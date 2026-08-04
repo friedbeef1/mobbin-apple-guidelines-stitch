@@ -31,6 +31,7 @@ for required_file in \
   docs/validation/behavioral-validation.md \
   skills/validating-ui-with-guidelines-and-mobbin/SKILL.md \
   skills/validating-ui-with-guidelines-and-mobbin/agents/openai.yaml \
+  scripts/test-validate.sh \
   scripts/validate.sh
 do
   require_file "$required_file"
@@ -58,14 +59,28 @@ private_key_prefix='-----BEGIN '
 private_key_marker='PRIVATE KEY'
 private_key_suffix='-----'
 private_key_pattern="${private_key_prefix}[A-Z ]*${private_key_marker}[ A-Z-]*${private_key_suffix}"
-credential_pattern='^[[:space:]]*([A-Z0-9]+[_-])?(API[_-]?KEY|ACCESS[_-]?KEY([_-]?ID)?|AUTH[_-]?TOKEN|CLIENT[_-]?SECRET|GITHUB[_-]?TOKEN|OPENAI[_-]?API[_-]?KEY|AWS[_-]?ACCESS[_-]?KEY([_-]?ID)?|PASSWORD|PRIVATE[_-]?KEY|SECRET|TOKEN)[[:space:]]*[:=][[:space:]]*[^[:space:]#]'
+credential_pattern='^[[:space:]]*((export|env)[[:space:]]+)*([A-Z0-9]+[_-])?(API[_-]?KEY|ACCESS[_-]?KEY([_-]?ID)?|AUTH[_-]?TOKEN|CLIENT[_-]?SECRET|GITHUB[_-]?TOKEN|OPENAI[_-]?API[_-]?KEY|AWS[_-]?ACCESS[_-]?KEY([_-]?ID)?|PASSWORD|PRIVATE[_-]?KEY|SECRET|TOKEN)[[:space:]]*[:=][[:space:]]*[^[:space:]#]'
 
-if find "$repo_root" \
-  \( -path "$repo_root/.git" -o -path "$repo_root/.worktrees" -o -path "$repo_root/.superpowers" \) -prune -o \
-  -type f \
-  -exec grep -i -E -e "$private_key_pattern" -e "$credential_pattern" {} \; | grep . >/dev/null
+contains_private_material() {
+  scan_root=$1
+  find "$scan_root" \
+    \( -path "$scan_root/.git" -o -path "$scan_root/.worktrees" -o -path "$scan_root/.superpowers" \) -prune -o \
+    -type f \
+    -exec grep -i -E -e "$private_key_pattern" -e "$credential_pattern" {} \; | grep . >/dev/null
+}
+
+if contains_private_material "$repo_root"
 then
   fail 'private key or credential assignment found'
+fi
+
+if [ -n "${VALIDATE_EXTRA_SCAN_ROOT:-}" ]
+then
+  [ -d "$VALIDATE_EXTRA_SCAN_ROOT" ] || fail 'VALIDATE_EXTRA_SCAN_ROOT must name a directory'
+  if contains_private_material "$VALIDATE_EXTRA_SCAN_ROOT"
+  then
+    fail 'private key or credential assignment found'
+  fi
 fi
 
 user_path_prefix='/''Users/'

@@ -12,6 +12,12 @@ The skill takes a mobile or web journey from a confirmed product objective throu
 
 It stops at the relevant design gate by default. A generated proposal is not source implementation, staging, deployment, release, or device-compliance proof.
 
+## Confirm the objective first
+
+Objective Confirmation happens before product inspection, audit, or external research. When the context makes useful suggestions possible, the skill offers two or three context-specific, mutually distinct objectives and always lets the user enter a free-form objective instead. The user never has to choose an agent-generated option.
+
+If the request already states an objective, the skill restates it concisely and asks the user to confirm or revise it. Neither approval mode bypasses this confirmation; the confirmed objective remains the evaluation criterion throughout the workflow.
+
 ## Why each step is crucial
 
 | Step | Why it is crucial |
@@ -31,7 +37,7 @@ It stops at the relevant design gate by default. A generated proposal is not sou
 
 ## Install
 
-Install directly from the future public repository:
+Install directly from the public repository:
 
 ```bash
 python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \

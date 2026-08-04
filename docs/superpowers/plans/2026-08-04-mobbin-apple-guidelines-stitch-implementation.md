@@ -8,6 +8,10 @@
 
 **Tech Stack:** Markdown, YAML, POSIX shell, Python 3 validation helpers, Git, GitHub CLI.
 
+**Status:** Complete. The validated skill is published at `friedbeef1/mobbin-apple-guidelines-stitch` on public `main`.
+
+**Approved publication exception:** The user approved a tested, single-commit source snapshot specifically because iCloud made 62 objects from the original local Git history dataless and unable to hydrate, causing Git object packaging and both HTTPS and SSH pushes from that history to stall. The snapshot published only the validated tracked source. The original local repository and its multi-commit history remain untouched; the initial public snapshot commit was `5bbfed8133c88a3341f776e5f5dc76b8f4117670`.
+
 ## Global Constraints
 
 - Public display name: `Mobbin - Apple Guidelines - Stitch`.
@@ -36,7 +40,7 @@
 - Consumes: Approved design at `docs/superpowers/specs/2026-08-04-mobbin-apple-guidelines-stitch-design.md` and the installed source at `/Users/jamesyeang/.codex/skills/validating-ui-with-guidelines-and-mobbin/`.
 - Produces: A distributable skill whose observable state machine is Objective Confirmation → audit → light Apple grounding → Mobbin discovery → directions → Direction Gate → full Apple validation → Stitch journey → Codex evidence → Stitch Gate → authorized routing.
 
-- [ ] **Step 1: Record failing baseline scenarios**
+- [x] **Step 1: Record failing baseline scenarios**
 
 Create `docs/validation/behavioral-validation.md` with these three raw scenarios and a `Baseline result` field for each:
 
@@ -46,11 +50,11 @@ Create `docs/validation/behavioral-validation.md` with these three raw scenarios
 
 Run each scenario against the currently installed skill using fresh-context agents. Record their outputs verbatim enough to show whether Objective Confirmation and gate semantics are missing or inconsistent.
 
-- [ ] **Step 2: Verify the baseline fails for the new objective contract**
+- [x] **Step 2: Verify the baseline fails for the new objective contract**
 
 Expected: at least one baseline response begins audit/research or treats `bypass both gates` as permission to proceed without confirming the objective. If every response already satisfies the new contract, document that result and retain the scenarios as regression evidence.
 
-- [ ] **Step 3: Author the packaged skill**
+- [x] **Step 3: Author the packaged skill**
 
 Copy the validated existing journey and gate rules, then make these sections explicit in `SKILL.md`:
 
@@ -63,7 +67,7 @@ Copy the validated existing journey and gate rules, then make these sections exp
 
 Update `agents/openai.yaml` to use display name `Mobbin - Apple Guidelines - Stitch`, a concise description, and a default prompt that begins with Objective Confirmation.
 
-- [ ] **Step 4: Validate the skill structure**
+- [x] **Step 4: Validate the skill structure**
 
 Run:
 
@@ -73,13 +77,13 @@ python3 /Users/jamesyeang/.codex/skills/.system/skill-creator/scripts/quick_vali
 
 Expected: `Skill is valid!`
 
-- [ ] **Step 5: Re-run the three behavioral scenarios**
+- [x] **Step 5: Re-run the three behavioral scenarios**
 
 Use fresh-context agents with the packaged skill. Record the post-change output and verdict for each scenario in `docs/validation/behavioral-validation.md`.
 
 Expected: all three scenarios satisfy Objective Confirmation and gate semantics without treating either design-gate bypass as implementation or deployment authority.
 
-- [ ] **Step 6: Commit the behavioral contract**
+- [x] **Step 6: Commit the behavioral contract**
 
 ```bash
 git add skills/validating-ui-with-guidelines-and-mobbin docs/validation/behavioral-validation.md
@@ -98,13 +102,13 @@ git commit -m "feat: add objective-led UI evidence skill"
 - Consumes: The packaged skill behavior from Task 1.
 - Produces: Human-readable installation, rationale, operating sequence, examples, limitations, and licensing.
 
-- [ ] **Step 1: Write the README purpose and non-goals**
+- [x] **Step 1: Write the README purpose and non-goals**
 
 Lead with the problem: UI work often jumps from subjective dissatisfaction to attractive screens without confirming the user outcome or validating the journey. Explain that the skill makes the reasoning auditable by assigning distinct roles to the user, Apple guidance, Mobbin, Stitch, and Codex.
 
 State clearly that the repository is a standalone skill, not a plugin or official Mobbin, Apple, Google, or Stitch integration.
 
-- [ ] **Step 2: Explain why every step is crucial**
+- [x] **Step 2: Explain why every step is crucial**
 
 Include a readable table covering:
 
@@ -121,7 +125,7 @@ Include a readable table covering:
 11. Stitch approval prevents a generated artifact from silently becoming an implementation mandate.
 12. Authorized routing preserves ownership, staging, and release boundaries.
 
-- [ ] **Step 3: Add exact installation instructions**
+- [x] **Step 3: Add exact installation instructions**
 
 Document direct installation from the future public repository:
 
@@ -133,7 +137,7 @@ python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-githu
 
 Also document a manual copy fallback and state that the skill becomes available on the next Codex turn. Mention that access to Mobbin and Stitch is external and not bundled.
 
-- [ ] **Step 4: Write three prompt examples**
+- [x] **Step 4: Write three prompt examples**
 
 In `examples/prompts.md`, include:
 
@@ -143,11 +147,11 @@ In `examples/prompts.md`, include:
 
 Each example must let the user choose from suggested objectives or enter their own.
 
-- [ ] **Step 5: Add license, ignore rules, and disclaimer**
+- [x] **Step 5: Add license, ignore rules, and disclaimer**
 
 Add the standard MIT license with copyright year `2026` and holder `James Yeang`. Add a minimal `.gitignore` for `.DS_Store`, editor state, temporary files, and Python cache files. State in the README that Mobbin, Apple, Google, and Stitch marks belong to their respective owners and no affiliation or endorsement is implied.
 
-- [ ] **Step 6: Check documentation consistency**
+- [x] **Step 6: Check documentation consistency**
 
 Run:
 
@@ -158,7 +162,7 @@ git diff --check
 
 Expected: `plugin` appears only in explicit “not a plugin” statements; all required concepts appear; `git diff --check` exits successfully.
 
-- [ ] **Step 7: Commit documentation**
+- [x] **Step 7: Commit documentation**
 
 ```bash
 git add README.md examples/prompts.md LICENSE .gitignore
@@ -169,12 +173,13 @@ git commit -m "docs: explain the evidence-led journey workflow"
 
 **Files:**
 - Create: `scripts/validate.sh`
+- Create: `scripts/test-validate.sh`
 
 **Interfaces:**
 - Consumes: Repository paths and the packaged skill metadata.
 - Produces: Exit code `0` plus concise pass messages when structure, naming, safety, and Markdown invariants hold; non-zero exit on any violation.
 
-- [ ] **Step 1: Write a failing validator invocation**
+- [x] **Step 1: Write a failing validator invocation**
 
 Run before creating the script:
 
@@ -184,7 +189,7 @@ Run before creating the script:
 
 Expected: FAIL because `scripts/validate.sh` does not exist.
 
-- [ ] **Step 2: Implement the minimal validator**
+- [x] **Step 2: Implement the minimal validator**
 
 Create an executable POSIX shell script that:
 
@@ -194,10 +199,10 @@ Create an executable POSIX shell script that:
 - Confirms `openai.yaml` contains `Mobbin - Apple Guidelines - Stitch`.
 - Confirms README installation path matches `skills/validating-ui-with-guidelines-and-mobbin`.
 - Confirms Objective Confirmation and both approval-gate phrases appear in the skill and README.
-- Rejects private keys, common credential assignments, `/Users/` paths outside historical design/plan docs, and proprietary image/media artifacts.
+- Rejects private keys, bare and `export`/`env`-prefixed common credential assignments, `/Users/` paths outside historical design/plan docs, and proprietary image/media artifacts.
 - Runs `git diff --check` when executed inside a Git worktree.
 
-- [ ] **Step 3: Run the repository validator**
+- [x] **Step 3: Run the repository validator**
 
 ```bash
 chmod +x scripts/validate.sh
@@ -206,13 +211,13 @@ chmod +x scripts/validate.sh
 
 Expected: all checks pass with exit code `0`.
 
-- [ ] **Step 4: Prove a negative case**
+- [x] **Step 4: Prove a negative case**
 
-Temporarily change the display-name check target in a copy of `agents/openai.yaml` under a temporary directory and run the relevant validation condition against it.
+Temporarily change the display-name check target in a copy of `agents/openai.yaml` under a temporary directory and run the relevant validation condition against it. Also prove that `export`, `env`, and repeated shell prefixes cannot conceal credential assignments from the safety scan.
 
 Expected: non-zero exit identifying the display-name mismatch. Remove only the temporary directory afterward.
 
-- [ ] **Step 5: Run the full local verification set**
+- [x] **Step 5: Run the full local verification set**
 
 ```bash
 python3 /Users/jamesyeang/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/validating-ui-with-guidelines-and-mobbin
@@ -223,7 +228,7 @@ git status --short
 
 Expected: skill and repository validation pass; only intentional files are uncommitted.
 
-- [ ] **Step 6: Commit validation tooling**
+- [x] **Step 6: Commit validation tooling**
 
 ```bash
 git add scripts/validate.sh
@@ -240,7 +245,7 @@ git commit -m "test: add distributable skill validation"
 - Consumes: Validated packaged skill from Tasks 1–3.
 - Produces: The next Codex turn discovers the same behavior and display metadata as the public repository.
 
-- [ ] **Step 1: Compare packaged and installed files**
+- [x] **Step 1: Compare packaged and installed files**
 
 ```bash
 diff -u /Users/jamesyeang/.codex/skills/validating-ui-with-guidelines-and-mobbin/SKILL.md skills/validating-ui-with-guidelines-and-mobbin/SKILL.md
@@ -249,11 +254,11 @@ diff -u /Users/jamesyeang/.codex/skills/validating-ui-with-guidelines-and-mobbin
 
 Expected: differences show Objective Confirmation, why-each-step explanations, and the new display name.
 
-- [ ] **Step 2: Apply the validated packaged content to the installed skill**
+- [x] **Step 2: Apply the validated packaged content to the installed skill**
 
 Use `apply_patch` for both installed files. Do not modify any other global skill or plugin configuration.
 
-- [ ] **Step 3: Validate the installed skill**
+- [x] **Step 3: Validate the installed skill**
 
 ```bash
 python3 /Users/jamesyeang/.codex/skills/.system/skill-creator/scripts/quick_validate.py /Users/jamesyeang/.codex/skills/validating-ui-with-guidelines-and-mobbin
@@ -272,7 +277,7 @@ Expected: `Skill is valid!`; both diffs produce no output.
 - Consumes: Clean validated local repository and authenticated GitHub CLI account `friedbeef1`.
 - Produces: Public repository `friedbeef1/mobbin-apple-guidelines-stitch` whose `main` branch matches the validated local commit.
 
-- [ ] **Step 1: Run the final safety audit**
+- [x] **Step 1: Run the final safety audit**
 
 ```bash
 ./scripts/validate.sh
@@ -283,7 +288,7 @@ git log --oneline --decorate -8
 
 Expected: validators pass and the intended commits are present.
 
-- [ ] **Step 2: Verify GitHub authentication**
+- [x] **Step 2: Verify GitHub authentication**
 
 ```bash
 gh auth status
@@ -291,7 +296,7 @@ gh auth status
 
 Expected: authenticated as `friedbeef1`. Current known state before implementation: the configured token is invalid, so reauthentication is required before publication.
 
-- [ ] **Step 3: Restore GitHub authentication if needed**
+- [x] **Step 3: Restore GitHub authentication if needed**
 
 Run the interactive GitHub CLI login only with the user present:
 
@@ -301,7 +306,7 @@ gh auth login -h github.com
 
 Expected: `gh auth status` succeeds for `friedbeef1`.
 
-- [ ] **Step 4: Create and push the public repository**
+- [x] **Step 4: Create and push the public repository**
 
 ```bash
 gh repo create friedbeef1/mobbin-apple-guidelines-stitch --public --source=. --remote=origin --push
@@ -309,7 +314,7 @@ gh repo create friedbeef1/mobbin-apple-guidelines-stitch --public --source=. --r
 
 Expected: GitHub creates the public repository and pushes local `main`.
 
-- [ ] **Step 5: Verify remote identity and visibility**
+- [x] **Step 5: Verify remote identity and visibility**
 
 ```bash
 gh repo view friedbeef1/mobbin-apple-guidelines-stitch --json nameWithOwner,visibility,url,defaultBranchRef
@@ -319,12 +324,12 @@ git ls-remote origin refs/heads/main
 
 Expected: `nameWithOwner` is `friedbeef1/mobbin-apple-guidelines-stitch`, visibility is `PUBLIC`, default branch is `main`, and local/remote commit IDs match.
 
-- [ ] **Step 6: Perform a clean-clone smoke check**
+- [x] **Step 6: Perform a clean-clone smoke check**
 
 Clone the public repository into a `mktemp -d` directory, run `./scripts/validate.sh`, and delete only that validated temporary directory afterward.
 
 Expected: the clean clone passes the same repository validation.
 
-- [ ] **Step 7: Report distribution links and remaining boundaries**
+- [x] **Step 7: Report distribution links and remaining boundaries**
 
 Provide the GitHub repository URL, local repository link, direct skill-installation command, validation results, and the known external-access requirements. Do not claim that Mobbin or Stitch access is bundled or that a mockup proves implementation/device compliance.
