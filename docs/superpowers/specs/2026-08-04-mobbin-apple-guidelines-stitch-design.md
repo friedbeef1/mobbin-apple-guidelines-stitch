@@ -1,8 +1,8 @@
-# Mobbin - Apple Guidelines - Stitch: Distribution Design
+# FB UX: Distribution Design
 
 ## Objective
 
-Turn the existing `validating-ui-with-guidelines-and-mobbin` workflow into a public, directly installable Codex skill. Prepare and validate the repository locally, then publish the same history to a public GitHub repository.
+Turn the existing `fb-ux` workflow into a public, directly installable Codex skill. Prepare and validate the repository locally, then publish the same history to a public GitHub repository.
 
 ## Why This Exists
 
@@ -14,18 +14,18 @@ The intended outcome is not “make a prettier screen.” It is a coherent, evid
 
 ## Naming
 
-- Public display name: `Mobbin - Apple Guidelines - Stitch`
+- Public display name: `FB UX`
 - Repository slug: `mobbin-apple-guidelines-stitch`
-- Internal skill name: `validating-ui-with-guidelines-and-mobbin`
+- Internal skill name: `fb-ux`
 
-The internal skill name remains stable so existing prompts and installations continue to trigger it correctly.
+The folder, frontmatter name, default prompt, installation path, and documentation all use `fb-ux` as the canonical skill identifier.
 
 ## Repository Structure
 
 ```text
 mobbin-apple-guidelines-stitch/
 ├── skills/
-│   └── validating-ui-with-guidelines-and-mobbin/
+│   └── fb-ux/
 │       ├── SKILL.md
 │       └── agents/openai.yaml
 ├── examples/
@@ -41,7 +41,7 @@ mobbin-apple-guidelines-stitch/
 
 ## Distribution
 
-Install `skills/validating-ui-with-guidelines-and-mobbin` directly from GitHub using a compatible Codex skill installer. The README will provide the exact command and a manual-copy fallback. The repository will not include a plugin manifest, marketplace entry, MCP server, connector, or application wrapper.
+Install `skills/fb-ux` directly from GitHub using a compatible Codex skill installer. The README will provide the exact command and a manual-copy fallback. The repository will not include a plugin manifest, marketplace entry, MCP server, connector, or application wrapper.
 
 The README will state any required external access. The skill does not bundle Mobbin, Apple, or Stitch services, accounts, credentials, connectors, or proprietary content.
 

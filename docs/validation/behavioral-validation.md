@@ -1,4 +1,4 @@
-# Behavioral Validation
+# FB UX Behavioral Validation
 
 ## Baseline: installed skill
 
@@ -48,7 +48,7 @@ The baseline scenarios used fresh-context agents reading the installed source sk
 
 ## Post-change: packaged skill
 
-The same prompts were re-run with fresh-context agents reading `skills/validating-ui-with-guidelines-and-mobbin/`.
+The same prompts were re-run with fresh-context agents reading `skills/fb-ux/`.
 
 ### Scenario 1
 

@@ -5,8 +5,8 @@ set -eu
 
 script_dir=$(CDPATH= cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH= cd "$script_dir/.." && pwd)
-skill_path="$repo_root/skills/validating-ui-with-guidelines-and-mobbin/SKILL.md"
-metadata_path=${VALIDATE_OPENAI_YAML:-"$repo_root/skills/validating-ui-with-guidelines-and-mobbin/agents/openai.yaml"}
+skill_path="$repo_root/skills/fb-ux/SKILL.md"
+metadata_path=${VALIDATE_OPENAI_YAML:-"$repo_root/skills/fb-ux/agents/openai.yaml"}
 
 fail() {
   printf '%s\n' "FAIL: $*" >&2
@@ -29,8 +29,8 @@ for required_file in \
   .gitignore \
   examples/prompts.md \
   docs/validation/behavioral-validation.md \
-  skills/validating-ui-with-guidelines-and-mobbin/SKILL.md \
-  skills/validating-ui-with-guidelines-and-mobbin/agents/openai.yaml \
+  skills/fb-ux/SKILL.md \
+  skills/fb-ux/agents/openai.yaml \
   scripts/test-validate.sh \
   scripts/validate.sh
 do
@@ -40,12 +40,13 @@ printf '%s\n' 'PASS: required files'
 
 awk '
   NR == 1 { valid = ($0 == "---"); next }
-  valid && $0 == "name: validating-ui-with-guidelines-and-mobbin" { named = 1 }
+  valid && $0 == "name: fb-ux" { named = 1 }
   valid && $0 == "---" { closed = 1; exit }
   END { exit !(valid && closed && named) }
 ' "$skill_path" || fail 'SKILL.md must begin with YAML frontmatter containing the exact internal name'
-require_text "$metadata_path" 'Mobbin - Apple Guidelines - Stitch'
-require_text "$repo_root/README.md" 'skills/validating-ui-with-guidelines-and-mobbin'
+require_text "$metadata_path" 'display_name: "FB UX"'
+require_text "$repo_root/README.md" 'skills/fb-ux'
+require_text "$repo_root/README.md" '$fb-ux'
 printf '%s\n' 'PASS: package metadata'
 
 for required_text in 'Objective Confirmation' 'Follow your recommendation' 'Bypass both gates'

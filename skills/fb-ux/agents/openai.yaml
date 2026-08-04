@@ -1,0 +1,4 @@
+interface:
+  display_name: "FB UX"
+  short_description: "Confirm UI goals, validate journeys, and propose evidence-backed Stitch flows"
+  default_prompt: "Begin with Objective Confirmation: use $fb-ux to confirm the intended UI outcome before auditing the journey, researching evidence, or generating a Stitch proposal."

@@ -1,4 +1,4 @@
-# Mobbin - Apple Guidelines - Stitch Implementation Plan
+# FB UX Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -14,9 +14,9 @@
 
 ## Global Constraints
 
-- Public display name: `Mobbin - Apple Guidelines - Stitch`.
+- Public display name: `FB UX`.
 - Repository slug: `mobbin-apple-guidelines-stitch`.
-- Internal skill name remains `validating-ui-with-guidelines-and-mobbin`.
+- Internal skill name is `fb-ux`.
 - This is a standalone Codex skill repository, not a Codex plugin, marketplace package, MCP server, connector, or application.
 - Objective Confirmation occurs before product audit or external research.
 - If the objective is stated initially, restate it and ask the user to confirm or revise it.
@@ -33,11 +33,11 @@
 
 **Files:**
 - Create: `docs/validation/behavioral-validation.md`
-- Create: `skills/validating-ui-with-guidelines-and-mobbin/SKILL.md`
-- Create: `skills/validating-ui-with-guidelines-and-mobbin/agents/openai.yaml`
+- Create: `skills/fb-ux/SKILL.md`
+- Create: `skills/fb-ux/agents/openai.yaml`
 
 **Interfaces:**
-- Consumes: Approved design at `docs/superpowers/specs/2026-08-04-mobbin-apple-guidelines-stitch-design.md` and the installed source at `/Users/jamesyeang/.codex/skills/validating-ui-with-guidelines-and-mobbin/`.
+- Consumes: Approved design at `docs/superpowers/specs/2026-08-04-mobbin-apple-guidelines-stitch-design.md` and the installed source at `/Users/jamesyeang/.codex/skills/fb-ux/`.
 - Produces: A distributable skill whose observable state machine is Objective Confirmation → audit → light Apple grounding → Mobbin discovery → directions → Direction Gate → full Apple validation → Stitch journey → Codex evidence → Stitch Gate → authorized routing.
 
 - [x] **Step 1: Record failing baseline scenarios**
@@ -65,14 +65,14 @@ Copy the validated existing journey and gate rules, then make these sections exp
 - `Approval Modes`: preserve the three modes exactly.
 - `Required Output`, `Integrity Gates`, `Quick Check`, and `Common Mistakes`.
 
-Update `agents/openai.yaml` to use display name `Mobbin - Apple Guidelines - Stitch`, a concise description, and a default prompt that begins with Objective Confirmation.
+Update `agents/openai.yaml` to use display name `FB UX`, a concise description, and a default prompt that begins with Objective Confirmation.
 
 - [x] **Step 4: Validate the skill structure**
 
 Run:
 
 ```bash
-python3 /Users/jamesyeang/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/validating-ui-with-guidelines-and-mobbin
+python3 /Users/jamesyeang/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/fb-ux
 ```
 
 Expected: `Skill is valid!`
@@ -86,7 +86,7 @@ Expected: all three scenarios satisfy Objective Confirmation and gate semantics 
 - [x] **Step 6: Commit the behavioral contract**
 
 ```bash
-git add skills/validating-ui-with-guidelines-and-mobbin docs/validation/behavioral-validation.md
+git add skills/fb-ux docs/validation/behavioral-validation.md
 git commit -m "feat: add objective-led UI evidence skill"
 ```
 
@@ -132,7 +132,7 @@ Document direct installation from the future public repository:
 ```bash
 python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
   --repo friedbeef1/mobbin-apple-guidelines-stitch \
-  --path skills/validating-ui-with-guidelines-and-mobbin
+  --path skills/fb-ux
 ```
 
 Also document a manual copy fallback and state that the skill becomes available on the next Codex turn. Mention that access to Mobbin and Stitch is external and not bundled.
@@ -156,7 +156,7 @@ Add the standard MIT license with copyright year `2026` and holder `James Yeang`
 Run:
 
 ```bash
-rg -n "plugin|Objective Confirmation|Why.*crucial|Follow your recommendation|Bypass both gates|implementation|deployment" README.md examples/prompts.md skills/validating-ui-with-guidelines-and-mobbin/SKILL.md
+rg -n "plugin|Objective Confirmation|Why.*crucial|Follow your recommendation|Bypass both gates|implementation|deployment" README.md examples/prompts.md skills/fb-ux/SKILL.md
 git diff --check
 ```
 
@@ -196,8 +196,8 @@ Create an executable POSIX shell script that:
 - Resolves the repository root from the script location.
 - Confirms all required files exist.
 - Confirms `SKILL.md` begins with YAML frontmatter and contains the exact internal name.
-- Confirms `openai.yaml` contains `Mobbin - Apple Guidelines - Stitch`.
-- Confirms README installation path matches `skills/validating-ui-with-guidelines-and-mobbin`.
+- Confirms `openai.yaml` contains `FB UX`.
+- Confirms README installation path matches `skills/fb-ux`.
 - Confirms Objective Confirmation and both approval-gate phrases appear in the skill and README.
 - Rejects private keys, bare and `export`/`env`-prefixed common credential assignments, `/Users/` paths outside historical design/plan docs, and proprietary image/media artifacts.
 - Runs `git diff --check` when executed inside a Git worktree.
@@ -220,7 +220,7 @@ Expected: non-zero exit identifying the display-name mismatch. Remove only the t
 - [x] **Step 5: Run the full local verification set**
 
 ```bash
-python3 /Users/jamesyeang/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/validating-ui-with-guidelines-and-mobbin
+python3 /Users/jamesyeang/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/fb-ux
 ./scripts/validate.sh
 git diff --check
 git status --short
@@ -238,8 +238,8 @@ git commit -m "test: add distributable skill validation"
 ### Task 4: Synchronize the Installed Skill
 
 **Files:**
-- Modify: `/Users/jamesyeang/.codex/skills/validating-ui-with-guidelines-and-mobbin/SKILL.md`
-- Modify: `/Users/jamesyeang/.codex/skills/validating-ui-with-guidelines-and-mobbin/agents/openai.yaml`
+- Modify: `/Users/jamesyeang/.codex/skills/fb-ux/SKILL.md`
+- Modify: `/Users/jamesyeang/.codex/skills/fb-ux/agents/openai.yaml`
 
 **Interfaces:**
 - Consumes: Validated packaged skill from Tasks 1–3.
@@ -248,8 +248,8 @@ git commit -m "test: add distributable skill validation"
 - [x] **Step 1: Compare packaged and installed files**
 
 ```bash
-diff -u /Users/jamesyeang/.codex/skills/validating-ui-with-guidelines-and-mobbin/SKILL.md skills/validating-ui-with-guidelines-and-mobbin/SKILL.md
-diff -u /Users/jamesyeang/.codex/skills/validating-ui-with-guidelines-and-mobbin/agents/openai.yaml skills/validating-ui-with-guidelines-and-mobbin/agents/openai.yaml
+diff -u /Users/jamesyeang/.codex/skills/fb-ux/SKILL.md skills/fb-ux/SKILL.md
+diff -u /Users/jamesyeang/.codex/skills/fb-ux/agents/openai.yaml skills/fb-ux/agents/openai.yaml
 ```
 
 Expected: differences show Objective Confirmation, why-each-step explanations, and the new display name.
@@ -261,9 +261,9 @@ Use `apply_patch` for both installed files. Do not modify any other global skill
 - [x] **Step 3: Validate the installed skill**
 
 ```bash
-python3 /Users/jamesyeang/.codex/skills/.system/skill-creator/scripts/quick_validate.py /Users/jamesyeang/.codex/skills/validating-ui-with-guidelines-and-mobbin
-diff -u /Users/jamesyeang/.codex/skills/validating-ui-with-guidelines-and-mobbin/SKILL.md skills/validating-ui-with-guidelines-and-mobbin/SKILL.md
-diff -u /Users/jamesyeang/.codex/skills/validating-ui-with-guidelines-and-mobbin/agents/openai.yaml skills/validating-ui-with-guidelines-and-mobbin/agents/openai.yaml
+python3 /Users/jamesyeang/.codex/skills/.system/skill-creator/scripts/quick_validate.py /Users/jamesyeang/.codex/skills/fb-ux
+diff -u /Users/jamesyeang/.codex/skills/fb-ux/SKILL.md skills/fb-ux/SKILL.md
+diff -u /Users/jamesyeang/.codex/skills/fb-ux/agents/openai.yaml skills/fb-ux/agents/openai.yaml
 ```
 
 Expected: `Skill is valid!`; both diffs produce no output.

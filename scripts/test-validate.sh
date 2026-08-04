@@ -49,3 +49,19 @@ expect_credential_rejection env "env ${openai_key_name}=test-placeholder"
 expect_credential_rejection repeated-prefixes "export env ${github_token_name}=test-placeholder"
 
 printf '%s\n' 'PASS: validator negative cases'
+
+repo_root=$(CDPATH= cd "$script_dir/.." && pwd)
+[ -f "$repo_root/skills/fb-ux/SKILL.md" ] || fail 'canonical skill path must be skills/fb-ux'
+grep -F 'name: fb-ux' "$repo_root/skills/fb-ux/SKILL.md" >/dev/null || fail 'SKILL.md must use the fb-ux internal name'
+grep -F '$fb-ux' "$repo_root/README.md" >/dev/null || fail 'README must document the $fb-ux invocation'
+legacy_skill_name='validating-ui-with-''guidelines-and-mobbin'
+if grep -R -F "$legacy_skill_name" \
+  "$repo_root/README.md" \
+  "$repo_root/docs" \
+  "$repo_root/examples" \
+  "$repo_root/scripts" \
+  "$repo_root/skills" >/dev/null
+then
+  fail 'legacy skill name remains in the distributable documentation or package'
+fi
+printf '%s\n' 'PASS: fb-ux identity'

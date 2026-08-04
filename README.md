@@ -1,8 +1,14 @@
-# Mobbin - Apple Guidelines - Stitch
+# FB UX
 
-UI work can jump from “this feels wrong” to an attractive screen without confirming the user outcome or validating the full journey. This repository packages a Codex skill that makes that reasoning auditable: the user confirms the objective, Apple guidance supplies platform constraints, Mobbin supplies inspected journey precedent, Stitch visualizes the selected journey, and Codex keeps the evidence and decisions visible in the conversation.
+UI work can jump from “this feels wrong” to an attractive screen without confirming the user outcome or validating the full journey. FB UX is a Codex skill that makes that reasoning auditable: the user confirms the objective, Apple guidance supplies platform constraints, Mobbin supplies inspected journey precedent, Stitch visualizes the selected journey, and Codex keeps the evidence and decisions visible in the conversation.
 
 It is a standalone Codex skill, not a plugin or an official Mobbin, Apple, Google, or Stitch integration.
+
+Invoke it with `$fb-ux`:
+
+```text
+$fb-ux https://example.com
+```
 
 ## What the skill does
 
@@ -42,10 +48,10 @@ Install directly from the public repository:
 ```bash
 python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
   --repo friedbeef1/mobbin-apple-guidelines-stitch \
-  --path skills/validating-ui-with-guidelines-and-mobbin
+  --path skills/fb-ux
 ```
 
-As a manual fallback, copy `skills/validating-ui-with-guidelines-and-mobbin` into your Codex skills directory. The skill becomes available on the next Codex turn.
+As a manual fallback, copy `skills/fb-ux` into your Codex skills directory. The skill becomes available on the next Codex turn.
 
 Mobbin and Stitch access are external and are not bundled with this repository or the skill. Apple and other platform guidance are looked up as current first-party sources during use.
 

@@ -1,9 +1,9 @@
 ---
-name: validating-ui-with-guidelines-and-mobbin
+name: fb-ux
 description: Use when a mobile or web interface or end-to-end journey feels inconsistent, cluttered, unclear, or incomplete and the user wants the current product audited, journey directions benchmarked with Mobbin, validated against official platform guidance, and visualized as a complete Stitch proposal.
 ---
 
-# Validate UI Journeys With Guidelines, Mobbin, and Stitch
+# FB UX
 
 Build an auditable evidence chain from a user-confirmed product objective to an approved journey direction and a newly generated Stitch proposal. The Codex chat is the primary decision surface; the Stitch board supplies deeper exploration.
 
