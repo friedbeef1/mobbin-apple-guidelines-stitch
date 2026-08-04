@@ -1,0 +1,9 @@
+.worktrees/
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+*.tmp
+__pycache__/
+*.py[cod]
