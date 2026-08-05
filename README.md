@@ -34,7 +34,7 @@ On first use in a project, FB UX asks the user to choose an approval mode and sa
 | --- | --- | --- | --- |
 | **Guided** — recommended for a new project | Confirm | Stop | Stop |
 | **Follow recommendation** | Confirm | Automatically follow Codex's recommendation | Stop |
-| **Fully automatic** | Use an explicit request objective; clarify if missing | Automatically follow Codex's recommendation | Continue when validation passes |
+| **Fully automatic** | Use an explicit request objective; clarify if missing | Automatically follow Codex's recommendation | Continue only after a `meets direction` verdict |
 
 Later runs use the saved project preference. `$fb-ux mode` reports it; `$fb-ux mode guided`, `$fb-ux mode follow-recommendation`, and `$fb-ux mode fully-automatic` change it. `use Guided for this run` is a one-run override and does not replace the saved preference.
 
