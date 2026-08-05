@@ -27,7 +27,7 @@ After the user chooses, create or update this project-scoped preference:
 approval_mode: guided
 ```
 
-The only valid values are `guided`, `follow-recommendation`, and `fully-automatic`. Read the saved preference at the start of every run and state the active mode concisely. Do not silently turn a project preference into a global preference.
+The only valid values are `guided`, `follow-recommendation`, and `fully-automatic`. Read the saved preference at the start of every run and state the active mode concisely. Also state whether that active mode came from the saved project preference, an explicit one-run override, or first-use/default selection. Do not silently turn a project preference into a global preference.
 
 Resolve the mode in this order:
 
@@ -57,13 +57,13 @@ Follow this state machine in order:
 
 `project preference → establish objective → audit → light Apple grounding → Mobbin discovery → directions → Direction Gate policy → full Apple validation → Stitch journey → Codex evidence → Stitch Gate policy → authorized routing`
 
-1. **Resolve the project preference.** Apply an explicit one-run override, otherwise read `.codex/fb-ux.yaml`, otherwise ask the user to choose Guided, Follow recommendation, or Fully automatic and save the choice.
+1. **Resolve the project preference.** Apply an explicit one-run override, otherwise read `.codex/fb-ux.yaml`, otherwise ask the user to choose Guided, Follow recommendation, or Fully automatic and save the choice. At resolution, record the active mode and whether it came from the saved project preference or an explicit one-run override; if neither supplied it, identify the first-use/default selection instead.
 2. **Establish the objective.** Obtain the user’s confirmed outcome, or accept a clearly stated current-request objective under Fully automatic mode, before product inspection or external research.
 3. **Audit the current product.** Inspect the live or supplied website/app and its product contract against that objective. Map real entry points, user goals, journey steps, screens, transitions, decision points, success states, empty states, errors, recovery paths, and visible friction. Record platform, orientation, state, region, and any inferred evidence.
 4. **Perform light Apple grounding.** Look up current Apple guidance relevant to the intended experience, plus current first-party guidance for every other affected platform. Extract only the principles needed to ground hierarchy, navigation, targets, spacing, safe areas, labels, accessibility, feedback, errors, and recovery before benchmark research.
 5. **Discover Mobbin journeys.** Search using the established user goal, screen type, and interaction. Inspect complete flows and images rather than metadata. Cite each mentioned screen or flow with its canonical Mobbin URL. Use official guidance and product context to assess examples; never copy assets, wording, colors, or layouts.
 6. **Recommend exact directions.** Synthesize the evidence into one recommended direction plus meaningful alternatives. For each direction, state journey sequence, screens/states to add, remove, merge, or retain, important interaction changes, supporting Mobbin patterns, Apple grounding, benefits, risks, and trade-offs. Make the recommendation unmistakable.
-7. **Apply the Direction Gate policy.** In Guided mode, present directions and stop. In Follow recommendation or Fully automatic mode, present the recommendation and alternatives, record that the saved preference selected the recommendation, and continue without pausing.
+7. **Apply the Direction Gate policy.** In Guided mode, present directions, record the active mode and its provenance, and stop. In Follow recommendation or Fully automatic mode, present the recommendation and alternatives, record that the active mode selected the recommendation, include whether the active mode came from the saved project preference or an explicit one-run override, and continue without pausing; never attribute the selection to the saved preference when an explicit one-run override is active.
 8. **Fully validate the selected direction.** Rigorously recheck the complete selected journey against current Apple guidance and every other affected platform’s first-party rules. Correct conflicts before generation. Distinguish platform requirements, evidence-backed precedent, and product-specific judgment.
 9. **Generate the complete Stitch journey.** Use the existing Stitch project and design system when available. Generate every screen and material state required by the approved journey, including entry, transition, loading, success, empty, error, and recovery states. Specify exact viewports, safe areas, product assets or generic mock imagery, interaction state, and prohibited clutter. Arrange the output as a coherent Stitch board and record project and new screen IDs.
 10. **Render honest evidence in Codex.** Verify exported or rendered image dimensions. Embed key journey screens directly in chat, provide a concise journey map and Stitch generator recommendations, and identify project, board, screen IDs, and exact viewports. A user must be able to judge the proposal from Codex without opening Stitch.
@@ -101,7 +101,7 @@ When the mode or instruction is ambiguous and no saved preference exists, use Gu
 
 ## Required Output
 
-- **Approval preference:** saved project mode, any one-run override, and which pauses apply.
+- **Approval preference:** saved project mode, any one-run override, the active mode and its provenance, and which pauses apply.
 - **Established objective:** the user-confirmed outcome or explicit Fully automatic objective and the criterion used to evaluate the journey.
 - **Current journey:** product surface, platform, entry point, user goal, steps, states, and observed friction.
 - **Official grounding:** applicable Apple and other first-party principles with direct links.

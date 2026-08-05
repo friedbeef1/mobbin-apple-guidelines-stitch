@@ -5,13 +5,10 @@ set -eu
 
 script_dir=$(CDPATH= cd "$(dirname "$0")" && pwd)
 validator="$script_dir/validate.sh"
-temporary_dirs=''
+task_temp_dir=$(mktemp -d "${TMPDIR:-/tmp}/mobbin-validator-tests.XXXXXX")
 
 cleanup() {
-  for temporary_dir in $temporary_dirs
-  do
-    rm -rf "$temporary_dir"
-  done
+  rm -rf "$task_temp_dir"
 }
 
 fail() {
@@ -24,8 +21,8 @@ trap cleanup EXIT HUP INT TERM
 expect_credential_rejection() {
   label=$1
   assignment=$2
-  case_dir=$(mktemp -d "${TMPDIR:-/tmp}/mobbin-validator-${label}.XXXXXX")
-  temporary_dirs="$temporary_dirs $case_dir"
+  case_dir="$task_temp_dir/$label"
+  mkdir "$case_dir"
   printf '%s\n' "$assignment" > "$case_dir/fixture.env"
 
   if output=$(VALIDATE_EXTRA_SCAN_ROOT="$case_dir" "$validator" 2>&1)

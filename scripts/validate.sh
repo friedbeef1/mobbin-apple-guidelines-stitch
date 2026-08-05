@@ -39,6 +39,7 @@ for required_file in \
   plugins/fb-ux/skills/fb-ux/SKILL.md \
   plugins/fb-ux/skills/fb-ux/agents/openai.yaml \
   scripts/test-validate.sh \
+  scripts/test-test-validate.sh \
   scripts/test-plugin-install.sh \
   scripts/validate.sh
 do
@@ -88,6 +89,17 @@ do
   require_text "$repo_root/README.md" "$required_text"
 done
 printf '%s\n' 'PASS: workflow phrases'
+
+require_text "$skill_path" 'record the active mode and whether it came from the saved project preference or an explicit one-run override'
+require_text "$skill_path" 'never attribute the selection to the saved preference when an explicit one-run override is active'
+require_text "$repo_root/docs/validation/behavioral-validation.md" 'plugins/fb-ux/skills/fb-ux/SKILL.md'
+require_text "$repo_root/docs/validation/behavioral-validation.md" '| Guided |'
+require_text "$repo_root/docs/validation/behavioral-validation.md" '| Follow recommendation |'
+require_text "$repo_root/docs/validation/behavioral-validation.md" '| Fully automatic |'
+require_text "$repo_root/docs/validation/behavioral-validation.md" 'Explicit objective required'
+require_text "$repo_root/docs/validation/behavioral-validation.md" 'Saved preference'
+require_text "$repo_root/docs/validation/behavioral-validation.md" 'One-run override precedence'
+printf '%s\n' 'PASS: approval-mode provenance and current behavioral evidence'
 
 private_key_prefix='-----BEGIN '
 private_key_marker='PRIVATE KEY'
