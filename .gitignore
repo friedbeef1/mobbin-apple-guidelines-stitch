@@ -1,4 +1,5 @@
 .worktrees/
+.superpowers/
 .DS_Store
 .idea/
 .vscode/
