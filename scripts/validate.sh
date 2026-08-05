@@ -5,8 +5,12 @@ set -eu
 
 script_dir=$(CDPATH= cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH= cd "$script_dir/.." && pwd)
-skill_path="$repo_root/skills/fb-ux/SKILL.md"
-metadata_path=${VALIDATE_OPENAI_YAML:-"$repo_root/skills/fb-ux/agents/openai.yaml"}
+plugin_path="$repo_root/plugins/fb-ux"
+skill_path="$plugin_path/skills/fb-ux/SKILL.md"
+metadata_path=${VALIDATE_OPENAI_YAML:-"$plugin_path/skills/fb-ux/agents/openai.yaml"}
+codex_skills_dir=${CODEX_SKILLS_DIR:-"$HOME/.codex/skills"}
+plugin_validator="$codex_skills_dir/.system/plugin-creator/scripts/validate_plugin.py"
+skill_validator="$codex_skills_dir/.system/skill-creator/scripts/quick_validate.py"
 
 fail() {
   printf '%s\n' "FAIL: $*" >&2
@@ -29,8 +33,10 @@ for required_file in \
   .gitignore \
   examples/prompts.md \
   docs/validation/behavioral-validation.md \
-  skills/fb-ux/SKILL.md \
-  skills/fb-ux/agents/openai.yaml \
+  .agents/plugins/marketplace.json \
+  plugins/fb-ux/.codex-plugin/plugin.json \
+  plugins/fb-ux/skills/fb-ux/SKILL.md \
+  plugins/fb-ux/skills/fb-ux/agents/openai.yaml \
   scripts/test-validate.sh \
   scripts/validate.sh
 do
@@ -48,6 +54,12 @@ require_text "$metadata_path" 'display_name: "FB UX"'
 require_text "$repo_root/README.md" 'skills/fb-ux'
 require_text "$repo_root/README.md" '$fb-ux'
 printf '%s\n' 'PASS: package metadata'
+
+[ -f "$plugin_validator" ] || fail 'plugin validator is unavailable'
+[ -f "$skill_validator" ] || fail 'skill validator is unavailable'
+python3 -u "$plugin_validator" "$plugin_path"
+python3 -u "$skill_validator" "$(dirname "$skill_path")"
+printf '%s\n' 'PASS: plugin and embedded skill validation'
 
 for required_text in 'Objective Confirmation' 'Follow your recommendation' 'Bypass both gates'
 do

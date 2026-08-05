@@ -1,0 +1,20 @@
+{
+  "name": "fb-ux-marketplace",
+  "interface": {
+    "displayName": "FB UX Marketplace"
+  },
+  "plugins": [
+    {
+      "name": "fb-ux",
+      "source": {
+        "source": "local",
+        "path": "./plugins/fb-ux"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
