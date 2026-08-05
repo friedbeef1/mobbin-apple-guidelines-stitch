@@ -32,6 +32,7 @@ for required_file in \
   LICENSE \
   .gitignore \
   examples/prompts.md \
+  docs/codex-operating-layer.md \
   docs/validation/behavioral-validation.md \
   .agents/plugins/marketplace.json \
   plugins/fb-ux/.codex-plugin/plugin.json \
@@ -54,6 +55,20 @@ require_text "$metadata_path" 'display_name: "FB UX"'
 require_text "$repo_root/README.md" 'skills/fb-ux'
 require_text "$repo_root/README.md" '$fb-ux'
 printf '%s\n' 'PASS: package metadata'
+
+require_text "$repo_root/README.md" 'Install the FB UX Codex plugin from https://github.com/friedbeef1/mobbin-apple-guidelines-stitch'
+require_text "$repo_root/README.md" 'Codex handles the installation and may ask for download permission.'
+require_text "$repo_root/README.md" '## Advanced/manual installation'
+require_text "$repo_root/README.md" 'plugins/fb-ux/skills/fb-ux/'
+require_text "$repo_root/README.md" 'plugin containing the `fb-ux` skill'
+require_text "$repo_root/README.md" 'Apple, Google, Mobbin, and Stitch integrations are not bundled or official.'
+require_text "$repo_root/README.md" 'Guided'
+require_text "$repo_root/README.md" 'Follow recommendation'
+require_text "$repo_root/README.md" 'Fully automatic'
+require_text "$repo_root/examples/prompts.md" '.codex/fb-ux.yaml'
+require_text "$repo_root/docs/codex-operating-layer.md" '# Codex as the operating layer'
+require_text "$repo_root/docs/codex-operating-layer.md" '## What Codex contributes'
+printf '%s\n' 'PASS: distribution documentation'
 
 [ -f "$plugin_validator" ] || fail 'plugin validator is unavailable'
 [ -f "$skill_validator" ] || fail 'skill validator is unavailable'

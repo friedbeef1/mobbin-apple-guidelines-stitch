@@ -1,15 +1,21 @@
 # Prompt examples
 
-Each request below starts by asking Codex to offer suggested objectives and retain a free-form choice. Objective Confirmation still happens before the product is inspected, external sources are researched, or a Stitch proposal is generated.
+On first use, `$fb-ux` asks the user to choose Guided, Follow recommendation, or Fully automatic and saves the project preference in `.codex/fb-ux.yaml`. These examples can set or override that preference.
 
-## Default mode: stop at both design gates
+## Set Guided for the project
 
-> Use `$fb-ux` to review the checkout journey for our iOS app. First, offer two or three suggested objectives and let me choose one or enter my own. After I confirm the objective, audit the current journey, ground the review in current Apple guidance, inspect relevant Mobbin flows, and recommend directions. Stop for my approval at the Direction Gate, then stop again at the Stitch Gate after presenting the validated complete Stitch journey.
+> `$fb-ux mode guided`. Save that for this project. Review the checkout journey for our iOS app. First, offer two or three suggested objectives and let me choose one or enter my own. After I confirm the objective, run the evidence workflow automatically and stop for my approval at the Direction and Stitch gates.
 
-## Recommended-direction mode: stop at Stitch
+## Set Follow recommendation for the project
 
-> Use `$fb-ux` to review the subscription-upgrade journey for our web app. First, offer two or three suggested objectives and let me choose one or enter my own. After I confirm the objective, audit the journey, use current first-party guidance and inspected Mobbin flows, then recommend directions. Follow your recommendation. Fully validate it and create the complete Stitch proposal, but stop at the Stitch Gate so I can approve the rendered proposal.
+> `$fb-ux mode follow-recommendation`. Save that for this project. Review the subscription-upgrade journey for our web app. Confirm my objective, run the audit and research automatically, follow your recommendation, fully validate it, and create the complete Stitch proposal. Stop at the Stitch Gate.
 
-## Two-gate bypass mode: route only the validated proposal
+## Set Fully automatic for the project
 
-> Use `$fb-ux` to review the account-recovery journey for our mobile app. First, offer two or three suggested objectives and let me choose one or enter my own. Do not begin the audit until I confirm an objective. After confirmation, audit the current journey, use current official guidance and inspected Mobbin precedent, recommend directions, and Bypass both gates. Preserve evidence integrity and all implementation, staging, deployment, release, device-proof, external-service approval, and lane-ownership boundaries: route only the validated Stitch proposal to the authorized integration lane.
+> `$fb-ux mode fully-automatic`. Save that for this project. My objective is to help legitimate users recover access with less uncertainty while preserving account security. Review the account-recovery journey, follow your recommendation, and continue through Stitch when the proposal meets direction. Preserve all implementation, staging, deployment, release, device-proof, external-service approval, and lane-ownership boundaries.
+
+## Override one run without changing the project
+
+> Use `$fb-ux` in Guided mode for this run only. Review onboarding against my objective of improving first-session activation. Do not change the saved project preference.
+
+`Follow your recommendation` remains a one-run alias for Follow recommendation. `Bypass both gates` remains a one-run alias for Fully automatic when the request states an explicit objective.
