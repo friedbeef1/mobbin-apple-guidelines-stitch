@@ -39,6 +39,7 @@ for required_file in \
   plugins/fb-ux/skills/fb-ux/SKILL.md \
   plugins/fb-ux/skills/fb-ux/agents/openai.yaml \
   scripts/test-validate.sh \
+  scripts/test-plugin-install.sh \
   scripts/validate.sh
 do
   require_file "$required_file"
@@ -136,6 +137,8 @@ then
   fail 'proprietary image or media artifact found'
 fi
 printf '%s\n' 'PASS: safety scan'
+
+sh "$script_dir/test-plugin-install.sh"
 
 if git -C "$repo_root" rev-parse --is-inside-work-tree >/dev/null 2>&1
 then

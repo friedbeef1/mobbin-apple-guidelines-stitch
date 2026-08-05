@@ -121,3 +121,17 @@ then
   fail 'legacy skill name remains in the distributable documentation or package'
 fi
 printf '%s\n' 'PASS: fb-ux identity'
+
+if validation_output=$("$validator" 2>&1)
+then
+  :
+else
+  printf '%s\n' "$validation_output" >&2
+  fail 'repository validation failed while checking installation smoke coverage'
+fi
+
+printf '%s\n' "$validation_output" | grep -F 'PASS: isolated plugin installation smoke' >/dev/null || {
+  printf '%s\n' "$validation_output" >&2
+  fail 'repository validation did not run the isolated plugin installation smoke'
+}
+printf '%s\n' 'PASS: repository validation runs isolated plugin installation smoke'
