@@ -170,3 +170,9 @@ printf '%s\n' "$validation_output" | grep -F 'PASS: plugin and embedded skill va
   fail 'repository validation did not validate both plugin packages and embedded skills'
 }
 printf '%s\n' 'PASS: repository validation validates both plugin packages and embedded skills'
+
+printf '%s\n' "$validation_output" | grep -F 'PASS: isolated plugin installation smoke' >/dev/null || {
+  printf '%s\n' "$validation_output" >&2
+  fail 'repository validation did not run the isolated plugin installation smoke'
+}
+printf '%s\n' 'PASS: repository validation runs the isolated plugin installation smoke'

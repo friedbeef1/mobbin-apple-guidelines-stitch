@@ -171,6 +171,8 @@ then
 fi
 printf '%s\n' 'PASS: safety scan'
 
+sh "$repo_root/scripts/test-plugin-install.sh"
+
 if git -C "$repo_root" rev-parse --is-inside-work-tree >/dev/null 2>&1
 then
   git -C "$repo_root" diff --check
