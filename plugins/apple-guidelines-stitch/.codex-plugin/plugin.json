@@ -1,0 +1,32 @@
+{
+  "name": "apple-guidelines-stitch",
+  "version": "0.1.0",
+  "description": "Apple-led, evidence-led UI journey design for Codex.",
+  "author": {
+    "name": "James Yeang"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ux",
+    "apple-guidelines",
+    "journey-design",
+    "evidence"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Apple Guidelines + Stitch",
+    "shortDescription": "Confirm UI goals and propose Apple-led, evidence-backed Stitch journeys.",
+    "longDescription": "Guide a mobile or web journey from a confirmed objective through official platform guidance and an approved Stitch proposal.",
+    "developerName": "James Yeang",
+    "category": "Productivity",
+    "capabilities": [
+      "Journey design",
+      "Official-guidance review"
+    ],
+    "defaultPrompt": [
+      "Audit my mobile onboarding journey using Apple guidance and recommend improvements.",
+      "Help me redesign this checkout journey with official platform evidence.",
+      "Plan a complete, accessible web signup journey with Stitch."
+    ]
+  }
+}

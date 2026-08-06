@@ -1,0 +1,4 @@
+interface:
+  display_name: "Apple Guidelines + Stitch"
+  short_description: "Confirm UI goals, validate journeys, and propose Apple-led Stitch flows"
+  default_prompt: "Begin with Objective Confirmation: use $apple-guidelines-stitch to confirm the intended UI outcome before auditing the journey, researching official guidance, or generating a Stitch proposal."

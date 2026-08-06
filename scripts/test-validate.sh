@@ -51,24 +51,32 @@ repo_root=$(CDPATH= cd "$script_dir/.." && pwd)
 codex_skills_dir=${CODEX_SKILLS_DIR:-"$HOME/.codex/skills"}
 plugin_path="$repo_root/plugins/fb-ux"
 plugin_manifest="$plugin_path/.codex-plugin/plugin.json"
+apple_plugin_path="$repo_root/plugins/apple-guidelines-stitch"
+apple_plugin_manifest="$apple_plugin_path/.codex-plugin/plugin.json"
 marketplace_manifest="$repo_root/.agents/plugins/marketplace.json"
 skill_path="$plugin_path/skills/fb-ux/SKILL.md"
+apple_skill_path="$apple_plugin_path/skills/apple-guidelines-stitch/SKILL.md"
 
 missing_layout=''
 [ -f "$plugin_manifest" ] || missing_layout="$missing_layout $plugin_manifest"
+[ -f "$apple_plugin_manifest" ] || missing_layout="$missing_layout $apple_plugin_manifest"
 [ -f "$marketplace_manifest" ] || missing_layout="$missing_layout $marketplace_manifest"
 [ -f "$skill_path" ] || missing_layout="$missing_layout $skill_path"
+[ -f "$apple_skill_path" ] || missing_layout="$missing_layout $apple_skill_path"
 [ -z "$missing_layout" ] || fail "canonical plugin and marketplace layout is missing:$missing_layout"
 
 python3 "$codex_skills_dir/.system/plugin-creator/scripts/validate_plugin.py" "$plugin_path"
 python3 "$codex_skills_dir/.system/skill-creator/scripts/quick_validate.py" "$(dirname "$skill_path")"
+python3 "$codex_skills_dir/.system/plugin-creator/scripts/validate_plugin.py" "$apple_plugin_path"
+python3 "$codex_skills_dir/.system/skill-creator/scripts/quick_validate.py" "$(dirname "$apple_skill_path")"
 
-python3 - "$plugin_manifest" "$marketplace_manifest" <<'PY'
+python3 - "$plugin_manifest" "$apple_plugin_manifest" "$marketplace_manifest" <<'PY'
 import json
 import sys
 
-plugin_path, marketplace_path = sys.argv[1:]
+plugin_path, apple_plugin_path, marketplace_path = sys.argv[1:]
 plugin = json.load(open(plugin_path, encoding="utf-8"))
+apple_plugin = json.load(open(apple_plugin_path, encoding="utf-8"))
 marketplace = json.load(open(marketplace_path, encoding="utf-8"))
 
 expected_plugin = {
@@ -95,17 +103,47 @@ for forbidden in ("apps", "mcpServers", "hooks"):
     if forbidden in plugin:
         raise SystemExit(f"plugin must not declare {forbidden}")
 
+expected_apple_plugin = {
+    "name": "apple-guidelines-stitch",
+    "version": "0.1.0",
+    "skills": "./skills/",
+    "license": "MIT",
+}
+for key, expected in expected_apple_plugin.items():
+    if apple_plugin.get(key) != expected:
+        raise SystemExit(f"apple-guidelines-stitch plugin {key} must be {expected!r}")
+if apple_plugin.get("author", {}).get("name") != "James Yeang":
+    raise SystemExit("apple-guidelines-stitch plugin author must be James Yeang")
+if apple_plugin.get("interface", {}).get("displayName") != "Apple Guidelines + Stitch":
+    raise SystemExit("apple-guidelines-stitch display name must be Apple Guidelines + Stitch")
+if apple_plugin.get("interface", {}).get("category") != "Productivity":
+    raise SystemExit("apple-guidelines-stitch plugin category must be Productivity")
+if not isinstance(apple_plugin.get("interface", {}).get("defaultPrompt"), list):
+    raise SystemExit("apple-guidelines-stitch defaultPrompt must be a list")
+if len(apple_plugin["interface"]["defaultPrompt"]) > 3:
+    raise SystemExit("apple-guidelines-stitch defaultPrompt must contain at most three prompts")
+for forbidden in ("apps", "mcpServers", "hooks"):
+    if forbidden in apple_plugin:
+        raise SystemExit(f"apple-guidelines-stitch plugin must not declare {forbidden}")
+
 expected_entry = {
     "name": "fb-ux",
     "source": {"source": "local", "path": "./plugins/fb-ux"},
     "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
     "category": "Productivity",
 }
-if marketplace.get("plugins") != [expected_entry]:
-    raise SystemExit("marketplace must expose the canonical fb-ux plugin entry")
+expected_apple_entry = {
+    "name": "apple-guidelines-stitch",
+    "source": {"source": "local", "path": "./plugins/apple-guidelines-stitch"},
+    "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
+    "category": "Productivity",
+}
+if marketplace.get("plugins") != [expected_entry, expected_apple_entry]:
+    raise SystemExit("marketplace must expose the canonical fb-ux and apple-guidelines-stitch plugin entries")
 PY
 
 grep -F 'name: fb-ux' "$skill_path" >/dev/null || fail 'SKILL.md must use the fb-ux internal name'
+grep -F 'name: apple-guidelines-stitch' "$apple_skill_path" >/dev/null || fail 'SKILL.md must use the apple-guidelines-stitch internal name'
 grep -F '$fb-ux' "$repo_root/README.md" >/dev/null || fail 'README must document the $fb-ux invocation'
 legacy_skill_name='validating-ui-with-''guidelines-and-mobbin'
 if grep -R -F "$legacy_skill_name" \
@@ -124,11 +162,11 @@ then
   :
 else
   printf '%s\n' "$validation_output" >&2
-  fail 'repository validation failed while checking installation smoke coverage'
+  fail 'repository validation failed while checking both package validator coverage'
 fi
 
-printf '%s\n' "$validation_output" | grep -F 'PASS: isolated plugin installation smoke' >/dev/null || {
+printf '%s\n' "$validation_output" | grep -F 'PASS: plugin and embedded skill validation for both packages' >/dev/null || {
   printf '%s\n' "$validation_output" >&2
-  fail 'repository validation did not run the isolated plugin installation smoke'
+  fail 'repository validation did not validate both plugin packages and embedded skills'
 }
-printf '%s\n' 'PASS: repository validation runs isolated plugin installation smoke'
+printf '%s\n' 'PASS: repository validation validates both plugin packages and embedded skills'

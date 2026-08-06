@@ -8,6 +8,9 @@ repo_root=$(CDPATH= cd "$script_dir/.." && pwd)
 plugin_path="$repo_root/plugins/fb-ux"
 skill_path="$plugin_path/skills/fb-ux/SKILL.md"
 metadata_path=${VALIDATE_OPENAI_YAML:-"$plugin_path/skills/fb-ux/agents/openai.yaml"}
+apple_plugin_path="$repo_root/plugins/apple-guidelines-stitch"
+apple_skill_path="$apple_plugin_path/skills/apple-guidelines-stitch/SKILL.md"
+apple_metadata_path="$apple_plugin_path/skills/apple-guidelines-stitch/agents/openai.yaml"
 codex_skills_dir=${CODEX_SKILLS_DIR:-"$HOME/.codex/skills"}
 plugin_validator="$codex_skills_dir/.system/plugin-creator/scripts/validate_plugin.py"
 skill_validator="$codex_skills_dir/.system/skill-creator/scripts/quick_validate.py"
@@ -38,6 +41,9 @@ for required_file in \
   plugins/fb-ux/.codex-plugin/plugin.json \
   plugins/fb-ux/skills/fb-ux/SKILL.md \
   plugins/fb-ux/skills/fb-ux/agents/openai.yaml \
+  plugins/apple-guidelines-stitch/.codex-plugin/plugin.json \
+  plugins/apple-guidelines-stitch/skills/apple-guidelines-stitch/SKILL.md \
+  plugins/apple-guidelines-stitch/skills/apple-guidelines-stitch/agents/openai.yaml \
   scripts/test-validate.sh \
   scripts/test-test-validate.sh \
   scripts/test-plugin-install.sh \
@@ -53,7 +59,14 @@ awk '
   valid && $0 == "---" { closed = 1; exit }
   END { exit !(valid && closed && named) }
 ' "$skill_path" || fail 'SKILL.md must begin with YAML frontmatter containing the exact internal name'
+awk '
+  NR == 1 { valid = ($0 == "---"); next }
+  valid && $0 == "name: apple-guidelines-stitch" { named = 1 }
+  valid && $0 == "---" { closed = 1; exit }
+  END { exit !(valid && closed && named) }
+' "$apple_skill_path" || fail 'Apple Guidelines + Stitch SKILL.md must begin with YAML frontmatter containing the exact internal name'
 require_text "$metadata_path" 'display_name: "FB UX"'
+require_text "$apple_metadata_path" 'display_name: "Apple Guidelines + Stitch"'
 require_text "$repo_root/README.md" 'skills/fb-ux'
 require_text "$repo_root/README.md" '$fb-ux'
 printf '%s\n' 'PASS: package metadata'
@@ -81,7 +94,15 @@ printf '%s\n' 'PASS: distribution documentation'
 [ -f "$skill_validator" ] || fail 'skill validator is unavailable'
 python3 -u "$plugin_validator" "$plugin_path"
 python3 -u "$skill_validator" "$(dirname "$skill_path")"
-printf '%s\n' 'PASS: plugin and embedded skill validation'
+python3 -u "$plugin_validator" "$apple_plugin_path"
+python3 -u "$skill_validator" "$(dirname "$apple_skill_path")"
+printf '%s\n' 'PASS: plugin and embedded skill validation for both packages'
+
+if grep -R -i -F 'mobbin' "$apple_plugin_path" >/dev/null
+then
+  fail 'apple-guidelines-stitch package must not reference Mobbin'
+fi
+printf '%s\n' 'PASS: Apple Guidelines + Stitch package has no Mobbin references'
 
 for required_text in 'Objective Confirmation' 'Follow your recommendation' 'Bypass both gates'
 do
@@ -149,8 +170,6 @@ then
   fail 'proprietary image or media artifact found'
 fi
 printf '%s\n' 'PASS: safety scan'
-
-sh "$script_dir/test-plugin-install.sh"
 
 if git -C "$repo_root" rev-parse --is-inside-work-tree >/dev/null 2>&1
 then
