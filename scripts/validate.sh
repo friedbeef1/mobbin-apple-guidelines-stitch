@@ -44,8 +44,10 @@ for required_file in \
   plugins/apple-guidelines-stitch/.codex-plugin/plugin.json \
   plugins/apple-guidelines-stitch/skills/apple-guidelines-stitch/SKILL.md \
   plugins/apple-guidelines-stitch/skills/apple-guidelines-stitch/agents/openai.yaml \
+  scripts/check-workflow-contracts.py \
   scripts/test-validate.sh \
   scripts/test-test-validate.sh \
+  scripts/test-workflow-contracts.py \
   scripts/test-plugin-install.sh \
   scripts/validate.sh
 do
@@ -98,11 +100,27 @@ python3 -u "$plugin_validator" "$apple_plugin_path"
 python3 -u "$skill_validator" "$(dirname "$apple_skill_path")"
 printf '%s\n' 'PASS: plugin and embedded skill validation for both packages'
 
-if grep -R -i -F 'mobbin' "$apple_plugin_path" >/dev/null
-then
-  fail 'apple-guidelines-stitch package must not reference Mobbin'
-fi
-printf '%s\n' 'PASS: Apple Guidelines + Stitch package has no Mobbin references'
+python3 - "$apple_plugin_path" <<'PY' || fail 'apple-guidelines-stitch package must not reference Mobbin outside its canonical repository metadata'
+import json
+from pathlib import Path
+import sys
+
+plugin_root = Path(sys.argv[1])
+manifest = plugin_root / ".codex-plugin/plugin.json"
+allowed_repository = "https://github.com/friedbeef1/mobbin-apple-guidelines-stitch"
+for path in plugin_root.rglob("*"):
+    if not path.is_file():
+        continue
+    text = path.read_text(encoding="utf-8")
+    if path == manifest:
+        manifest_data = json.loads(text)
+        if manifest_data.pop("repository", None) != allowed_repository:
+            raise SystemExit(1)
+        text = json.dumps(manifest_data)
+    if "mobbin" in text.casefold():
+        raise SystemExit(1)
+PY
+printf '%s\n' 'PASS: Apple Guidelines + Stitch package has no Mobbin workflow references'
 
 for required_text in 'Objective Confirmation' 'Follow your recommendation' 'Bypass both gates'
 do
@@ -120,20 +138,21 @@ require_text "$repo_root/docs/validation/behavioral-validation.md" '| Fully auto
 require_text "$repo_root/docs/validation/behavioral-validation.md" 'Explicit objective required'
 require_text "$repo_root/docs/validation/behavioral-validation.md" 'Saved preference'
 require_text "$repo_root/docs/validation/behavioral-validation.md" 'One-run override precedence'
-printf '%s\n' 'PASS: approval-mode provenance and current behavioral evidence'
+printf '%s\n' 'PASS: approval-mode provenance instruction evidence'
 
 private_key_prefix='-----BEGIN '
 private_key_marker='PRIVATE KEY'
 private_key_suffix='-----'
 private_key_pattern="${private_key_prefix}[A-Z ]*${private_key_marker}[ A-Z-]*${private_key_suffix}"
 credential_pattern='^[[:space:]]*((export|env)[[:space:]]+)*([A-Z0-9]+[_-])?(API[_-]?KEY|ACCESS[_-]?KEY([_-]?ID)?|AUTH[_-]?TOKEN|CLIENT[_-]?SECRET|GITHUB[_-]?TOKEN|OPENAI[_-]?API[_-]?KEY|AWS[_-]?ACCESS[_-]?KEY([_-]?ID)?|PASSWORD|PRIVATE[_-]?KEY|SECRET|TOKEN)[[:space:]]*[:=][[:space:]]*[^[:space:]#]'
+quoted_credential_pattern="^[[:space:]]*[{]?[[:space:]]*['\"]([A-Z0-9]+[_-])?(API[_-]?KEY|ACCESS[_-]?KEY([_-]?ID)?|AUTH[_-]?TOKEN|CLIENT[_-]?SECRET|GITHUB[_-]?TOKEN|OPENAI[_-]?API[_-]?KEY|AWS[_-]?ACCESS[_-]?KEY([_-]?ID)?|PASSWORD|PRIVATE[_-]?KEY|SECRET|TOKEN)['\"][[:space:]]*:[[:space:]]*['\"]?[^[:space:]#,'\"}]+"
 
 contains_private_material() {
   scan_root=$1
   find "$scan_root" \
     \( -path "$scan_root/.git" -o -path "$scan_root/.worktrees" -o -path "$scan_root/.superpowers" \) -prune -o \
     -type f \
-    -exec grep -i -E -e "$private_key_pattern" -e "$credential_pattern" {} \; | grep . >/dev/null
+    -exec grep -i -E -e "$private_key_pattern" -e "$credential_pattern" -e "$quoted_credential_pattern" {} \; | grep . >/dev/null
 }
 
 if contains_private_material "$repo_root"
@@ -170,6 +189,8 @@ then
   fail 'proprietary image or media artifact found'
 fi
 printf '%s\n' 'PASS: safety scan'
+
+python3 "$repo_root/scripts/check-workflow-contracts.py"
 
 sh "$repo_root/scripts/test-plugin-install.sh"
 

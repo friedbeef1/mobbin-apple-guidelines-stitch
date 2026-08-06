@@ -44,6 +44,19 @@ openai_key_name='OPENAI_''API_KEY'
 expect_credential_rejection export "export ${github_token_name}=test-placeholder"
 expect_credential_rejection env "env ${openai_key_name}=test-placeholder"
 expect_credential_rejection repeated-prefixes "export env ${github_token_name}=test-placeholder"
+api_key_name='api_''key'
+client_secret_name='client_''secret'
+expect_credential_rejection quoted-json "{\"${api_key_name}\": \"test-placeholder\"}"
+expect_credential_rejection quoted-yaml "\"${client_secret_name}\": \"test-placeholder\""
+
+ordinary_prose_dir="$task_temp_dir/ordinary-prose"
+mkdir "$ordinary_prose_dir"
+printf '%s\n' 'Ask the provider how an API key is rotated before changing configuration.' > "$ordinary_prose_dir/README.md"
+if ! VALIDATE_EXTRA_SCAN_ROOT="$ordinary_prose_dir" "$validator" >/dev/null
+then
+  fail 'ordinary credential-related prose was rejected'
+fi
+printf '%s\n' 'PASS: accepted ordinary credential-related prose'
 
 printf '%s\n' 'PASS: validator negative cases'
 
@@ -108,6 +121,7 @@ expected_apple_plugin = {
     "version": "0.1.0",
     "skills": "./skills/",
     "license": "MIT",
+    "repository": "https://github.com/friedbeef1/mobbin-apple-guidelines-stitch",
 }
 for key, expected in expected_apple_plugin.items():
     if apple_plugin.get(key) != expected:
@@ -156,6 +170,8 @@ then
   fail 'legacy skill name remains in the distributable documentation or package'
 fi
 printf '%s\n' 'PASS: fb-ux identity'
+
+python3 "$repo_root/scripts/test-workflow-contracts.py"
 
 if validation_output=$("$validator" 2>&1)
 then
