@@ -1,0 +1,118 @@
+#!/bin/sh
+# Validate Design Arc's public product story and documentation boundaries.
+
+set -eu
+
+script_dir=$(CDPATH= cd "$(dirname "$0")" && pwd)
+repo_root=$(CDPATH= cd "$script_dir/.." && pwd)
+
+fail() {
+  printf '%s\n' "FAIL: $*" >&2
+  exit 1
+}
+
+require_text() {
+  file=$1
+  text=$2
+  grep -F "$text" "$file" >/dev/null || fail "missing required text in ${file#"$repo_root/"}: $text"
+}
+
+readme="$repo_root/README.md"
+operating_layer="$repo_root/docs/codex-operating-layer.md"
+behavioral_validation="$repo_root/docs/validation/behavioral-validation.md"
+prompts="$repo_root/examples/prompts.md"
+
+for file in "$readme" "$operating_layer" "$behavioral_validation" "$prompts"
+do
+  [ -f "$file" ] || fail "missing required documentation: ${file#"$repo_root/"}"
+done
+
+require_text "$readme" '# Design Arc'
+require_text "$readme" 'Product feedback is often vague, redesign discussions become subjective, and teams approve attractive screens without knowing whether the complete journey works.'
+require_text "$readme" 'Move from uncertain product feedback to a complete, evidence-backed design direction.'
+require_text "$readme" 'Design Arc audits the real journey, explores meaningful alternatives, recommends the strongest path, and designs every important state before implementation begins.'
+require_text "$readme" '## You need Design Arc if…'
+require_text "$readme" '## What Design Arc produces'
+require_text "$readme" '## The workflow'
+require_text "$readme" '## Example: from “confusing onboarding” to a complete direction'
+require_text "$readme" '## Choose your evidence approach'
+require_text "$readme" '## Install and set up in 60 seconds'
+require_text "$readme" '## Approval and trust controls'
+require_text "$readme" '## Methodology, sources, migration, and limitations'
+require_text "$readme" 'Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.'
+require_text "$readme" 'Install the Design Arc Codex plugin from https://github.com/friedbeef1/mobbin-apple-guidelines-stitch'
+require_text "$readme" 'Codex handles the installation and may ask for download permission.'
+require_text "$readme" 'No Python knowledge is required.'
+require_text "$readme" '| Step | Performed in / by | Why it is crucial |'
+require_text "$readme" 'codex plugin remove fb-ux@fb-ux-marketplace'
+require_text "$readme" 'codex plugin remove apple-guidelines-stitch@fb-ux-marketplace'
+require_text "$readme" 'codex plugin marketplace remove fb-ux-marketplace'
+require_text "$readme" 'codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main'
+require_text "$readme" 'codex plugin add design-arc@design-arc-marketplace'
+require_text "$readme" 'Start a new Codex task.'
+require_text "$readme" 'Never silently merge, rewrite, or delete either legacy preference file.'
+require_text "$readme" 'not bundled or official'
+
+python3 - "$readme" <<'PY'
+from pathlib import Path
+import sys
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+headings = [
+    "## You need Design Arc if…",
+    "## What Design Arc produces",
+    "## The workflow",
+    "## Example: from “confusing onboarding” to a complete direction",
+    "## Choose your evidence approach",
+    "## Install and set up in 60 seconds",
+    "## Approval and trust controls",
+    "## Methodology, sources, migration, and limitations",
+]
+positions = [text.index(heading) for heading in headings]
+if positions != sorted(positions) or len(set(positions)) != len(positions):
+    raise SystemExit("FAIL: README sections are not in the required product-story order")
+
+methodology = text[text.index("## Methodology, sources, migration, and limitations"):]
+hero = text[:text.index("## You need Design Arc if…")]
+for provider in ("Apple", "Mobbin", "Stitch"):
+    if provider in hero:
+        raise SystemExit(f"FAIL: {provider} appears in the hero or primary identity")
+    if provider not in methodology:
+        raise SystemExit(f"FAIL: {provider} is missing from the lower methodology section")
+
+migration_commands = [
+    "codex plugin remove fb-ux@fb-ux-marketplace",
+    "codex plugin remove apple-guidelines-stitch@fb-ux-marketplace",
+    "codex plugin marketplace remove fb-ux-marketplace",
+    "codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main",
+    "codex plugin add design-arc@design-arc-marketplace",
+    "Start a new Codex task.",
+]
+migration = text[text.index("### Saved preferences and migration"):]
+migration_positions = [migration.index(command) for command in migration_commands]
+if migration_positions != sorted(migration_positions):
+    raise SystemExit("FAIL: migration steps are not in the required safe order")
+PY
+
+require_text "$operating_layer" '# Codex as the Design Arc operating layer'
+require_text "$operating_layer" '.codex/design-arc.yaml'
+require_text "$operating_layer" 'evidence and approval choices independently'
+require_text "$operating_layer" 'Android or web first-party rules override conflicting Apple-inspired judgment'
+require_text "$operating_layer" 'No mode or external-service authorization authorizes source implementation, staging, deployment, or release.'
+
+require_text "$behavioral_validation" '# Design Arc instruction-contract validation'
+require_text "$behavioral_validation" 'plugins/design-arc/skills/design-arc/SKILL.md'
+require_text "$behavioral_validation" 'executable static instruction-contract guards; they do not execute an agent or prove runtime agent behavior.'
+require_text "$behavioral_validation" 'Fresh-context scenario evidence is qualitative unless the prompt, environment, output, and scoring are stored reproducibly.'
+
+require_text "$prompts" '# Design Arc prompt examples'
+require_text "$prompts" '$design-arc setup'
+require_text "$prompts" '$design-arc evidence benchmarks'
+require_text "$prompts" '$design-arc evidence guidelines'
+require_text "$prompts" '$design-arc mode guided'
+require_text "$prompts" '$design-arc mode follow-recommendation'
+require_text "$prompts" '$design-arc mode fully-automatic'
+require_text "$prompts" 'use Guidelines for this run'
+require_text "$prompts" 'Bypass both gates'
+
+printf '%s\n' 'PASS: Design Arc product documentation'

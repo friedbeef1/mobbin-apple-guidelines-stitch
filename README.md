@@ -1,114 +1,190 @@
-# FB UX Marketplace
+# Design Arc
 
-This marketplace offers two independently installable Codex plugins for turning a UI concern into an auditable journey proposal. FB UX is a plugin containing the `fb-ux` skill; Apple Guidelines + Stitch contains the `apple-guidelines-stitch` skill. They deliberately share the same safety and approval model but differ in their evidence source:
+Product feedback is often vague, redesign discussions become subjective, and teams approve attractive screens without knowing whether the complete journey works.
 
-| Choose | Use it when | Evidence model |
+**Move from uncertain product feedback to a complete, evidence-backed design direction.**<br>
+Design Arc audits the real journey, explores meaningful alternatives, recommends the strongest path, and designs every important state before implementation begins.
+
+It turns comments such as “this feels confusing” into a product objective, an auditable journey diagnosis, meaningful alternatives, one clear recommendation, and a complete design proposal that can be evaluated before implementation starts.
+
+## You need Design Arc if…
+
+- Feedback such as “this feels confusing” keeps producing circular discussion instead of a testable product decision.
+- Stakeholders disagree based on taste because no shared objective or evidence distinguishes the alternatives.
+- Redesigns improve isolated screens without proving the complete journey, transitions, or recovery paths.
+- Loading, empty, error, success, and recovery states are repeatedly omitted until implementation.
+- Your team wants a strong recommendation without surrendering approval control.
+
+## What Design Arc produces
+
+- A confirmed product objective and the criterion used to judge every finding.
+- An audit of the real current journey, including friction, transitions, exits, and non-happy states.
+- Evidence appropriate to the product and platform, with current links, limitations, and observed-versus-inferred status.
+- One unmistakably recommended direction plus meaningful alternatives, benefits, risks, and trade-offs.
+- A complete visual proposal covering entry, transition, loading, empty, error, success, cancellation, and recovery states.
+- Decision-ready evidence in the Codex task: journey map, key renders, identifiers, validation verdict, gate record, and next authorized owner.
+
+## The workflow
+
+```text
+setup → objective → current-journey audit → evidence → directions
+      → Direction Gate → full first-party validation → complete visual journey
+      → render validation → Visual Gate → authorized design handoff
+```
+
+Setup resolves two independent choices: how evidence is gathered and where Codex pauses for approval. Every route establishes the objective before inspection or research, audits the actual product, preserves platform rules, and stops at a design-only handoff boundary.
+
+## Example: from “confusing onboarding” to a complete direction
+
+**Input:** “Our onboarding feels confusing.”
+
+**Design Arc first establishes the objective:** for example, help a new user reach their first useful result with less uncertainty, while still collecting the information the product genuinely needs.
+
+It then maps the existing entry points, choices, transitions, abandonment points, validation errors, loading behavior, success confirmation, and recovery paths. It separates observed friction from inference, compares evidence-backed alternatives, and recommends the strongest complete journey against the confirmed objective.
+
+Instead of returning one polished welcome screen, it proposes the full sequence: entry, progressive decisions, permission timing, validation, loading, empty or unavailable cases, success, cancellation, and recovery. The direction is validated before the team treats the proposal as ready for an implementation handoff.
+
+## Choose your evidence approach
+
+| Evidence mode | Choose it when | What it means |
 | --- | --- | --- |
-| **FB UX** (`$fb-ux`) | You want Apple guidance, inspected product-journey precedent from Mobbin, and a Stitch proposal. | Apple and other applicable first-party guidance govern; Mobbin supplies separately authorized, inspected precedent; Stitch visualizes the selected journey. |
-| **Apple Guidelines + Stitch** (`$apple-guidelines-stitch`) | You want a first-party-guidance-led review and Stitch proposal without a Mobbin account, search, or dependency. | Apple Human Interface Guidelines lead; current Android or web first-party rules override conflicting Apple-inspired judgment; Stitch visualizes the selected journey. |
+| **Benchmarks** — recommended when relevant access is available | Inspected real-product journeys would add useful precedent to current platform guidance. | Design Arc inspects complete, relevant journeys, explains why each pattern helps the objective, and records limits. A library listing, popularity, metadata, or one screenshot is never proof of best-in-class quality. |
+| **Guidelines** | You want a first-party-guidance-led review without benchmark research or do not have authorized benchmark access. | Design Arc performs no benchmark lookup and makes no benchmark-evidence claim. It uses current first-party guidance for every affected platform. |
 
-Two variants exist so teams can choose the evidence they have authority and need to use. FB UX is for a review where comparative, inspected Mobbin flows add useful product precedent. Apple Guidelines + Stitch is for teams that want an official-guidance-only research path, have no Mobbin access, or must keep that external service out of the workflow. Neither variant treats a generated mockup as implementation or release proof.
+The evidence choice is independent from approval behavior. Design Arc reports the active evidence mode, approval mode, and provenance of each at the start of every run.
 
-Mobbin and Stitch are external services that need their own authorization. Apple, Google, Mobbin, and Stitch integrations are not bundled or official. Their marks belong to their respective owners; no affiliation with or endorsement by those owners is implied.
+## Install and set up in 60 seconds
 
-## Install
-
-Paste one of these requests into Codex:
+Paste this into Codex:
 
 ```text
-Install the FB UX Codex plugin from https://github.com/friedbeef1/mobbin-apple-guidelines-stitch
+Install the Design Arc Codex plugin from https://github.com/friedbeef1/mobbin-apple-guidelines-stitch
 ```
+
+Codex handles the installation and may ask for download permission. No Python knowledge is required. Start a new Codex task after installation, then run:
 
 ```text
-Install the Apple Guidelines + Stitch Codex plugin from https://github.com/friedbeef1/mobbin-apple-guidelines-stitch
+$design-arc setup
 ```
 
-Codex handles the installation and may ask for download permission. Start a new Codex task after it finishes. If both plugins are installed, invoke the one you want explicitly: `$fb-ux` for the Apple + Mobbin + Stitch workflow, or `$apple-guidelines-stitch` for the Apple-led, no-Mobbin workflow.
+On first use, Design Arc independently asks you to choose an evidence mode and an approval mode, shows the proposed `.codex/design-arc.yaml` values, and asks before saving them. Benchmarks and Guided are the recommended first-use choices when relevant external access is available and the product direction is new.
 
-## What both plugins do
-
-Both plugins establish the user’s outcome before inspection, preserve the same three approval modes, require current first-party validation, and stop at an authorized handoff boundary. Gates are decision pauses, not skipped quality checks. A generated proposal is not source implementation, staging, deployment, release, or device-compliance proof.
-
-The workflows differ only where their evidence sources differ:
+Useful commands:
 
 ```text
-FB UX: project preference → objective → audit → light Apple grounding → Mobbin discovery → directions → Direction Gate → full cross-platform validation → Stitch journey → Codex evidence → render validation → Stitch Gate → authorized routing
-
-Apple Guidelines + Stitch: project preference → objective → audit → Apple-led official grounding → directions → Direction Gate → full cross-platform validation → Stitch journey → Codex evidence → render validation → Stitch Gate → authorized routing
+$design-arc evidence benchmarks
+$design-arc evidence guidelines
+$design-arc mode
+$design-arc mode guided
+$design-arc mode follow-recommendation
+$design-arc mode fully-automatic
 ```
 
-For both, Apple Human Interface Guidelines are the primary framework. For Android or web targets, current first-party platform rules override conflicting Apple-inspired judgment.
+Natural-language requests such as “use Guidelines for this run” or “follow your recommendation this time” are one-run overrides; they do not rewrite the saved project preference.
 
-## Codex is the operating layer
+### Advanced CLI fallback
 
-Codex establishes intent, inspects the real product, reconciles current first-party guidance with the selected evidence model, critiques the result, and makes decisions visible in the task. Read [Codex as the operating layer](docs/codex-operating-layer.md) for responsibilities that stay with Codex, the user, and external services.
-
-## Choose how Codex should pause
-
-Each plugin saves its own project preference: FB UX uses `.codex/fb-ux.yaml`; Apple Guidelines + Stitch uses `.codex/apple-guidelines-stitch.yaml`.
-
-| Mode | Objective | Direction | Stitch |
-| --- | --- | --- | --- |
-| **Guided** — recommended for a new project | Confirm | Stop | Stop |
-| **Follow recommendation** | Confirm | Automatically follow Codex's recommendation | Stop |
-| **Fully automatic** | Use an explicit request objective; clarify if missing | Automatically follow Codex's recommendation | Continue only after a `meets direction` verdict |
-
-Later runs use the saved preference. `$fb-ux mode` and `$apple-guidelines-stitch mode` report the respective mode; append `guided`, `follow-recommendation`, or `fully-automatic` to save a new one. `use Guided for this run` is a one-run override and does not replace the saved preference.
-
-Every mode establishes the objective before inspection, audit, external research, or generation. Guided and Follow recommendation ask the user to confirm it. Fully automatic may treat an objective explicitly stated in the current request as pre-confirmed, but must stop when it is missing or materially ambiguous. The active-mode record must state whether it came from a saved project preference, an explicit one-run override, or first-use/default selection; an override must never be presented as the saved preference.
-
-`Follow your recommendation` selects Follow recommendation as a one-run override. `Bypass both gates` selects Fully automatic as a backward-compatible one-run override, but never authorizes Codex to invent a missing objective.
-
-## Why each step is crucial
-
-“Performed in / by” names the primary platform, source, or decision-maker. Combined labels show where Codex orchestrates another platform or requires a person’s decision.
-
-| Step | Performed in / by | Why it is crucial |
-| --- | --- | --- |
-| Project preference and provenance | Codex + user | Keeps approval pauses predictable and makes clear whether a saved setting, one-run override, or first-use choice controls the run. |
-| Objective Confirmation | Codex + user | Prevents optimizing for the wrong outcome by making the user-confirmed goal the criterion. |
-| Current-journey audit | Codex, using the current website or app | Prevents redesigning an imagined product by mapping real entry points, states, friction, and recovery paths. |
-| Official grounding | Codex + Apple HIG and affected-platform first-party guidance | Sets governing platform constraints; Android or web first-party guidance prevails over conflicting Apple-inspired judgment. |
-| Mobbin discovery — FB UX only | Codex + Mobbin | Supplies separately authorized, inspectable journey precedent that guidance alone does not provide. |
-| Direction recommendations | Codex | Makes the recommended journey, alternatives, benefits, risks, and trade-offs decidable before generation cost is incurred. |
-| Direction Gate | User in Codex, or active automatic mode | Preserves user control where selected and records why automatic progress is allowed where selected. |
-| Full cross-platform validation | Codex + applicable first-party guidance | Catches accessibility, navigation, safe-area, and platform conflicts before visualization bakes them into a proposal. |
-| Complete Stitch generation | Codex + Google Stitch | Reveals missing transitions, loading, empty, error, success, and recovery states across the whole journey. |
-| Inline Codex evidence and render validation | Codex + target device or runtime | Makes the proposal reviewable in the task and prevents attractive metadata or appearance from becoming a false compliance claim. |
-| Stitch Gate | User in Codex, or Fully automatic after `meets direction` | Separates a validated proposal from authority to route it, implement it, or release it. |
-| Authorized routing | Codex + authorized Product/Captain/Integration lane | Preserves ownership, staging, and release boundaries when validated design work moves to its proper lane. |
-
-## Approval, external-service, and release boundaries
-
-The selected mode controls approval pauses only. It never skips the audit, official validation, accessibility reasoning, Stitch critique, evidence requirements, or ownership boundaries, and it never authorizes source implementation, staging, deployment, release, destructive or provider changes, or work outside the authorized integration lane.
-
-FB UX requires separately authorized use of both Mobbin and Stitch; Mobbin is observed precedent, never a bundled integration or copy source. Apple Guidelines + Stitch has no Mobbin dependency: only Stitch is external and separately authorized. In either workflow, external-service access or payload approval does not authorize product-source changes. After the Direction and Stitch gates are satisfied, Codex may route a validated design proposal only; the authorized integration lane needs its own scope and evidence to implement, stage, deploy, or release it.
-
-See [prompt examples](examples/prompts.md) and [behavioral validation](docs/validation/behavioral-validation.md) for copyable mode-specific requests and current scenarios.
-
-## Advanced/manual installation
-
-For the Codex CLI, add the repository marketplace once, then install the named plugin you need:
+If the natural-language installation is unavailable, use the Codex CLI:
 
 ```bash
 codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main
-codex plugin add fb-ux@fb-ux-marketplace
-codex plugin add apple-guidelines-stitch@fb-ux-marketplace
+codex plugin add design-arc@design-arc-marketplace
 ```
 
-For a local checkout, point Codex at the repository marketplace file, then use the same exact named-plugin commands:
+For a local checkout, replace the GitHub repository argument with the checkout path. The canonical embedded skill is `plugins/design-arc/skills/design-arc/`; do not copy it into a global skills directory. Begin a new Codex task so the plugin is loaded.
 
-```bash
-codex plugin marketplace add /path/to/mobbin-apple-guidelines-stitch
-codex plugin add fb-ux@fb-ux-marketplace
-codex plugin add apple-guidelines-stitch@fb-ux-marketplace
+## Approval and trust controls
+
+> Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.
+
+| Approval mode | Objective | Visual Gate |
+| --- | --- | --- |
+| **Guided** — recommended for a new project | Confirm; stop at Direction Gate | Stop for approval |
+| **Follow recommendation** | Confirm; continue at Direction Gate with the visibly marked recommendation | Stop for approval |
+| **Fully automatic** | The current request must state an explicit objective; continue at Direction Gate with the visibly marked recommendation | Continue only after a `meets direction` verdict |
+
+“Follow your recommendation” is a one-run Follow recommendation alias. “Bypass both gates” is a one-run Fully automatic alias, but it never permits Design Arc to invent a missing objective. Automatic modes change decision pauses, not the audit, evidence, complete-state, validation, or ownership requirements.
+
+## Methodology, sources, migration, and limitations
+
+### Why each step is crucial
+
+“Performed in / by” names the primary platform, source, or decision-maker. Combined labels show where Codex orchestrates an external platform or requires a person’s decision.
+
+| Step | Performed in / by | Why it is crucial |
+| --- | --- | --- |
+| Setup and provenance | Codex + user | Makes the evidence and approval choices independent and records whether each came from the current request, saved preference, confirmed import, or first-use selection. |
+| Objective Confirmation | Codex + user | Prevents optimization for the wrong outcome by making the confirmed goal the evaluation criterion. |
+| Current-journey audit | Codex, using the supplied website or app | Maps the real entry points, states, friction, transitions, exits, and recovery paths instead of redesigning an imagined product. |
+| Evidence gathering | Codex + selected sources | Supplies relevant constraints or inspected precedent without confusing requirements, observations, and product judgment. |
+| Direction recommendations | Codex | Makes the strongest journey, alternatives, benefits, risks, and trade-offs decidable before visualization cost is incurred. |
+| Direction Gate | User in Codex, or the active automatic mode | Preserves user control where selected and records why automatic selection is allowed where selected. |
+| Full cross-platform validation | Codex + affected-platform first-party guidance | Catches navigation, accessibility, safe-area, and platform conflicts before they are baked into a proposal. |
+| Complete Stitch generation | Codex + Google Stitch | Exposes missing transitions and loading, empty, error, success, cancellation, and recovery states across the complete journey. |
+| Inline evidence and render validation | Codex + target device or runtime | Keeps the proposal reviewable in the task and prevents attractive output or metadata from becoming a false compliance claim. |
+| Stitch Gate | User in Codex, or Fully automatic after `meets direction` | Separates a validated design proposal from authority to route it, implement it, or release it. |
+| Authorized routing | Codex + authorized Product/Captain/Integration owner | Preserves source, staging, deployment, and release ownership after design approval. |
+
+### External evidence and visualization sources
+
+Apple Human Interface Guidelines are first-party authority for Apple targets. For Android or web targets, current first-party platform rules override conflicting Apple-inspired judgment. Requirements are kept distinct from product-specific judgment.
+
+Mobbin can be selected as a benchmark provider in Benchmarks mode. It remains an external source requiring separate access and authorization. Its examples are observed precedent, not a bundled integration or a source to copy. If access is unavailable, Design Arc stops and offers either a one-run Guidelines fallback or a confirmed saved switch; it never silently degrades or calls the result benchmark-backed.
+
+Google Stitch is an external visualization service requiring separate access and payload authorization. The board supports deeper exploration, while Codex must still return a reviewable journey map, key renders, identifiers, and validation verdict in the task. Apple, Google, Mobbin, and Stitch access is not bundled or official, and none of those services authorizes product-source changes.
+
+### Saved preferences and migration
+
+Design Arc stores project choices in `.codex/design-arc.yaml`:
+
+```yaml
+evidence_mode: benchmarks
+benchmark_provider: mobbin
+approval_mode: guided
 ```
 
-The canonical embedded-skill paths are `plugins/fb-ux/skills/fb-ux/` and `plugins/apple-guidelines-stitch/skills/apple-guidelines-stitch/`; do not copy either into a global skills directory. Begin a new Codex task after installation so it loads the plugin.
+If the new file is absent, Design Arc can propose an import. `.codex/fb-ux.yaml` maps to Benchmarks with provider `mobbin`; `.codex/apple-guidelines-stitch.yaml` maps to Guidelines. Each mapping preserves the former approval mode. Design Arc shows the proposed mapping and asks once before importing. If both legacy files exist, it asks which one to import or offers fresh setup. Never silently merge, rewrite, or delete either legacy preference file.
 
-## Limitations
+To replace the former installed plugins, use this safe order:
 
-The plugins help assess a design proposal; they do not prove native or browser implementation, accessibility, safe-area behavior, or physical-device behavior. They also cannot claim current guidance, Mobbin precedent (FB UX only), or Stitch generation without corresponding current-task evidence.
+1. Remove both installed legacy plugins:
+
+   ```bash
+   codex plugin remove fb-ux@fb-ux-marketplace
+   codex plugin remove apple-guidelines-stitch@fb-ux-marketplace
+   ```
+
+2. Remove the former marketplace:
+
+   ```bash
+   codex plugin marketplace remove fb-ux-marketplace
+   ```
+
+3. Add the repository again so Codex reads the renamed marketplace:
+
+   ```bash
+   codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main
+   ```
+
+4. Install the canonical plugin:
+
+   ```bash
+   codex plugin add design-arc@design-arc-marketplace
+   ```
+
+5. Start a new Codex task.
+
+The legacy project preference files remain untouched for recovery even after a confirmed import.
+
+### Evidence, implementation, and release boundaries
+
+Design Arc must not claim current product inspection, first-party guidance, benchmark evidence, new Stitch output, exact render dimensions, accessibility, safe-area behavior, native/browser behavior, or physical-device compliance without corresponding current-task proof.
+
+A validated visual journey remains a design proposal. No evidence mode, approval mode, external-service access, provider authorization, Direction decision, or Stitch verdict authorizes source implementation, staging, deployment, live release, destructive or provider changes, or work outside the authorized integration lane. Those actions require their own scope, owner, authorization, and evidence.
+
+### Trademarks
+
+Apple, Google, Mobbin, and Stitch are trademarks of their respective owners. Design Arc is not affiliated with or endorsed by those owners, and no official integration is claimed.
 
 ## License
 

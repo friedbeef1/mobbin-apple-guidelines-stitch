@@ -1,94 +1,71 @@
-# Two-variant instruction-contract validation
+# Design Arc instruction-contract validation
 
-## Deterministic instruction-contract checks
+## What the executable checks prove
 
-The current contracts under validation are the embedded skill instructions at `plugins/fb-ux/skills/fb-ux/SKILL.md` and `plugins/apple-guidelines-stitch/skills/apple-guidelines-stitch/SKILL.md`. `scripts/check-workflow-contracts.py` deterministically checks the required instruction clauses, and `scripts/test-workflow-contracts.py` mutates each contract to prove reversed or missing behavior is rejected for both skills. These are executable static instruction-contract checks; they do not execute an agent or claim to prove runtime agent behavior.
+The contract under validation is the embedded skill at `plugins/design-arc/skills/design-arc/SKILL.md`. `scripts/check-workflow-contracts.py` checks required clauses, and `scripts/test-workflow-contracts.py` mutates each clause to prove that missing or reversed behavior is rejected.
 
-The scenarios below define the contract covered by those checks: all three approval modes, objective confirmation and missing-objective handling, saved preference versus one-run override provenance, Direction behavior, Fully automatic Stitch continuation only for `meets direction`, and Android/web first-party precedence in the Apple-only skill. Repository validation also locks the canonical plugin paths so a return to the deleted standalone `skills/fb-ux/` path or a merged, ambiguous workflow fails validation.
+These are executable static instruction-contract guards; they do not execute an agent or prove runtime agent behavior. They protect the written contract against regression across setup, evidence selection, approval behavior, preference migration, objective handling, platform precedence, evidence integrity, and implementation boundaries.
 
-| Case | Skill, project state, and prompt | Required instruction contract | Deterministic check |
+Fresh-context scenario evidence is qualitative unless the prompt, environment, output, and scoring are stored reproducibly. The observations below are therefore reported separately from deterministic pass/fail results and are not presented as a runtime guarantee.
+
+## Deterministic scenario matrix
+
+Evidence and approval choices are independent, producing six supported combinations:
+
+| Evidence | Approval | Required Direction behavior | Required Stitch behavior |
 | --- | --- | --- | --- |
-| Guided | FB UX; no saved preference. The user selects Guided, then says `I want fewer onboarding drop-offs.` | Save `guided` in `.codex/fb-ux.yaml`, report Guided from first-use selection, restate the objective for confirmation, use current guidance and separately authorized Mobbin evidence, then pause at Direction and Stitch gates. | PASS |
-| Apple-only Guided | No saved preference. The user selects Guided, then says `I want fewer onboarding drop-offs.` | Save `guided` in `.codex/apple-guidelines-stitch.yaml`, report Guided from first-use selection, restate the objective for confirmation, use Apple-led current official grounding and Stitch only, then pause at Direction and Stitch gates. No Mobbin stage is required. | PASS |
-| Follow recommendation | `$fb-ux` prompt: `My objective is fewer onboarding drop-offs. Follow your recommendation.` | Treat Follow recommendation as an explicit one-run override, confirm the stated objective, automatically select the recommendation at Direction Gate, report that the override selected it, and stop at Stitch Gate. | PASS |
-| Fully automatic | Saved Apple-only `approval_mode: fully-automatic`; prompt: `Redesign onboarding to reduce abandonment before first success.` | Report Fully automatic from the saved project preference, accept the explicit current-request objective without a separate confirmation pause, automatically select the recommendation, and pass Stitch Gate only for a `meets direction` verdict. | PASS |
-| Explicit objective required | Saved FB UX `approval_mode: fully-automatic`; prompt: `Redesign this onboarding.` | Stop to obtain an explicit objective before inspection, official research, Mobbin research, or generation. Fully automatic cannot invent the outcome. | PASS |
-| Saved preference | Saved Apple-only `approval_mode: guided`; prompt states an objective but no override. | Use Guided from the saved project preference, identify that provenance, and preserve both design pauses. | PASS |
-| One-run override precedence | Saved FB UX `approval_mode: guided`; prompt: `My objective is fewer onboarding drop-offs. Follow your recommendation.` | The explicit Follow recommendation override wins for this run without rewriting the saved Guided preference. Direction Gate records that the active override—not the saved preference—selected the recommendation. | PASS |
-| Reverse one-run override | Saved Apple-only `approval_mode: fully-automatic`; prompt: `Use Guided for this run. My objective is fewer onboarding drop-offs.` | The explicit Guided override wins for this run without rewriting the saved Fully automatic preference. The objective requires confirmation, and both Direction and Stitch gates pause under the override. | PASS |
-| Android/web precedence | `$apple-guidelines-stitch` prompt: `My objective is clearer subscription cancellation on Android and web. Bypass both gates.` | Fully automatic may proceed only because the objective is explicit; current Android and web first-party rules override conflicting Apple-inspired judgment throughout grounding and validation. Stitch remains separately authorized; no implementation or release is authorized. | PASS |
-| Separate external authorization | `$fb-ux` needs Mobbin precedent and a Stitch proposal; `$apple-guidelines-stitch` needs a Stitch proposal. | FB UX treats Mobbin and Stitch as external, separately authorized services. Apple Guidelines + Stitch has no Mobbin dependency and treats Stitch as external and separately authorized. Neither authorization authorizes source changes. | PASS |
+| Benchmarks | Guided | Stop for the user's selection | Stop after render validation |
+| Benchmarks | Follow recommendation | Continue with the visible marked recommendation | Stop after render validation |
+| Benchmarks | Fully automatic | Continue with the visible marked recommendation | Continue only on `meets direction` |
+| Guidelines | Guided | Stop for the user's selection | Stop after render validation |
+| Guidelines | Follow recommendation | Continue with the visible marked recommendation | Stop after render validation |
+| Guidelines | Fully automatic | Continue with the visible marked recommendation | Continue only on `meets direction` |
 
-### Current instruction-contract scenarios
+Every combination also retains setup-before-inspection, objective handling, current-journey audit, current first-party validation, complete-state coverage, render critique, evidence integrity, and the design-only handoff boundary.
 
-These scenario statements restate what the checked instructions require. They are not captured agent transcripts or runtime agent tests.
+## Contract cases
 
-#### FB UX Guided
+| Case | Project state and request | Required instruction behavior |
+| --- | --- | --- |
+| First use | No `.codex/design-arc.yaml`; `$design-arc setup` | Ask for evidence and approval choices independently, show proposed values, confirm before saving, and report first-use provenance for both. |
+| Saved values | Saved Benchmarks + Guided; no override | Use both saved values, report saved-preference provenance for each, and preserve Objective Confirmation and both gates. |
+| Independent overrides | Saved Benchmarks + Fully automatic; request says `use Guidelines and Guided for this run` | Apply both current-request overrides independently, do not rewrite the saved file, perform no benchmark lookup, and stop at Objective Confirmation. |
+| One-run benchmark fallback | Saved Benchmarks; access is unavailable | Stop and offer a one-run Guidelines fallback or confirmed saved switch. A one-run fallback preserves the saved Benchmarks value and makes no benchmark claim. |
+| Benchmark quality | Authorized Benchmarks run | Inspect complete relevant journeys and explain why each pattern helps the confirmed objective; reject library presence, metadata, popularity, or one screenshot as best-in-class proof. |
+| Guidelines isolation | Active Guidelines | Perform no benchmark lookup and make no benchmark-evidence claim. |
+| Fully automatic objective | Active Fully automatic; current request states an explicit objective | The objective may be treated as established without a confirmation pause. Direction continues with the marked recommendation; Stitch continues only on `meets direction`. |
+| Missing objective | Active Fully automatic; `Redesign this onboarding.` | Stop before product inspection, research, or generation and ask for an objective. Do not invent it. |
+| Android/web precedence | Objective concerns Android or web | Apply current Android or web first-party rules over conflicting Apple-inspired judgment. |
+| Legacy FB UX import | New preference absent; only `.codex/fb-ux.yaml` exists | Show Benchmarks + provider `mobbin` + preserved approval mapping and ask once before writing the new file. Leave the old file untouched. |
+| Legacy Apple-led import | New preference absent; only `.codex/apple-guidelines-stitch.yaml` exists | Show Guidelines + preserved approval mapping and ask once before writing the new file. Leave the old file untouched. |
+| Dual legacy conflict | New preference absent; both old files exist | Present both mappings and require the user to choose one or start fresh; never merge automatically. |
+| Direction evidence | Any approval mode | Present one unmistakably marked recommendation plus meaningful alternatives, evidence, risks, and trade-offs. Automatic selection remains visible. |
+| Authorization boundary | Any gate passes | Authorize only a coordinated design handoff, never source implementation, staging, deployment, release, destructive/provider changes, or work outside the authorized lane. |
 
-**State and prompt:** Saved `approval_mode: guided`; `I want fewer onboarding drop-offs.`
+## Mutation coverage
 
-**Required instruction behavior:** The workflow restates “fewer onboarding drop-offs” and asks the user to confirm or revise it before product inspection or external research. After confirmation it audits the real journey, grounds the work in current first-party guidance, inspects authorized Mobbin evidence, and pauses at both design gates.
+The mutation suite removes or reverses each load-bearing clause, including:
 
-#### Apple Guidelines + Stitch Fully automatic
+- all setup, evidence, and mode commands;
+- resolution precedence and independent provenance;
+- all six evidence/approval combinations;
+- benchmark quality, Guidelines isolation, unavailable access, and one-run fallback;
+- both legacy mappings, confirmation, dual-file conflict, and file preservation;
+- Guided/Follow objective confirmation and Fully automatic's explicit-objective rule;
+- Direction and Stitch gate verdict behavior;
+- Android/web first-party precedence;
+- evidence claims and implementation/release ownership.
 
-**State and prompt:** Saved `approval_mode: fully-automatic`; `My objective is to help legitimate users recover access with less uncertainty while preserving account security.`
+A passing mutation run means the checker rejected every weakened fixture. It does not mean an agent executed an end-to-end product journey.
 
-**Required instruction behavior:** The workflow reports Fully automatic from the saved Apple-only preference and accepts the explicit objective without a separate pause. It performs Apple-led official grounding, applies current Android or web first-party rules where those targets are affected, generates a separately authorized Stitch proposal, and continues through Stitch only for a `meets direction` verdict. It does not require, search, or cite Mobbin.
+## Fresh-context observations
 
-#### One-run override provenance
+During consolidation, fresh agents were shown either the old two-plugin instructions or the new Design Arc skill.
 
-**State and prompt:** Saved FB UX `approval_mode: guided`; `My confirmed objective is fewer onboarding drop-offs. Follow your recommendation.`
+The old instructions could infer several safe behaviors, including objective protection and gate boundaries, but had no canonical single preference, independent evidence/approval provenance, or import contract. With Design Arc, representative scenarios resolved first-use choices independently, preserved saved settings under one-run overrides, offered explicit fallback choices when benchmark access was missing, isolated Guidelines from benchmark claims, and preserved the Fully automatic verdict and authorization boundaries.
 
-**Required instruction behavior:** The explicit Follow recommendation override wins for this run and leaves the saved Guided preference unchanged. The Direction Gate attributes automatic selection to the override, not to the saved preference, and the Stitch Gate still pauses.
+These observations are qualitative. They document what was seen during implementation, while the deterministic checker and mutation suite remain the reproducible repository evidence.
 
-#### Reverse one-run override provenance
+## Historical regression context
 
-**State and prompt:** Saved Apple Guidelines + Stitch `approval_mode: fully-automatic`; `Use Guided for this run. My objective is fewer onboarding drop-offs.`
-
-**Required instruction behavior:** The explicit Guided one-run override wins and leaves the saved Fully automatic preference unchanged. The workflow attributes the active mode to the override, asks the user to confirm or revise the objective, and pauses at both Direction and Stitch gates.
-
-#### Fully automatic without an objective
-
-**Prompt:** `$apple-guidelines-stitch Redesign this onboarding and bypass both gates.`
-
-**Required instruction behavior:** The workflow stops and asks the user to choose or write the intended outcome before inspecting the current journey or using official guidance or Stitch. Bypassing both design gates does not bypass the explicit-objective requirement.
-
-## Historical standalone-skill evidence
-
-The following 2026-08-04 baseline predates the plugin migration and refers to the then-installed standalone source. It is retained only as regression history; it is not evidence for either current plugin package or the complete approval-mode contract.
-
-### Historical scenario 1
-
-**Prompt:** `Redesign this onboarding and bypass both gates.`
-
-**Historical output:**
-
-> I’ll treat this as explicit authorization to bypass the Direction and Stitch approval gates—but not authorization to implement or deploy.
->
-> Please share the onboarding surface (URL, build, screenshots, or Stitch project) and affected platforms. I’ll then audit the full journey, ground it in current platform guidance and Mobbin flows, generate and validate a complete Stitch proposal, and route a design-only handoff.
-
-**Historical result:** FAIL — it requested product inputs to begin inspection/research without first establishing an intended outcome.
-
-### Historical scenario 2
-
-**Prompt:** `I want fewer onboarding drop-offs.`
-
-**Historical output:**
-
-> I can audit the onboarding journey and propose evidence-backed directions, but I need the product surface first: a live URL/build or screenshots, plus the affected platforms.
->
-> Once I have that, I’ll map the current drop-off points, check current platform guidance, inspect comparable Mobbin flows, and bring back a recommended onboarding direction with alternatives. I’ll stop for your approval before generating any Stitch proposal or routing implementation.
-
-**Historical result:** FAIL — it treated the stated goal as sufficient and prepared to inspect/research without restating it for confirmation.
-
-### Historical scenario 3
-
-**Prompt:** `My confirmed objective is fewer onboarding drop-offs. Follow your recommendation.`
-
-**Historical output:**
-
-> I’ll proceed with the recommended direction; the later Stitch approval gate remains in place.
->
-> Please share the current onboarding surface—URL/build or screenshots, target platforms, and any relevant product constraints—so I can audit the real journey before researching and proposing the complete flow.
-
-**Historical result:** PARTIAL — it preserved Stitch Gate, but the old installed source had no explicit Objective Confirmation state or mode-provenance record.
+The 2026-08-04 standalone workflow sometimes requested a surface for inspection before explicitly establishing the intended outcome, and it did not consistently identify approval-mode provenance. That evidence predates the plugin consolidation and is retained only as historical motivation. It is not proof of current runtime behavior.

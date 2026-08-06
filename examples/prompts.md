@@ -1,27 +1,57 @@
-# Prompt examples
+# Design Arc prompt examples
 
-Choose `$fb-ux` when the review should use Apple guidance, inspected Mobbin journey precedent, and Stitch. Choose `$apple-guidelines-stitch` when the review should use official guidance and Stitch without a Mobbin dependency. On first use, each skill asks the user to choose Guided, Follow recommendation, or Fully automatic and saves a separate project preference: `.codex/fb-ux.yaml` or `.codex/apple-guidelines-stitch.yaml`.
+Design Arc resolves the evidence approach and approval behavior independently. Begin with `$design-arc setup`, or state both choices and your objective in one request. A one-run override changes only the current task unless you explicitly ask Design Arc to save it.
 
-## FB UX: set Guided for the project
+## First-run setup
 
-> `$fb-ux mode guided`. Save that for this project. Review the checkout journey for our iOS app. First, offer two or three suggested objectives and let me choose one or enter my own. After I confirm the objective, inspect the current journey, use current Apple guidance and separately authorized Mobbin precedent, then stop for my approval at the Direction and Stitch gates.
+> `$design-arc setup`. Help me choose the evidence approach and approval behavior independently. Show the proposed `.codex/design-arc.yaml` values before saving them. Then help me choose or write the objective for our onboarding review before inspecting the product.
 
-## FB UX: set Follow recommendation for the project
+## Save Benchmarks and Guided
 
-> `$fb-ux mode follow-recommendation`. Save that for this project. Review the subscription-upgrade journey for our web app. Confirm my objective, run the audit and research automatically, follow your recommendation, fully validate it against current web guidance, and create the complete Stitch proposal. Stop at the Stitch Gate.
+> `$design-arc evidence benchmarks`, using our separately authorized Mobbin access. `$design-arc mode guided`. Save both for this project. For the checkout review, first suggest two or three plausible objectives and let me choose one or enter my own. After I confirm it, inspect the complete current journey, use relevant full-journey benchmarks and current first-party platform guidance, and stop at the Direction and Stitch gates.
 
-## Apple Guidelines + Stitch: set Guided for the project
+## Save Guidelines and Follow recommendation
 
-> `$apple-guidelines-stitch mode guided`. Save that for this project. Review the account-recovery journey for our iOS app. First, offer two or three suggested objectives and let me choose one or enter my own. After I confirm the objective, use current Apple guidance and an authorized Stitch proposal only; do not use Mobbin. Stop for my approval at the Direction and Stitch gates.
+> `$design-arc evidence guidelines`. `$design-arc mode follow-recommendation`. Save both for this project. My objective is to reduce uncertainty during account recovery without weakening security. Confirm that objective, audit the real journey, use current first-party guidance without benchmark lookup, show your recommendation and alternatives, follow the marked recommendation, and stop at the Stitch Gate.
 
-## Apple Guidelines + Stitch: set Fully automatic for the project
+## Save Fully automatic
 
-> `$apple-guidelines-stitch mode fully-automatic`. Save that for this project. My objective is to help legitimate users recover access with less uncertainty while preserving account security. Review the Android and web account-recovery journey, apply current Android and web first-party rules over conflicting Apple-inspired judgment, follow your recommendation, and continue through Stitch only when the proposal meets direction. Preserve all implementation, staging, deployment, release, device-proof, external-service approval, and lane-ownership boundaries.
+> `$design-arc mode fully-automatic`. Save it for this project. My explicit objective is to help new users reach their first useful result with fewer unnecessary decisions. Review the Android and web onboarding journey, apply current Android and web first-party rules over conflicting Apple-inspired judgment, use the saved evidence choice, show the marked direction and alternatives, and continue through Stitch only when the verdict is `meets direction`. Preserve all source, staging, deployment, release, device-proof, external-service, and lane-ownership boundaries.
+
+## Report active settings
+
+> `$design-arc mode`. Report the active evidence mode and approval mode, the saved value of each, and whether each active value comes from the current request, the saved Design Arc preference, a confirmed legacy import, or first-use selection.
 
 ## Override one run without changing the project
 
-> Use `$fb-ux` in Guided mode for this run only. Review onboarding against my objective of improving first-session activation. Do not change the saved project preference.
+> Use `$design-arc` with Guidelines and Guided for this run only. My objective is to improve first-session activation without forcing optional profile setup. Confirm the objective, perform no benchmark lookup, stop at both design gates, and do not change the saved project preference.
 
-> Use `$apple-guidelines-stitch` in Guided mode for this run only. Review onboarding against my objective of improving first-session activation. Do not use Mobbin and do not change the saved project preference.
+The shorter phrase `use Guidelines for this run` changes only the current evidence route. `Follow your recommendation` is a one-run Follow recommendation alias and still stops at the Stitch Gate.
 
-`Follow your recommendation` remains a one-run alias for Follow recommendation. `Bypass both gates` remains a one-run alias for Fully automatic when the request states an explicit objective. In either skill, the task should identify whether the active mode comes from the saved preference, an explicit override, or first-use/default selection.
+## Missing benchmark access
+
+> Use `$design-arc` with the saved Benchmarks preference. If authorized benchmark access is unavailable, stop and let me choose between a one-run Guidelines fallback and a saved switch. Do not silently degrade or call a Guidelines result benchmark-backed.
+
+After the stop, a one-run response can be:
+
+> Use Guidelines for this run. Keep the saved Benchmarks preference unchanged, perform no benchmark lookup or benchmark-evidence claim, and continue under the active approval mode.
+
+## Bypass both gates for one explicit objective
+
+> Use `$design-arc`. Bypass both gates for this run. My explicit objective is to reduce checkout abandonment caused by unclear delivery choices while preserving accurate delivery promises. Keep the alternatives and automatic selection visible, validate every material state, and continue past Stitch only on `meets direction`. This does not authorize implementation or deployment.
+
+`Bypass both gates` is a one-run Fully automatic alias. Without an explicit current-request objective, Design Arc must stop before inspection or research.
+
+## Import a legacy preference
+
+> `$design-arc setup`. The new preference does not exist. Inspect the former project preference, show its proposed Design Arc mapping including the preserved approval mode, and ask once before importing. Do not modify or delete the old file.
+
+If both legacy files exist:
+
+> Present both possible mappings and let me choose one or start fresh. Do not merge them.
+
+## Switch saved evidence route
+
+> `$design-arc evidence guidelines`. Save Guidelines for this project and omit `benchmark_provider`. Do not look up or claim benchmark evidence on later Guidelines runs.
+
+> `$design-arc evidence benchmarks`. Confirm that relevant external benchmark access is authorized, then save Benchmarks and the selected provider for this project.
