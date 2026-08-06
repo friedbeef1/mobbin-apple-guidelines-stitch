@@ -29,7 +29,7 @@ It turns comments such as “this feels confusing” into a product objective, a
 ```text
 setup → objective → current-journey audit → evidence → directions
       → Direction Gate → full first-party validation → complete visual journey
-      → render validation → Visual Gate → authorized design handoff
+      → render validation → Stitch Gate → authorized design handoff
 ```
 
 Setup resolves two independent choices: how evidence is gathered and where Codex pauses for approval. Every route establishes the objective before inspection or research, audits the actual product, preserves platform rules, and stops at a design-only handoff boundary.
@@ -91,13 +91,20 @@ codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref mai
 codex plugin add design-arc@design-arc-marketplace
 ```
 
-For a local checkout, replace the GitHub repository argument with the checkout path. The canonical embedded skill is `plugins/design-arc/skills/design-arc/`; do not copy it into a global skills directory. Begin a new Codex task so the plugin is loaded.
+For a local checkout, add the directory without the Git-only `--ref` option, then install the same plugin:
+
+```bash
+codex plugin marketplace add /path/to/mobbin-apple-guidelines-stitch
+codex plugin add design-arc@design-arc-marketplace
+```
+
+The canonical embedded skill is `plugins/design-arc/skills/design-arc/`; do not copy it into a global skills directory. Begin a new Codex task so the plugin is loaded.
 
 ## Approval and trust controls
 
 > Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.
 
-| Approval mode | Objective | Visual Gate |
+| Approval mode | Objective | Stitch Gate |
 | --- | --- | --- |
 | **Guided** — recommended for a new project | Confirm; stop at Direction Gate | Stop for approval |
 | **Follow recommendation** | Confirm; continue at Direction Gate with the visibly marked recommendation | Stop for approval |

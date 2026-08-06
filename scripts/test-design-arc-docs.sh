@@ -43,7 +43,10 @@ require_text "$readme" 'Design Arc does not silently redesign, implement, or dep
 require_text "$readme" 'Install the Design Arc Codex plugin from https://github.com/friedbeef1/mobbin-apple-guidelines-stitch'
 require_text "$readme" 'Codex handles the installation and may ask for download permission.'
 require_text "$readme" 'No Python knowledge is required.'
+require_text "$readme" 'render validation → Stitch Gate → authorized design handoff'
+require_text "$readme" '| Approval mode | Objective | Stitch Gate |'
 require_text "$readme" '| Step | Performed in / by | Why it is crucial |'
+require_text "$readme" 'codex plugin marketplace add /path/to/mobbin-apple-guidelines-stitch'
 require_text "$readme" 'codex plugin remove fb-ux@fb-ux-marketplace'
 require_text "$readme" 'codex plugin remove apple-guidelines-stitch@fb-ux-marketplace'
 require_text "$readme" 'codex plugin marketplace remove fb-ux-marketplace'
@@ -58,6 +61,15 @@ from pathlib import Path
 import sys
 
 text = Path(sys.argv[1]).read_text(encoding="utf-8")
+if "Visual Gate" in text:
+    raise SystemExit("FAIL: README must use the required Stitch Gate name, not Visual Gate")
+
+local_command = "codex plugin marketplace add /path/to/mobbin-apple-guidelines-stitch"
+if local_command not in text.splitlines():
+    raise SystemExit("FAIL: README must show the exact local-checkout marketplace command")
+if f"{local_command} --ref main" in text:
+    raise SystemExit("FAIL: local-checkout marketplace command must not use the Git-only --ref option")
+
 headings = [
     "## You need Design Arc if…",
     "## What Design Arc produces",
