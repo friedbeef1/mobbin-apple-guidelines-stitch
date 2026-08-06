@@ -1,0 +1,33 @@
+{
+  "name": "design-arc",
+  "version": "0.2.0",
+  "description": "Outcome-led UI journey design for Codex.",
+  "author": {
+    "name": "James Yeang"
+  },
+  "repository": "https://github.com/friedbeef1/mobbin-apple-guidelines-stitch",
+  "license": "MIT",
+  "keywords": [
+    "ux",
+    "journey-design",
+    "outcomes",
+    "evidence"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Design Arc",
+    "shortDescription": "Turn ambiguous UI feedback into complete, evidence-grounded journeys.",
+    "longDescription": "Turn a confirmed product outcome into a complete UI journey with evidence, clear trade-offs, and explicit approval gates.",
+    "developerName": "James Yeang",
+    "category": "Productivity",
+    "capabilities": [
+      "Outcome-led journey design",
+      "Evidence-grounded validation"
+    ],
+    "defaultPrompt": [
+      "Use $design-arc to turn my onboarding feedback into a complete, evidence-grounded journey proposal.",
+      "Use $design-arc to design a checkout journey around a confirmed conversion outcome.",
+      "Use $design-arc to audit this signup journey and propose the states needed to reach its intended outcome."
+    ]
+  }
+}

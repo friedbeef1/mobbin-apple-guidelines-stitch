@@ -1,26 +1,14 @@
 {
-  "name": "fb-ux-marketplace",
+  "name": "design-arc-marketplace",
   "interface": {
-    "displayName": "FB UX Marketplace"
+    "displayName": "Design Arc"
   },
   "plugins": [
     {
-      "name": "fb-ux",
+      "name": "design-arc",
       "source": {
         "source": "local",
-        "path": "./plugins/fb-ux"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "apple-guidelines-stitch",
-      "source": {
-        "source": "local",
-        "path": "./plugins/apple-guidelines-stitch"
+        "path": "./plugins/design-arc"
       },
       "policy": {
         "installation": "AVAILABLE",
