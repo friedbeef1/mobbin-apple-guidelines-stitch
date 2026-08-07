@@ -37,6 +37,7 @@ for required_file in \
   scripts/test-design-arc-identity.sh \
   scripts/test-plugin-install.sh \
   scripts/test-plugin-migration.sh \
+  scripts/test-plugin-upgrade.sh \
   scripts/test-test-validate.sh \
   scripts/test-validate.sh \
   scripts/test-workflow-contracts.py \
@@ -125,6 +126,7 @@ sh -n \
   "$repo_root/scripts/test-design-arc-identity.sh" \
   "$repo_root/scripts/test-plugin-install.sh" \
   "$repo_root/scripts/test-plugin-migration.sh" \
+  "$repo_root/scripts/test-plugin-upgrade.sh" \
   "$repo_root/scripts/test-test-validate.sh" \
   "$repo_root/scripts/test-validate.sh" \
   "$repo_root/scripts/validate.sh"
@@ -150,6 +152,13 @@ then
   :
 else
   fail 'isolated plugin migration smoke failed'
+fi
+
+if sh "$repo_root/scripts/test-plugin-upgrade.sh"
+then
+  :
+else
+  fail 'isolated plugin upgrade smoke failed'
 fi
 
 if git -C "$repo_root" rev-parse --is-inside-work-tree >/dev/null 2>&1

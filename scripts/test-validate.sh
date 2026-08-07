@@ -76,6 +76,7 @@ for expected_output in \
   'PASS: plugin and embedded skill validation for Design Arc' \
   'PASS: isolated Design Arc plugin installation smoke' \
   'PASS: isolated Design Arc plugin migration smoke' \
+  'PASS: isolated Design Arc plugin upgrade smoke' \
   'PASS: credential, local-path, and media safety scans' \
   'PASS: shell and Python syntax checks' \
   'PASS: Design Arc repository validation'

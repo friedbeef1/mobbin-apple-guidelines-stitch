@@ -44,6 +44,11 @@ then
   fail 'migration harness accepted a deliberately failing Codex CLI'
 fi
 
+if CODEX_BIN="$failing_codex" sh "$script_dir/test-plugin-upgrade.sh" >/dev/null 2>&1
+then
+  fail 'upgrade harness accepted a deliberately failing Codex CLI'
+fi
+
 if output=$(CODEX_BIN="$failing_codex" sh "$script_dir/validate.sh" 2>&1)
 then
   printf '%s\n' "$output" >&2
@@ -56,4 +61,4 @@ printf '%s\n' "$output" | grep -F 'FAIL: isolated plugin installation smoke fail
 }
 
 [ -d "$sentinel" ] || fail 'deliberate failure cleanup removed a split-path sentinel'
-printf '%s\n' 'PASS: install, migration, and repository harnesses fail closed without source mutation'
+printf '%s\n' 'PASS: install, migration, upgrade, and repository harnesses fail closed without source mutation'

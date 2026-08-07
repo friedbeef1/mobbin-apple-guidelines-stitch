@@ -111,6 +111,40 @@ Scoring: GREEN because the installed plugin skill loaded, setup preceded product
 
 These observations prove the tested Codex CLI 0.146.1 routing and setup behavior in the recorded environment. They do not prove that every future model, client, policy, or marketplace configuration will behave identically. The isolated CLI installation and mutation suites remain the deterministic regression evidence.
 
+## Isolated 0.2.0 to 0.2.1 upgrade evidence — 2026-08-07
+
+This is deterministic CLI integration evidence, separate from the static instruction contracts above and the qualitative agent scenarios. `scripts/test-plugin-upgrade.sh` uses only a temporary `CODEX_HOME`, an exact checkout of public commit `8e2318496d8e2dbc3c75e19ddde997b598188755`, and a temporary checkout of the current branch. It does not read or change the user's installed plugin profile.
+
+The RED expectation installed Design Arc `0.2.0`, attempted `codex plugin marketplace upgrade design-arc-marketplace`, and required the installed state to expose `0.2.1`. On Codex CLI 0.146.1 it failed with the installed CLI's real local-source boundary: the exact-commit fixture was not configured as a Git marketplace, and the installed cache remained `0.2.0`.
+
+The GREEN path uses the bounded fallback only when the post-refresh installed state is not `0.2.1`: remove the canonical plugin, remove its marketplace source, add the isolated current checkout, and reinstall `design-arc@design-arc-marketplace`. The smoke then proves that exactly one enabled `0.2.1` plugin and one branch-identical cached skill remain, a new task discovers that skill exactly once, the old `0.2.0` cache is removed, and a representative `.codex/design-arc.yaml` containing evidence, approval, and ready-home metadata is unchanged byte-for-byte.
+
+This proves the tested local exact-baseline-to-branch upgrade and fallback behavior. It does not claim that the unpublished `0.2.1` is available from the public Git marketplace yet. After publication, a user should try marketplace refresh first and use the same remove/add fallback only if installed state still does not expose `0.2.1`.
+
+## Actual Codex desktop project-home acceptance — 2026-08-07
+
+This is actual Codex app task-tool evidence, not a static instruction check and not a qualitative agent scenario. The acceptance was explicitly bounded to two temporary project tasks, and every mutating call targeted only the recorded temporary thread IDs.
+
+The read-only preflight called `codex_app__list_threads({limit: 50})` and found no pinned or unpinned Design Arc task in the visible task set. `codex_app__list_projects({})` supplied these two saved projects, neither of which had its canonical home title before creation:
+
+| Saved project | Project ID | Canonical temporary title |
+| --- | --- | --- |
+| UI plugin | `e1feaaeb-59f2-4dc8-a6d7-cb5603606b59` | `Design Arc — UI plugin` |
+| Testing FB Lanes | `c5384f95-2b8b-46fa-99ee-458010b0f638` | `Design Arc — Testing FB Lanes` |
+
+The exercised app schemas were `codex_app__create_thread({target: {type: "project", projectId, environment: {type: "local"}}, prompt})`, `codex_app__wait_threads({targets: [{threadId, hostId}], timeoutMs: 60000})`, `codex_app__set_thread_title({threadId, title})`, `codex_app__set_thread_pinned({threadId, pinned})`, `codex_app__list_threads({limit: 50})`, and `codex_app__set_thread_archived({threadId, hostId: "local", archived: true})`. Creation supplied no model or thinking override.
+
+Each initial prompt identified itself as Design Arc acceptance only and prohibited file inspection, edits, research, further task creation, and running Design Arc. It requested only a compact launchpad card and then a wait. Both tasks returned only that inert card: correct project name, installed status, sample Guidelines/Guided preferences, and five plain-language starters. Neither task performed a product audit or research, and neither wrote project files.
+
+| Saved project | Temporary thread ID | Mutation and observed result |
+| --- | --- | --- |
+| UI plugin | `019fdbab-2a07-7590-b3d7-bd872698311f` | Titled once, pinned once, and listed once under the UI plugin project ID. |
+| Testing FB Lanes | `019fdbab-2766-7092-90ad-55ad3c60b778` | Titled once, pinned once, and listed once under the Testing FB Lanes project ID. |
+
+The first post-mutation list contained both pinned homes under distinct project IDs with a count of one for each. A separate later lookup from a fresh controller context rediscovered both with `onePerProject=true` and chose `reuse existing; create zero`. This demonstrates persistence across a later task-tool context and repeat discovery without duplication; it was not an application restart and is not presented as restart evidence.
+
+Cleanup unpinned each recorded temporary thread and then archived it. Each tool result reported `{pinned: false}` followed by `{archived: true}`. A final visible-task list found `temporaryHomesStillPinned: 0`. This proves the fixtures are no longer pinned; it does not claim that archived task records were deleted from storage.
+
 ## Historical regression context
 
 The 2026-08-04 standalone workflow sometimes requested a surface for inspection before explicitly establishing the intended outcome, and it did not consistently identify approval-mode provenance. That evidence predates the plugin consolidation and is retained only as historical motivation. It is not proof of current runtime behavior.
