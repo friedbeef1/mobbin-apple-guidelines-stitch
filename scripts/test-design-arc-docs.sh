@@ -37,6 +37,21 @@ require_text "$readme" '## The workflow'
 require_text "$readme" '## Example: from “confusing onboarding” to a complete direction'
 require_text "$readme" '## Choose your evidence approach'
 require_text "$readme" '## Install and set up in 60 seconds'
+require_text "$readme" 'Design Arc is installed once for your Codex profile. Each participating project keeps its own setup and may have one approved, pinned home.'
+require_text "$readme" '## Coming back tomorrow'
+require_text "$readme" '| First day | Open the project, run `$design-arc setup`, choose the two project preferences, and approve or decline its proposed home. |'
+require_text "$readme" '| Next day | Open that project’s pinned `Design Arc — <Project Name>` task and describe the journey in ordinary language. |'
+require_text "$readme" '| New product | Open the new saved project and run setup there once. Its preferences and optional home stay separate from every other product. |'
+require_text "$readme" 'Each home is a launchpad, not a workspace for the design review.'
+require_text "$readme" 'Every journey starter opens a clean local task in that same saved project'
+require_text "$readme" 'There is no global Design Arc home.'
+require_text "$readme" 'A project with no confirmed Design Arc setup receives no home and no sidebar item.'
+require_text "$readme" 'Design Arc reuses an existing home for the same title and project instead of creating a duplicate.'
+require_text "$readme" 'If it finds extra same-project homes, it reports them for you to clean up; it never deletes them.'
+require_text "$readme" 'If Codex cannot create or pin the task, Design Arc saves confirmed preferences, says clearly that no home is ready, and gives you the exact title, starter card, and manual create-and-pin steps.'
+require_text "$readme" 'Help me make our onboarding less confusing.'
+require_text "$readme" 'Audit how customers complete checkout and propose a better complete journey.'
+require_text "$readme" 'Redesign account recovery so people can get back in without weakening security.'
 require_text "$readme" '## Approval and trust controls'
 require_text "$readme" '## Methodology, sources, migration, and limitations'
 require_text "$readme" 'Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.'
@@ -97,6 +112,7 @@ headings = [
     "## Example: from “confusing onboarding” to a complete direction",
     "## Choose your evidence approach",
     "## Install and set up in 60 seconds",
+    "## Coming back tomorrow",
     "## Approval and trust controls",
     "## Methodology, sources, migration, and limitations",
 ]
@@ -127,6 +143,12 @@ if migration_positions != sorted(migration_positions):
 PY
 
 require_text "$operating_layer" '# Codex as the Design Arc operating layer'
+require_text "$operating_layer" '## Install once; participate per project'
+require_text "$operating_layer" 'one confirmed home per participating saved project'
+require_text "$operating_layer" 'There is no global Design Arc home.'
+require_text "$operating_layer" 'Each journey starts in a clean local task in the same saved project'
+require_text "$operating_layer" 'A project without confirmed setup gets no home and no sidebar item.'
+require_text "$operating_layer" 'If task tools are unavailable or fail, preference setup may still succeed, but Design Arc must not claim that the home exists.'
 require_text "$operating_layer" '.codex/design-arc.yaml'
 require_text "$operating_layer" 'evidence and approval choices independently'
 require_text "$operating_layer" 'Android or web first-party rules override conflicting Apple-inspired judgment'
@@ -141,8 +163,20 @@ require_text "$behavioral_validation" 'Codex CLI 0.146.1'
 require_text "$behavioral_validation" 'used the restricted built-in plugin-install control and failed'
 require_text "$behavioral_validation" 'executed both terminal commands, verified `design-arc@design-arc-marketplace` as installed and enabled'
 require_text "$behavioral_validation" 'presented Benchmarks/Guidelines and Guided/Follow recommendation/Fully automatic independently'
+require_text "$behavioral_validation" '| First use | Install once, then confirm this project’s preferences and separately approve or decline one pinned home. |'
+require_text "$behavioral_validation" '| Next-day return | Open the project’s pinned home and use an ordinary-language starter; the home launches a clean local task in the same project. |'
+require_text "$behavioral_validation" '| New product | Reuse the installed plugin, run setup in the new saved project, and keep its optional home and preferences separate. |'
+require_text "$behavioral_validation" '| Multiple products | Keep at most one approved home per participating project and never create a global home. |'
+require_text "$behavioral_validation" '| Duplicate discovery | Reuse the matching same-project home, report extras for user cleanup, and create no known duplicate. |'
+require_text "$behavioral_validation" '| Task tools unavailable | Save only confirmed preferences, report that no home is ready, and provide the exact title, card, and manual create-and-pin steps. |'
 
 require_text "$prompts" '# Design Arc prompt examples'
+require_text "$prompts" 'You do not need to remember a command for ordinary journey work.'
+require_text "$prompts" '## Plain-language journey starters'
+require_text "$prompts" 'Help me make our onboarding less confusing.'
+require_text "$prompts" 'Audit how customers complete checkout and propose a better complete journey.'
+require_text "$prompts" 'Redesign account recovery so people can get back in without weakening security.'
+require_text "$prompts" '## Preference and recovery commands'
 require_text "$prompts" '$design-arc setup'
 require_text "$prompts" '$design-arc evidence benchmarks'
 require_text "$prompts" '$design-arc evidence guidelines'

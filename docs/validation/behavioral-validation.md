@@ -23,6 +23,20 @@ Evidence and approval choices are independent, producing six supported combinati
 
 Every combination also retains setup-before-inspection, objective handling, current-journey audit, current first-party validation, complete-state coverage, render critique, evidence integrity, and the design-only handoff boundary.
 
+## Returning-user product story contract
+
+These documentation and interface cases describe the user-visible contract. The executable skill checker separately protects the underlying project identity, confirmation, recovery, and deduplication rules.
+
+| Case | Required user-visible behavior |
+| --- | --- |
+| First use | Install once, then confirm this project’s preferences and separately approve or decline one pinned home. |
+| Next-day return | Open the project’s pinned home and use an ordinary-language starter; the home launches a clean local task in the same project. |
+| New product | Reuse the installed plugin, run setup in the new saved project, and keep its optional home and preferences separate. |
+| Multiple products | Keep at most one approved home per participating project and never create a global home. |
+| Project without setup | Create no home and no sidebar item. |
+| Duplicate discovery | Reuse the matching same-project home, report extras for user cleanup, and create no known duplicate. |
+| Task tools unavailable | Save only confirmed preferences, report that no home is ready, and provide the exact title, card, and manual create-and-pin steps. |
+
 ## Contract cases
 
 | Case | Project state and request | Required instruction behavior |

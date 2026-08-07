@@ -59,9 +59,9 @@ expected_plugin = {
         "category": "Productivity",
         "capabilities": ["Outcome-led journey design", "Evidence-grounded validation"],
         "defaultPrompt": [
-            "Use $design-arc to turn my onboarding feedback into a complete, evidence-grounded journey proposal.",
-            "Use $design-arc to design a checkout journey around a confirmed conversion outcome.",
-            "Use $design-arc to audit this signup journey and propose the states needed to reach its intended outcome.",
+            "Help me make our onboarding less confusing.",
+            "Audit how customers complete checkout and propose a better complete journey.",
+            "Redesign account recovery so people can get back in without weakening security.",
         ],
     },
 }
@@ -86,7 +86,7 @@ if marketplace != expected_marketplace:
 expected_metadata = '''interface:
   display_name: "Design Arc"
   short_description: "Turn ambiguous UI feedback into complete, evidence-grounded journeys"
-  default_prompt: "Use $design-arc to turn a confirmed product outcome into a complete, evidence-grounded UI journey proposal."
+  default_prompt: "Help me make this product journey less confusing."
 '''
 if metadata != expected_metadata:
     raise SystemExit("Design Arc agent metadata must match the canonical identity contract")

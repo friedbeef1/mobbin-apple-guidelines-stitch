@@ -1,4 +1,4 @@
 interface:
   display_name: "Design Arc"
   short_description: "Turn ambiguous UI feedback into complete, evidence-grounded journeys"
-  default_prompt: "Use $design-arc to turn a confirmed product outcome into a complete, evidence-grounded UI journey proposal."
+  default_prompt: "Help me make this product journey less confusing."

@@ -55,6 +55,8 @@ The evidence choice is independent from approval behavior. Design Arc reports th
 
 ## Install and set up in 60 seconds
 
+Design Arc is installed once for your Codex profile. Each participating project keeps its own setup and may have one approved, pinned home.
+
 Paste this complete instruction into Codex:
 
 ```text
@@ -79,6 +81,7 @@ On first use, Design Arc independently asks you to choose an evidence mode and a
 Useful commands:
 
 ```text
+$design-arc home
 $design-arc evidence benchmarks
 $design-arc evidence guidelines
 $design-arc mode
@@ -105,6 +108,28 @@ codex plugin add design-arc@design-arc-marketplace
 ```
 
 The canonical embedded skill is `plugins/design-arc/skills/design-arc/`; do not copy it into a global skills directory. Begin a new Codex task so the plugin is loaded.
+
+## Coming back tomorrow
+
+You do not need to remember a command for ordinary journey work. Setup can add one approved, pinned home named `Design Arc — <Project Name>` to each project where you choose to use Design Arc.
+
+| When | What you do |
+| --- | --- |
+| First day | Open the project, run `$design-arc setup`, choose the two project preferences, and approve or decline its proposed home. |
+| Next day | Open that project’s pinned `Design Arc — <Project Name>` task and describe the journey in ordinary language. |
+| New product | Open the new saved project and run setup there once. Its preferences and optional home stay separate from every other product. |
+
+Try one of these:
+
+- “Help me make our onboarding less confusing.”
+- “Audit how customers complete checkout and propose a better complete journey.”
+- “Redesign account recovery so people can get back in without weakening security.”
+
+Each home is a launchpad, not a workspace for the design review. Every journey starter opens a clean local task in that same saved project, while the pinned home stays available for the next request.
+
+There is no global Design Arc home. A project with no confirmed Design Arc setup receives no home and no sidebar item. Design Arc reuses an existing home for the same title and project instead of creating a duplicate. If it finds extra same-project homes, it reports them for you to clean up; it never deletes them.
+
+If Codex cannot create or pin the task, Design Arc saves confirmed preferences, says clearly that no home is ready, and gives you the exact title, starter card, and manual create-and-pin steps. Run `$design-arc home` later to report, create, recover, or repin the current project’s home.
 
 ## Approval and trust controls
 

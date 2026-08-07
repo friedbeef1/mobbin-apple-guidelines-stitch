@@ -1,6 +1,39 @@
 # Design Arc prompt examples
 
-Design Arc resolves the evidence approach and approval behavior independently. Begin with `$design-arc setup`, or state both choices and your objective in one request. A one-run override changes only the current task unless you explicitly ask Design Arc to save it.
+You do not need to remember a command for ordinary journey work. Describe the product journey and the outcome you want; Design Arc activates in the current task, or the project’s pinned home opens a clean task in that same project.
+
+## Plain-language journey starters
+
+> Help me make our onboarding less confusing.
+
+> Audit how customers complete checkout and propose a better complete journey.
+
+> Redesign account recovery so people can get back in without weakening security.
+
+Other natural starters work too: describe the journey, who is using it, and what should become easier or more successful. If the outcome is unclear, Design Arc offers a few choices and lets you write your own.
+
+## Returning through a project home
+
+Install Design Arc once, then approve an optional pinned home during setup in each participating saved project. The next day, open `Design Arc — <Project Name>` and enter any plain-language journey starter. The home remains a launchpad; the actual review opens in a clean local task in the same saved project.
+
+There is no global home, and projects without confirmed setup receive no sidebar item. If Design Arc finds the same project home again, it reuses it rather than creating a duplicate. If task tools are unavailable, it reports that no home is ready and returns the exact title, starter card, and manual create-and-pin steps.
+
+## Preference and recovery commands
+
+Commands remain available when you want to set or inspect project preferences or manage a home explicitly:
+
+```text
+$design-arc setup
+$design-arc home
+$design-arc evidence benchmarks
+$design-arc evidence guidelines
+$design-arc mode
+$design-arc mode guided
+$design-arc mode follow-recommendation
+$design-arc mode fully-automatic
+```
+
+Design Arc resolves the evidence approach and approval behavior independently. A one-run override changes only the current task unless you explicitly ask Design Arc to save it.
 
 ## First-run setup
 

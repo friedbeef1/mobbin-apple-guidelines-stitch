@@ -2,6 +2,14 @@
 
 Design Arc is one adaptive workflow. Codex is where the product objective, current-journey evidence, evidence choice, recommendations, gate decisions, validation, and next authorized owner remain connected. The plugin contributes the `$design-arc` skill; it does not add a native provider integration or transfer implementation authority.
 
+## Install once; participate per project
+
+The plugin is installed once for a Codex profile. Setup and return paths remain project-scoped: Design Arc may add one confirmed home per participating saved project, and each project keeps its own evidence and approval preferences. There is no global Design Arc home. A project without confirmed setup gets no home and no sidebar item.
+
+The pinned home is a launchpad, not the place where product work accumulates. Each journey starts in a clean local task in the same saved project, so one product’s context and preferences cannot leak into another. An existing matching home is reused; known duplicates are reported for user cleanup rather than deleted or multiplied.
+
+If task tools are unavailable or fail, preference setup may still succeed, but Design Arc must not claim that the home exists. It returns the exact title and complete starter card with manual create-and-pin steps, and keeps the home pending until title, project identity, and pinning are verified.
+
 ## What Codex contributes
 
 - Resolves evidence and approval choices independently before product inspection, external research, or generation.
