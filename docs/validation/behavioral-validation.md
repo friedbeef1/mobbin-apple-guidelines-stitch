@@ -141,9 +141,18 @@ Each initial prompt identified itself as Design Arc acceptance only and prohibit
 | UI plugin | `019fdbab-2a07-7590-b3d7-bd872698311f` | Titled once, pinned once, and listed once under the UI plugin project ID. |
 | Testing FB Lanes | `019fdbab-2766-7092-90ad-55ad3c60b778` | Titled once, pinned once, and listed once under the Testing FB Lanes project ID. |
 
-The first post-mutation list contained both pinned homes under distinct project IDs with a count of one for each. A separate later lookup from a fresh controller context rediscovered both with `onePerProject=true` and chose `reuse existing; create zero`. This demonstrates persistence across a later task-tool context and repeat discovery without duplication; it was not an application restart and is not presented as restart evidence.
+The first post-mutation list contained both pinned homes under distinct project IDs with a count of one for each. A later controller lookup also rediscovered both with `onePerProject=true` and chose `reuse existing; create zero`, but that lookup was not treated as new-session proof.
 
-Cleanup unpinned each recorded temporary thread and then archived it. Each tool result reported `{pinned: false}` followed by `{archived: true}`. A final visible-task list found `temporaryHomesStillPinned: 0`. This proves the fixtures are no longer pinned; it does not claim that archived task records were deleted from storage.
+For genuine separate-session proof, the controller temporarily unarchived and repinned only the two recorded home fixtures, then created a new projectless Codex verifier task, `019fdbb7-379d-78a1-8bf9-87a9ec5ac5d5`. Its prompt was explicitly read-only and requested only task-list verification, with no edits or mutations. The completed verifier returned:
+
+```text
+Design Arc — UI plugin: Visible — project ID e1feaaeb-59f2-4dc8-a6d7-cb5603606b59 — exact matches: 1
+Design Arc — Testing FB Lanes: Visible — project ID c5384f95-2b8b-46fa-99ee-458010b0f638 — exact matches: 1
+```
+
+This is evidence from a genuinely separate Codex task/session that both project homes remained distinct and non-duplicated. It was not an application process restart and is not presented as restart evidence.
+
+Final cleanup set `pinned: false` and `archived: true` for both home fixtures and the verifier task. A post-cleanup visible-task list filtered to all three recorded IDs reported `temporaryAcceptanceTasksStillPinned: 0`. This proves the three temporary acceptance tasks are no longer pinned; it does not claim that archived task records were deleted from storage.
 
 ## Historical regression context
 
