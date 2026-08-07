@@ -5,7 +5,9 @@ Product feedback is often vague, redesign discussions become subjective, and tea
 **Move from uncertain product feedback to a complete design direction grounded in credible sources.**<br>
 ### Grounded, not guessed
 
-Attractive screens can still fail when they ignore platform behavior, copy an isolated pattern without its journey, or hide product judgment as fact. Grounding gives every recommendation a visible reason: what users currently experience, what the platform requires, what relevant products demonstrate, and where Design Arc is making a judgment.
+Design Arc gives teams a stronger basis for making design decisions. Instead of asking everyone to trust a polished screen or one person's taste, it connects each recommendation to the product's real journey, the rules of its platform, relevant patterns observed in complete products, and clearly labeled product judgment. That makes the proposed direction easier to understand, challenge, approve, and carry into implementation with confidence.
+
+This matters because attractive screens can still fail when they ignore familiar platform behavior, borrow an isolated pattern without understanding the surrounding journey, or present opinion as fact. Grounding keeps the reasoning visible without pretending that a source can make the product decision for you.
 
 | Grounding layer | Why it matters | Credible sources |
 | --- | --- | --- |
@@ -14,7 +16,7 @@ Attractive screens can still fail when they ignore platform behavior, copy an is
 | Product judgment | Makes trade-offs and recommendations explicit where sources do not determine one correct answer. | Design Arc synthesis against the user-confirmed objective, clearly labeled as judgment. |
 | Visualization and validation | Makes the proposed journey concrete enough to inspect across every material state. | Google Stitch as an external visualization surface, not an authority or evidence source. |
 
-[Explore the trusted sources and why Design Arc uses them](docs/trusted-sources/README.md)
+If you want the underlying detail, you can also [see which trusted sources Design Arc uses and why](docs/trusted-sources/README.md).
 
 Design Arc audits the real journey, checks decisions against current first-party platform guidance and inspected real-product journeys, recommends the strongest path, and designs every important state before implementation begins.
 
