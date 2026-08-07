@@ -81,6 +81,7 @@ require_text "$readme" 'no documented public third-party directory submission ro
 
 python3 - "$readme" <<'PY'
 from pathlib import Path
+import re
 import sys
 
 text = Path(sys.argv[1]).read_text(encoding="utf-8")
@@ -137,6 +138,30 @@ migration = text[text.index("### Saved preferences and migration"):]
 migration_positions = [migration.index(command) for command in migration_commands]
 if migration_positions != sorted(migration_positions):
     raise SystemExit("FAIL: migration steps are not in the required safe order")
+
+trusted_sources_dir = Path(sys.argv[1]).parent / "docs" / "trusted-sources"
+approved_external_urls = {
+    "https://developer.apple.com/design/human-interface-guidelines/",
+    "https://developer.android.com/design/ui/mobile",
+    "https://developer.android.com/guide/topics/ui/accessibility",
+    "https://m3.material.io/",
+    "https://www.w3.org/TR/WCAG22/",
+    "https://www.w3.org/WAI/ARIA/apg/",
+    "https://mobbin.com/",
+    "https://stitch.withgoogle.com/",
+}
+actual_external_urls = {
+    url
+    for path in trusted_sources_dir.glob("*.md")
+    for url in re.findall(r"https?://[^\s)]+", path.read_text(encoding="utf-8"))
+}
+if actual_external_urls != approved_external_urls:
+    missing = sorted(approved_external_urls - actual_external_urls)
+    unexpected = sorted(actual_external_urls - approved_external_urls)
+    raise SystemExit(
+        "FAIL: trusted sources external URL set drifted"
+        f"; missing={missing}; unexpected={unexpected}"
+    )
 PY
 
 require_text "$operating_layer" '# Codex as the Design Arc operating layer'

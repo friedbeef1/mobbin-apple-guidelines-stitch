@@ -16,7 +16,7 @@ Platform guidance does not determine the product objective, prove that a user jo
 - [Android design guidance](https://developer.android.com/design/ui/mobile) — Android UI and platform guidance.
 - [Android accessibility guidance](https://developer.android.com/guide/topics/ui/accessibility) — accessibility considerations for Android UI.
 - [Material Design](https://m3.material.io/) — Google's Material system guidance, including design and accessibility patterns.
-- [W3C web standards](https://www.w3.org/standards/) — standards for the open web platform.
+- W3C web standards — standards for the open web platform.
 - [W3C Web Content Accessibility Guidelines 2.2](https://www.w3.org/TR/WCAG22/) — stable, referenceable accessibility guidance for web content.
 - [WAI-ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/) — accessible interaction-pattern guidance for web interfaces.
 

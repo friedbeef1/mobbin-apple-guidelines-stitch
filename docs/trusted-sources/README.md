@@ -6,7 +6,7 @@ Grounding makes a recommendation explainable instead of taste-based. Design Arc 
 
 | Grounding layer | What it supports | Named sources | What it cannot prove |
 | --- | --- | --- | --- |
-| Platform requirements | Current behavior, accessibility, and conventions for the affected platform. | [Apple Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/), [Android design guidance](https://developer.android.com/design/ui/mobile), [Material Design](https://m3.material.io/), and [W3C web standards](https://www.w3.org/standards/). | The best product trade-off for a particular objective. |
+| Platform requirements | Current behavior, accessibility, and conventions for the affected platform. | [Apple Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/), [Android design guidance](https://developer.android.com/design/ui/mobile), [Material Design](https://m3.material.io/), and W3C web standards. | The best product trade-off for a particular objective. |
 | Product precedent | How a relevant, complete real-product journey handles a similar decision and non-happy states. | An authorized provider such as [Mobbin](https://mobbin.com/). | A requirement, quality verdict, or proof that a pattern fits this product. |
 | Product judgment | The recommendation and trade-offs for the user-confirmed objective where sources do not decide one answer. | Design Arc synthesis, labeled as judgment. | An external fact or provider endorsement. |
 | Visualization and validation | A concrete proposed journey that can be inspected across material states. | [Google Stitch](https://stitch.withgoogle.com/). | Evidence, platform compliance, accessibility, or implementation readiness by itself. |

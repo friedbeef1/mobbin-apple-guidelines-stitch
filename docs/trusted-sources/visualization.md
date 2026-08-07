@@ -6,7 +6,7 @@ Visualization turns a recommended journey into a concrete proposal that can be i
 
 ## What Stitch supports
 
-Google describes Stitch as a design canvas for generating and iterating high-fidelity UI; see its [official Stitch introduction](https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-ai-ui-design/). Its visual output helps a team inspect whether the proposed journey is complete enough to evaluate and whether important states are missing.
+Google describes Stitch as a design canvas for generating and iterating high-fidelity UI; see its official Stitch introduction. Its visual output helps a team inspect whether the proposed journey is complete enough to evaluate and whether important states are missing.
 
 ## What it cannot prove
 
