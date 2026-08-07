@@ -2,10 +2,23 @@
 
 Product feedback is often vague, redesign discussions become subjective, and teams approve attractive screens without knowing whether the complete journey works.
 
-**Move from uncertain product feedback to a complete, evidence-backed design direction.**<br>
-Design Arc audits the real journey, explores meaningful alternatives, recommends the strongest path, and designs every important state before implementation begins.
+**Move from uncertain product feedback to a complete design direction grounded in credible sources.**<br>
+Design Arc audits the real journey, checks decisions against current first-party platform guidance and inspected real-product journeys, recommends the strongest path, and designs every important state before implementation begins.
 
 It turns comments such as “this feels confusing” into a product objective, an auditable journey diagnosis, meaningful alternatives, one clear recommendation, and a complete design proposal that can be evaluated before implementation starts.
+
+### Grounded, not guessed
+
+Attractive screens can still fail when they ignore platform behavior, copy an isolated pattern without its journey, or hide product judgment as fact. Grounding gives every recommendation a visible reason: what users currently experience, what the platform requires, what relevant products demonstrate, and where Design Arc is making a judgment.
+
+| Grounding layer | Why it matters | Credible sources |
+| --- | --- | --- |
+| Platform requirements | Keeps the proposal usable, familiar, accessible, and appropriate for the target platform. | Apple Human Interface Guidelines for Apple products; Android and Material guidance for Android; W3C standards for the web. |
+| Product precedent | Shows how complete real journeys handle similar decisions and non-happy states without treating popularity as proof. | Relevant end-to-end journeys inspected through an authorized benchmark provider such as Mobbin. |
+| Product judgment | Makes trade-offs and recommendations explicit where sources do not determine one correct answer. | Design Arc synthesis against the user-confirmed objective, clearly labeled as judgment. |
+| Visualization and validation | Makes the proposed journey concrete enough to inspect across every material state. | Google Stitch as an external visualization surface, not an authority or evidence source. |
+
+[Explore the trusted sources and why Design Arc uses them](docs/trusted-sources/README.md)
 
 ## You need Design Arc if…
 
@@ -44,7 +57,7 @@ It then maps the existing entry points, choices, transitions, abandonment points
 
 Instead of returning one polished welcome screen, it proposes the full sequence: entry, progressive decisions, permission timing, validation, loading, empty or unavailable cases, success, cancellation, and recovery. The direction is validated before the team treats the proposal as ready for an implementation handoff.
 
-## Choose your evidence approach
+## Choose how Design Arc grounds its recommendations
 
 | Evidence mode | Choose it when | What it means |
 | --- | --- | --- |
