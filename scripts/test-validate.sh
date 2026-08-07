@@ -73,6 +73,7 @@ else
 fi
 
 for expected_output in \
+  'PASS: required Design Arc files' \
   'PASS: plugin and embedded skill validation for Design Arc' \
   'PASS: isolated Design Arc plugin installation smoke' \
   'PASS: isolated Design Arc plugin migration smoke' \

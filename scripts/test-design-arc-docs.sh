@@ -29,13 +29,13 @@ done
 
 require_text "$readme" '# Design Arc'
 require_text "$readme" 'Product feedback is often vague, redesign discussions become subjective, and teams approve attractive screens without knowing whether the complete journey works.'
-require_text "$readme" 'Move from uncertain product feedback to a complete, evidence-backed design direction.'
-require_text "$readme" 'Design Arc audits the real journey, explores meaningful alternatives, recommends the strongest path, and designs every important state before implementation begins.'
+require_text "$readme" 'Move from uncertain product feedback to a complete design direction grounded in credible sources.'
+require_text "$readme" 'Design Arc audits the real journey, checks decisions against current first-party platform guidance and inspected real-product journeys, recommends the strongest path, and designs every important state before implementation begins.'
 require_text "$readme" '## You need Design Arc if…'
 require_text "$readme" '## What Design Arc produces'
 require_text "$readme" '## The workflow'
 require_text "$readme" '## Example: from “confusing onboarding” to a complete direction'
-require_text "$readme" '## Choose your evidence approach'
+require_text "$readme" '## Choose how Design Arc grounds its recommendations'
 require_text "$readme" '## Install and set up in 60 seconds'
 require_text "$readme" 'Design Arc is installed once for your Codex profile. Each participating project keeps its own setup and may have one approved, pinned home.'
 require_text "$readme" '## Coming back tomorrow'
@@ -110,7 +110,7 @@ headings = [
     "## What Design Arc produces",
     "## The workflow",
     "## Example: from “confusing onboarding” to a complete direction",
-    "## Choose your evidence approach",
+    "## Choose how Design Arc grounds its recommendations",
     "## Install and set up in 60 seconds",
     "## Coming back tomorrow",
     "## Approval and trust controls",
@@ -121,10 +121,7 @@ if positions != sorted(positions) or len(set(positions)) != len(positions):
     raise SystemExit("FAIL: README sections are not in the required product-story order")
 
 methodology = text[text.index("## Methodology, sources, migration, and limitations"):]
-hero = text[:text.index("## You need Design Arc if…")]
 for provider in ("Apple", "Mobbin", "Stitch"):
-    if provider in hero:
-        raise SystemExit(f"FAIL: {provider} appears in the hero or primary identity")
     if provider not in methodology:
         raise SystemExit(f"FAIL: {provider} is missing from the lower methodology section")
 

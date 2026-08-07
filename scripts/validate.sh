@@ -27,6 +27,10 @@ for required_file in \
   .gitignore \
   examples/prompts.md \
   docs/codex-operating-layer.md \
+  docs/trusted-sources/README.md \
+  docs/trusted-sources/platform-guidance.md \
+  docs/trusted-sources/product-benchmarks.md \
+  docs/trusted-sources/visualization.md \
   docs/validation/behavioral-validation.md \
   .agents/plugins/marketplace.json \
   plugins/design-arc/.codex-plugin/plugin.json \

@@ -4,11 +4,13 @@
 set -eu
 
 script_dir=$(CDPATH= cd "$(dirname "$0")" && pwd)
+repo_root=$(CDPATH= cd "$script_dir/.." && pwd)
 task_temp_dir=$(mktemp -d "${TMPDIR:-/tmp}/design-arc-test-validate-regression.XXXXXX")
 whitespace_tmpdir="$task_temp_dir/tmp with spaces"
 split_target="$task_temp_dir/with"
 sentinel="$split_target/must-survive"
 failing_codex="$task_temp_dir/failing-codex"
+missing_source_checkout="$task_temp_dir/missing-trusted-source"
 
 cleanup() {
   [ -n "$task_temp_dir" ] && [ -d "$task_temp_dir" ] && rm -rf "$task_temp_dir"
@@ -30,6 +32,23 @@ mkdir -p "$whitespace_tmpdir" "$sentinel"
 
 [ -d "$sentinel" ] || fail 'test-validate cleanup targeted a split TMPDIR path'
 printf '%s\n' 'PASS: test-validate cleanup preserves split-path sentinels with whitespace TMPDIR'
+
+cp -R "$repo_root" "$missing_source_checkout"
+missing_source_file="$missing_source_checkout/docs/trusted-sources/README.md"
+[ -f "$missing_source_file" ] || fail 'temporary checkout is missing trusted-sources README fixture'
+rm "$missing_source_file"
+
+if output=$(sh "$missing_source_checkout/scripts/validate.sh" 2>&1)
+then
+  printf '%s\n' "$output" >&2
+  fail 'repository validator accepted a missing trusted-sources README'
+fi
+
+printf '%s\n' "$output" | grep -F 'FAIL: missing required file: docs/trusted-sources/README.md' >/dev/null || {
+  printf '%s\n' "$output" >&2
+  fail 'repository validator failed for the wrong missing trusted-sources README reason'
+}
+printf '%s\n' 'PASS: repository validator rejects a missing trusted-sources README'
 
 printf '%s\n' '#!/bin/sh' 'printf "%s\n" "deliberate Codex CLI failure" >&2' 'exit 97' > "$failing_codex"
 chmod +x "$failing_codex"
