@@ -154,10 +154,11 @@ REQUIRED_PROJECT_HOME_CONTRACTS = {
         "After confirmation, write `state: pending` with the candidate's `thread_id` while preserving the evidence and approval values, then enter the common readiness sequence.",
         "New, recovered, and adopted tasks all use the same title-once, pin-once, re-list verification sequence before any `ready` write.",
     ),
-    "stored thread recovery": (
-        "For any pending record with `thread_id`, resolve that exact stored ID with `list_threads` and `read_thread`, then require the exact saved `project_id` and canonical title.",
-        "Do not require the recovery marker from a task addressed by stored `thread_id`; adopted tasks may predate that marker.",
-        "If stored `thread_id` no longer resolves or its project or title identity mismatches, keep `state: pending`, report the stale identity, and require explicit abandonment; never create a replacement automatically.",
+    "stored thread recovery evidence": (
+        "For a pending record with `thread_id`, first resolve that exact stored ID with `list_threads` and `read_thread` and require the exact saved `project_id`; then choose recovery proof from the record's creation path.",
+        "For an adopted pending task, the exact canonical title is the recovery proof; do not require the recovery marker because the task may predate Design Arc.",
+        "For a newly created pending task whose ready result supplied and stored `thread_id`, the exact recorded recovery marker in its initial prompt is the recovery proof, so the canonical title need not exist yet.",
+        "If the exact stored ID does not resolve, the project identity mismatches, or neither allowed recovery proof matches, keep `state: pending`, report the stale or mismatched identity, and require explicit abandonment; never create a replacement automatically.",
         "Use `pending_since` plus recovery-marker candidate scanning only when a pending record has no `thread_id`.",
     ),
     "single ready mutation sequence": (
@@ -187,9 +188,10 @@ PROJECT_HOME_ADOPTION_SEQUENCE = (
 )
 
 PROJECT_HOME_STORED_THREAD_RECOVERY_SEQUENCE = (
-    "For any pending record with `thread_id`, resolve that exact stored ID",
-    "Do not require the recovery marker from a task addressed by stored `thread_id`",
-    "If stored `thread_id` no longer resolves or its project or title identity mismatches",
+    "For a pending record with `thread_id`, first resolve that exact stored ID",
+    "For an adopted pending task, the exact canonical title is the recovery proof",
+    "For a newly created pending task whose ready result supplied and stored `thread_id`",
+    "If the exact stored ID does not resolve, the project identity mismatches, or neither allowed recovery proof matches",
     "For a new, adopted, or exactly recovered task",
     "Call `set_thread_title` once",
     "call `set_thread_pinned` once",
@@ -225,8 +227,16 @@ FORBIDDEN_PROJECT_HOME_PATTERNS = {
         r"absent\s*(?:→|->|to)\s*ready",
         re.IGNORECASE,
     ),
-    "stored thread marker requirement": re.compile(
-        r"pending record with `?thread_id`?.{0,180}(?<!do not )require (?:the )?(?:(?:recorded )?project identity and )?(?:the )?recovery marker",
+    "adopted thread marker requirement": re.compile(
+        r"adopted pending task.{0,180}(?<!do not )require (?:the )?(?:recorded )?recovery marker",
+        re.IGNORECASE | re.DOTALL,
+    ),
+    "created thread title requirement": re.compile(
+        r"newly created pending task.{0,220}(?:must|should|may only).{0,100}(?:canonical title|title match)",
+        re.IGNORECASE | re.DOTALL,
+    ),
+    "created thread marker bypass": re.compile(
+        r"newly created pending task.{0,220}(?:need not|does not need to|without).{0,100}(?:recovery marker|marker)",
         re.IGNORECASE | re.DOTALL,
     ),
     "stored thread automatic replacement": re.compile(

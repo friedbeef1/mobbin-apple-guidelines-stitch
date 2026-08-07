@@ -287,17 +287,21 @@ MUTATIONS = {
         "New, recovered, and adopted tasks all use the same title-once, pin-once, re-list verification sequence before any `ready` write.",
         "Adopted tasks use a shorter path that omits pin and verification.",
     ),
-    "stored thread exact identity recovery": (
-        "For any pending record with `thread_id`, resolve that exact stored ID with `list_threads` and `read_thread`, then require the exact saved `project_id` and canonical title.",
-        "Recover a pending thread from the first recent task without checking stored identity.",
+    "stored thread exact project recovery": (
+        "For a pending record with `thread_id`, first resolve that exact stored ID with `list_threads` and `read_thread` and require the exact saved `project_id`; then choose recovery proof from the record's creation path.",
+        "Recover a pending thread from the first recent task without checking the stored ID or project identity.",
     ),
-    "stored thread needs no marker": (
-        "Do not require the recovery marker from a task addressed by stored `thread_id`; adopted tasks may predate that marker.",
-        "Require the recovery marker from every task addressed by stored thread_id.",
+    "adopted stored thread needs no marker": (
+        "For an adopted pending task, the exact canonical title is the recovery proof; do not require the recovery marker because the task may predate Design Arc.",
+        "For an adopted pending task, require both the exact canonical title and the recovery marker.",
     ),
-    "stale stored thread remains pending": (
-        "If stored `thread_id` no longer resolves or its project or title identity mismatches, keep `state: pending`, report the stale identity, and require explicit abandonment; never create a replacement automatically.",
-        "If stored thread_id is missing or mismatched, clear pending and create a replacement automatically.",
+    "created stored thread marker recovery": (
+        "For a newly created pending task whose ready result supplied and stored `thread_id`, the exact recorded recovery marker in its initial prompt is the recovery proof, so the canonical title need not exist yet.",
+        "For a newly created pending task with a stored thread_id, require the canonical title before recovery.",
+    ),
+    "stale stored proof remains pending": (
+        "If the exact stored ID does not resolve, the project identity mismatches, or neither allowed recovery proof matches, keep `state: pending`, report the stale or mismatched identity, and require explicit abandonment; never create a replacement automatically.",
+        "If the stored ID, project identity, or recovery proof mismatches, clear pending and create a replacement automatically.",
     ),
     "queued marker recovery scope": (
         "Use `pending_since` plus recovery-marker candidate scanning only when a pending record has no `thread_id`.",
@@ -363,12 +367,20 @@ CONTRADICTION_MUTATIONS = {
         "The only automatic home-state transitions are `absent → pending`, `pending → pending + client_thread_id|thread_id`, and `pending + thread_id → ready + thread_id`.",
         " The adoption path may transition absent → ready.",
     ),
-    "conflicting stored thread marker requirement": (
-        "Do not require the recovery marker from a task addressed by stored `thread_id`; adopted tasks may predate that marker.",
-        " A pending record with `thread_id` must require the recovery marker.",
+    "conflicting adopted marker requirement": (
+        "For an adopted pending task, the exact canonical title is the recovery proof; do not require the recovery marker because the task may predate Design Arc.",
+        " An adopted pending task must require the recovery marker.",
+    ),
+    "conflicting created title requirement": (
+        "For a newly created pending task whose ready result supplied and stored `thread_id`, the exact recorded recovery marker in its initial prompt is the recovery proof, so the canonical title need not exist yet.",
+        " A newly created pending task must have the canonical title before recovery.",
+    ),
+    "conflicting created marker bypass": (
+        "For a newly created pending task whose ready result supplied and stored `thread_id`, the exact recorded recovery marker in its initial prompt is the recovery proof, so the canonical title need not exist yet.",
+        " A newly created pending task may recover without the recovery marker.",
     ),
     "conflicting stale thread replacement": (
-        "If stored `thread_id` no longer resolves or its project or title identity mismatches, keep `state: pending`, report the stale identity, and require explicit abandonment; never create a replacement automatically.",
+        "If the exact stored ID does not resolve, the project identity mismatches, or neither allowed recovery proof matches, keep `state: pending`, report the stale or mismatched identity, and require explicit abandonment; never create a replacement automatically.",
         " If a stored `thread_id` is missing, the agent may create a replacement automatically.",
     ),
 }
@@ -385,7 +397,7 @@ ADOPTION_ORDERED_MUTATION_MARKERS = (
 )
 
 STORED_RECOVERY_ORDERED_MUTATION_MARKERS = (
-    "For any pending record with `thread_id`, resolve that exact stored ID with `list_threads` and `read_thread`, then require the exact saved `project_id` and canonical title.",
+    "For a newly created pending task whose ready result supplied and stored `thread_id`, the exact recorded recovery marker in its initial prompt is the recovery proof, so the canonical title need not exist yet.",
     "For a new, adopted, or exactly recovered task that still needs readiness, perform one mutation sequence after confirmation.",
 )
 
