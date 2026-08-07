@@ -66,6 +66,37 @@ The old instructions could infer several safe behaviors, including objective pro
 
 These observations are qualitative. They document what was seen during implementation, while the deterministic checker and mutation suite remain the reproducible repository evidence.
 
+## Fresh-task installation and setup evidence — 2026-08-07
+
+The corrective installation prompt was exercised in fresh ephemeral tasks on Codex CLI 0.146.1 with the installed public `design-arc@design-arc-marketplace` profile. The task prompt, environment, final output, and scoring criteria are recorded here so this evidence is not confused with the static workflow checker.
+
+### Installation-routing RED
+
+The first corrective prompt said to use the plugin marketplace and avoid skills.sh, but did not explicitly prohibit the built-in plugin-install control. In a fresh read-only task, Codex avoided the standalone registry but used the restricted built-in plugin-install control and failed because Design Arc is not in the permitted recommended-plugin list.
+
+Scoring: RED because no terminal marketplace command ran and installation could not be verified, even though the skills-registry failure was avoided.
+
+### Installation-routing GREEN
+
+The revised public prompt explicitly directs Codex to use these terminal commands and not `request_plugin_install`:
+
+```bash
+codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main
+codex plugin add design-arc@design-arc-marketplace
+```
+
+In a fresh ephemeral task with terminal access, Codex executed both terminal commands, verified `design-arc@design-arc-marketplace` as installed and enabled, avoided skills.sh and the built-in plugin-install control, and told the user to start a new task.
+
+Scoring: GREEN because both canonical terminal commands ran successfully, the reported plugin ID and enabled state matched the CLI, no skills-registry refusal appeared, and the response gave the new-task boundary.
+
+### Setup GREEN
+
+A separate fresh read-only task invoked `$design-arc setup` with no Design Arc or legacy project preference present. It wrote no files and presented Benchmarks/Guidelines and Guided/Follow recommendation/Fully automatic independently, with the recommended choices identified.
+
+Scoring: GREEN because the installed plugin skill loaded, setup preceded product work, both choices were independent, and no preference was written without confirmation.
+
+These observations prove the tested Codex CLI 0.146.1 routing and setup behavior in the recorded environment. They do not prove that every future model, client, policy, or marketplace configuration will behave identically. The isolated CLI installation and mutation suites remain the deterministic regression evidence.
+
 ## Historical regression context
 
 The 2026-08-04 standalone workflow sometimes requested a surface for inspection before explicitly establishing the intended outcome, and it did not consistently identify approval-mode provenance. That evidence predates the plugin consolidation and is retained only as historical motivation. It is not proof of current runtime behavior.

@@ -24,6 +24,11 @@ trap cleanup EXIT HUP INT TERM
 command -v "$codex_bin" >/dev/null 2>&1 || fail "Codex CLI is unavailable: $codex_bin"
 mkdir "$codex_home"
 git clone --quiet --no-local "$repo_root" "$checkout_path"
+git -C "$repo_root" diff --binary --no-ext-diff HEAD -- . > "$task_temp_dir/current-worktree.diff"
+if [ -s "$task_temp_dir/current-worktree.diff" ]
+then
+  git -C "$checkout_path" apply "$task_temp_dir/current-worktree.diff"
+fi
 
 CODEX_HOME="$codex_home" "$codex_bin" --version > "$task_temp_dir/codex-version.txt"
 CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace add "$checkout_path" --json > "$task_temp_dir/marketplace-add.json"
@@ -89,7 +94,7 @@ require(
 install = read_json("design-arc-add.json")
 require(install.get("pluginId") == "design-arc@design-arc-marketplace", "Codex must install the canonical plugin")
 require(install.get("name") == "design-arc", "install result must name design-arc")
-require(install.get("version") == "0.2.0", "install result must report version 0.2.0")
+require(install.get("version") == "0.2.1", "install result must report version 0.2.1")
 installed_path = Path(install.get("installedPath", "")).resolve()
 require(installed_path.is_dir(), "Codex must report an installed plugin cache directory")
 require(codex_home in installed_path.parents, "installed plugin cache must stay inside the isolated Codex home")

@@ -40,9 +40,15 @@ require_text "$readme" '## Install and set up in 60 seconds'
 require_text "$readme" '## Approval and trust controls'
 require_text "$readme" '## Methodology, sources, migration, and limitations'
 require_text "$readme" 'Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.'
-require_text "$readme" 'Install the Design Arc Codex plugin from https://github.com/friedbeef1/mobbin-apple-guidelines-stitch'
-require_text "$readme" 'Codex handles the installation and may ask for download permission.'
+require_text "$readme" 'Install Design Arc as a Codex plugin, not as a standalone skill.'
+require_text "$readme" 'Add https://github.com/friedbeef1/mobbin-apple-guidelines-stitch as a plugin marketplace using ref `main`, then install `design-arc@design-arc-marketplace`.'
+require_text "$readme" 'Do not search skills.sh or the standalone skills registry.'
+require_text "$readme" 'Use the terminal commands below; do not use the built-in plugin-install control or `request_plugin_install`.'
+require_text "$readme" 'Ask me for download permission if required, verify the plugin is enabled, and tell me to start a new task.'
 require_text "$readme" 'No Python knowledge is required.'
+require_text "$readme" '### If Codex says “no exact package exists in the skills registry”'
+require_text "$readme" 'That response means Codex used the wrong installation route.'
+require_text "$readme" 'If Codex says the plugin is not in the permitted recommended-plugin list, it used the built-in plugin-install control instead of the terminal commands.'
 require_text "$readme" 'render validation → Stitch Gate → authorized design handoff'
 require_text "$readme" '| Approval mode | Objective | Stitch Gate |'
 require_text "$readme" '| Step | Performed in / by | Why it is crucial |'
@@ -55,12 +61,26 @@ require_text "$readme" 'codex plugin add design-arc@design-arc-marketplace'
 require_text "$readme" 'Start a new Codex task.'
 require_text "$readme" 'Never silently merge, rewrite, or delete either legacy preference file.'
 require_text "$readme" 'not bundled or official'
+require_text "$readme" 'Design Arc is not listed in Codex’s built-in recommended-plugin directory.'
+require_text "$readme" 'no documented public third-party directory submission route'
 
 python3 - "$readme" <<'PY'
 from pathlib import Path
 import sys
 
 text = Path(sys.argv[1]).read_text(encoding="utf-8")
+install_heading = text.index("## Install and set up in 60 seconds")
+approval_heading = text.index("## Approval and trust controls")
+install_section = text[install_heading:approval_heading]
+prompt_start = install_section.index("Install Design Arc as a Codex plugin, not as a standalone skill.")
+marketplace_command = "codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main"
+plugin_command = "codex plugin add design-arc@design-arc-marketplace"
+if install_section.index(marketplace_command) < prompt_start or install_section.index(plugin_command) < prompt_start:
+    raise SystemExit("FAIL: explicit plugin commands must appear directly after the copyable Codex instruction")
+if "Codex handles the installation" in install_section:
+    raise SystemExit("FAIL: README must not promise that Codex infers the marketplace route automatically")
+if "skills.sh URL or package name" in install_section:
+    raise SystemExit("FAIL: troubleshooting must not route Design Arc back to a standalone skills registry")
 if "Visual Gate" in text:
     raise SystemExit("FAIL: README must use the required Stitch Gate name, not Visual Gate")
 
@@ -116,6 +136,11 @@ require_text "$behavioral_validation" '# Design Arc instruction-contract validat
 require_text "$behavioral_validation" 'plugins/design-arc/skills/design-arc/SKILL.md'
 require_text "$behavioral_validation" 'executable static instruction-contract guards; they do not execute an agent or prove runtime agent behavior.'
 require_text "$behavioral_validation" 'Fresh-context scenario evidence is qualitative unless the prompt, environment, output, and scoring are stored reproducibly.'
+require_text "$behavioral_validation" '## Fresh-task installation and setup evidence — 2026-08-07'
+require_text "$behavioral_validation" 'Codex CLI 0.146.1'
+require_text "$behavioral_validation" 'used the restricted built-in plugin-install control and failed'
+require_text "$behavioral_validation" 'executed both terminal commands, verified `design-arc@design-arc-marketplace` as installed and enabled'
+require_text "$behavioral_validation" 'presented Benchmarks/Guidelines and Guided/Follow recommendation/Fully automatic independently'
 
 require_text "$prompts" '# Design Arc prompt examples'
 require_text "$prompts" '$design-arc setup'

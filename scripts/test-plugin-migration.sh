@@ -28,6 +28,11 @@ mkdir "$codex_home"
 git clone --quiet --no-local "$repo_root" "$baseline_checkout"
 git -C "$baseline_checkout" checkout --quiet --detach "$baseline_sha"
 git clone --quiet --no-local "$repo_root" "$current_checkout"
+git -C "$repo_root" diff --binary --no-ext-diff HEAD -- . > "$task_temp_dir/current-worktree.diff"
+if [ -s "$task_temp_dir/current-worktree.diff" ]
+then
+  git -C "$current_checkout" apply "$task_temp_dir/current-worktree.diff"
+fi
 
 CODEX_HOME="$codex_home" "$codex_bin" --version > "$task_temp_dir/codex-version.txt"
 CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace add "$baseline_checkout" --json > "$task_temp_dir/legacy-marketplace-add.json"
@@ -103,7 +108,7 @@ require(Path(design_marketplace_add.get("installedRoot", "")).resolve() == curre
 
 design_add = read_json("design-arc-add.json")
 require(design_add.get("pluginId") == "design-arc@design-arc-marketplace", "migration must install the canonical Design Arc plugin")
-require(design_add.get("version") == "0.2.0", "migration must install Design Arc 0.2.0")
+require(design_add.get("version") == "0.2.1", "migration must install Design Arc 0.2.1")
 installed_path = Path(design_add.get("installedPath", "")).resolve()
 require(installed_path.is_dir(), "migrated Design Arc cache must exist")
 require(codex_home in installed_path.parents, "migrated plugin cache must stay in the isolated Codex home")
