@@ -3,10 +3,6 @@
 Product feedback is often vague, redesign discussions become subjective, and teams approve attractive screens without knowing whether the complete journey works.
 
 **Move from uncertain product feedback to a complete design direction grounded in credible sources.**<br>
-Design Arc audits the real journey, checks decisions against current first-party platform guidance and inspected real-product journeys, recommends the strongest path, and designs every important state before implementation begins.
-
-It turns comments such as “this feels confusing” into a product objective, an auditable journey diagnosis, meaningful alternatives, one clear recommendation, and a complete design proposal that can be evaluated before implementation starts.
-
 ### Grounded, not guessed
 
 Attractive screens can still fail when they ignore platform behavior, copy an isolated pattern without its journey, or hide product judgment as fact. Grounding gives every recommendation a visible reason: what users currently experience, what the platform requires, what relevant products demonstrate, and where Design Arc is making a judgment.
@@ -19,6 +15,10 @@ Attractive screens can still fail when they ignore platform behavior, copy an is
 | Visualization and validation | Makes the proposed journey concrete enough to inspect across every material state. | Google Stitch as an external visualization surface, not an authority or evidence source. |
 
 [Explore the trusted sources and why Design Arc uses them](docs/trusted-sources/README.md)
+
+Design Arc audits the real journey, checks decisions against current first-party platform guidance and inspected real-product journeys, recommends the strongest path, and designs every important state before implementation begins.
+
+It turns comments such as “this feels confusing” into a product objective, an auditable journey diagnosis, meaningful alternatives, one clear recommendation, and a complete design proposal that can be evaluated before implementation starts.
 
 ## You need Design Arc if…
 
