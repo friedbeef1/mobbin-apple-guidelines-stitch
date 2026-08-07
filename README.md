@@ -139,7 +139,28 @@ Tell Codex:
 
 The upgrade changes the shared Design Arc plugin on the laptop. It does not rerun setup in participating projects, recreate their homes, or rewrite `.codex/design-arc.yaml`. Existing homes remain the entry points for their original products.
 
-Afterward, Design Arc reports the installed version and the preservation result. A successful zero-disruption upgrade should end with `project homes recreated: 0` and `project preferences changed: 0`. If Codex cannot inventory every project, it reports only the projects it actually verified instead of claiming complete preservation.
+### What users should expect
+
+| Moment | What Design Arc does | What happens to projects |
+| --- | --- | --- |
+| Before upgrading | Reports the installed version, available version, marketplace source, and projects it can verify. | Read-only checks; no project setup or design work begins. |
+| Normal upgrade | Updates the one shared Codex-profile installation and verifies the installed result. | Preferences, homes, product files, and active reviews remain untouched. |
+| If the normal route fails | Stops with the current plugin intact. It explains any remove-and-reinstall fallback before asking separately for permission. | Nothing is recreated or reset while waiting for that decision. |
+| After upgrading | Reports the resulting version, installed-copy count, verified preservation scope, and whether fallback was used. | Existing homes remain where they were; the next clean review uses the new plugin. |
+
+A remove-and-reinstall fallback is never automatic. Before removal, Design Arc must have either an exact immutable commit or ref, or a verified, isolated local package backup proven to restore the exact installed version. If restoration cannot be proven, it leaves the working version installed. If fallback fails, it restores and verifies the previous version instead of leaving a partial installation.
+
+Afterward, Design Arc reports the installed version and the preservation result. A successful zero-disruption upgrade should end with:
+
+```text
+Installed copies: 1
+Project homes recreated: 0
+Project preferences changed: 0
+Product files changed: 0
+Active reviews interrupted: 0
+```
+
+If Codex cannot inventory every project, it names the narrower scope it actually verified instead of claiming complete preservation.
 
 An already-open review may retain its older task context. Leave it untouched; begin the next review from the same pinned home so the clean task loads the upgraded plugin. If the normal marketplace upgrade does not expose the requested version, Design Arc stops before any destructive fallback and explains the separately confirmed, restorable remove/add route.
 

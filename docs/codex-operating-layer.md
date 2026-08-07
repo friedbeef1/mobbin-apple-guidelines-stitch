@@ -10,6 +10,18 @@ The pinned home is a launchpad, not the place where product work accumulates. Ea
 
 Plugin upgrades are profile-scoped and project-preserving. They do not run setup, recreate homes, rewrite `.codex/design-arc.yaml`, mutate product files, or interrupt active reviews. The next clean task from an existing home loads the upgraded plugin; an already-open task may retain older context. Upgrade completion is reported with the verified plugin version and evidence-backed counts for changed preferences and recreated homes.
 
+### Upgrade operating contract
+
+1. Inventory the installed and available versions, marketplace source, participating preference files, and known project homes without exposing preference contents or unrelated task data.
+2. Report the exact proposed route and verified scope before changing the Codex profile. A request to inspect updates is read-only; a request to upgrade authorizes only the reported normal marketplace route.
+3. Prefer marketplace upgrade and re-read installed state afterward. Command success alone is not proof.
+4. Never run project setup, import preferences, create or mutate homes, touch product files, or alter active review tasks during an upgrade.
+5. Treat remove/add as a separate fallback decision. Before removal, require either an exact immutable prior commit or ref, or a verified, isolated local package backup proven to restore the exact installed version.
+6. If fallback fails, remove only partial Design Arc replacement state, restore the exact prior plugin and marketplace, verify one enabled prior version, and confirm discovered project preferences remain byte-identical.
+7. Finish with the old and new versions, route used, installed-copy count, preservation results, fallback or rollback status, and any inventory limitation.
+
+The upgrade contract does not weaken Objective Confirmation, evidence integrity, the Direction Gate, the Stitch Gate, external-service authorization, or implementation and release boundaries. It changes only the shared plugin installation.
+
 If task tools are unavailable or fail, preference setup may still succeed, but Design Arc must not claim that the home exists. It returns the exact title and complete starter card with manual create-and-pin steps, and keeps the home pending until title, project identity, and pinning are verified.
 
 ## What Codex contributes
