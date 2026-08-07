@@ -203,10 +203,6 @@ MUTATIONS = {
         "Never pass a returned `clientThreadId` to thread tools that require a `threadId`.",
         "Pass `clientThreadId` to every thread tool while setup is pending.",
     ),
-    "verified title and pin": (
-        "Use `set_thread_title` with the canonical title and `set_thread_pinned` with `pinned: true`; verify the resulting title, project identity, and pinned state before claiming the home exists.",
-        "Assume create_thread also applied the title and pin, then claim success.",
-    ),
     "home card content": (
         "The home card displays the project identity, Design Arc installed status, active and saved evidence and approval preferences with provenance, plain-language journey starters, and preference controls.",
         "The home card displays only a command reference.",
@@ -231,7 +227,101 @@ MUTATIONS = {
         "If task discovery, creation, title, or pin tools are unavailable or fail, complete confirmed preference setup, do not claim a home or launch succeeded, and return the exact canonical home title plus the full starter card and manual create-and-pin steps.",
         "If task tools fail, claim the home is ready and omit re-entry instructions.",
     ),
+    "home metadata isolation": (
+        "Store home metadata under `design_arc_home` in the current project's `.codex/design-arc.yaml`; it is project-scoped state, not a global preference.",
+        "Store home metadata in a global Codex preference.",
+    ),
+    "preference preservation": (
+        "Every home-state write must preserve `evidence_mode`, `benchmark_provider` when present, and `approval_mode` unchanged.",
+        "Rewrite evidence and approval values whenever home state changes.",
+    ),
+    "pending duplicate guard": (
+        "A `pending` or `ready` `design_arc_home` record blocks every new automatic home `create_thread` call.",
+        "A pending record permits another automatic home create_thread call.",
+    ),
+    "pending record preservation": (
+        "Never silently clear or replace a pending or ready record.",
+        "Silently replace a pending record when recovery takes too long.",
+    ),
+    "queued recovery marker": (
+        "Store a deterministic recovery marker in metadata and in the home task's initial prompt.",
+        "Do not persist any way to recognize a queued home later.",
+    ),
+    "queued recovery timestamp": (
+        "Store `pending_since` as an ISO-8601 UTC timestamp before task creation so later recovery can bound candidate age.",
+        "Guess when the pending task was created from current recency order.",
+    ),
+    "queued id persistence": (
+        "When only `clientThreadId` is returned, keep `state: pending`, store `client_thread_id`, and do not pass it to a thread-ID tool.",
+        "When only clientThreadId is returned, discard it and retry automatically.",
+    ),
+    "exact queued recovery": (
+        "If exactly one same-project task contains the recorded recovery marker, store its `threadId` and resume the pending transition; otherwise keep the guard and report the unresolved pending state.",
+        "Use the first recent task from any project as the queued home.",
+    ),
+    "confirmed abandonment": (
+        "Only explicit user confirmation may abandon a pending or stale ready record and authorize a retry.",
+        "Automatically abandon pending state and retry after a timeout.",
+    ),
+    "rediscover after abandonment": (
+        "After confirmed abandonment, re-run title, project, and recovery-marker discovery before any replacement creation.",
+        "Create a replacement immediately after clearing the record.",
+    ),
+    "explicit home transitions": (
+        "The only automatic home-state transitions are `absent → pending`, `pending → pending + client_thread_id|thread_id`, and `pending + thread_id → ready + thread_id`.",
+        "Home state may jump directly from absent to ready.",
+    ),
+    "manual fallback pending": (
+        "Manual fallback remains `pending` until the exact title and project identity are verified.",
+        "Manual fallback is ready as soon as instructions are printed.",
+    ),
+    "single ready sequence": (
+        "Call `set_thread_title` once, then call `set_thread_pinned` once, then call `list_threads` again and verify the canonical title, resolved project identity, and pinned state.",
+        "Repeatedly mutate title and pin before and after verification.",
+    ),
+    "ready only after verification": (
+        "Only after that verification, write `state: ready` with the verified `thread_id`.",
+        "Write state: ready before title and pin verification.",
+    ),
+    "no mutation after verification": (
+        "Do not mutate title or pin after verification.",
+        "After verification, call set_thread_title again.",
+    ),
 }
+
+
+CONTRADICTION_MUTATIONS = {
+    "conflicting pending bypass": (
+        "Never silently clear or replace a pending or ready record.",
+        " Agents may ignore a pending record and create another home automatically.",
+    ),
+    "conflicting silent clear": (
+        "Never silently clear or replace a pending or ready record.",
+        " Without explicit confirmation, remove the pending home record.",
+    ),
+    "conflicting ready-before-verify": (
+        "Only after that verification, write `state: ready` with the verified `thread_id`.",
+        " Mark state: ready before verification.",
+    ),
+    "conflicting post-verify mutation": (
+        "Do not mutate title or pin after verification.",
+        " After verification, call `set_thread_pinned` again.",
+    ),
+    "duplicate title mutation before verification": (
+        "Call `set_thread_title` once, then call `set_thread_pinned` once, then call `list_threads` again and verify the canonical title, resolved project identity, and pinned state.",
+        " Before verification, call `set_thread_title` again.",
+    ),
+    "duplicate pin mutation before verification": (
+        "Call `set_thread_title` once, then call `set_thread_pinned` once, then call `list_threads` again and verify the canonical title, resolved project identity, and pinned state.",
+        " Before verification, call `set_thread_pinned` again.",
+    ),
+}
+
+
+ORDERED_MUTATION_MARKERS = (
+    "Write `state: pending` before calling `create_thread`.",
+    "Call `create_thread` once.",
+)
 
 
 def run_checker(skill: Path) -> subprocess.CompletedProcess[str]:
@@ -250,6 +340,15 @@ def mutate_once(original: str, old: str, new: str, label: str) -> str:
             f"mutation fixture for {label!r} must match once, found {count}"
         )
     return original.replace(old, new, 1)
+
+
+def swap_once(original: str, first: str, second: str) -> str:
+    if original.count(first) != 1 or original.count(second) != 1:
+        raise AssertionError("ordered mutation markers must each match once")
+    placeholder = "__DESIGN_ARC_ORDER_MUTATION__"
+    return original.replace(first, placeholder).replace(second, first).replace(
+        placeholder, second
+    )
 
 
 def main() -> int:
@@ -273,7 +372,38 @@ def main() -> int:
                 )
             print(f"PASS: rejected mutation: {label}")
 
-    print(f"PASS: rejected {len(MUTATIONS)} deterministic contract mutations")
+        home_fragment = (
+            "A `pending` or `ready` `design_arc_home` record blocks every new "
+            "automatic home `create_thread` call."
+        )
+        mutated_skill.write_text(
+            original.replace(home_fragment, "", 1) + "\n" + home_fragment + "\n",
+            encoding="utf-8",
+        )
+        if run_checker(mutated_skill).returncode == 0:
+            raise AssertionError("checker accepted Project home contract outside section")
+        print("PASS: rejected mutation: home contract moved outside section")
+
+        mutated_skill.write_text(
+            swap_once(original, *ORDERED_MUTATION_MARKERS), encoding="utf-8"
+        )
+        if run_checker(mutated_skill).returncode == 0:
+            raise AssertionError("checker accepted reversed pending/create order")
+        print("PASS: rejected mutation: reversed pending/create order")
+
+        for label, (anchor, contradiction) in CONTRADICTION_MUTATIONS.items():
+            mutated_skill.write_text(
+                mutate_once(original, anchor, anchor + contradiction, label),
+                encoding="utf-8",
+            )
+            if run_checker(mutated_skill).returncode == 0:
+                raise AssertionError(
+                    f"checker accepted contradictory contract: {label}"
+                )
+            print(f"PASS: rejected mutation: {label}")
+
+    mutation_count = len(MUTATIONS) + len(CONTRADICTION_MUTATIONS) + 2
+    print(f"PASS: rejected {mutation_count} deterministic contract mutations")
     return 0
 
 

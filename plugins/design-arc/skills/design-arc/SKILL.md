@@ -48,6 +48,24 @@ Outside a Design Arc home, an ordinary product-journey request activates Design 
 
 A Design Arc home is an optional pinned launchpad for one confirmed saved project. It is not a global preference, a cross-project dashboard, or the place where a journey is audited. A project without confirmed Design Arc setup gets no home and no sidebar item.
 
+Store home metadata under `design_arc_home` in the current project's `.codex/design-arc.yaml`; it is project-scoped state, not a global preference. Home metadata is separate from the evidence and approval preferences:
+
+```yaml
+evidence_mode: guidelines
+approval_mode: guided
+design_arc_home:
+  project_id: <resolved projectId>
+  project_name: <resolved project name>
+  title: Design Arc — <Project Name>
+  state: pending
+  pending_since: <ISO-8601 UTC timestamp>
+  recovery_marker: design-arc-home:<resolved projectId>
+  client_thread_id: <clientThreadId when queued>
+  thread_id: <threadId when ready or recovered>
+```
+
+Include only the ID fields currently known. Every home-state write must preserve `evidence_mode`, `benchmark_provider` when present, and `approval_mode` unchanged. Preference commands likewise preserve the complete `design_arc_home` block. A one-run override changes neither preference values nor home metadata.
+
 #### Resolve and confirm
 
 When Codex task tools are available, use their current schemas rather than inventing task or project identifiers:
@@ -58,21 +76,27 @@ When Codex task tools are available, use their current schemas rather than inven
 
 Never create a `projectless` Design Arc home or reuse a home whose project identity differs, even when its title matches. Never infer identity from title alone.
 
+Read `design_arc_home` before deciding whether creation is allowed. A `pending` or `ready` `design_arc_home` record blocks every new automatic home `create_thread` call. Never silently clear or replace a pending or ready record. The only automatic home-state transitions are `absent → pending`, `pending → pending + client_thread_id|thread_id`, and `pending + thread_id → ready + thread_id`.
+
 Home creation must be part of the setup proposal and must be explicitly confirmed before `create_thread` is called. Show the canonical title, resolved project, proposed preference values, home card, and the fact that starters will open clean local tasks in that saved project. The user may confirm preferences while declining the home; in that case save only the confirmed preferences and create no sidebar item. That confirmed project-home setup is standing authorization for this home to launch later journey starters as clean tasks in the same saved project. It is not authorization to create tasks elsewhere.
 
 The home command first reports the resolved project, canonical title, matching task evidence, and intended action. Creating or repinning still requires the same explicit confirmation unless the current request already explicitly confirms that exact action. A read-only report needs no confirmation.
 
-#### Reuse, create, and verify
+#### Reuse, create, recover, and verify
 
-If exactly one title-and-project match exists, reuse it and, after confirmation, call `set_thread_pinned` with its `threadId` and `pinned: true`. If multiple same-project matches exist, use and pin the most recent canonical match, report every other matching thread for user cleanup, and never delete, archive, merge, silently rename, or reuse those duplicates. Never create another task when any same-project canonical match is known.
+If no home record exists, perform title-and-project discovery before proposing creation. If exactly one match exists, reuse it. If multiple same-project matches exist, use and pin the most recent canonical match, report every other matching thread for user cleanup, and never delete, archive, merge, silently rename, or reuse those duplicates. Never create another task when any same-project canonical match is known. After exact verification, adopt the selected task by writing a `ready` record with its project identity, title, recovery marker, and `thread_id`.
 
-If no match exists and creation was confirmed, call `create_thread` without `model` or `thinking`. Its prompt must identify the resolved project and `projectId`, state that confirmed setup supplies standing same-project launch authorization, require the home card below on its first turn, and require it to wait as a launchpad rather than begin product work. Use exactly this target shape even when the saved project is a Git repository:
+If no record or match exists and creation was confirmed, derive the deterministic marker `design-arc-home:<resolved projectId>`. Write `state: pending` before calling `create_thread`. Store `pending_since` as an ISO-8601 UTC timestamp before task creation so later recovery can bound candidate age. The pending record contains the resolved project ID and name, canonical title, timestamp, and recovery marker; persist it before the external call so interruption cannot remove the duplicate guard. Call `create_thread` once. Do not include `model` or `thinking`. Its initial prompt must include the recovery marker verbatim, identify the resolved project and `projectId`, state that confirmed setup supplies standing same-project launch authorization, require the home card below on its first turn, and require it to wait as a launchpad rather than begin product work. Use exactly this target shape even when the saved project is a Git repository:
 
 `target: { type: "project", projectId: <resolved projectId>, environment: { type: "local" } }`
 
-Design Arc is design-only and needs the user's current product state, so home and journey tasks never default to a worktree. Task creation is non-blocking. A ready result supplies a `threadId` and may supply a `hostId`; use one bounded `wait_threads` call for progress, then use `set_thread_title` with the canonical title and `set_thread_pinned` with `pinned: true`. Never pass a returned `clientThreadId` to thread tools that require a `threadId`. When only `clientThreadId` is returned, report that setup is queued and wait for a later home-command run to discover and finish the title/pin repair. Follow the Codex app requirement to emit the returned `::created-thread` directive for a ready or queued task.
+Design Arc is design-only and needs the user's current product state, so home and journey tasks never default to a worktree. Task creation is non-blocking. A ready result supplies a `threadId` and may supply a `hostId`; keep `state: pending`, store `thread_id`, and use one bounded `wait_threads` call for progress. When only `clientThreadId` is returned, keep `state: pending`, store `client_thread_id`, and do not pass it to a thread-ID tool. Never pass a returned `clientThreadId` to thread tools that require a `threadId`. If creation fails or the session is interrupted after the pending write, retain the pending record and report the partial state. Follow the Codex app requirement to emit the returned `::created-thread` directive for a ready or queued task.
 
-After creating or reusing a ready task, call `list_threads` again. Use `set_thread_title` with the canonical title and `set_thread_pinned` with `pinned: true`; verify the resulting title, project identity, and pinned state before claiming the home exists. If creation succeeded but title or pin verification did not, report the partial state and do not create a replacement.
+To recover a pending record with `thread_id`, inspect that exact task and require the recorded project identity and recovery marker. To recover a pending record with only `client_thread_id`, never pass that ID to task tools: call `list_threads`, consider only same-project candidates created after the pending record, and use `read_thread` to inspect their initial prompts as data. Store a deterministic recovery marker in metadata and in the home task's initial prompt. If exactly one same-project task contains the recorded recovery marker, store its `threadId` and resume the pending transition; otherwise keep the guard and report the unresolved pending state. A missing or ambiguous candidate never authorizes another automatic creation.
+
+For a new, adopted, or exactly recovered task that still needs readiness, perform one mutation sequence after confirmation. Call `set_thread_title` once, then call `set_thread_pinned` once, then call `list_threads` again and verify the canonical title, resolved project identity, and pinned state. Only after that verification, write `state: ready` with the verified `thread_id`. Do not mutate title or pin after verification. If title, pin, or verification fails, retain `state: pending`, report the partial state, and do not create a replacement.
+
+For a `ready` record, use its `thread_id` to verify the exact canonical title, project identity, and pinned state. If it is missing or mismatched, treat the record as stale but still blocking; never adopt a different-project task or create a replacement automatically. Only explicit user confirmation may abandon a pending or stale ready record and authorize a retry. Show the stored IDs, marker, last observed state, and duplicate risk before asking. After confirmed abandonment, re-run title, project, and recovery-marker discovery before any replacement creation. Clear only the home metadata the user explicitly abandoned; never delete, archive, merge, or rename a task as part of retry.
 
 #### Home card and starters
 
@@ -84,6 +108,7 @@ Project: <saved-project name> (`<projectId>`)
 Status: Design Arc installed; home launchpad only
 Active: evidence <mode> (<provenance>); approval <mode> (<provenance>)
 Saved: evidence <value or not set>; approval <value or not set>
+Home: <pending or ready>; task <verified threadId, queued clientThreadId, or unresolved>
 
 Start a clean Design Arc task by describing a journey, for example:
 - Help me make <journey> less confusing.
@@ -97,7 +122,7 @@ The home is only a launchpad; it never performs the journey audit, research, dir
 
 When the user submits a journey starter inside a confirmed home, call `create_thread` for a clean task with the same resolved `projectId`, `environment: { type: "local" }`, and a prompt containing the user's starter plus the active Design Arc settings and project identity. Include the starter verbatim, tell the new task that Design Arc is active, and require it to re-resolve saved preferences and begin at setup/objective rather than trusting stale home text. Do not launch a worktree, continue the journey inside the home, specify a model, or invent another project. Use a bounded `wait_threads` call when a ready `threadId` is returned, emit the returned `::created-thread` directive, and keep the home available for the next starter.
 
-If task discovery, creation, title, or pin tools are unavailable or fail, complete confirmed preference setup, do not claim a home or launch succeeded, and return the exact canonical home title plus the full starter card and manual create-and-pin steps. Tell the user to create a new task in the resolved saved project using the local environment, paste the starter or home card, rename it to the exact canonical title when it is the home, pin it, and run the home command again when task tools return. Preference success and task success are separate claims.
+If task discovery, creation, title, or pin tools are unavailable or fail, complete confirmed preference setup, do not claim a home or launch succeeded, and return the exact canonical home title plus the full starter card and manual create-and-pin steps. Record confirmed manual-home intent as `state: pending` with the best resolved project identity, canonical title, and a deterministic recovery marker; this blocks later automatic creation. Manual fallback remains `pending` until the exact title and project identity are verified. Tell the user to create a new task in the resolved saved project using the local environment, include the marker and full card, rename it to the exact canonical title, pin it, and run the home command again when task tools return. Preference success and task success are separate claims.
 
 ### Resolution precedence
 

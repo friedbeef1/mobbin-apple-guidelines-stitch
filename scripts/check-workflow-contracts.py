@@ -8,6 +8,7 @@ simulate an agent; fresh-context scenarios provide separate behavioral evidence.
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from pathlib import Path
 
@@ -104,7 +105,6 @@ REQUIRED_CONTRACTS = {
     "project home task creation": (
         '`target: { type: "project", projectId: <resolved projectId>, environment: { type: "local" } }`',
         "Never pass a returned `clientThreadId` to thread tools that require a `threadId`.",
-        "Use `set_thread_title` with the canonical title and `set_thread_pinned` with `pinned: true`; verify the resulting title, project identity, and pinned state before claiming the home exists.",
     ),
     "project home launchpad content": (
         "The home card displays the project identity, Design Arc installed status, active and saved evidence and approval preferences with provenance, plain-language journey starters, and preference controls.",
@@ -121,6 +121,86 @@ REQUIRED_CONTRACTS = {
         "If task discovery, creation, title, or pin tools are unavailable or fail, complete confirmed preference setup, do not claim a home or launch succeeded, and return the exact canonical home title plus the full starter card and manual create-and-pin steps.",
     ),
 }
+
+
+PROJECT_HOME_HEADING = "### Project home"
+PROJECT_HOME_MUTATION_HEADING = "#### Reuse, create, recover, and verify"
+
+REQUIRED_PROJECT_HOME_CONTRACTS = {
+    "home metadata isolation": (
+        "Store home metadata under `design_arc_home` in the current project's `.codex/design-arc.yaml`; it is project-scoped state, not a global preference.",
+        "Every home-state write must preserve `evidence_mode`, `benchmark_provider` when present, and `approval_mode` unchanged.",
+    ),
+    "pending duplicate guard": (
+        "A `pending` or `ready` `design_arc_home` record blocks every new automatic home `create_thread` call.",
+        "Never silently clear or replace a pending or ready record.",
+    ),
+    "queued recovery": (
+        "Store `pending_since` as an ISO-8601 UTC timestamp before task creation so later recovery can bound candidate age.",
+        "Store a deterministic recovery marker in metadata and in the home task's initial prompt.",
+        "When only `clientThreadId` is returned, keep `state: pending`, store `client_thread_id`, and do not pass it to a thread-ID tool.",
+        "If exactly one same-project task contains the recorded recovery marker, store its `threadId` and resume the pending transition; otherwise keep the guard and report the unresolved pending state.",
+    ),
+    "explicit abandonment": (
+        "Only explicit user confirmation may abandon a pending or stale ready record and authorize a retry.",
+        "After confirmed abandonment, re-run title, project, and recovery-marker discovery before any replacement creation.",
+    ),
+    "home state transitions": (
+        "The only automatic home-state transitions are `absent → pending`, `pending → pending + client_thread_id|thread_id`, and `pending + thread_id → ready + thread_id`.",
+        "Manual fallback remains `pending` until the exact title and project identity are verified.",
+    ),
+    "single ready mutation sequence": (
+        "Call `set_thread_title` once, then call `set_thread_pinned` once, then call `list_threads` again and verify the canonical title, resolved project identity, and pinned state.",
+        "Only after that verification, write `state: ready` with the verified `thread_id`.",
+        "Do not mutate title or pin after verification.",
+    ),
+}
+
+PROJECT_HOME_MUTATION_SEQUENCE = (
+    "Write `state: pending` before calling `create_thread`.",
+    "Call `create_thread` once.",
+    "Call `set_thread_title` once",
+    "call `set_thread_pinned` once",
+    "call `list_threads` again and verify",
+    "Only after that verification, write `state: ready`",
+)
+
+FORBIDDEN_PROJECT_HOME_PATTERNS = {
+    "pending guard bypass": re.compile(
+        r"(?:may|must|should)\s+(?:ignore|bypass).{0,100}(?:pending|ready).{0,100}(?:create|retry)",
+        re.IGNORECASE | re.DOTALL,
+    ),
+    "silent home-state clearing": re.compile(
+        r"(?:(?<!never )silently|without (?:explicit )?confirmation).{0,100}(?:clear|remove|delete).{0,100}(?:pending|ready|home record)",
+        re.IGNORECASE | re.DOTALL,
+    ),
+    "ready before verification": re.compile(
+        r"(?:mark|write|set).{0,60}(?:state:\s*)?ready.{0,120}before.{0,120}(?:verify|verification)",
+        re.IGNORECASE | re.DOTALL,
+    ),
+    "mutation after verification": re.compile(
+        r"after verification.{0,120}(?:call|run).{0,80}(?:set_thread_title|set_thread_pinned)",
+        re.IGNORECASE | re.DOTALL,
+    ),
+}
+
+
+def markdown_section(text: str, heading: str, next_prefix: str) -> str | None:
+    start = text.find(heading)
+    if start < 0:
+        return None
+    end = text.find(f"\n{next_prefix}", start + len(heading))
+    return text[start:] if end < 0 else text[start:end]
+
+
+def is_ordered(text: str, fragments: tuple[str, ...]) -> bool:
+    cursor = 0
+    for fragment in fragments:
+        position = text.find(fragment, cursor)
+        if position < 0:
+            return False
+        cursor = position + len(fragment)
+    return True
 
 
 def parse_args() -> argparse.Namespace:
@@ -143,6 +223,31 @@ def main() -> int:
     for label, fragments in REQUIRED_CONTRACTS.items():
         if any(fragment not in text for fragment in fragments):
             failures.append(f"missing or reversed {label} contract")
+
+    project_home = markdown_section(text, PROJECT_HOME_HEADING, "### ")
+    if project_home is None:
+        failures.append("missing Project home section")
+    else:
+        for label, fragments in REQUIRED_PROJECT_HOME_CONTRACTS.items():
+            if any(fragment not in project_home for fragment in fragments):
+                failures.append(f"missing or reversed {label} contract")
+
+        mutation_section = markdown_section(
+            project_home, PROJECT_HOME_MUTATION_HEADING, "#### "
+        )
+        if mutation_section is None or not is_ordered(
+            mutation_section, PROJECT_HOME_MUTATION_SEQUENCE
+        ):
+            failures.append("missing or reversed project-home mutation sequence")
+        elif any(
+            mutation_section.count(f"`{tool_name}`") != 1
+            for tool_name in ("set_thread_title", "set_thread_pinned")
+        ):
+            failures.append("project-home title or pin mutation is not singular")
+
+        for label, pattern in FORBIDDEN_PROJECT_HOME_PATTERNS.items():
+            if pattern.search(project_home):
+                failures.append(f"contradictory {label} contract")
 
     if failures:
         for failure in failures:
