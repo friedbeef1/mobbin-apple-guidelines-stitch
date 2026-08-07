@@ -287,6 +287,22 @@ MUTATIONS = {
         "New, recovered, and adopted tasks all use the same title-once, pin-once, re-list verification sequence before any `ready` write.",
         "Adopted tasks use a shorter path that omits pin and verification.",
     ),
+    "stored thread exact identity recovery": (
+        "For any pending record with `thread_id`, resolve that exact stored ID with `list_threads` and `read_thread`, then require the exact saved `project_id` and canonical title.",
+        "Recover a pending thread from the first recent task without checking stored identity.",
+    ),
+    "stored thread needs no marker": (
+        "Do not require the recovery marker from a task addressed by stored `thread_id`; adopted tasks may predate that marker.",
+        "Require the recovery marker from every task addressed by stored thread_id.",
+    ),
+    "stale stored thread remains pending": (
+        "If stored `thread_id` no longer resolves or its project or title identity mismatches, keep `state: pending`, report the stale identity, and require explicit abandonment; never create a replacement automatically.",
+        "If stored thread_id is missing or mismatched, clear pending and create a replacement automatically.",
+    ),
+    "queued marker recovery scope": (
+        "Use `pending_since` plus recovery-marker candidate scanning only when a pending record has no `thread_id`.",
+        "Use recovery-marker scanning instead of stored thread_id identity for every pending record.",
+    ),
     "single ready sequence": (
         "Call `set_thread_title` once, then call `set_thread_pinned` once, then call `list_threads` again and verify the canonical title, resolved project identity, and pinned state.",
         "Repeatedly mutate title and pin before and after verification.",
@@ -347,6 +363,14 @@ CONTRADICTION_MUTATIONS = {
         "The only automatic home-state transitions are `absent → pending`, `pending → pending + client_thread_id|thread_id`, and `pending + thread_id → ready + thread_id`.",
         " The adoption path may transition absent → ready.",
     ),
+    "conflicting stored thread marker requirement": (
+        "Do not require the recovery marker from a task addressed by stored `thread_id`; adopted tasks may predate that marker.",
+        " A pending record with `thread_id` must require the recovery marker.",
+    ),
+    "conflicting stale thread replacement": (
+        "If stored `thread_id` no longer resolves or its project or title identity mismatches, keep `state: pending`, report the stale identity, and require explicit abandonment; never create a replacement automatically.",
+        " If a stored `thread_id` is missing, the agent may create a replacement automatically.",
+    ),
 }
 
 
@@ -357,6 +381,11 @@ ORDERED_MUTATION_MARKERS = (
 
 ADOPTION_ORDERED_MUTATION_MARKERS = (
     "After confirmation, write `state: pending` with the candidate's `thread_id` while preserving the evidence and approval values, then enter the common readiness sequence.",
+    "For a new, adopted, or exactly recovered task that still needs readiness, perform one mutation sequence after confirmation.",
+)
+
+STORED_RECOVERY_ORDERED_MUTATION_MARKERS = (
+    "For any pending record with `thread_id`, resolve that exact stored ID with `list_threads` and `read_thread`, then require the exact saved `project_id` and canonical title.",
     "For a new, adopted, or exactly recovered task that still needs readiness, perform one mutation sequence after confirmation.",
 )
 
@@ -435,6 +464,14 @@ def main() -> int:
             raise AssertionError("checker accepted adoption readiness before pending")
         print("PASS: rejected mutation: adoption readiness before pending")
 
+        mutated_skill.write_text(
+            swap_once(original, *STORED_RECOVERY_ORDERED_MUTATION_MARKERS),
+            encoding="utf-8",
+        )
+        if run_checker(mutated_skill).returncode == 0:
+            raise AssertionError("checker accepted readiness before stored-ID recovery")
+        print("PASS: rejected mutation: readiness before stored-ID recovery")
+
         for label, (anchor, contradiction) in CONTRADICTION_MUTATIONS.items():
             mutated_skill.write_text(
                 mutate_once(original, anchor, anchor + contradiction, label),
@@ -446,7 +483,7 @@ def main() -> int:
                 )
             print(f"PASS: rejected mutation: {label}")
 
-    mutation_count = len(MUTATIONS) + len(CONTRADICTION_MUTATIONS) + 3
+    mutation_count = len(MUTATIONS) + len(CONTRADICTION_MUTATIONS) + 4
     print(f"PASS: rejected {mutation_count} deterministic contract mutations")
     return 0
 

@@ -154,6 +154,12 @@ REQUIRED_PROJECT_HOME_CONTRACTS = {
         "After confirmation, write `state: pending` with the candidate's `thread_id` while preserving the evidence and approval values, then enter the common readiness sequence.",
         "New, recovered, and adopted tasks all use the same title-once, pin-once, re-list verification sequence before any `ready` write.",
     ),
+    "stored thread recovery": (
+        "For any pending record with `thread_id`, resolve that exact stored ID with `list_threads` and `read_thread`, then require the exact saved `project_id` and canonical title.",
+        "Do not require the recovery marker from a task addressed by stored `thread_id`; adopted tasks may predate that marker.",
+        "If stored `thread_id` no longer resolves or its project or title identity mismatches, keep `state: pending`, report the stale identity, and require explicit abandonment; never create a replacement automatically.",
+        "Use `pending_since` plus recovery-marker candidate scanning only when a pending record has no `thread_id`.",
+    ),
     "single ready mutation sequence": (
         "Call `set_thread_title` once, then call `set_thread_pinned` once, then call `list_threads` again and verify the canonical title, resolved project identity, and pinned state.",
         "Only after that verification, write `state: ready` with the verified `thread_id`.",
@@ -178,6 +184,16 @@ PROJECT_HOME_ADOPTION_SEQUENCE = (
     "call `set_thread_pinned` once",
     "call `list_threads` again and verify",
     "Only after that verification, write `state: ready`",
+)
+
+PROJECT_HOME_STORED_THREAD_RECOVERY_SEQUENCE = (
+    "For any pending record with `thread_id`, resolve that exact stored ID",
+    "Do not require the recovery marker from a task addressed by stored `thread_id`",
+    "If stored `thread_id` no longer resolves or its project or title identity mismatches",
+    "For a new, adopted, or exactly recovered task",
+    "Call `set_thread_title` once",
+    "call `set_thread_pinned` once",
+    "call `list_threads` again and verify",
 )
 
 FORBIDDEN_PROJECT_HOME_PATTERNS = {
@@ -208,6 +224,14 @@ FORBIDDEN_PROJECT_HOME_PATTERNS = {
     "absent direct to ready": re.compile(
         r"absent\s*(?:→|->|to)\s*ready",
         re.IGNORECASE,
+    ),
+    "stored thread marker requirement": re.compile(
+        r"pending record with `?thread_id`?.{0,180}(?<!do not )require (?:the )?(?:(?:recorded )?project identity and )?(?:the )?recovery marker",
+        re.IGNORECASE | re.DOTALL,
+    ),
+    "stored thread automatic replacement": re.compile(
+        r"(?:(?:missing|mismatched|unresolved).{0,160}(?:stored )?`?thread_id`?|(?:stored )?`?thread_id`?.{0,80}(?:is )?(?:missing|mismatched|unresolved)).{0,160}(?:may|must|should).{0,80}(?:create|replace)",
+        re.IGNORECASE | re.DOTALL,
     ),
 }
 
@@ -268,6 +292,10 @@ def main() -> int:
             failures.append("missing or reversed project-home mutation sequence")
         elif not is_ordered(mutation_section, PROJECT_HOME_ADOPTION_SEQUENCE):
             failures.append("missing or reversed project-home adoption sequence")
+        elif not is_ordered(
+            mutation_section, PROJECT_HOME_STORED_THREAD_RECOVERY_SEQUENCE
+        ):
+            failures.append("missing or reversed stored-thread recovery sequence")
         elif any(
             mutation_section.count(f"`{tool_name}`") != 1
             for tool_name in ("set_thread_title", "set_thread_pinned")
