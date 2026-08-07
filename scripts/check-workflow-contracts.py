@@ -100,7 +100,7 @@ REQUIRED_CONTRACTS = {
     ),
     "project home deduplication": (
         "Call `list_threads` with `limit: 50`; inspect both `pinnedThreads` and `threads`, and match a home by both the exact canonical title and the resolved `projectId`.",
-        "If multiple same-project matches exist, use and pin the most recent canonical match, report every other matching thread for user cleanup, and never delete, archive, merge, silently rename, or reuse those duplicates.",
+        "If multiple same-project matches exist, select the most recent canonical match for adoption, report every other matching thread for user cleanup, and never delete, archive, merge, silently rename, or reuse those duplicates.",
     ),
     "project home task creation": (
         '`target: { type: "project", projectId: <resolved projectId>, environment: { type: "local" } }`',
@@ -149,6 +149,11 @@ REQUIRED_PROJECT_HOME_CONTRACTS = {
         "The only automatic home-state transitions are `absent → pending`, `pending → pending + client_thread_id|thread_id`, and `pending + thread_id → ready + thread_id`.",
         "Manual fallback remains `pending` until the exact title and project identity are verified.",
     ),
+    "existing home adoption": (
+        "An existing exact title-and-project match is an adoption candidate, not a ready home.",
+        "After confirmation, write `state: pending` with the candidate's `thread_id` while preserving the evidence and approval values, then enter the common readiness sequence.",
+        "New, recovered, and adopted tasks all use the same title-once, pin-once, re-list verification sequence before any `ready` write.",
+    ),
     "single ready mutation sequence": (
         "Call `set_thread_title` once, then call `set_thread_pinned` once, then call `list_threads` again and verify the canonical title, resolved project identity, and pinned state.",
         "Only after that verification, write `state: ready` with the verified `thread_id`.",
@@ -159,6 +164,16 @@ REQUIRED_PROJECT_HOME_CONTRACTS = {
 PROJECT_HOME_MUTATION_SEQUENCE = (
     "Write `state: pending` before calling `create_thread`.",
     "Call `create_thread` once.",
+    "Call `set_thread_title` once",
+    "call `set_thread_pinned` once",
+    "call `list_threads` again and verify",
+    "Only after that verification, write `state: ready`",
+)
+
+PROJECT_HOME_ADOPTION_SEQUENCE = (
+    "An existing exact title-and-project match is an adoption candidate, not a ready home.",
+    "After confirmation, write `state: pending` with the candidate's `thread_id`",
+    "For a new, adopted, or exactly recovered task",
     "Call `set_thread_title` once",
     "call `set_thread_pinned` once",
     "call `list_threads` again and verify",
@@ -181,6 +196,18 @@ FORBIDDEN_PROJECT_HOME_PATTERNS = {
     "mutation after verification": re.compile(
         r"after verification.{0,120}(?:call|run).{0,80}(?:set_thread_title|set_thread_pinned)",
         re.IGNORECASE | re.DOTALL,
+    ),
+    "direct ready adoption": re.compile(
+        r"(?:adopt|reuse).{0,120}(?:by|directly|immediately).{0,80}(?:writ(?:e|ing)|mark|set).{0,60}(?:state:\s*)?`?ready`?",
+        re.IGNORECASE | re.DOTALL,
+    ),
+    "adoption readiness bypass": re.compile(
+        r"adopt(?:ed|ion)?.{0,120}(?:skip|bypass).{0,120}(?:pending|pin|list_threads|verification)",
+        re.IGNORECASE | re.DOTALL,
+    ),
+    "absent direct to ready": re.compile(
+        r"absent\s*(?:→|->|to)\s*ready",
+        re.IGNORECASE,
     ),
 }
 
@@ -239,6 +266,8 @@ def main() -> int:
             mutation_section, PROJECT_HOME_MUTATION_SEQUENCE
         ):
             failures.append("missing or reversed project-home mutation sequence")
+        elif not is_ordered(mutation_section, PROJECT_HOME_ADOPTION_SEQUENCE):
+            failures.append("missing or reversed project-home adoption sequence")
         elif any(
             mutation_section.count(f"`{tool_name}`") != 1
             for tool_name in ("set_thread_title", "set_thread_pinned")

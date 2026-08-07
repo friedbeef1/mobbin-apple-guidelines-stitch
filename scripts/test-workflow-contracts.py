@@ -192,8 +192,8 @@ MUTATIONS = {
         "Reuse the first title match without checking its project identity.",
     ),
     "duplicate preservation": (
-        "If multiple same-project matches exist, use and pin the most recent canonical match, report every other matching thread for user cleanup, and never delete, archive, merge, silently rename, or reuse those duplicates.",
-        "Merge and archive all duplicate homes automatically.",
+        "If multiple same-project matches exist, select the most recent canonical match for adoption, report every other matching thread for user cleanup, and never delete, archive, merge, silently rename, or reuse those duplicates.",
+        "Use and pin the first duplicate directly as ready, then archive the others.",
     ),
     "local project target": (
         '`target: { type: "project", projectId: <resolved projectId>, environment: { type: "local" } }`',
@@ -275,6 +275,18 @@ MUTATIONS = {
         "Manual fallback remains `pending` until the exact title and project identity are verified.",
         "Manual fallback is ready as soon as instructions are printed.",
     ),
+    "existing match is adoption candidate": (
+        "An existing exact title-and-project match is an adoption candidate, not a ready home.",
+        "An existing exact title-and-project match is already a ready home.",
+    ),
+    "adoption enters pending": (
+        "After confirmation, write `state: pending` with the candidate's `thread_id` while preserving the evidence and approval values, then enter the common readiness sequence.",
+        "Adopt the candidate directly as ready without writing pending metadata.",
+    ),
+    "common readiness for adopted tasks": (
+        "New, recovered, and adopted tasks all use the same title-once, pin-once, re-list verification sequence before any `ready` write.",
+        "Adopted tasks use a shorter path that omits pin and verification.",
+    ),
     "single ready sequence": (
         "Call `set_thread_title` once, then call `set_thread_pinned` once, then call `list_threads` again and verify the canonical title, resolved project identity, and pinned state.",
         "Repeatedly mutate title and pin before and after verification.",
@@ -315,12 +327,37 @@ CONTRADICTION_MUTATIONS = {
         "Call `set_thread_title` once, then call `set_thread_pinned` once, then call `list_threads` again and verify the canonical title, resolved project identity, and pinned state.",
         " Before verification, call `set_thread_pinned` again.",
     ),
+    "conflicting direct ready adoption": (
+        "An existing exact title-and-project match is an adoption candidate, not a ready home.",
+        " Reuse the candidate by writing state: ready immediately.",
+    ),
+    "conflicting adopted pending bypass": (
+        "An existing exact title-and-project match is an adoption candidate, not a ready home.",
+        " Adopted tasks skip pending metadata.",
+    ),
+    "conflicting adopted pin bypass": (
+        "An existing exact title-and-project match is an adoption candidate, not a ready home.",
+        " Adopted tasks bypass pin verification.",
+    ),
+    "conflicting adopted re-list bypass": (
+        "An existing exact title-and-project match is an adoption candidate, not a ready home.",
+        " Adoption may skip list_threads verification.",
+    ),
+    "conflicting absent-ready transition": (
+        "The only automatic home-state transitions are `absent → pending`, `pending → pending + client_thread_id|thread_id`, and `pending + thread_id → ready + thread_id`.",
+        " The adoption path may transition absent → ready.",
+    ),
 }
 
 
 ORDERED_MUTATION_MARKERS = (
     "Write `state: pending` before calling `create_thread`.",
     "Call `create_thread` once.",
+)
+
+ADOPTION_ORDERED_MUTATION_MARKERS = (
+    "After confirmation, write `state: pending` with the candidate's `thread_id` while preserving the evidence and approval values, then enter the common readiness sequence.",
+    "For a new, adopted, or exactly recovered task that still needs readiness, perform one mutation sequence after confirmation.",
 )
 
 
@@ -391,6 +428,13 @@ def main() -> int:
             raise AssertionError("checker accepted reversed pending/create order")
         print("PASS: rejected mutation: reversed pending/create order")
 
+        mutated_skill.write_text(
+            swap_once(original, *ADOPTION_ORDERED_MUTATION_MARKERS), encoding="utf-8"
+        )
+        if run_checker(mutated_skill).returncode == 0:
+            raise AssertionError("checker accepted adoption readiness before pending")
+        print("PASS: rejected mutation: adoption readiness before pending")
+
         for label, (anchor, contradiction) in CONTRADICTION_MUTATIONS.items():
             mutated_skill.write_text(
                 mutate_once(original, anchor, anchor + contradiction, label),
@@ -402,7 +446,7 @@ def main() -> int:
                 )
             print(f"PASS: rejected mutation: {label}")
 
-    mutation_count = len(MUTATIONS) + len(CONTRADICTION_MUTATIONS) + 2
+    mutation_count = len(MUTATIONS) + len(CONTRADICTION_MUTATIONS) + 3
     print(f"PASS: rejected {mutation_count} deterministic contract mutations")
     return 0
 
