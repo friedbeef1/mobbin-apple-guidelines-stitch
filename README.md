@@ -9,7 +9,7 @@ Design Arc gives teams a stronger basis for making design decisions. Instead of 
 
 This matters because attractive screens can still fail when they ignore familiar platform behavior, borrow an isolated pattern without understanding the surrounding journey, or present opinion as fact. Grounding keeps the reasoning visible without pretending that a source can make the product decision for you.
 
-| Grounding layer | Why it matters | Credible sources |
+| Grounding layer | Why it matters | Credible sources used |
 | --- | --- | --- |
 | Platform requirements | Keeps the proposal usable, familiar, accessible, and appropriate for the target platform. | Apple Human Interface Guidelines for Apple products; Android and Material guidance for Android; W3C standards for the web. |
 | Product precedent | Shows how complete real journeys handle similar decisions and non-happy states without treating popularity as proof. | Relevant end-to-end journeys inspected through an authorized benchmark provider such as Mobbin. |
