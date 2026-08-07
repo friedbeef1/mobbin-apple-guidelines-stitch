@@ -33,6 +33,7 @@ Valid evidence modes are `benchmarks` and `guidelines`. `benchmark_provider` is 
 
 - `$design-arc setup` — resolve migration and any missing project choices.
 - `$design-arc home` — report, create, recover, or repin this project's Design Arc home under the confirmation and deduplication rules below.
+- `$design-arc upgrade` — safely upgrade the laptop/profile plugin while preserving every project's preferences, home, files, and active work.
 - `$design-arc evidence benchmarks` — save Benchmarks for this project after confirming provider access.
 - `$design-arc evidence guidelines` — save Guidelines and omit `benchmark_provider`.
 - `$design-arc mode` — report the saved and active approval mode and provenance.
@@ -43,6 +44,22 @@ Valid evidence modes are `benchmarks` and `guidelines`. `benchmark_provider` is 
 A natural-language request such as “use Guidelines for this run” or “follow your recommendation this time” is a one-run override, not permission to rewrite the file. A setting command explicitly authorizes changing only that named project preference.
 
 Outside a Design Arc home, an ordinary product-journey request activates Design Arc in the current task; briefly disclose that Design Arc is being used and continue without requiring `$design-arc`. Resolve setup and the objective in the required order before doing product work.
+
+A request such as “upgrade Design Arc” activates this same safe upgrade flow without requiring the command.
+
+### Safe plugin upgrade
+
+An upgrade changes the shared Codex plugin installation, not any participating product. Do not treat it as first use, project setup, preference migration, home recovery, or a design run.
+
+Before changing the Codex plugin profile, report the installed and available Design Arc versions, the marketplace source, and the exact planned upgrade route; require confirmation unless the current request already explicitly authorizes that exact upgrade. Use read-only project and task discovery only as needed to record the participating preference paths and existing Design Arc home identities. Never expose preference contents or unrelated task data.
+
+Prefer the installed Codex CLI's marketplace-upgrade operation. Re-read installed state afterward rather than trusting command success. If the requested version is not installed, verify the prior plugin is still installed and enabled, then stop. Before any remove/add fallback, capture and verify an immutable restoration artifact: an exact commit or immutable ref, or a verified local package backup; a marketplace source plus version label alone is insufficient. Report that fallback temporarily removes the plugin and obtain confirmation for that exact route. If the prior installation cannot be restored deterministically from the captured artifact, do not remove it. On fallback failure, restore from that artifact, verify the exact prior version and enabled state, and report the failed upgrade; never leave a silent partial installation.
+
+A plugin upgrade is laptop/profile-scoped and must not run project setup, create or replace a project home, change title or pin state, rewrite `.codex/design-arc.yaml`, touch product files, or continue an active review. Project preference and home files are inputs to preservation checks only. Compare every discovered participating `.codex/design-arc.yaml` byte-for-byte before and after; if any differs, stop, restore the prior plugin when the upgrade route changed it, report the exact affected project, and do not rewrite the file automatically.
+
+After the upgrade, verify exactly one enabled `design-arc@design-arc-marketplace`, report its version, and report `project homes recreated: 0` and `project preferences changed: 0` only when current evidence supports both claims. If complete project or task inventory is unavailable, state the narrower verified scope instead of claiming all projects were preserved.
+
+An already-open task may retain older task context; keep its project home unchanged and tell the user to start the next review from that existing home so a clean task loads the upgraded plugin. Never force-close, archive, replace, or continue an active review as part of upgrade.
 
 ### Project home
 

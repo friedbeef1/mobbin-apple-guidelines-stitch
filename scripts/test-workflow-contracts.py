@@ -26,6 +26,7 @@ MUTATIONS = {
     ),
     "setup command": ("`$design-arc setup`", "`$design-arc configure`"),
     "home command": ("`$design-arc home`", "`$design-arc dashboard`"),
+    "upgrade command": ("`$design-arc upgrade`", "`$design-arc reinstall-every-project`"),
     "benchmark command": (
         "`$design-arc evidence benchmarks`",
         "`$design-arc evidence examples`",
@@ -226,6 +227,30 @@ MUTATIONS = {
     "unavailable tool fallback": (
         "If task discovery, creation, title, or pin tools are unavailable or fail, complete confirmed preference setup, do not claim a home or launch succeeded, and return the exact canonical home title plus the full starter card and manual create-and-pin steps.",
         "If task tools fail, claim the home is ready and omit re-entry instructions.",
+    ),
+    "natural language upgrade": (
+        "A request such as “upgrade Design Arc” activates this same safe upgrade flow without requiring the command.",
+        "Require the user to remember `$design-arc upgrade` before helping.",
+    ),
+    "upgrade confirmation": (
+        "Before changing the Codex plugin profile, report the installed and available Design Arc versions, the marketplace source, and the exact planned upgrade route; require confirmation unless the current request already explicitly authorizes that exact upgrade.",
+        "Upgrade the plugin profile immediately without reporting scope or checking authorization.",
+    ),
+    "immutable upgrade rollback": (
+        "Before any remove/add fallback, capture and verify an immutable restoration artifact: an exact commit or immutable ref, or a verified local package backup; a marketplace source plus version label alone is insufficient.",
+        "Record only the moving marketplace branch and version label before removing the working plugin.",
+    ),
+    "upgrade project isolation": (
+        "A plugin upgrade is laptop/profile-scoped and must not run project setup, create or replace a project home, change title or pin state, rewrite `.codex/design-arc.yaml`, touch product files, or continue an active review.",
+        "Re-run setup and recreate every project home after upgrading the plugin.",
+    ),
+    "upgrade result integrity": (
+        "After the upgrade, verify exactly one enabled `design-arc@design-arc-marketplace`, report its version, and report `project homes recreated: 0` and `project preferences changed: 0` only when current evidence supports both claims.",
+        "Assume the upgrade succeeded and report that every project was preserved without verification.",
+    ),
+    "open task upgrade boundary": (
+        "An already-open task may retain older task context; keep its project home unchanged and tell the user to start the next review from that existing home so a clean task loads the upgraded plugin.",
+        "Replace the project home and continue the active review with mixed old and new context.",
     ),
     "home metadata isolation": (
         "Store home metadata under `design_arc_home` in the current project's `.codex/design-arc.yaml`; it is project-scoped state, not a global preference.",

@@ -49,6 +49,18 @@ then
   fail 'upgrade harness accepted a deliberately failing Codex CLI'
 fi
 
+for failure_point in marketplace-add plugin-add
+do
+  rollback_output=$(DESIGN_ARC_UPGRADE_INJECT_FAILURE="$failure_point" sh "$script_dir/test-plugin-upgrade.sh") || {
+    printf '%s\n' "$rollback_output" >&2
+    fail "upgrade rollback scenario failed at $failure_point"
+  }
+  printf '%s\n' "$rollback_output" | grep -F "PASS: restored exact Design Arc 0.2.0 after injected $failure_point failure" >/dev/null || {
+    printf '%s\n' "$rollback_output" >&2
+    fail "upgrade rollback scenario did not prove exact restoration at $failure_point"
+  }
+done
+
 if output=$(CODEX_BIN="$failing_codex" sh "$script_dir/validate.sh" 2>&1)
 then
   printf '%s\n' "$output" >&2

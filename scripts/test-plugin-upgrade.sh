@@ -13,6 +13,7 @@ current_checkout="$task_temp_dir/current-0.2.1"
 codex_home="$task_temp_dir/codex-home"
 project_root="$task_temp_dir/project"
 preference_path="$project_root/.codex/design-arc.yaml"
+injected_failure=${DESIGN_ARC_UPGRADE_INJECT_FAILURE:-}
 
 cleanup() {
   [ -n "$task_temp_dir" ] && [ -d "$task_temp_dir" ] && rm -rf "$task_temp_dir"
@@ -77,8 +78,86 @@ then
 else
   CODEX_HOME="$codex_home" "$codex_bin" plugin remove design-arc@design-arc-marketplace --json > "$task_temp_dir/plugin-remove-0.2.0.json"
   CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace remove design-arc-marketplace --json > "$task_temp_dir/marketplace-remove-0.2.0.json"
-  CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace add "$current_checkout" --json > "$task_temp_dir/marketplace-add-0.2.1.json"
-  CODEX_HOME="$codex_home" "$codex_bin" plugin add design-arc@design-arc-marketplace --json > "$task_temp_dir/plugin-add-0.2.1.json"
+  fallback_failure=
+  if [ "$injected_failure" = marketplace-add ]
+  then
+    fallback_failure=marketplace-add
+  elif ! CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace add "$current_checkout" --json > "$task_temp_dir/marketplace-add-0.2.1.json"
+  then
+    fallback_failure=marketplace-add
+  fi
+
+  if [ -z "$fallback_failure" ]
+  then
+    if [ "$injected_failure" = plugin-add ]
+    then
+      fallback_failure=plugin-add
+    elif ! CODEX_HOME="$codex_home" "$codex_bin" plugin add design-arc@design-arc-marketplace --json > "$task_temp_dir/plugin-add-0.2.1.json"
+    then
+      fallback_failure=plugin-add
+    fi
+  fi
+
+  if [ -n "$fallback_failure" ]
+  then
+    CODEX_HOME="$codex_home" "$codex_bin" plugin remove design-arc@design-arc-marketplace --json >/dev/null 2>&1 || :
+    CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace remove design-arc-marketplace --json >/dev/null 2>&1 || :
+    CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace add "$published_checkout" --json > "$task_temp_dir/marketplace-restore-0.2.0.json"
+    CODEX_HOME="$codex_home" "$codex_bin" plugin add design-arc@design-arc-marketplace --json > "$task_temp_dir/plugin-restore-0.2.0.json"
+    CODEX_HOME="$codex_home" "$codex_bin" plugin list --available --json > "$task_temp_dir/after-rollback.json"
+    CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace list --json > "$task_temp_dir/marketplaces-after-rollback.json"
+
+    python3 - "$published_checkout" "$codex_home" "$task_temp_dir" "$preference_path" "$published_sha" "$fallback_failure" <<'PY'
+import json
+from pathlib import Path
+import subprocess
+import sys
+
+published, codex_home, temporary_dir, preference_path = (
+    Path(path).resolve() for path in sys.argv[1:5]
+)
+expected_sha, failure_point = sys.argv[5:7]
+
+
+def read_json(name):
+    return json.loads((temporary_dir / name).read_text(encoding="utf-8"))
+
+
+def require(condition, message):
+    if not condition:
+        raise SystemExit(f"FAIL: {message}")
+
+
+actual_sha = subprocess.run(
+    ["git", "-C", str(published), "rev-parse", "HEAD"],
+    check=True,
+    capture_output=True,
+    text=True,
+).stdout.strip()
+require(actual_sha == expected_sha, "rollback source must be the immutable public 0.2.0 commit")
+
+state = read_json("after-rollback.json")
+installed = state.get("installed")
+require(isinstance(installed, list) and len(installed) == 1, "rollback must restore exactly one installed plugin")
+require(installed[0].get("pluginId") == "design-arc@design-arc-marketplace", "rollback must restore the canonical plugin ID")
+require(installed[0].get("version") == "0.2.0", "rollback must restore exact Design Arc 0.2.0")
+require(installed[0].get("enabled") is True, "restored Design Arc must be enabled")
+require(state.get("available") == [], "rollback must leave no second Design Arc version available")
+
+marketplaces = read_json("marketplaces-after-rollback.json").get("marketplaces")
+require(isinstance(marketplaces, list) and len(marketplaces) == 1, "rollback must restore exactly one marketplace")
+require(marketplaces[0].get("name") == "design-arc-marketplace", "rollback must restore the canonical marketplace")
+
+cached_skills = list((codex_home / "plugins/cache").glob("*/design-arc/*/skills/design-arc/SKILL.md"))
+require(len(cached_skills) == 1, "rollback must leave exactly one cached Design Arc skill")
+require(cached_skills[0].read_bytes() == (published / "plugins/design-arc/skills/design-arc/SKILL.md").read_bytes(), "rollback cache must match immutable public 0.2.0")
+require(preference_path.read_bytes() == (temporary_dir / "preference-before.yaml").read_bytes(), "rollback must preserve project preferences byte-for-byte")
+
+print(f"PASS: restored exact Design Arc 0.2.0 after injected {failure_point} failure")
+PY
+    exit 0
+  fi
+
   CODEX_HOME="$codex_home" "$codex_bin" plugin list --available --json > "$task_temp_dir/after-upgrade.json"
   printf '%s\n' remove-add-fallback > "$task_temp_dir/upgrade-route.txt"
 fi

@@ -131,6 +131,18 @@ There is no global Design Arc home. A project with no confirmed Design Arc setup
 
 If Codex cannot create or pin the task, Design Arc saves confirmed preferences, says clearly that no home is ready, and gives you the exact title, starter card, and manual create-and-pin steps. Run `$design-arc home` later to report, create, recover, or repin the current project’s home.
 
+## Upgrade once without rebuilding projects
+
+Tell Codex:
+
+> Upgrade Design Arc safely. Preserve every project's preferences, pinned home, files, and active reviews.
+
+The upgrade changes the shared Design Arc plugin on the laptop. It does not rerun setup in participating projects, recreate their homes, or rewrite `.codex/design-arc.yaml`. Existing homes remain the entry points for their original products.
+
+Afterward, Design Arc reports the installed version and the preservation result. A successful zero-disruption upgrade should end with `project homes recreated: 0` and `project preferences changed: 0`. If Codex cannot inventory every project, it reports only the projects it actually verified instead of claiming complete preservation.
+
+An already-open review may retain its older task context. Leave it untouched; begin the next review from the same pinned home so the clean task loads the upgraded plugin. If the normal marketplace upgrade does not expose the requested version, Design Arc stops before any destructive fallback and explains the separately confirmed, restorable remove/add route.
+
 ## Approval and trust controls
 
 > Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.

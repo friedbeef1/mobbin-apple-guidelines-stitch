@@ -8,6 +8,8 @@ The plugin is installed once for a Codex profile. Setup and return paths remain 
 
 The pinned home is a launchpad, not the place where product work accumulates. Each journey starts in a clean local task in the same saved project, so one product’s context and preferences cannot leak into another. An existing matching home is reused; known duplicates are reported for user cleanup rather than deleted or multiplied.
 
+Plugin upgrades are profile-scoped and project-preserving. They do not run setup, recreate homes, rewrite `.codex/design-arc.yaml`, mutate product files, or interrupt active reviews. The next clean task from an existing home loads the upgraded plugin; an already-open task may retain older context. Upgrade completion is reported with the verified plugin version and evidence-backed counts for changed preferences and recreated homes.
+
 If task tools are unavailable or fail, preference setup may still succeed, but Design Arc must not claim that the home exists. It returns the exact title and complete starter card with manual create-and-pin steps, and keeps the home pending until title, project identity, and pinning are verified.
 
 ## What Codex contributes

@@ -25,6 +25,7 @@ Commands remain available when you want to set or inspect project preferences or
 ```text
 $design-arc setup
 $design-arc home
+$design-arc upgrade
 $design-arc evidence benchmarks
 $design-arc evidence guidelines
 $design-arc mode
@@ -34,6 +35,12 @@ $design-arc mode fully-automatic
 ```
 
 Design Arc resolves the evidence approach and approval behavior independently. A one-run override changes only the current task unless you explicitly ask Design Arc to save it.
+
+## Safe upgrade
+
+> Upgrade Design Arc safely. Preserve every project's preferences, pinned home, files, and active reviews.
+
+> Check whether Design Arc has an update, but do not install anything yet.
 
 ## First-run setup
 
