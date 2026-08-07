@@ -22,6 +22,7 @@ REQUIRED_CONTRACTS = {
     ),
     "setup and mode commands": (
         "`$design-arc setup`",
+        "`$design-arc home`",
         "`$design-arc evidence benchmarks`",
         "`$design-arc evidence guidelines`",
         "`$design-arc mode`",
@@ -83,6 +84,41 @@ REQUIRED_CONTRACTS = {
     ),
     "authorization boundary": (
         "Design approval never authorizes source implementation, staging, live deployment, release, destructive changes, provider changes, or work outside the authorized integration lane.",
+    ),
+    "project home resolution": (
+        "Call `list_projects` before any home lookup or creation and resolve the current saved project's `projectId` and saved-project name; use the workspace-folder name only when the saved-project name is unavailable.",
+        "The canonical title is `Design Arc — <Project Name>`.",
+    ),
+    "project home confirmation": (
+        "Home creation must be part of the setup proposal and must be explicitly confirmed before `create_thread` is called.",
+        "That confirmed project-home setup is standing authorization for this home to launch later journey starters as clean tasks in the same saved project.",
+    ),
+    "project home isolation": (
+        "Never create a `projectless` Design Arc home or reuse a home whose project identity differs, even when its title matches.",
+        "A project without confirmed Design Arc setup gets no home and no sidebar item.",
+    ),
+    "project home deduplication": (
+        "Call `list_threads` with `limit: 50`; inspect both `pinnedThreads` and `threads`, and match a home by both the exact canonical title and the resolved `projectId`.",
+        "If multiple same-project matches exist, use and pin the most recent canonical match, report every other matching thread for user cleanup, and never delete, archive, merge, silently rename, or reuse those duplicates.",
+    ),
+    "project home task creation": (
+        '`target: { type: "project", projectId: <resolved projectId>, environment: { type: "local" } }`',
+        "Never pass a returned `clientThreadId` to thread tools that require a `threadId`.",
+        "Use `set_thread_title` with the canonical title and `set_thread_pinned` with `pinned: true`; verify the resulting title, project identity, and pinned state before claiming the home exists.",
+    ),
+    "project home launchpad content": (
+        "The home card displays the project identity, Design Arc installed status, active and saved evidence and approval preferences with provenance, plain-language journey starters, and preference controls.",
+        "The home is only a launchpad; it never performs the journey audit, research, direction work, or visualization in the home task.",
+    ),
+    "clean journey task launch": (
+        "When the user submits a journey starter inside a confirmed home, call `create_thread` for a clean task with the same resolved `projectId`, `environment: { type: \"local\" }`, and a prompt containing the user's starter plus the active Design Arc settings and project identity.",
+        "Do not launch a worktree, continue the journey inside the home, specify a model, or invent another project.",
+    ),
+    "natural language activation": (
+        "Outside a Design Arc home, an ordinary product-journey request activates Design Arc in the current task; briefly disclose that Design Arc is being used and continue without requiring `$design-arc`.",
+    ),
+    "task tool fallback": (
+        "If task discovery, creation, title, or pin tools are unavailable or fail, complete confirmed preference setup, do not claim a home or launch succeeded, and return the exact canonical home title plus the full starter card and manual create-and-pin steps.",
     ),
 }
 
