@@ -37,6 +37,12 @@ If Codex cannot inventory every project, it names the narrower scope it actually
 
 An already-open review may retain its older task context. Leave it untouched; begin the next review from the same pinned home so the clean task loads the upgraded plugin. If the normal marketplace upgrade does not expose the requested version, Design Arc stops before any destructive fallback and explains the separately confirmed, restorable remove/add route.
 
+### Moving to or from 0.3.0
+
+Upgrading to 0.3.0 preserves project preferences, homes, active-review identity and workflow versions, graph records, and product files. Active reviews are not changed mid-review; a later clean review resolves the 0.3.0 default independently.
+
+Downgrading to an older workflow leaves graph records in place but ignores them; it does not delete or reinterpret them. The downgrade likewise preserves preferences, homes, active-review identity and workflow versions, and product files. Neither direction of upgrade turns graph assistance on or off for a project merely by reading existing state.
+
 ## Saved preferences and migration
 
 Design Arc stores project choices in `.codex/design-arc.yaml`:

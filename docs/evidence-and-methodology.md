@@ -12,6 +12,9 @@ How are Design Arc recommendations grounded and validated?
 | Product precedent | Teams copy attractive screenshots without understanding the complete journey or failure states. | Inspect relevant end-to-end product journeys and explain why a pattern fits the objective. | Authorized benchmark research through a provider such as Mobbin. |
 | Product judgment | Opinions and trade-offs can be presented as if a source proved them. | Tie recommendations to the confirmed objective and label judgment separately from observed evidence. | User-confirmed objective and documented Design Arc synthesis—not an external authority. |
 | Visualization and validation | Polished screens can conceal missing transitions, errors, and recovery states. | Visualize the complete journey and inspect every important state before approving it for frontend implementation. | Google Stitch as a visualization tool—not an evidence authority. |
+| Relationship context | A correction can miss dependent states when requirements, evidence, and screens are considered separately. | Keep validated relationships visible to plan the smallest compatible correction batch and the regression checks that follow. | The current Design Arc workflow record; the relationship record adds context only. |
+
+First-party guidance remains authoritative for its platform, authorized benchmark evidence remains precedent, Stitch remains visualization, and the graph remains relationship context only. A graph relationship is not evidence, proof, approval, a source of requirements, or authority. It is a checked record of relationships already supported by the current workflow, used to see which states may need a compatible repair or regression check.
 
 ### Render conformance and repair
 
@@ -20,6 +23,8 @@ Google Stitch remains an external visualizer, not a compliance authority. Codex 
 The initial proposal may be followed by at most three correction rounds for the whole proposal. Each round batches every known repairable mismatch, generates a new proposal, and reinspects the complete result. That reinspection includes requirements that matched earlier and could have regressed. A written correction is not a corrected proposal; only the inspected replacement render proves the change.
 
 Codex stops early when two consecutive corrected proposals show no improvement or oscillate, access becomes unavailable, a correction would change direction, or new authorization is required. After the final complete inspection, `meets direction` requires every Stitch-expressible requirement to match; otherwise the remaining mismatch scope receives `meets with corrections` or `does not meet`. Prototype review never becomes runtime proof: only the authorized implementation owner can establish that later in staging or on a target device, and the Stitch verdict does not authorize source implementation, deployment, or release.
+
+The graph can focus correction planning but never replaces complete render inspection or the proposal-wide correction limit. It may help identify a compatible batch, but every replacement still receives the unchanged complete-proposal inspection, including states that previously matched or were unrelated to the correction.
 
 ## Choose how Design Arc grounds its recommendations
 

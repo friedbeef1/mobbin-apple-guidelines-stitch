@@ -27,6 +27,35 @@ $design-arc mode fully-automatic
 
 Natural-language requests such as “use Guidelines for this run” or “follow your recommendation this time” are one-run overrides; they do not rewrite the saved project preference.
 
+## More precise corrections in 0.3.0
+
+Design Arc understands how requirements, evidence and screens affect one another, helping it make more precise corrections without surrendering approval control.
+
+Graph assistance is active by default for every new 0.3.0 review in both existing and new projects when no project or laptop safety control turns it off. That default does not rewrite a project preference, home, or laptop setting. An active review remains exactly as it started; its next clean review gains the 0.3.0 assistance.
+
+Graph assistance adds no approval gate. Objective Confirmation, the Direction Gate, the Stitch Gate, the active approval mode, and the full review of every important state remain exactly the same.
+
+Use these controls when you want to inspect or change the assistance:
+
+```text
+$design-arc graph
+$design-arc graph on
+$design-arc graph off
+$design-arc graph explain
+$design-arc graph rebuild
+$design-arc graph clear
+$design-arc graph global off
+$design-arc graph global on
+```
+
+`graph` reports the current review without changing anything. `graph on` and `graph off` save a setting for this project only. `graph global off` is a laptop safety ceiling; `graph global on` removes that ceiling but never overrides a project that is off. A one-review request can turn assistance off for that review, but cannot override a project or laptop safety control.
+
+At the start of a review, Design Arc reports whether assistance is active and why. Graph status has its own provenance; it is separate from evidence-mode and approval-mode provenance. `graph explain` also shows the resolution chain, review identity, workflow version, record location, and the latest validation or fallback result.
+
+If the record is missing, invalid, or cannot be trusted, Design Arc reports the reason and continues the unchanged standard workflow without graph assistance. This is a reduction in assistance, not a blocked review or a reason to bypass the usual evidence and approval controls.
+
+Rebuild reconstructs only the current review from current authoritative workflow facts; it does not redo research, change an approved direction, or create requirements. Clear is destructive: it requires explicit confirmation for the exact current-review graph path and deletes only that record. Clearing leaves project and laptop settings, homes, product files, and other reviews alone.
+
 ## Coming back tomorrow
 
 Setup can add one approved, pinned home named `Design Arc — <Project Name>` to each project where you choose to use Design Arc.

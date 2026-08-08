@@ -14,6 +14,14 @@ Google Stitch is an external visualization service requiring separate access and
 
 Stitch prototypes are design evidence, not staging or device implementation proof. A prototype can communicate an intended interaction, but it cannot prove runtime quality.
 
+## Relationship assistance boundary
+
+Graph assistance is a project-local relationship record for correction planning, not a new source of truth. It records supported links among the current review's requirements, evidence, screens, states, and checks so Design Arc can plan more precise corrections.
+
+It cannot prove a requirement, establish runtime quality, replace current evidence, or authorize a product decision. Current first-party requirements, accessibility requirements, and inspected evidence always take precedence over a conflicting, stale, inferred, or unsupported relationship.
+
+A failed graph record reduces assistance rather than blocking the review: Design Arc reports the issue and continues the standard workflow. Rebuild uses current authoritative workflow facts for the current review only. Clear requires explicit confirmation for that review's exact record and never removes project preferences, homes, product files, or another review's record.
+
 ## Plugin discovery boundary
 
 Design Arc is not listed in Codex’s built-in recommended-plugin directory. Codex CLI 0.146 introduced workspace plugin publishing, but this account exposes no `codex plugin publish` command and current official documentation provides no documented public third-party directory submission route. The GitHub marketplace commands in [Getting started](getting-started.md) are therefore the canonical public installation path. Do not claim that bare-name discovery, skills.sh, or an official marketplace listing is available. See the [official Codex 0.146 update](https://learn.chatgpt.com/docs/whats-new#organize-sessions-and-extend-codex-cli-01460).
