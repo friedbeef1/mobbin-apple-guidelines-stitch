@@ -203,9 +203,12 @@ GRAPH_CONTRACT_CASES = {
     ),
     "case 03 storage separation": (
         "Save the project setting only as `graph_assistance: on|off` in that project's `.codex/design-arc.yaml`; keep laptop-global graph safety state isolated under the active Codex profile, never in a project or product file.",
+        "Read laptop-global safety only from `$CODEX_HOME/design-arc-global.yaml`, whose root mapping uses `schema: design-arc.global/v1` and `graph_assistance_ceiling: on|off`; no other path or field controls the laptop ceiling.",
     ),
     "case 04 disabling precedence": (
         "Resolve graph assistance independently for a new review: an explicit one-review off override, project off, or global off each disables it; global on is only permission to resolve the project and can never force-enable project off.",
+        "When the global file is absent, treat the ceiling as on without creating it; malformed YAML, a non-mapping root, a missing or unsupported schema, or a missing or invalid ceiling fails safe as global off, is reported, and is never rewritten merely by resolution.",
+        "A confirmed global command changes only `graph_assistance_ceiling`, preserves the valid schema and every unrelated mapping entry, writes a same-directory temporary file with mode `0600`, flushes and fsyncs it, atomically replaces `$CODEX_HOME/design-arc-global.yaml`, and fsyncs the parent directory; `global off` writes off, while `global on` writes on only to clear the laptop ceiling and never force-enables project off.",
     ),
     "case 05 existing-project default": (
         "For every new 0.3.0 review in an existing project whose preference has no `graph_assistance` field, resolve graph assistance to active by default.",
@@ -221,6 +224,7 @@ GRAPH_CONTRACT_CASES = {
     ),
     "case 09 graph path isolation": (
         "Store each record only at `.codex/design-arc/reviews/<review_id>/graph.json`, require schema `design-arc.graph/v1`, and validate the current project ID and review ID before use; never read a graph from another project or review.",
+        "Resolve `scripts/validate-graph-record.py` relative to the directory containing this `SKILL.md`, never relative to the product workspace or repository root.",
     ),
     "case 10 status provenance": (
         "At review start, report the graph active state and its provenance as current-request one-review override, saved project setting, laptop-global safety off, or 0.3.0 default; `graph explain` also reports the resolution chain, review ID, workflow version, graph path, and latest validation or fallback result.",

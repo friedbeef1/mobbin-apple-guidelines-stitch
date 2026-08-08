@@ -613,12 +613,12 @@ GRAPH_MUTATIONS = {
         "Require exact graph command syntax and ignore equivalent natural-language requests.",
     ),
     "graph case 03 storage separation": (
-        "Save the project setting only as `graph_assistance: on|off` in that project's `.codex/design-arc.yaml`; keep laptop-global graph safety state isolated under the active Codex profile, never in a project or product file.",
-        "Store graph settings in one shared product file for all projects.",
+        "Read laptop-global safety only from `$CODEX_HOME/design-arc-global.yaml`, whose root mapping uses `schema: design-arc.global/v1` and `graph_assistance_ceiling: on|off`; no other path or field controls the laptop ceiling.",
+        "Read laptop-global safety from any convenient project file using an unversioned field.",
     ),
     "graph case 04 disabling precedence": (
-        "Resolve graph assistance independently for a new review: an explicit one-review off override, project off, or global off each disables it; global on is only permission to resolve the project and can never force-enable project off.",
-        "Global on force-enables graph assistance even when the project or current review says off.",
+        "A confirmed global command changes only `graph_assistance_ceiling`, preserves the valid schema and every unrelated mapping entry, writes a same-directory temporary file with mode `0600`, flushes and fsyncs it, atomically replaces `$CODEX_HOME/design-arc-global.yaml`, and fsyncs the parent directory; `global off` writes off, while `global on` writes on only to clear the laptop ceiling and never force-enables project off.",
+        "Rewrite the global file in place, discard unrelated fields, and let global on force-enable project off.",
     ),
     "graph case 05 existing-project default": (
         "For every new 0.3.0 review in an existing project whose preference has no `graph_assistance` field, resolve graph assistance to active by default.",
@@ -703,6 +703,10 @@ GRAPH_MUTATIONS = {
 }
 
 
+EXPECTED_GRAPH_MUTATION_COUNT = 24
+EXPECTED_TOTAL_MUTATION_COUNT = 175
+
+
 ORDERED_MUTATION_MARKERS = (
     "Write `state: pending` before calling `create_thread`.",
     "Call `create_thread` once.",
@@ -747,6 +751,22 @@ def swap_once(original: str, first: str, second: str) -> str:
 
 
 def main() -> int:
+    graph_mutation_count = len(GRAPH_MUTATIONS)
+    if graph_mutation_count != EXPECTED_GRAPH_MUTATION_COUNT:
+        raise AssertionError(
+            "graph mutation count must be exactly "
+            f"{EXPECTED_GRAPH_MUTATION_COUNT}, found {graph_mutation_count}"
+        )
+
+    mutation_count = (
+        len(MUTATIONS) + len(CONTRADICTION_MUTATIONS) + graph_mutation_count + 4
+    )
+    if mutation_count != EXPECTED_TOTAL_MUTATION_COUNT:
+        raise AssertionError(
+            "deterministic mutation count must be exactly "
+            f"{EXPECTED_TOTAL_MUTATION_COUNT}, found {mutation_count}"
+        )
+
     original = SKILL.read_text(encoding="utf-8")
     baseline = run_checker(SKILL)
     if baseline.returncode != 0:
@@ -823,9 +843,6 @@ def main() -> int:
                 )
             print(f"PASS: rejected mutation: {label}")
 
-    mutation_count = (
-        len(MUTATIONS) + len(CONTRADICTION_MUTATIONS) + len(GRAPH_MUTATIONS) + 4
-    )
     print(f"PASS: rejected {mutation_count} deterministic contract mutations")
     return 0
 

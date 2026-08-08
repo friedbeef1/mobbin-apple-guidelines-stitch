@@ -40,6 +40,7 @@ CODEX_HOME="$codex_home" "$codex_bin" debug prompt-input 'Use $design-arc to aud
 python3 - "$checkout_path" "$codex_home" "$task_temp_dir" <<'PY'
 import json
 from pathlib import Path
+import subprocess
 import sys
 
 checkout, codex_home, temporary_dir = (Path(path).resolve() for path in sys.argv[1:])
@@ -113,6 +114,22 @@ require(manifest.get("skills") == "./skills/", "installed plugin must expose its
 installed_skill = installed_path / "skills/design-arc/SKILL.md"
 skill_text = installed_skill.read_text(encoding="utf-8")
 require(skill_text.startswith("---\nname: design-arc\n"), "installed embedded skill must load with name: design-arc")
+installed_validator = installed_skill.parent / "scripts/validate-graph-record.py"
+require(installed_validator.is_file(), "installed embedded skill must bundle its graph validator")
+installed_validation = subprocess.run(
+    [
+        sys.executable,
+        str(installed_validator),
+        str(checkout / "scripts/fixtures/graph-records/valid.json"),
+        "project-alpha",
+        "review-001",
+    ],
+    text=True,
+    capture_output=True,
+    check=False,
+)
+require(installed_validation.returncode == 0, "installed graph validator must accept a valid isolated fixture")
+require("PASS: usable graph record" in installed_validation.stdout, "installed graph validator must execute from the plugin cache")
 
 cached_skills = list((codex_home / "plugins/cache").glob("*/design-arc/*/skills/design-arc/SKILL.md"))
 require(cached_skills == [installed_skill], "isolated cache must contain one unique Design Arc skill")
@@ -146,7 +163,7 @@ require("Use $design-arc to audit this journey." in user_text, "new-task proof m
 for legacy_id in ("fb-ux@fb-ux-marketplace", "apple-guidelines-stitch@fb-ux-marketplace"):
     require(legacy_id not in json.dumps(installed), f"active plugin state must not contain {legacy_id}")
 
-print(f"PASS: isolated fresh install and new-task skill discovery ({version})")
+print(f"PASS: isolated fresh install, bundled graph validation, and new-task skill discovery ({version})")
 PY
 
 printf '%s\n' 'PASS: isolated Design Arc plugin installation smoke'

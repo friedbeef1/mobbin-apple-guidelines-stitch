@@ -10,7 +10,16 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 FIXTURES = REPO_ROOT / "scripts" / "fixtures" / "graph-records"
-VALIDATOR = REPO_ROOT / "scripts" / "validate-graph-record.py"
+VALIDATOR = (
+    REPO_ROOT
+    / "plugins"
+    / "design-arc"
+    / "skills"
+    / "design-arc"
+    / "scripts"
+    / "validate-graph-record.py"
+)
+REPOSITORY_ENTRYPOINT = REPO_ROOT / "scripts" / "validate-graph-record.py"
 EXPECTED_PROJECT_ID = "project-alpha"
 EXPECTED_REVIEW_ID = "review-001"
 
@@ -49,7 +58,28 @@ def expect_invalid(name: str, reason: str) -> None:
 
 def main() -> int:
     if not VALIDATOR.is_file():
-        fail("graph-record validator is absent; expected RED state")
+        fail("packaged graph-record validator is absent; expected RED state")
+    if not REPOSITORY_ENTRYPOINT.is_file():
+        fail("repository graph-record entrypoint is absent")
+
+    packaged_valid = run_fixture("valid.json")
+    repository_valid = subprocess.run(
+        [
+            "python3",
+            str(REPOSITORY_ENTRYPOINT),
+            str(FIXTURES / "valid.json"),
+            EXPECTED_PROJECT_ID,
+            EXPECTED_REVIEW_ID,
+        ],
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if repository_valid.returncode != packaged_valid.returncode:
+        fail("repository graph entrypoint diverges from packaged validator")
+    if repository_valid.stdout != packaged_valid.stdout or repository_valid.stderr != packaged_valid.stderr:
+        fail("repository graph entrypoint output diverges from packaged validator")
+    print("PASS: repository graph entrypoint delegates to packaged validator")
 
     expect_valid("valid.json")
     expect_invalid("corrupt.json", "invalid JSON")

@@ -38,6 +38,7 @@ for required_file in \
   plugins/design-arc/skills/design-arc/SKILL.md \
   plugins/design-arc/skills/design-arc/agents/openai.yaml \
   plugins/design-arc/skills/design-arc/references/graph-record.schema.json \
+  plugins/design-arc/skills/design-arc/scripts/validate-graph-record.py \
   scripts/check-workflow-contracts.py \
   scripts/test-design-arc-docs.sh \
   scripts/test-design-arc-identity.sh \
@@ -149,6 +150,7 @@ python3 - \
   "$repo_root/scripts/check-workflow-contracts.py" \
   "$repo_root/scripts/test-graph-records.py" \
   "$repo_root/scripts/test-plugin-upgrade-state.py" \
+  "$repo_root/plugins/design-arc/skills/design-arc/scripts/validate-graph-record.py" \
   "$repo_root/scripts/validate-graph-record.py" \
   "$repo_root/scripts/test-workflow-contracts.py" <<'PY'
 from pathlib import Path

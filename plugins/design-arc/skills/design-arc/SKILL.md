@@ -190,6 +190,12 @@ Design Arc 0.3.0 may maintain a validated project-local relationship record to p
 
 Save the project setting only as `graph_assistance: on|off` in that project's `.codex/design-arc.yaml`; keep laptop-global graph safety state isolated under the active Codex profile, never in a project or product file. The profile state is a safety control shared by this Codex installation, not a design preference and not a source of project truth.
 
+Read laptop-global safety only from `$CODEX_HOME/design-arc-global.yaml`, whose root mapping uses `schema: design-arc.global/v1` and `graph_assistance_ceiling: on|off`; no other path or field controls the laptop ceiling. Additional mapping entries are forward-compatible state owned by later Design Arc versions and are ignored by 0.3.0 resolution.
+
+When the global file is absent, treat the ceiling as on without creating it; malformed YAML, a non-mapping root, a missing or unsupported schema, or a missing or invalid ceiling fails safe as global off, is reported, and is never rewritten merely by resolution.
+
+A confirmed global command changes only `graph_assistance_ceiling`, preserves the valid schema and every unrelated mapping entry, writes a same-directory temporary file with mode `0600`, flushes and fsyncs it, atomically replaces `$CODEX_HOME/design-arc-global.yaml`, and fsyncs the parent directory; `global off` writes off, while `global on` writes on only to clear the laptop ceiling and never force-enables project off. If the existing file is malformed or uses an unsupported schema, report that replacing it with the two-field v1 document will discard unreadable or unsupported state and require explicit confirmation for that repair before the atomic write.
+
 Resolve graph assistance independently for a new review: an explicit one-review off override, project off, or global off each disables it; global on is only permission to resolve the project and can never force-enable project off. An explicit one-review on cannot override project off or global off. A saved project on remains disabled while global off is active and becomes eligible again when the global safety state is on.
 
 For every new 0.3.0 review in an existing project whose preference has no `graph_assistance` field, resolve graph assistance to active by default.
@@ -206,7 +212,7 @@ At review start, report the graph active state and its provenance as current-req
 
 Store each record only at `.codex/design-arc/reviews/<review_id>/graph.json`, require schema `design-arc.graph/v1`, and validate the current project ID and review ID before use; never read a graph from another project or review. Build the record only from authoritative facts established by the current workflow, keep edge provenance and support explicit, and replace relationships when their supporting facts change rather than treating stale links as current.
 
-When graph assistance is active, construct or update the current review record as stable workflow facts become available. Before relying on it, run the bundled validator as `python3 scripts/validate-graph-record.py GRAPH_PATH EXPECTED_PROJECT_ID EXPECTED_REVIEW_ID`; do not silently normalize or partially trust a rejected record.
+When graph assistance is active, construct or update the current review record as stable workflow facts become available. Resolve `scripts/validate-graph-record.py` relative to the directory containing this `SKILL.md`, never relative to the product workspace or repository root. Before relying on the graph, run `python3 <resolved Design Arc skill directory>/scripts/validate-graph-record.py GRAPH_PATH EXPECTED_PROJECT_ID EXPECTED_REVIEW_ID`; do not silently normalize or partially trust a rejected record.
 
 Validate the complete graph before every use; if it is missing, invalid, corrupt, incomplete, contradictory, unsupported, unproven, or identity-mismatched, ignore it, report the reason, and continue the unchanged standard workflow without graph assistance. Graph failure is a downgrade in assistance, not a blocked gate; preserve the rejected file for explanation or confirmed rebuild/clear unless using it would cross a project boundary.
 
