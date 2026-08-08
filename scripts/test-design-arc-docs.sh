@@ -34,6 +34,24 @@ do
   [ -f "$file" ] || fail "missing required documentation: ${file#"$repo_root/"}"
 done
 
+python3 - "$readme" <<'PY'
+from pathlib import Path
+import sys
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+line_count = len(text.splitlines())
+if not 80 <= line_count <= 110:
+    raise SystemExit(f"FAIL: README must contain 80-110 lines; found {line_count}")
+
+ask_codex_instruction = "**Ask Codex:** Install the Design Arc plugin from\nhttps://github.com/friedbeef1/mobbin-apple-guidelines-stitch"
+if ask_codex_instruction not in text:
+    raise SystemExit("FAIL: README is missing the exact Ask Codex installation instruction")
+
+for forbidden_text in ("```sh", "codex plugin", "skills registry", "Python", "Saved preferences and migration", "If Codex says"):
+    if forbidden_text in text:
+        raise SystemExit(f"FAIL: README retains forbidden advanced-installation content: {forbidden_text}")
+PY
+
 require_text "$readme" '# Design Arc'
 require_text "$readme" 'Product feedback is often vague, redesign discussions become subjective, and teams approve attractive screens without knowing whether the complete journey works.'
 require_text "$readme" 'Move from uncertain product feedback to a complete design direction grounded in credible sources.'
@@ -41,7 +59,18 @@ require_text "$readme" 'Design Arc audits the real journey, checks decisions aga
 require_text "$readme" '## You need Design Arc if…'
 require_text "$readme" '## What Design Arc produces'
 require_text "$readme" '## The workflow'
-require_text "$readme" '## Example: from “confusing onboarding” to a complete direction'
+require_text "$readme" '## Documentation'
+require_text "$readme" '[Getting started](docs/getting-started.md)'
+require_text "$readme" '[Using Design Arc](docs/using-design-arc.md)'
+require_text "$readme" '[Evidence and methodology](docs/evidence-and-methodology.md)'
+require_text "$readme" '[Upgrades and migration](docs/upgrades-and-migration.md)'
+require_text "$readme" '[Trust and sources](docs/trust-limitations-and-sources.md)'
+require_text "$readme" '## Install'
+require_text "$readme" '## Start a review'
+require_text "$readme" 'Help me make our onboarding less confusing.'
+require_text "$readme" '## Trust'
+require_text "$readme" 'Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.'
+require_text "$readme" '## License'
 
 for file in "$getting_started" "$using_design_arc" "$evidence_methodology" "$upgrades_migration" "$trust_sources"
 do
@@ -152,23 +181,23 @@ if local_command not in install_section.splitlines():
 if f"{local_command} --ref main" in install_section:
     raise SystemExit("FAIL: documentation local-checkout marketplace command must not use the Git-only --ref option")
 
-headings = [
+headings = re.findall(r"^#{1,2} .+$", text, re.MULTILINE)
+expected_headings = [
+    "# Design Arc",
+    "## Documentation",
     "## You need Design Arc if…",
     "## What Design Arc produces",
     "## The workflow",
-    "## Example: from “confusing onboarding” to a complete direction",
-    "## Choose how Design Arc grounds its recommendations",
-    "## Install and set up in 60 seconds",
-    "## Coming back tomorrow",
-    "## Approval and trust controls",
-    "## Methodology, sources, migration, and limitations",
+    "## Install",
+    "## Start a review",
+    "## Trust",
+    "## License",
 ]
-positions = [text.index(heading) for heading in headings]
-if positions != sorted(positions) or len(set(positions)) != len(positions):
-    raise SystemExit("FAIL: README sections are not in the required product-story order")
+if headings != expected_headings:
+    raise SystemExit("FAIL: README sections are not in the approved landing-page order")
 
 workflow_start = text.index("## The workflow")
-workflow_end = text.index("## Example: from “confusing onboarding” to a complete direction")
+workflow_end = text.index("## Install")
 workflow = text[workflow_start:workflow_end]
 workflow_instruction = "**Only rows marked 👤 You require your involvement. Design Arc handles every unmarked step.**"
 workflow_table = """| Workflow step | Platform or source handling it | Human involvement |
