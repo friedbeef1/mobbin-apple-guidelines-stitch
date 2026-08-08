@@ -255,6 +255,20 @@ An automatic selection is still visible and auditable; never hide the alternativ
 
 Recheck the complete selected direction against current first-party guidance for every affected platform. Resolve conflicts before generation and report any product-specific judgment separately.
 
+### Specify motion before visualization
+
+Identify every material on-screen animation and screen-to-screen transition in the selected direction. If existing product motion or standard native behavior is sufficient, record that choice instead of inventing custom motion.
+
+Resolve motion evidence in this order: the product's existing motion system; native platform behavior; current first-party platform motion guidance; actually inspected motion precedent; clearly labeled Design Arc judgment. Prefer the product's established motion tokens and platform-native components when they satisfy the interaction purpose.
+
+A static screenshot or screen sequence may support transition intent, but only inspected motion playback supports claims about duration, easing, velocity, spring behavior, or choreography. Never convert an unobserved benchmark animation into an exact motion claim.
+
+For each custom or product-defining motion, record its purpose, trigger, start and end states, spatial behavior, timing or spring behavior, interruption behavior, reduced-motion alternative, evidence provenance, implementation target, and proof status. Motion must communicate feedback, continuity, hierarchy, status, recovery, or another stated purpose; decoration alone is not sufficient justification.
+
+Treat Stitch prototype behavior as design evidence only. If Stitch cannot express a required animation faithfully, return its start and end states plus the motion contract and do not claim that motion is validated. Actual staging or device motion requires later measured implementation proof; it cannot be claimed from a Stitch render or prototype.
+
+Design Arc specifies and critiques motion but does not implement application code. Passing the Stitch Gate may route the approved motion contract to the authorized stack-specific implementation owner; it does not authorize that implementation.
+
 Stitch is an external visualization service, not a bundled or official Design Arc integration. Obtain whatever separate access and payload authorization the environment requires. Use an existing project and design system when supplied. Generate every material state required by the selected journey, including entry, transition, loading, empty, error, success, cancellation, and recovery. Record exact requested viewports, safe areas, assets, interaction states, project or board identifiers, and new screen identifiers.
 
 Return decision-ready evidence in Codex: an inline journey map, embedded key renders, concise generator recommendations, exact verified render dimensions, identifiers, and evidence provenance. A board offers deeper exploration; it is not a substitute for the evidence in chat.
@@ -279,6 +293,7 @@ Report these fields in the Codex conversation:
 - **Directions:** marked recommendation, alternatives, exact journey changes, and trade-offs.
 - **Gates:** Objective Confirmation, Direction Gate, and Stitch Gate status and reason.
 - **Proposal:** journey map, embedded key renders, viewports, identifiers, and material states.
+- **Motion:** material animations and transitions, source precedence, motion contracts, reduced-motion alternatives, and design-versus-implementation proof status.
 - **Validation:** Stitch verdict, corrections, blocked proof, and remaining device or implementation checks.
 - **Authority:** design-only status and next authorized owner.
 
@@ -296,6 +311,9 @@ No approval mode waives current-source evidence, external authorization, platfor
 - Silently importing or merging legacy preferences.
 - Falling back from Benchmarks without the user's choice.
 - Calling a popular screenshot “best in class” without inspecting its journey.
+- Inferring exact motion timing, easing, springs, or choreography from a screenshot or static screen sequence.
+- Treating a Stitch prototype as staging or device implementation proof.
+- Inventing custom motion when existing product or standard native behavior already serves the purpose.
 - Looking up benchmarks or implying benchmark support in Guidelines mode.
 - Inventing a missing objective under Fully automatic.
 - Hiding alternatives because Follow recommendation is active.

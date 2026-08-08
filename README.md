@@ -43,7 +43,8 @@ It turns comments such as “this feels confusing” into a product objective, a
 
 ```text
 setup → objective → current-journey audit → evidence → directions
-      → Direction Gate → full first-party validation → complete visual journey
+      → Direction Gate → full first-party validation → motion specification
+      → complete visual journey
       → render validation → Stitch Gate → authorized design handoff
 ```
 
@@ -206,10 +207,19 @@ An already-open review may retain its older task context. Leave it untouched; be
 | Direction recommendations | Codex | Makes the strongest journey, alternatives, benefits, risks, and trade-offs decidable before visualization cost is incurred. |
 | Direction Gate | User in Codex, or the active automatic mode | Preserves user control where selected and records why automatic selection is allowed where selected. |
 | Full cross-platform validation | Codex + affected-platform first-party guidance | Catches navigation, accessibility, safe-area, and platform conflicts before they are baked into a proposal. |
+| Motion specification | Codex + affected-platform guidance + inspected motion evidence | Defines what moves, why, how it behaves, its reduced-motion alternative, and what still requires implementation proof. |
 | Complete Stitch generation | Codex + Google Stitch | Exposes missing transitions and loading, empty, error, success, cancellation, and recovery states across the complete journey. |
 | Inline evidence and render validation | Codex + target device or runtime | Keeps the proposal reviewable in the task and prevents attractive output or metadata from becoming a false compliance claim. |
 | Stitch Gate | User in Codex, or Fully automatic after `meets direction` | Separates a validated design proposal from authority to route it, implement it, or release it. |
 | Authorized routing | Codex + authorized Product/Captain/Integration owner | Preserves source, staging, deployment, and release ownership after design approval. |
+
+### Motion grounding and implementation proof
+
+Design Arc specifies material on-screen animations and screen-to-screen transitions before frontend implementation. It first checks the product's existing motion system and standard native behavior, then current first-party platform guidance, actually inspected motion precedent, and finally clearly labeled Design Arc judgment.
+
+Every custom or product-defining motion records its purpose, trigger, start and end states, spatial behavior, timing or spring behavior, interruption behavior, reduced-motion alternative, evidence provenance, implementation target, and proof status. A static screenshot or screen sequence can support transition intent, but only inspected motion playback can support claims about duration, easing, velocity, spring behavior, or choreography.
+
+Stitch prototypes are design evidence, not staging or device implementation proof. When Stitch cannot represent required motion faithfully, Design Arc returns the start and end states plus the motion contract. The authorized implementation owner later builds it with the product's actual stack and validates the result in staging or on the target device.
 
 ### External evidence and visualization sources
 

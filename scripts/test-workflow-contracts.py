@@ -160,6 +160,30 @@ MUTATIONS = {
         "Do not claim product inspection, first-party guidance, benchmark evidence, or new Stitch output without current evidence for that exact claim.",
         "Claim inspection and evidence based on prior metadata.",
     ),
+    "material motion inventory": (
+        "Identify every material on-screen animation and screen-to-screen transition in the selected direction. If existing product motion or standard native behavior is sufficient, record that choice instead of inventing custom motion.",
+        "Invent custom animation for every screen without checking existing or native behavior.",
+    ),
+    "motion source precedence": (
+        "Resolve motion evidence in this order: the product's existing motion system; native platform behavior; current first-party platform motion guidance; actually inspected motion precedent; clearly labeled Design Arc judgment.",
+        "Use unlabeled Design Arc judgment before checking the product or platform.",
+    ),
+    "motion playback evidence": (
+        "A static screenshot or screen sequence may support transition intent, but only inspected motion playback supports claims about duration, easing, velocity, spring behavior, or choreography.",
+        "Infer exact timing, easing, velocity, and choreography from a screenshot.",
+    ),
+    "motion specification fields": (
+        "For each custom or product-defining motion, record its purpose, trigger, start and end states, spatial behavior, timing or spring behavior, interruption behavior, reduced-motion alternative, evidence provenance, implementation target, and proof status.",
+        "For each motion, record only its name and duration.",
+    ),
+    "stitch motion proof limit": (
+        "Treat Stitch prototype behavior as design evidence only. If Stitch cannot express a required animation faithfully, return its start and end states plus the motion contract and do not claim that motion is validated.",
+        "Treat every Stitch screen transition as complete production motion proof.",
+    ),
+    "staging motion proof": (
+        "Actual staging or device motion requires later measured implementation proof; it cannot be claimed from a Stitch render or prototype.",
+        "Claim staging and device motion compliance from the Stitch prototype.",
+    ),
     "implementation boundary": (
         "Design approval never authorizes source implementation, staging, live deployment, release, destructive changes, provider changes, or work outside the authorized integration lane.",
         "Design approval authorizes implementation and live deployment.",

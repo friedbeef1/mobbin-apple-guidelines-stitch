@@ -10,6 +10,12 @@ The affected platform's current first-party rules govern that platform. Apple Hu
 
 Platform guidance does not determine the product objective, prove that a user journey was inspected, choose every trade-off, or make a generated proposal implementation-ready. Design Arc labels those product-specific decisions as judgment and validates them separately.
 
+## Motion guidance
+
+Existing product motion and standard native behavior come first. Design Arc uses the affected platform's current first-party guidance to decide when motion is purposeful, how it preserves continuity and feedback, whether it can be interrupted, and what reduced-motion alternative is required. Custom duration, easing, spring, and choreography choices remain labeled product judgment unless current evidence supports them.
+
+Inspected product motion may supply precedent for a comparable interaction. A screenshot or static screen sequence cannot prove exact motion timing, easing, velocity, spring behavior, or choreography. Stitch may demonstrate a design interaction, but only the implemented staging or device experience can prove runtime behavior, responsiveness, accessibility settings, and performance.
+
 ## Official sources
 
 - [Apple Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/) — Apple platform design principles and component guidance.

@@ -83,6 +83,18 @@ REQUIRED_CONTRACTS = {
     "evidence integrity": (
         "Do not claim product inspection, first-party guidance, benchmark evidence, or new Stitch output without current evidence for that exact claim.",
     ),
+    "motion grounding": (
+        "Identify every material on-screen animation and screen-to-screen transition in the selected direction. If existing product motion or standard native behavior is sufficient, record that choice instead of inventing custom motion.",
+        "Resolve motion evidence in this order: the product's existing motion system; native platform behavior; current first-party platform motion guidance; actually inspected motion precedent; clearly labeled Design Arc judgment.",
+        "A static screenshot or screen sequence may support transition intent, but only inspected motion playback supports claims about duration, easing, velocity, spring behavior, or choreography.",
+    ),
+    "motion specification": (
+        "For each custom or product-defining motion, record its purpose, trigger, start and end states, spatial behavior, timing or spring behavior, interruption behavior, reduced-motion alternative, evidence provenance, implementation target, and proof status.",
+    ),
+    "motion proof boundary": (
+        "Treat Stitch prototype behavior as design evidence only. If Stitch cannot express a required animation faithfully, return its start and end states plus the motion contract and do not claim that motion is validated.",
+        "Actual staging or device motion requires later measured implementation proof; it cannot be claimed from a Stitch render or prototype.",
+    ),
     "authorization boundary": (
         "Design approval never authorizes source implementation, staging, live deployment, release, destructive changes, provider changes, or work outside the authorized integration lane.",
     ),
