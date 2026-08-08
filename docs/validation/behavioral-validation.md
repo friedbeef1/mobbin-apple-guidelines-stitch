@@ -69,7 +69,7 @@ The executable checker protects these twelve motion-methodology cases. Each row 
 | 5. Missing playback | Report the limitation, offer one of the allowed playable/default/proposal paths, and never invent unavailable motion. |
 | 6. Guidelines isolation | Perform no benchmark lookup, make no real-product motion claim, and explicitly report that no benchmark motion was inspected. |
 | 7. Complete contract | Require all named motion fields and use `unverified` for unsupported values. |
-| 8. Motion+ boundary | Keep Motion+ optional and separate from evidence, authority, dependencies, and implementation permission. |
+| 8. Motion+ boundary | Keep Motion+ outside Design Arc requirements, evidence, authority, and dependencies while allowing an authorized implementation owner to approve it separately as an optional implementation dependency and source. |
 | 9. Direction and restraint | Include motion scope and uncertainty at the Direction Gate and apply the least-motion principle. |
 | 10. Prototype, proof, and authority | Keep prototypes separate from measured staging/device proof and preserve implementation, dependency, staging, deployment, and release ownership. |
 | 11. Run record | Preserve scope, evidence, provenance, contracts, reduced motion, implementation source, proof, and remaining uncertainty. |

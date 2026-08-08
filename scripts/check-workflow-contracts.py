@@ -156,7 +156,8 @@ MOTION_CONTRACT_CASES = {
         "Every material motion contract includes: Motion ID; journey location; purpose; trigger; start/end state; spatial behavior; choreography; timing; easing/spring; interruption; reduced motion; evidence; provenance; implementation target; implementation source; proof status. Unsupported values are `unverified`.",
     ),
     "case 08 Motion+ boundary": (
-        "Motion+ is optional implementation assistance, never real-product evidence, an evidence authority, a dependency, or implicit authorization to install or implement.",
+        "Motion+ is never required by or evidence for Design Arc, and it is never a Design Arc dependency.",
+        "An authorized implementation owner may separately approve Motion+ as an optional implementation dependency and implementation source; that approval does not install it or make it Design Arc evidence or authority.",
     ),
     "case 09 direction summary and least motion": (
         "At the Direction Gate, include a motion summary that identifies the material motion scope, retained native or existing behavior, proposed custom behavior, and unresolved evidence.",

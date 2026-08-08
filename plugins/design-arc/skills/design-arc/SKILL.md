@@ -286,7 +286,7 @@ Use one contract per motion or transition that affects continuity, feedback, hie
 
 `implementation target` names the application surface, component, or state change that an authorized owner would build. `implementation source` names the selected existing product token, native primitive or standard component, or separately approved library or custom implementation. Neither field is evidence that implementation occurred.
 
-Motion+ is optional implementation assistance, never real-product evidence, an evidence authority, a dependency, or implicit authorization to install or implement. If an authorized implementation owner later selects Motion or Motion+, list that choice only as the implementation source and validate the resulting behavior independently.
+Motion+ is never required by or evidence for Design Arc, and it is never a Design Arc dependency. An authorized implementation owner may separately approve Motion+ as an optional implementation dependency and implementation source; that approval does not install it or make it Design Arc evidence or authority. Validate any resulting behavior independently.
 
 #### Preserve prototype, proof, and authority boundaries
 
@@ -345,7 +345,7 @@ Fully automatic mode never bypasses motion evidence integrity.
 - Inferring exact motion timing, easing, springs, or choreography from a screenshot or static screen sequence.
 - Reporting a frame-derived value as exact or omitting the temporal-claim label.
 - Claiming shipped-product motion precedent in Guidelines mode.
-- Treating Motion or Motion+ as evidence, authority, or permission to install a dependency.
+- Treating Motion or Motion+ as Design Arc evidence, authority, dependency, or permission to install; an authorized implementation owner's separate optional dependency choice does not change that boundary.
 - Treating a Stitch prototype as staging or device implementation proof.
 - Inventing custom motion when existing product or standard native behavior already serves the purpose.
 - Looking up benchmarks or implying benchmark support in Guidelines mode.

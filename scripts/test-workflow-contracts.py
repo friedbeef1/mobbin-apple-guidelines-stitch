@@ -192,9 +192,13 @@ MUTATIONS = {
         "Every material motion contract includes: Motion ID; journey location; purpose; trigger; start/end state; spatial behavior; choreography; timing; easing/spring; interruption; reduced motion; evidence; provenance; implementation target; implementation source; proof status. Unsupported values are `unverified`.",
         "Every material motion contract includes only Motion ID, purpose, and timing; omit unsupported fields.",
     ),
-    "motion case 08 Motion+ boundary": (
-        "Motion+ is optional implementation assistance, never real-product evidence, an evidence authority, a dependency, or implicit authorization to install or implement.",
-        "Motion+ is required evidence and implicit authorization to install the implementation dependency.",
+    "motion case 08 Design Arc dependency boundary": (
+        "Motion+ is never required by or evidence for Design Arc, and it is never a Design Arc dependency.",
+        "Motion+ is required evidence for Design Arc and a Design Arc dependency.",
+    ),
+    "motion case 08 implementation owner boundary": (
+        "An authorized implementation owner may separately approve Motion+ as an optional implementation dependency and implementation source; that approval does not install it or make it Design Arc evidence or authority.",
+        "Design Arc automatically installs Motion+ as a required implementation dependency and treats it as motion evidence.",
     ),
     "motion case 09 direction summary": (
         "At the Direction Gate, include a motion summary that identifies the material motion scope, retained native or existing behavior, proposed custom behavior, and unresolved evidence.",
