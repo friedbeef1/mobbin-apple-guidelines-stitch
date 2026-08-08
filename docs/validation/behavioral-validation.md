@@ -139,7 +139,21 @@ The RED expectation installed Design Arc `0.2.0`, attempted `codex plugin market
 
 The GREEN path uses the bounded fallback only when the post-refresh installed state is not `0.2.1`: remove the canonical plugin, remove its marketplace source, add the isolated current checkout, and reinstall `design-arc@design-arc-marketplace`. The smoke then proves that exactly one enabled `0.2.1` plugin and one branch-identical cached skill remain, a new task discovers that skill exactly once, the old `0.2.0` cache is removed, and a representative `.codex/design-arc.yaml` containing evidence, approval, and ready-home metadata is unchanged byte-for-byte.
 
-This proves the tested local exact-baseline-to-branch upgrade and fallback behavior. It does not claim that the unpublished `0.2.1` is available from the public Git marketplace yet. After publication, a user should try marketplace refresh first and use the same remove/add fallback only if installed state still does not expose `0.2.1`.
+This proves the tested local exact-baseline-to-branch upgrade and fallback behavior. At the time of that run it did not claim that the then-unpublished `0.2.1` was available from the public Git marketplace. It is retained as historical `0.2.0`-to-`0.2.1` evidence, not as current installation guidance.
+
+## Isolated 0.2.1 to 0.2.2 upgrade evidence — 2026-08-08
+
+This is deterministic local CLI integration evidence, not a publication, remote-marketplace, real-profile, or product-runtime claim. `scripts/test-plugin-upgrade.sh` checks out immutable public `0.2.1` commit `c86240c67e1e9cae51bd6cc63a0f957d7fbca4a9`, clones the current `0.2.2` checkout, and runs Codex CLI 0.146.1 with a newly created temporary `CODEX_HOME`. The fixture creates two temporary participating projects only; it does not inspect or mutate the user's installed plugin, preferences, tasks, or projects.
+
+The RED expectations changed the canonical identity, fresh-install, migration, and exact-baseline upgrade targets to `0.2.2` while the plugin manifest still reported `0.2.1`. They failed independently at the manifest identity, fresh install result, migration result, and target marketplace availability checks. Changing only the canonical manifest version to `0.2.2` made those same expectations pass.
+
+The actual route first attempted `codex plugin marketplace upgrade design-arc-marketplace`. The isolated exact-commit source is local rather than a configured Git marketplace, so this installed CLI reported its local-marketplace boundary and left `0.2.1` installed. Only after re-reading that state did the test use the bounded remove/add fallback: remove the one canonical plugin and marketplace, add the isolated current checkout, and reinstall `design-arc@design-arc-marketplace`. No network source or user profile was involved.
+
+The fixture discovers both temporary `.codex/design-arc.yaml` files and snapshots every fixture file before and after. The preferences deliberately cover Benchmarks with `benchmark_provider: mobbin` and Follow recommendation, Guidelines with Guided, and distinct ready-home project and thread metadata. Separate product-file and active-review sentinels record two product states, two review thread identities, and a zero continuation count. The passing comparison proves those bytes and identities remained unchanged, with zero replacement homes and zero review continuations in the tested fixture.
+
+The final isolated state contains exactly one enabled canonical plugin, one cached plugin manifest at `0.2.2`, one branch-identical cached `$design-arc` skill, no `0.2.1` cache, and no second available version. One new `codex debug prompt-input` task loads the cached Design Arc skill exactly once. Injected failures at both fallback marketplace-add and plugin-add restore the exact immutable `0.2.1` plugin and cache while preserving the same two-project inventory.
+
+This evidence proves only the local immutable-`0.2.1`-to-current-`0.2.2` path and its rollback behavior. It does not claim that `0.2.2` is published, remotely available, installed for the user, or exercised against real project or task state.
 
 ## Actual Codex desktop project-home acceptance — 2026-08-07
 
