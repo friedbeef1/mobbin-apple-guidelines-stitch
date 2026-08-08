@@ -165,8 +165,8 @@ MUTATIONS = {
         "The initial proposal is a correction round, so unlimited rendered proposals are allowed.",
     ),
     "proposal-wide batching": (
-        "Use one initial Stitch proposal followed by at most three batched correction rounds for the entire proposal.",
-        "Use one initial Stitch proposal followed by separate correction rounds for each screen.",
+        "Each correction request identifies the source render and affected screen/state IDs; states the observed mismatch and exact approved requirement; changes only `repairable drift`; preserves already matching requirements and the approved direction; requests a complete enough result to re-inspect affected and potentially regressed states; and records the new render or screen identifiers returned by Stitch.",
+        "Each correction request may target one mismatch at a time, need not state the approved requirement, may change matching requirements, and may rely on a summary instead of enough output to inspect regressions.",
     ),
     "repair before user involvement": (
         "Correct `repairable drift` automatically without asking the user because it does not change the approved direction.",
@@ -197,8 +197,8 @@ MUTATIONS = {
         "Stop after one corrected proposal that appears unchanged.",
     ),
     "third-round exhaustion verdict": (
-        "After the third unsuccessful correction round, stop and assign `meets with corrections` or `does not meet` from the remaining mismatch scope.",
-        "After the third unsuccessful correction round, keep retrying until the proposal matches.",
+        "After the third unsuccessful correction round, stop and assign `meets with corrections` or `does not meet` from the remaining mismatch scope. Use `meets with corrections` only when unresolved bounded mismatches remain and the approved direction is still recognizable. Use `does not meet` when the proposal materially contradicts or fails to represent the approved direction.",
+        "After the third unsuccessful correction round, keep retrying until the proposal matches and treat any remaining mismatch as `meets direction`.",
     ),
     "no unexplained meets-direction verdict": (
         "Assign `meets direction` only after the most recent complete proposal is inspected and every Stitch-expressible requirement matches.",
@@ -209,8 +209,8 @@ MUTATIONS = {
         "Record only the final Stitch verdict and omit repair evidence.",
     ),
     "guided and follow repair timing": (
-        "Guided and Follow recommendation perform the repair loop before stopping at the Stitch Gate.",
-        "Guided and Follow recommendation stop at the Stitch Gate before the repair loop.",
+        "Guided and Follow recommendation perform the repair loop before stopping at the Stitch Gate. After an unresolved verdict in Guided or Follow recommendation, offer the user choices to revise the direction, accept a clearly labeled product exception where allowed, or stop; an exception cannot change the verdict to `meets direction` or waive a current first-party platform or accessibility requirement.",
+        "Guided and Follow recommendation stop at the Stitch Gate before the repair loop and silently treat unresolved drift as approved.",
     ),
     "fully automatic repair verdict": (
         "Fully automatic performs the same repair loop and continues past the Stitch Gate only on `meets direction`.",

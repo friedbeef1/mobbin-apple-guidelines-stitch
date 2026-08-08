@@ -338,13 +338,20 @@ RENDER_REPAIR_CONTRACTS = {
         "A correction note, provider status, or command success is not proof of correction; only inspection of the newly generated render can change a mismatch to `match`.",
         "After every correction round, inspect the complete resulting proposal again, including previously matching requirements that may have regressed.",
     ),
+    "correction request integrity": (
+        "Each correction request identifies the source render and affected screen/state IDs; states the observed mismatch and exact approved requirement; changes only `repairable drift`; preserves already matching requirements and the approved direction; requests a complete enough result to re-inspect affected and potentially regressed states; and records the new render or screen identifiers returned by Stitch.",
+        "Add newly introduced drift to the next batched round.",
+    ),
     "bounded convergence": (
         "Stop early only when two consecutive corrected proposals show no improvement, two consecutive corrected proposals oscillate by fixing one requirement while breaking another, access becomes unavailable, the next correction changes direction, or new authorization is required.",
         "After the third unsuccessful correction round, stop and assign `meets with corrections` or `does not meet` from the remaining mismatch scope.",
+        "Use `meets with corrections` only when unresolved bounded mismatches remain and the approved direction is still recognizable.",
+        "Use `does not meet` when the proposal materially contradicts or fails to represent the approved direction.",
     ),
     "verdict integrity": (
         "Assign `meets direction` only after the most recent complete proposal is inspected and every Stitch-expressible requirement matches.",
         "Guided and Follow recommendation perform the repair loop before stopping at the Stitch Gate.",
+        "After an unresolved verdict in Guided or Follow recommendation, offer the user choices to revise the direction, accept a clearly labeled product exception where allowed, or stop; an exception cannot change the verdict to `meets direction` or waive a current first-party platform or accessibility requirement.",
         "Fully automatic performs the same repair loop and continues past the Stitch Gate only on `meets direction`.",
     ),
     "repair record": (
