@@ -41,11 +41,31 @@ It turns comments such as “this feels confusing” into a product objective, a
 
 ## The workflow
 
-**Only the bold steps need you. Design Arc handles everything else.**
+**Only rows marked 👤 You require your involvement. Design Arc handles every unmarked step.**
 
-**Choose preferences once** → **Describe the outcome you want** → audit the current journey → gather and label evidence → recommend a direction<br>
-→ **Authorize external access if requested** → **Approve the direction if your mode pauses** → validate against platform guidance → specify motion<br>
-→ visualize the complete journey → validate every important state → **Approve the visual proposal if your mode pauses** → prepare the design handoff
+| Workflow step | Platform or source handling it | Human involvement |
+| --- | --- | --- |
+| Describe the outcome you want | Codex | **👤 You** |
+| ↓ | | |
+| Audit the current journey | Your website or app + Codex | |
+| ↓ | | |
+| Gather and label evidence | Mobbin + Codex in Benchmarks mode, and official platform guidance + Codex in Guidelines mode | |
+| ↓ | | |
+| Recommend a design direction | Codex | |
+| ↓ | | |
+| Approve design direction | Codex | **👤 You** |
+| ↓ | | |
+| Validate against platform guidance | Apple, Android, Material, or W3C guidance + Codex | |
+| ↓ | | |
+| Decide on any design motion | Relevant official guidance + inspected motion evidence + Codex | |
+| ↓ | | |
+| Visualize the complete journey | Google Stitch + Codex | |
+| ↓ | | |
+| Validate every important state | Google Stitch renders + Codex | |
+| ↓ | | |
+| Approve the visual proposal | Codex | **👤 You** |
+| ↓ | | |
+| Prepare the design handoff | Codex | |
 
 Setup resolves two independent choices: how evidence is gathered and where Codex pauses for approval. Every route establishes the objective before inspection or research, audits the actual product, preserves platform rules, and stops at a design-only handoff boundary.
 

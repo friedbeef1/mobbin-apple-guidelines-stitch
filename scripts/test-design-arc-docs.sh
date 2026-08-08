@@ -51,10 +51,6 @@ require_text "$readme" '[motion grounding guide](docs/trusted-sources/motion.md)
 require_text "$readme" '## You need Design Arc if…'
 require_text "$readme" '## What Design Arc produces'
 require_text "$readme" '## The workflow'
-require_text "$readme" '**Only the bold steps need you. Design Arc handles everything else.**'
-require_text "$readme" '**Choose preferences once** → **Describe the outcome you want** → audit the current journey → gather and label evidence → recommend a direction'
-require_text "$readme" '→ **Authorize external access if requested** → **Approve the direction if your mode pauses** → validate against platform guidance → specify motion'
-require_text "$readme" '→ visualize the complete journey → validate every important state → **Approve the visual proposal if your mode pauses** → prepare the design handoff'
 require_text "$readme" '## Example: from “confusing onboarding” to a complete direction'
 require_text "$readme" '## Choose how Design Arc grounds its recommendations'
 require_text "$readme" '## Install and set up in 60 seconds'
@@ -140,6 +136,42 @@ headings = [
 positions = [text.index(heading) for heading in headings]
 if positions != sorted(positions) or len(set(positions)) != len(positions):
     raise SystemExit("FAIL: README sections are not in the required product-story order")
+
+workflow_start = text.index("## The workflow")
+workflow_end = text.index("## Example: from “confusing onboarding” to a complete direction")
+workflow = text[workflow_start:workflow_end]
+required_workflow_rows = [
+    "| Describe the outcome you want | Codex | **👤 You** |",
+    "| ↓ | | |",
+    "| Audit the current journey | Your website or app + Codex | |",
+    "| Gather and label evidence | Mobbin + Codex in Benchmarks mode, and official platform guidance + Codex in Guidelines mode | |",
+    "| Recommend a design direction | Codex | |",
+    "| Approve design direction | Codex | **👤 You** |",
+    "| Validate against platform guidance | Apple, Android, Material, or W3C guidance + Codex | |",
+    "| Decide on any design motion | Relevant official guidance + inspected motion evidence + Codex | |",
+    "| Visualize the complete journey | Google Stitch + Codex | |",
+    "| Validate every important state | Google Stitch renders + Codex | |",
+    "| Approve the visual proposal | Codex | **👤 You** |",
+    "| Prepare the design handoff | Codex | |",
+]
+for row in required_workflow_rows:
+    if row not in workflow:
+        raise SystemExit(f"FAIL: workflow is missing required row: {row}")
+
+if workflow.count("| ↓ | | |") != 10:
+    raise SystemExit("FAIL: workflow must preserve the 10-row arrow sequence")
+if workflow.count("**👤 You**") != 3:
+    raise SystemExit("FAIL: workflow must contain exactly three human-involvement markers")
+for superseded_label in (
+    "**Only the bold steps need you. Design Arc handles everything else.**",
+    "**Choose preferences once**",
+    "**Authorize external access if requested**",
+    "**Approve the direction if your mode pauses**",
+    "**Approve the visual proposal if your mode pauses**",
+    "→",
+):
+    if superseded_label in workflow:
+        raise SystemExit(f"FAIL: workflow retains superseded horizontal/manual label: {superseded_label}")
 
 methodology = text[text.index("## Methodology, sources, migration, and limitations"):]
 for provider in ("Apple", "Mobbin", "Stitch"):
