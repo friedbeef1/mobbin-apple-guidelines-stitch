@@ -37,6 +37,7 @@ for required_file in \
   plugins/design-arc/.codex-plugin/plugin.json \
   plugins/design-arc/skills/design-arc/SKILL.md \
   plugins/design-arc/skills/design-arc/agents/openai.yaml \
+  plugins/design-arc/skills/design-arc/references/graph-record.schema.json \
   scripts/check-workflow-contracts.py \
   scripts/test-design-arc-docs.sh \
   scripts/test-design-arc-identity.sh \
@@ -46,6 +47,8 @@ for required_file in \
   scripts/test-plugin-upgrade.sh \
   scripts/test-test-validate.sh \
   scripts/test-validate.sh \
+  scripts/test-graph-records.py \
+  scripts/validate-graph-record.py \
   scripts/test-workflow-contracts.py \
   scripts/validate.sh
 do
@@ -75,6 +78,12 @@ sh "$repo_root/scripts/test-design-arc-identity.sh"
 sh "$repo_root/scripts/test-design-arc-docs.sh"
 python3 "$repo_root/scripts/check-workflow-contracts.py"
 python3 "$repo_root/scripts/test-workflow-contracts.py"
+if python3 "$repo_root/scripts/test-graph-records.py"
+then
+  :
+else
+  fail 'graph-record test failed'
+fi
 printf '%s\n' 'PASS: focused identity, documentation, and workflow contracts'
 
 private_key_prefix='-----BEGIN '
@@ -138,7 +147,9 @@ sh -n \
   "$repo_root/scripts/validate.sh"
 python3 - \
   "$repo_root/scripts/check-workflow-contracts.py" \
+  "$repo_root/scripts/test-graph-records.py" \
   "$repo_root/scripts/test-plugin-upgrade-state.py" \
+  "$repo_root/scripts/validate-graph-record.py" \
   "$repo_root/scripts/test-workflow-contracts.py" <<'PY'
 from pathlib import Path
 import sys

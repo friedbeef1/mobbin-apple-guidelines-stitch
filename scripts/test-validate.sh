@@ -63,6 +63,7 @@ printf '%s\n' 'PASS: validator negative cases'
 sh "$repo_root/scripts/test-design-arc-identity.sh"
 sh "$repo_root/scripts/test-design-arc-docs.sh"
 python3 "$repo_root/scripts/test-workflow-contracts.py"
+python3 "$repo_root/scripts/test-graph-records.py"
 
 if validation_output=$("$validator" 2>&1)
 then
@@ -75,6 +76,7 @@ fi
 for expected_output in \
   'PASS: required Design Arc files' \
   'PASS: plugin and embedded skill validation for Design Arc' \
+  'PASS: accepted valid fixture valid.json' \
   'PASS: isolated Design Arc plugin installation smoke' \
   'PASS: isolated Design Arc plugin migration smoke' \
   'PASS: isolated Design Arc plugin upgrade smoke' \

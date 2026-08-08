@@ -11,6 +11,7 @@ split_target="$task_temp_dir/with"
 sentinel="$split_target/must-survive"
 failing_codex="$task_temp_dir/failing-codex"
 missing_source_checkout="$task_temp_dir/missing-trusted-source"
+broken_graph_checkout="$task_temp_dir/broken-graph-record-test"
 
 cleanup() {
   [ -n "$task_temp_dir" ] && [ -d "$task_temp_dir" ] && rm -rf "$task_temp_dir"
@@ -49,6 +50,21 @@ printf '%s\n' "$output" | grep -F 'FAIL: missing required file: docs/trusted-sou
   fail 'repository validator failed for the wrong missing trusted-sources README reason'
 }
 printf '%s\n' 'PASS: repository validator rejects a missing trusted-sources README'
+
+cp -R "$repo_root" "$broken_graph_checkout"
+printf '%s\n' '#!/usr/bin/env python3' 'raise SystemExit(98)' > "$broken_graph_checkout/scripts/test-graph-records.py"
+
+if output=$(sh "$broken_graph_checkout/scripts/validate.sh" 2>&1)
+then
+  printf '%s\n' "$output" >&2
+  fail 'repository validator accepted a deliberately broken graph-record test'
+fi
+
+printf '%s\n' "$output" | grep -F 'FAIL: graph-record test failed' >/dev/null || {
+  printf '%s\n' "$output" >&2
+  fail 'repository validator failed for the wrong deliberate graph-record test reason'
+}
+printf '%s\n' 'PASS: repository validator fails closed on a deliberately broken graph-record test'
 
 printf '%s\n' '#!/bin/sh' 'printf "%s\n" "deliberate Codex CLI failure" >&2' 'exit 97' > "$failing_codex"
 chmod +x "$failing_codex"

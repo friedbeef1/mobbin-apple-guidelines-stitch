@@ -1,0 +1,173 @@
+{
+  "schema": "design-arc.graph/v1",
+  "project_id": "project-alpha",
+  "review_id": "review-001",
+  "nodes": [
+    {
+      "id": "node-1",
+      "type": "confirmed_objective",
+      "label": "Make account recovery clear"
+    },
+    {
+      "id": "node-2",
+      "type": "evidence_source",
+      "label": "Inspected account recovery journey"
+    },
+    {
+      "id": "node-3",
+      "type": "platform_requirement",
+      "label": "Platform accessibility requirement"
+    },
+    {
+      "id": "node-4",
+      "type": "design_decision",
+      "label": "Recovery direction"
+    },
+    {
+      "id": "node-5",
+      "type": "journey",
+      "label": "Password recovery"
+    },
+    {
+      "id": "node-6",
+      "type": "screen",
+      "label": "Recovery screen"
+    },
+    {
+      "id": "node-7",
+      "type": "state",
+      "label": "Recovery confirmation state"
+    },
+    {
+      "id": "node-8",
+      "type": "transition",
+      "label": "Recovery transition"
+    },
+    {
+      "id": "node-9",
+      "type": "stitch_render",
+      "label": "Initial Stitch render"
+    },
+    {
+      "id": "node-10",
+      "type": "observed_mismatch",
+      "label": "Missing recovery hint"
+    },
+    {
+      "id": "node-11",
+      "type": "correction",
+      "label": "Add recovery hint"
+    },
+    {
+      "id": "node-12",
+      "type": "approval",
+      "label": "Direction approval"
+    },
+    {
+      "id": "node-13",
+      "type": "exception",
+      "label": "Known runtime limitation"
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-1",
+      "type": "supports",
+      "from": "node-2",
+      "to": "node-1",
+      "active": true,
+      "provenance_kind": "inspected_evidence",
+      "source_ref": "https://example.test/recovery",
+      "observed_at": "2026-08-08T00:00:00Z",
+      "support_status": "supported"
+    },
+    {
+      "id": "edge-2",
+      "type": "requires",
+      "from": "node-4",
+      "to": "node-3",
+      "active": true,
+      "provenance_kind": "official_guidance",
+      "source_ref": "https://example.test/platform-guidance",
+      "observed_at": "2026-08-08T00:00:00Z",
+      "support_status": "supported"
+    },
+    {
+      "id": "edge-3",
+      "type": "applies_to",
+      "from": "node-4",
+      "to": "node-5",
+      "active": true,
+      "provenance_kind": "design_arc_judgment",
+      "source_ref": "design-arc:direction-1",
+      "observed_at": "2026-08-08T00:00:00Z",
+      "support_status": "supported"
+    },
+    {
+      "id": "edge-4",
+      "type": "conflicts_with",
+      "from": "node-10",
+      "to": "node-4",
+      "active": true,
+      "provenance_kind": "inspected_evidence",
+      "source_ref": "stitch:render-1",
+      "observed_at": "2026-08-08T00:00:00Z",
+      "support_status": "supported"
+    },
+    {
+      "id": "edge-5",
+      "type": "depends_on",
+      "from": "node-7",
+      "to": "node-6",
+      "active": true,
+      "provenance_kind": "design_arc_judgment",
+      "source_ref": "design-arc:state-1",
+      "observed_at": "2026-08-08T00:00:00Z",
+      "support_status": "supported"
+    },
+    {
+      "id": "edge-6",
+      "type": "rendered_as",
+      "from": "node-6",
+      "to": "node-9",
+      "active": true,
+      "provenance_kind": "inspected_evidence",
+      "source_ref": "stitch:render-1",
+      "observed_at": "2026-08-08T00:00:00Z",
+      "support_status": "supported"
+    },
+    {
+      "id": "edge-7",
+      "type": "corrected_by",
+      "from": "node-10",
+      "to": "node-11",
+      "active": true,
+      "provenance_kind": "design_arc_judgment",
+      "source_ref": "design-arc:correction-1",
+      "observed_at": "2026-08-08T00:00:00Z",
+      "support_status": "supported"
+    },
+    {
+      "id": "edge-8",
+      "type": "supersedes",
+      "from": "node-11",
+      "to": "node-9",
+      "active": true,
+      "provenance_kind": "inspected_evidence",
+      "source_ref": "stitch:render-2",
+      "observed_at": "2026-08-08T00:00:00Z",
+      "support_status": "supported"
+    },
+    {
+      "id": "edge-9",
+      "type": "approved_by",
+      "from": "node-4",
+      "to": "node-12",
+      "active": true,
+      "provenance_kind": "user_confirmed_objective",
+      "source_ref": "user:confirmation-1",
+      "observed_at": "2026-08-08T00:00:00Z",
+      "support_status": "supported"
+    }
+  ]
+}

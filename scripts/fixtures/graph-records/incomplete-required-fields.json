@@ -1,0 +1,18 @@
+{
+  "schema": "design-arc.graph/v1",
+  "project_id": "project-alpha",
+  "review_id": "review-001",
+  "nodes": [],
+  "edges": [
+    {
+      "id": "edge-1",
+      "type": "supports",
+      "from": "objective-1",
+      "to": "evidence-1",
+      "active": true,
+      "provenance_kind": "inspected_evidence",
+      "source_ref": "https://example.test/recovery",
+      "support_status": "supported"
+    }
+  ]
+}

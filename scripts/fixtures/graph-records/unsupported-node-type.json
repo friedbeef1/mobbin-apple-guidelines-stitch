@@ -1,0 +1,13 @@
+{
+  "schema": "design-arc.graph/v1",
+  "project_id": "project-alpha",
+  "review_id": "review-001",
+  "nodes": [
+    {
+      "id": "node-1",
+      "type": "unsupported_node",
+      "label": "Unsupported node"
+    }
+  ],
+  "edges": []
+}
