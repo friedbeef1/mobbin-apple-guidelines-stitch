@@ -48,6 +48,8 @@ setup → objective → current-journey audit → evidence → directions
       → render validation → Stitch Gate → authorized design handoff
 ```
 
+**What you need to do:** Tell Codex what outcome you want. On first use, choose how evidence and approvals should work; later, only authorize external access or approve a gate when your chosen mode asks. Codex handles the audit, research, recommendations, platform checks, motion specification, visual journey, and validation.
+
 Setup resolves two independent choices: how evidence is gathered and where Codex pauses for approval. Every route establishes the objective before inspection or research, audits the actual product, preserves platform rules, and stops at a design-only handoff boundary.
 
 ## Example: from “confusing onboarding” to a complete direction

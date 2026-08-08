@@ -51,6 +51,7 @@ require_text "$readme" '[motion grounding guide](docs/trusted-sources/motion.md)
 require_text "$readme" '## You need Design Arc if…'
 require_text "$readme" '## What Design Arc produces'
 require_text "$readme" '## The workflow'
+require_text "$readme" '**What you need to do:** Tell Codex what outcome you want. On first use, choose how evidence and approvals should work; later, only authorize external access or approve a gate when your chosen mode asks. Codex handles the audit, research, recommendations, platform checks, motion specification, visual journey, and validation.'
 require_text "$readme" '## Example: from “confusing onboarding” to a complete direction'
 require_text "$readme" '## Choose how Design Arc grounds its recommendations'
 require_text "$readme" '## Install and set up in 60 seconds'
