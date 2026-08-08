@@ -42,6 +42,7 @@ for required_file in \
   scripts/test-design-arc-identity.sh \
   scripts/test-plugin-install.sh \
   scripts/test-plugin-migration.sh \
+  scripts/test-plugin-upgrade-state.py \
   scripts/test-plugin-upgrade.sh \
   scripts/test-test-validate.sh \
   scripts/test-validate.sh \
@@ -135,7 +136,10 @@ sh -n \
   "$repo_root/scripts/test-test-validate.sh" \
   "$repo_root/scripts/test-validate.sh" \
   "$repo_root/scripts/validate.sh"
-python3 - "$repo_root/scripts/check-workflow-contracts.py" "$repo_root/scripts/test-workflow-contracts.py" <<'PY'
+python3 - \
+  "$repo_root/scripts/check-workflow-contracts.py" \
+  "$repo_root/scripts/test-plugin-upgrade-state.py" \
+  "$repo_root/scripts/test-workflow-contracts.py" <<'PY'
 from pathlib import Path
 import sys
 

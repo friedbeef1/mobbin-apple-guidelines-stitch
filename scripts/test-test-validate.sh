@@ -68,7 +68,34 @@ then
   fail 'upgrade harness accepted a deliberately failing Codex CLI'
 fi
 
-for failure_point in marketplace-add plugin-add
+for failure_point in \
+  preflight-missing \
+  preflight-disabled \
+  preflight-duplicate \
+  preflight-unexpected-source \
+  preflight-cache-mismatch
+do
+  preflight_output=$(DESIGN_ARC_UPGRADE_INJECT_FAILURE="$failure_point" sh "$script_dir/test-plugin-upgrade.sh") || {
+    printf '%s\n' "$preflight_output" >&2
+    fail "upgrade preflight scenario failed at $failure_point"
+  }
+  printf '%s\n' "$preflight_output" | grep -F "PASS: fallback preflight rejected $failure_point without plugin or marketplace removal" >/dev/null || {
+    printf '%s\n' "$preflight_output" >&2
+    fail "upgrade preflight scenario did not fail closed at $failure_point"
+  }
+done
+
+for failure_point in \
+  plugin-remove \
+  marketplace-remove \
+  marketplace-add \
+  target-available-read \
+  target-availability \
+  plugin-add \
+  final-plugin-read \
+  final-marketplace-read \
+  prompt-load \
+  preservation-validation
 do
   rollback_output=$(DESIGN_ARC_UPGRADE_INJECT_FAILURE="$failure_point" sh "$script_dir/test-plugin-upgrade.sh") || {
     printf '%s\n' "$rollback_output" >&2
