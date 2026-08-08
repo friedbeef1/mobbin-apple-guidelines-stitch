@@ -1,6 +1,6 @@
 # Design Arc Render-Repair Loop Design
 
-Date: 2026-08-08  
+Date: 2026-08-08
 Status: Approved direction; written specification awaiting user review
 
 ## Problem
