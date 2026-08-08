@@ -5,11 +5,18 @@ set -eu
 
 script_dir=$(CDPATH= cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH= cd "$script_dir/.." && pwd)
+task_temp_dir=$(mktemp -d "${TMPDIR:-/tmp}/design-arc-docs.XXXXXX")
+
+cleanup() {
+  [ -n "$task_temp_dir" ] && [ -d "$task_temp_dir" ] && rm -rf "$task_temp_dir"
+}
 
 fail() {
   printf '%s\n' "FAIL: $*" >&2
   exit 1
 }
+
+trap cleanup EXIT HUP INT TERM
 
 require_text() {
   file=$1
@@ -50,6 +57,29 @@ if ask_codex_instruction not in text:
 for forbidden_text in ("```sh", "codex plugin", "skills registry", "Python", "Saved preferences and migration", "If Codex says"):
     if forbidden_text in text:
         raise SystemExit(f"FAIL: README retains forbidden advanced-installation content: {forbidden_text}")
+PY
+
+python3 - "$repo_root" "$readme" "$getting_started" "$using_design_arc" "$evidence_methodology" "$upgrades_migration" "$trust_sources" <<'PY'
+from pathlib import Path
+import re
+import sys
+
+repository_root = Path(sys.argv[1]).resolve()
+documentation_pages = [Path(path) for path in sys.argv[2:]]
+
+for source in documentation_pages:
+    for target in re.findall(r"\[[^\]]+\]\(([^)]+)\)", source.read_text(encoding="utf-8")):
+        if target.startswith(("http://", "https://", "mailto:", "#")):
+            continue
+        resolved = (source.parent / target.split("#", 1)[0]).resolve()
+        try:
+            resolved.relative_to(repository_root)
+        except ValueError:
+            raise SystemExit(f"FAIL: relative link escapes repository in {source}: {target}")
+        if not resolved.exists():
+            raise SystemExit(f"FAIL: broken relative link in {source}: {target}")
+
+print("PASS: repository-relative Markdown links resolve")
 PY
 
 require_text "$readme" '# Design Arc'
@@ -383,3 +413,67 @@ require_text "$prompts" 'use Guidelines for this run'
 require_text "$prompts" 'Bypass both gates'
 
 printf '%s\n' 'PASS: Design Arc product documentation'
+
+if [ "${DESIGN_ARC_DOCS_SKIP_BROKEN_LINK_MUTATION:-}" != '1' ]
+then
+  mutation_checkout="$task_temp_dir/broken-link-fixture"
+  cp -R "$repo_root" "$mutation_checkout"
+  mutation_page="$mutation_checkout/README.md"
+
+  python3 - "$mutation_page" <<'PY'
+from pathlib import Path
+import sys
+
+page = Path(sys.argv[1])
+original = page.read_text(encoding="utf-8")
+target = "[Learn how to use Design Arc.](docs/using-design-arc.md)"
+if target not in original:
+    raise SystemExit("FAIL: broken-link fixture requires a valid menu target")
+page.write_text(original.replace(target, "[Learn how to use Design Arc.](missing-page.md)", 1), encoding="utf-8")
+PY
+
+  if output=$(DESIGN_ARC_DOCS_SKIP_BROKEN_LINK_MUTATION=1 sh "$mutation_checkout/scripts/test-design-arc-docs.sh" 2>&1)
+  then
+    printf '%s\n' "$output" >&2
+    fail 'broken-link mutation was accepted'
+  fi
+
+  printf '%s\n' "$output" | grep -F 'FAIL: broken relative link in' >/dev/null || {
+    printf '%s\n' "$output" >&2
+    fail 'broken-link mutation failed for the wrong reason'
+  }
+  printf '%s\n' 'PASS: broken-link mutation is rejected'
+
+  escape_checkout="$task_temp_dir/escape-link-fixture"
+  cp -R "$repo_root" "$escape_checkout"
+  escape_page="$escape_checkout/README.md"
+
+  python3 - "$escape_page" <<'PY'
+from pathlib import Path
+import os
+import sys
+
+page = Path(sys.argv[1])
+original = page.read_text(encoding="utf-8")
+target = "[Learn how to use Design Arc.](docs/using-design-arc.md)"
+if target not in original:
+    raise SystemExit("FAIL: escape-link fixture requires a valid menu target")
+escape_target = os.path.relpath("/etc/passwd", page.parent)
+page.write_text(
+    original.replace(target, f"[Learn how to use Design Arc.]({escape_target})", 1),
+    encoding="utf-8",
+)
+PY
+
+  if output=$(DESIGN_ARC_DOCS_SKIP_BROKEN_LINK_MUTATION=1 sh "$escape_checkout/scripts/test-design-arc-docs.sh" 2>&1)
+  then
+    printf '%s\n' "$output" >&2
+    fail 'escape-link mutation was accepted'
+  fi
+
+  printf '%s\n' "$output" | grep -F 'FAIL: relative link escapes repository in' >/dev/null || {
+    printf '%s\n' "$output" >&2
+    fail 'escape-link mutation failed for the wrong reason'
+  }
+  printf '%s\n' 'PASS: escape-link mutation is rejected'
+fi
