@@ -248,6 +248,18 @@ At the Direction Gate, present one unmistakably marked recommendation plus meani
 
 At the Direction Gate, include a motion summary that identifies the material motion scope, retained native or existing behavior, proposed custom behavior, and unresolved evidence.
 
+For each direction, explain the motion's concrete interaction purpose and why it uses no more motion than that purpose requires.
+
+For each direction, cite relevant inspected real-product evidence and current platform guidance, or state that either is unavailable.
+
+For each direction, apply the required provenance label to every temporal claim and distinguish directly observed behavior from measured estimates.
+
+For each direction, describe reduced-motion implications, motion-specific risks, and implementation complexity in the target stack.
+
+For each direction, identify what remains unproven and the staging, device, or production evidence needed to prove it.
+
+Headings or field names without these direction-specific explanations do not satisfy the Direction Gate.
+
 - **Guided:** report the active settings and provenance, then stop for the user's direction choice.
 - **Follow recommendation:** record that the active mode selected the marked recommendation, then continue.
 - **Fully automatic:** record the same automatic selection, then continue.
@@ -284,9 +296,23 @@ Every material motion contract includes: Motion ID; journey location; purpose; t
 
 Use one contract per motion or transition that affects continuity, feedback, hierarchy, status, recovery, spatial understanding, input, or accessibility. Record `none` only when absence is an inspected and deliberate value; use `unverified` when the value is unknown or unsupported. Reduced motion is a required alternative, not optional polish or `none`: preserve essential state and feedback without relying on nonessential displacement, scaling, parallax, or continuous motion.
 
-`implementation target` names the application surface, component, or state change that an authorized owner would build. `implementation source` names the selected existing product token, native primitive or standard component, or separately approved library or custom implementation. Neither field is evidence that implementation occurred.
+`implementation target` records the runtime and UI technology, such as Web, React, SwiftUI, UIKit, or Compose; record component and state-change specificity separately when useful.
+
+`timing` uses milliseconds or seconds for duration and delay, or records that a physical spring with explicit parameters governs timing.
+
+`easing/spring` records cubic-bezier coordinates, a named platform curve, or physical spring parameters such as mass, stiffness, damping, and initial velocity.
+
+`interruption` records whether motion can be interrupted or reversed, how cancellation resolves, and what happens on re-entry.
+
+`provenance` uses exactly one of `directly observed`, `measured estimate`, `pattern-level inference`, `Design Arc judgment`, or `unverified` for each claim, cites the supporting source, and records the measurement or estimate basis when applicable.
+
+`implementation source` names the existing product token, native or standard component, separately approved library, or custom implementation and records the authorizing owner; a proposal alone does not authorize it.
+
+`proof status` distinguishes `specified`, `prototyped`, `staging verified`, `device verified`, and `production verified` as applicable; use only the highest status established by current evidence.
 
 Motion+ is never required by or evidence for Design Arc, and it is never a Design Arc dependency. An authorized implementation owner may separately approve Motion+ as an optional implementation dependency and implementation source; that approval does not install it or make it Design Arc evidence or authority. Validate any resulting behavior independently.
+
+After separate authorization from the implementation owner, Motion+ assistance may cover documentation and example search; reusable source retrieval; spring and easing assistance; saved-transition inspection; performance auditing; and design-system adaptation.
 
 #### Preserve prototype, proof, and authority boundaries
 
@@ -299,6 +325,12 @@ Design Arc may specify and critique motion, but it does not authorize applicatio
 Stitch is an external visualization service, not a bundled or official Design Arc integration. Obtain whatever separate access and payload authorization the environment requires. Use an existing project and design system when supplied. Generate every material state required by the selected journey, including entry, transition, loading, empty, error, success, cancellation, and recovery. Record exact requested viewports, safe areas, assets, interaction states, project or board identifiers, and new screen identifiers.
 
 Return decision-ready evidence in Codex: an inline journey map, embedded key renders, concise generator recommendations, exact verified render dimensions, identifiers, and evidence provenance. A board offers deeper exploration; it is not a substitute for the evidence in chat.
+
+Before assigning a Stitch verdict, explicitly evaluate motion purpose and least-motion restraint, provenance labels and citations, reduced-motion behavior, alignment with every material motion contract, prototype limitations, and remaining runtime proof.
+
+A `meets direction` verdict is valid only when the prototype aligns with those motion requirements within its capabilities and every limitation and remaining runtime proof item is documented; any unexplained gap yields `meets with corrections` or `does not meet`.
+
+Fully automatic may continue on `meets direction` only after this motion evaluation is recorded; it cannot waive a missing or contradictory motion check.
 
 Inspect the actual renders for journey coherence, hierarchy, navigation, targets, spacing, containment, safe areas, orientation, text size, accessibility, errors, and recovery. Give exactly one Stitch verdict: `meets direction`, `meets with corrections`, or `does not meet`.
 

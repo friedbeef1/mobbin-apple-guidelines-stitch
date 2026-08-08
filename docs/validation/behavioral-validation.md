@@ -68,10 +68,10 @@ The executable checker protects these twelve motion-methodology cases. Each row 
 | 4. Temporal labels | Give every temporal claim exactly one allowed observation, estimate, inference, judgment, or unverified label. |
 | 5. Missing playback | Report the limitation, offer one of the allowed playable/default/proposal paths, and never invent unavailable motion. |
 | 6. Guidelines isolation | Perform no benchmark lookup, make no real-product motion claim, and explicitly report that no benchmark motion was inspected. |
-| 7. Complete contract | Require all named motion fields and use `unverified` for unsupported values. |
-| 8. Motion+ boundary | Keep Motion+ outside Design Arc requirements, evidence, authority, and dependencies while allowing an authorized implementation owner to approve it separately as an optional implementation dependency and source. |
-| 9. Direction and restraint | Include motion scope and uncertainty at the Direction Gate and apply the least-motion principle. |
-| 10. Prototype, proof, and authority | Keep prototypes separate from measured staging/device proof and preserve implementation, dependency, staging, deployment, and release ownership. |
+| 7. Complete contract | Require all named fields, define reproducible target/timing/easing/interruption/provenance/source/proof semantics, and use `unverified` for unsupported values. |
+| 8. Motion+ boundary | Keep Motion+ outside Design Arc requirements, evidence, authority, and dependencies while allowing separately authorized implementation help across documentation, source retrieval, tuning, inspection, auditing, and design-system adaptation. |
+| 9. Direction and restraint | Require each direction to explain purpose and restraint, evidence and guidance, provenance labels, reduced motion, risks, complexity, and remaining proof; headings alone do not pass. |
+| 10. Prototype, proof, and authority | Make every Stitch verdict evaluate motion requirements and contract alignment, carry limitations and runtime proof forward, and preserve implementation, dependency, staging, deployment, and release ownership. |
 | 11. Run record | Preserve scope, evidence, provenance, contracts, reduced motion, implementation source, proof, and remaining uncertainty. |
 | 12. Fully automatic | Never let Fully automatic bypass motion evidence integrity. |
 
@@ -87,7 +87,7 @@ The mutation suite removes or reverses each load-bearing clause, including:
 - Guided/Follow objective confirmation and Fully automatic's explicit-objective rule;
 - Direction and Stitch gate verdict behavior;
 - Android/web first-party precedence;
-- all twelve motion-methodology cases, with separate mutations for case 9's Direction and least-motion clauses and case 10's prototype, staging/device proof, and authority clauses;
+- all twelve motion-methodology cases, including semantic mutations for contract values, Direction explanations, Motion+ assistance, and Stitch verdict/automatic-gate behavior;
 - evidence claims and implementation/release ownership.
 
 A passing mutation run means the checker rejected every weakened fixture. It does not mean an agent executed an end-to-end product journey.

@@ -10,6 +10,8 @@ Existing product motion and standard native behavior come first. Then use the cu
 
 Every material motion contract must name a reduced-motion alternative; no animation is the fallback only when it still preserves the needed information and control. The alternative might use an immediate state change, a persistent status message, or a simpler transition, but it must still let a person understand what happened and continue the task.
 
+Implementation targets name the runtime and UI technology, such as Web, React, SwiftUI, UIKit, or Compose; timing uses milliseconds or seconds or a parameterized physical spring; easing uses cubic-bezier values, a named platform curve, or reproducible spring parameters. Interruption covers reversal, cancellation, and re-entry; provenance carries one required label plus citations and estimate basis; implementation source records authorization; proof status distinguishes specified, prototyped, staging, device, and production evidence.
+
 ## Precedent is not an implementation recipe
 
 Shipped-product precedent shows what was observed in a comparable journey; an implementation library supplies tools, not proof that its defaults fit this product. A library can help an authorized implementation owner build a known behavior, but it cannot establish that the behavior is accessible, suitable for the objective, or correct for the platform.
@@ -21,6 +23,8 @@ Use a recording or playable journey when the decision depends on timing, easing,
 ## Implementation remains optional and must be proven later
 
 Motion and Motion+ are optional implementation dependencies, never Design Arc requirements, evidence, authority, or bundled dependencies. An authorized implementation owner may separately choose an appropriate library and validate the actual result in the product's stack. That selection neither changes the evidence record nor authorizes source changes, staging, deployment, or release.
+
+After separate authorization, Motion+ can assist an implementation owner with documentation and example search, reusable source retrieval, spring and easing work, saved-transition inspection, performance auditing, and design-system adaptation. These are implementation aids, not motion evidence, platform guidance, approval to install, or proof that the result works.
 
 A prototype can communicate an intended interaction, but it cannot prove runtime quality. It does not prove frame rate, interruption behavior, accessibility settings, responsiveness, browser or native behavior, safe-area handling, or device performance. Those claims require current staging or target-device evidence after authorized implementation.
 

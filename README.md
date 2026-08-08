@@ -223,6 +223,8 @@ Static screens or sequences support only start/end state, changing element, jour
 
 Stitch prototypes are design evidence, not staging or device implementation proof. When Stitch cannot represent required motion faithfully, Design Arc returns the start and end states plus the motion contract. The authorized implementation owner later builds it with the product's actual stack and validates the result in staging or on the target device.
 
+Each direction explains motion purpose and restraint, relevant precedent and platform guidance, provenance labels, reduced-motion implications, motion-specific risks, implementation complexity, and remaining proof. A Stitch verdict evaluates the same motion requirements and contract alignment, and `meets direction` records prototype limitations and remaining runtime proof before Fully automatic may continue.
+
 For the nontechnical explanation of what motion evidence can establish, when a recording is needed, and why a prototype is not runtime proof, read the [motion grounding guide](docs/trusted-sources/motion.md).
 
 ### External evidence and visualization sources

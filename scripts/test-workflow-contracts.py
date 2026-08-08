@@ -192,6 +192,34 @@ MUTATIONS = {
         "Every material motion contract includes: Motion ID; journey location; purpose; trigger; start/end state; spatial behavior; choreography; timing; easing/spring; interruption; reduced motion; evidence; provenance; implementation target; implementation source; proof status. Unsupported values are `unverified`.",
         "Every material motion contract includes only Motion ID, purpose, and timing; omit unsupported fields.",
     ),
+    "motion case 07 target semantics": (
+        "`implementation target` records the runtime and UI technology, such as Web, React, SwiftUI, UIKit, or Compose; record component and state-change specificity separately when useful.",
+        "`implementation target` records only a vague screen or component name and omits the runtime and UI technology.",
+    ),
+    "motion case 07 timing semantics": (
+        "`timing` uses milliseconds or seconds for duration and delay, or records that a physical spring with explicit parameters governs timing.",
+        "`timing` uses subjective values such as fast or smooth without units or spring parameters.",
+    ),
+    "motion case 07 easing semantics": (
+        "`easing/spring` records cubic-bezier coordinates, a named platform curve, or physical spring parameters such as mass, stiffness, damping, and initial velocity.",
+        "`easing/spring` records only a vague adjective and no reproducible curve or spring parameters.",
+    ),
+    "motion case 07 interruption semantics": (
+        "`interruption` records whether motion can be interrupted or reversed, how cancellation resolves, and what happens on re-entry.",
+        "`interruption` records only yes or no and omits reversal, cancellation, and re-entry behavior.",
+    ),
+    "motion case 07 provenance semantics": (
+        "`provenance` uses exactly one of `directly observed`, `measured estimate`, `pattern-level inference`, `Design Arc judgment`, or `unverified` for each claim, cites the supporting source, and records the measurement or estimate basis when applicable.",
+        "`provenance` accepts unlabeled claims without citations or an estimate basis.",
+    ),
+    "motion case 07 source authorization semantics": (
+        "`implementation source` names the existing product token, native or standard component, separately approved library, or custom implementation and records the authorizing owner; a proposal alone does not authorize it.",
+        "`implementation source` lists an unapproved library and treats the proposal as installation authorization.",
+    ),
+    "motion case 07 proof-status semantics": (
+        "`proof status` distinguishes `specified`, `prototyped`, `staging verified`, `device verified`, and `production verified` as applicable; use only the highest status established by current evidence.",
+        "`proof status` uses complete for every design and promotes it without runtime evidence.",
+    ),
     "motion case 08 Design Arc dependency boundary": (
         "Motion+ is never required by or evidence for Design Arc, and it is never a Design Arc dependency.",
         "Motion+ is required evidence for Design Arc and a Design Arc dependency.",
@@ -200,6 +228,10 @@ MUTATIONS = {
         "An authorized implementation owner may separately approve Motion+ as an optional implementation dependency and implementation source; that approval does not install it or make it Design Arc evidence or authority.",
         "Design Arc automatically installs Motion+ as a required implementation dependency and treats it as motion evidence.",
     ),
+    "motion case 08 authorized assistance scope": (
+        "After separate authorization from the implementation owner, Motion+ assistance may cover documentation and example search; reusable source retrieval; spring and easing assistance; saved-transition inspection; performance auditing; and design-system adaptation.",
+        "Motion+ may autonomously install itself and redesign the product without implementation-owner authorization.",
+    ),
     "motion case 09 direction summary": (
         "At the Direction Gate, include a motion summary that identifies the material motion scope, retained native or existing behavior, proposed custom behavior, and unresolved evidence.",
         "At the Direction Gate, omit the motion scope and unresolved evidence.",
@@ -207,6 +239,30 @@ MUTATIONS = {
     "motion case 09 least-motion principle": (
         "Apply the least-motion principle: use no more motion than the stated interaction purpose requires, and remove decorative motion without a justified purpose.",
         "Add decorative motion even when it serves no interaction purpose.",
+    ),
+    "motion case 09 direction purpose semantics": (
+        "For each direction, explain the motion's concrete interaction purpose and why it uses no more motion than that purpose requires.",
+        "For each direction, list a motion-purpose heading without explaining the interaction purpose or restraint.",
+    ),
+    "motion case 09 direction evidence semantics": (
+        "For each direction, cite relevant inspected real-product evidence and current platform guidance, or state that either is unavailable.",
+        "For each direction, claim evidence and guidance support without citations or availability status.",
+    ),
+    "motion case 09 direction provenance semantics": (
+        "For each direction, apply the required provenance label to every temporal claim and distinguish directly observed behavior from measured estimates.",
+        "For each direction, combine observations and estimates under an unlabeled evidence heading.",
+    ),
+    "motion case 09 direction accessibility and delivery semantics": (
+        "For each direction, describe reduced-motion implications, motion-specific risks, and implementation complexity in the target stack.",
+        "For each direction, omit reduced-motion implications, motion-specific risks, and target-stack complexity.",
+    ),
+    "motion case 09 direction proof semantics": (
+        "For each direction, identify what remains unproven and the staging, device, or production evidence needed to prove it.",
+        "For each direction, claim completion without identifying remaining proof.",
+    ),
+    "motion case 09 headings are insufficient": (
+        "Headings or field names without these direction-specific explanations do not satisfy the Direction Gate.",
+        "Direction Gate is satisfied by empty headings or field names alone.",
     ),
     "motion case 10 prototype proof boundary": (
         "Stitch and other design prototypes can illustrate states and transition intent but cannot prove timing, easing, springs, interruption, reduced-motion behavior, performance, or runtime implementation quality.",
@@ -219,6 +275,18 @@ MUTATIONS = {
     "motion case 10 implementation authority": (
         "Design Arc may specify and critique motion, but it does not authorize application-code implementation, dependency installation, staging, deployment, or release.",
         "A Design Arc motion contract authorizes implementation, dependency installation, staging, deployment, and release.",
+    ),
+    "motion case 10 verdict evaluation": (
+        "Before assigning a Stitch verdict, explicitly evaluate motion purpose and least-motion restraint, provenance labels and citations, reduced-motion behavior, alignment with every material motion contract, prototype limitations, and remaining runtime proof.",
+        "Assign the Stitch verdict from visual polish without evaluating motion provenance, reduced motion, contract alignment, or remaining proof.",
+    ),
+    "motion case 10 meets-direction semantics": (
+        "A `meets direction` verdict is valid only when the prototype aligns with those motion requirements within its capabilities and every limitation and remaining runtime proof item is documented; any unexplained gap yields `meets with corrections` or `does not meet`.",
+        "Use `meets direction` despite unexplained motion gaps and undocumented runtime proof.",
+    ),
+    "motion case 10 automatic evaluation gate": (
+        "Fully automatic may continue on `meets direction` only after this motion evaluation is recorded; it cannot waive a missing or contradictory motion check.",
+        "Fully automatic may continue without recording the motion evaluation and may waive contradictory checks.",
     ),
     "motion case 11 run record": (
         "Relevant run records include motion scope, evidence, provenance, contracts, reduced motion, implementation source, proof, and remaining uncertainty.",
