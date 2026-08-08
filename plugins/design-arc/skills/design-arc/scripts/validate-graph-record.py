@@ -155,7 +155,7 @@ def validate_record(record: Any, expected_project_id: str, expected_review_id: s
         if edge["support_status"] != "supported":
             fail(f"unproven relationship: {edge_id}")
         if edge["active"]:
-            relationship = (source_id, target_id)
+            relationship = tuple(sorted((source_id, target_id)))
             active_types = active_relationships.setdefault(relationship, set())
             if edge_type == "conflicts_with" and active_types - {"conflicts_with"}:
                 fail(f"contradictory active relationships: {source_id} -> {target_id}")

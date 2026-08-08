@@ -1,0 +1,41 @@
+{
+  "schema": "design-arc.graph/v1",
+  "project_id": "project-alpha",
+  "review_id": "review-001",
+  "nodes": [
+    {
+      "id": "node-a",
+      "type": "confirmed_objective",
+      "label": "Objective"
+    },
+    {
+      "id": "node-b",
+      "type": "evidence_source",
+      "label": "Evidence"
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-conflicts",
+      "type": "conflicts_with",
+      "from": "node-a",
+      "to": "node-b",
+      "active": true,
+      "provenance_kind": "official_guidance",
+      "source_ref": "https://example.test/guidance",
+      "observed_at": "2026-08-08T00:00:00Z",
+      "support_status": "supported"
+    },
+    {
+      "id": "edge-supports-reverse",
+      "type": "supports",
+      "from": "node-b",
+      "to": "node-a",
+      "active": true,
+      "provenance_kind": "inspected_evidence",
+      "source_ref": "https://example.test/recovery",
+      "observed_at": "2026-08-08T00:00:00Z",
+      "support_status": "supported"
+    }
+  ]
+}

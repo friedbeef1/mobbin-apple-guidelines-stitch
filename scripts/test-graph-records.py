@@ -92,6 +92,10 @@ def main() -> int:
     expect_invalid("missing-endpoint.json", "missing endpoint")
     expect_invalid("unproven-relationship.json", "unproven relationship")
     expect_invalid("contradictory-active-relationships.json", "contradictory active relationships")
+    expect_invalid(
+        "reverse-direction-contradictory-active-relationships.json",
+        "contradictory active relationships",
+    )
 
     wrong_project = run_fixture("valid.json", project_id="other-project")
     if wrong_project.returncode == 0 or "project_id does not match expected project id" not in wrong_project.stderr:
