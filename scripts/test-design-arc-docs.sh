@@ -18,12 +18,18 @@ require_text() {
 }
 
 readme="$repo_root/README.md"
+getting_started="$repo_root/docs/getting-started.md"
+using_design_arc="$repo_root/docs/using-design-arc.md"
+evidence_methodology="$repo_root/docs/evidence-and-methodology.md"
+upgrades_migration="$repo_root/docs/upgrades-and-migration.md"
+trust_sources="$repo_root/docs/trust-limitations-and-sources.md"
 operating_layer="$repo_root/docs/codex-operating-layer.md"
 behavioral_validation="$repo_root/docs/validation/behavioral-validation.md"
 prompts="$repo_root/examples/prompts.md"
 motion_sources="$repo_root/docs/trusted-sources/motion.md"
+shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)'
 
-for file in "$readme" "$operating_layer" "$behavioral_validation" "$prompts" "$motion_sources"
+for file in "$readme" "$getting_started" "$using_design_arc" "$evidence_methodology" "$upgrades_migration" "$trust_sources" "$operating_layer" "$behavioral_validation" "$prompts" "$motion_sources"
 do
   [ -f "$file" ] || fail "missing required documentation: ${file#"$repo_root/"}"
 done
@@ -32,78 +38,102 @@ require_text "$readme" '# Design Arc'
 require_text "$readme" 'Product feedback is often vague, redesign discussions become subjective, and teams approve attractive screens without knowing whether the complete journey works.'
 require_text "$readme" 'Move from uncertain product feedback to a complete design direction grounded in credible sources.'
 require_text "$readme" 'Design Arc audits the real journey, checks decisions against current first-party platform guidance and inspected real-product journeys, recommends the strongest path, and designs every important state before implementation begins.'
-require_text "$readme" '| Grounding layer | Pain point | How Design Arc solves it | Credible sources used |'
-require_text "$readme" '| Platform requirements | Designs can feel unfamiliar, exclude users, or conflict with platform conventions. | Validate the journey against current guidance for its actual platform. | Apple HIG; Android and Material guidance; W3C web accessibility standards. |'
-require_text "$readme" '| Product precedent | Teams copy attractive screenshots without understanding the complete journey or failure states. | Inspect relevant end-to-end product journeys and explain why a pattern fits the objective. | Authorized benchmark research through a provider such as Mobbin. |'
-require_text "$readme" '| Product judgment | Opinions and trade-offs can be presented as if a source proved them. | Tie recommendations to the confirmed objective and label judgment separately from observed evidence. | User-confirmed objective and documented Design Arc synthesis—not an external authority. |'
-require_text "$readme" '| Visualization and validation | Polished screens can conceal missing transitions, errors, and recovery states. | Visualize the complete journey and inspect every important state before approving it for frontend implementation. | Google Stitch as a visualization tool—not an evidence authority. |'
-require_text "$readme" '| Motion specification | Codex + affected-platform guidance + inspected motion evidence | Defines what moves, why, how it behaves, its reduced-motion alternative, and what still requires implementation proof. |'
-require_text "$readme" '### Motion grounding and implementation proof'
-require_text "$readme" 'Design Arc specifies material on-screen animations and screen-to-screen transitions before frontend implementation.'
-require_text "$readme" 'Every material motion, including retained native or existing behavior, gets a contract with: Motion ID; journey location; purpose; trigger; start/end state; spatial behavior; choreography; timing; easing/spring; interruption; reduced motion; evidence; provenance; implementation target; implementation source; proof status.'
-require_text "$readme" 'Unsupported values are `unverified`.'
-require_text "$readme" 'Static screens or sequences support only start/end state, changing element, journey location, and transition intent; they cannot support exact duration, easing, springs, velocity, interruption, or choreography.'
-require_text "$readme" 'Directly applicable native or current first-party specifications and inspected playable evidence can support temporal behavior; otherwise temporal values remain labeled Design Arc judgment or `unverified`.'
-require_text "$readme" 'Stitch prototypes are design evidence, not staging or device implementation proof.'
-require_text "$readme" 'Each direction explains motion purpose and restraint, relevant precedent and platform guidance, provenance labels, reduced-motion implications, motion-specific risks, implementation complexity, and remaining proof.'
-require_text "$readme" 'A Stitch verdict evaluates the same motion requirements and contract alignment, and `meets direction` records prototype limitations and remaining runtime proof before Fully automatic may continue.'
-require_text "$readme" '[motion grounding guide](docs/trusted-sources/motion.md)'
 require_text "$readme" '## You need Design Arc if…'
 require_text "$readme" '## What Design Arc produces'
 require_text "$readme" '## The workflow'
 require_text "$readme" '## Example: from “confusing onboarding” to a complete direction'
-require_text "$readme" '## Choose how Design Arc grounds its recommendations'
-require_text "$readme" '## Install and set up in 60 seconds'
-require_text "$readme" 'Design Arc is installed once for your Codex profile. Each participating project keeps its own setup and may have one approved, pinned home.'
-require_text "$readme" '## Coming back tomorrow'
-require_text "$readme" '| First day | Open the project, run `$design-arc setup`, choose the two project preferences, and approve or decline its proposed home. |'
-require_text "$readme" '| Next day | Open that project’s pinned `Design Arc — <Project Name>` task and describe the journey in ordinary language. |'
-require_text "$readme" '| New product | Open the new saved project and run setup there once. Its preferences and optional home stay separate from every other product. |'
-require_text "$readme" 'Each home is a launchpad, not a workspace for the design review.'
-require_text "$readme" 'Every journey starter opens a clean local task in that same saved project'
-require_text "$readme" 'There is no global Design Arc home.'
-require_text "$readme" 'A project with no confirmed Design Arc setup receives no home and no sidebar item.'
-require_text "$readme" 'Design Arc reuses an existing home for the same title and project instead of creating a duplicate.'
-require_text "$readme" 'If it finds extra same-project homes, it reports them for you to clean up; it never deletes them.'
-require_text "$readme" 'If Codex cannot create or pin the task, Design Arc saves confirmed preferences, says clearly that no home is ready, and gives you the exact title, starter card, and manual create-and-pin steps.'
-require_text "$readme" 'Help me make our onboarding less confusing.'
-require_text "$readme" 'Audit how customers complete checkout and propose a better complete journey.'
-require_text "$readme" 'Redesign account recovery so people can get back in without weakening security.'
-require_text "$readme" '## Approval and trust controls'
-require_text "$readme" '## Methodology, sources, migration, and limitations'
-require_text "$readme" 'Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.'
-require_text "$readme" 'Install Design Arc as a Codex plugin, not as a standalone skill.'
-require_text "$readme" 'Add https://github.com/friedbeef1/mobbin-apple-guidelines-stitch as a plugin marketplace using ref `main`, then install `design-arc@design-arc-marketplace`.'
-require_text "$readme" 'Do not search skills.sh or the standalone skills registry.'
-require_text "$readme" 'Use the terminal commands below; do not use the built-in plugin-install control or `request_plugin_install`.'
-require_text "$readme" 'Ask me for download permission if required, verify the plugin is enabled, and tell me to start a new task.'
-require_text "$readme" 'No Python knowledge is required.'
-require_text "$readme" '### If Codex says “no exact package exists in the skills registry”'
-require_text "$readme" 'That response means Codex used the wrong installation route.'
-require_text "$readme" 'If Codex says the plugin is not in the permitted recommended-plugin list, it used the built-in plugin-install control instead of the terminal commands.'
-require_text "$readme" '| Approval mode | Objective | Stitch Gate |'
-require_text "$readme" '| Step | Performed in / by | Why it is crucial |'
-require_text "$readme" 'codex plugin marketplace add /path/to/mobbin-apple-guidelines-stitch'
-require_text "$readme" 'codex plugin remove fb-ux@fb-ux-marketplace'
-require_text "$readme" 'codex plugin remove apple-guidelines-stitch@fb-ux-marketplace'
-require_text "$readme" 'codex plugin marketplace remove fb-ux-marketplace'
-require_text "$readme" 'codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main'
-require_text "$readme" 'codex plugin add design-arc@design-arc-marketplace'
-require_text "$readme" 'Start a new Codex task.'
-require_text "$readme" 'Never silently merge, rewrite, or delete either legacy preference file.'
-require_text "$readme" 'not bundled or official'
-require_text "$readme" 'Design Arc is not listed in Codex’s built-in recommended-plugin directory.'
-require_text "$readme" 'no documented public third-party directory submission route'
 
-python3 - "$readme" <<'PY'
+for file in "$getting_started" "$using_design_arc" "$evidence_methodology" "$upgrades_migration" "$trust_sources"
+do
+  require_text "$file" "$shared_navigation"
+done
+
+require_text "$getting_started" '# Getting started'
+require_text "$getting_started" 'How do I install Design Arc and begin my first review?'
+require_text "$getting_started" 'Design Arc is installed once for your Codex profile. Each participating project keeps its own setup and may have one approved, pinned home.'
+require_text "$getting_started" 'Install Design Arc as a Codex plugin, not as a standalone skill.'
+require_text "$getting_started" 'Add https://github.com/friedbeef1/mobbin-apple-guidelines-stitch as a plugin marketplace using ref `main`, then install `design-arc@design-arc-marketplace`.'
+require_text "$getting_started" 'Do not search skills.sh or the standalone skills registry.'
+require_text "$getting_started" 'Use the terminal commands below; do not use the built-in plugin-install control or `request_plugin_install`.'
+require_text "$getting_started" 'Ask me for download permission if required, verify the plugin is enabled, and tell me to start a new task.'
+require_text "$getting_started" 'No Python knowledge is required.'
+require_text "$getting_started" '### If Codex says “no exact package exists in the skills registry”'
+require_text "$getting_started" 'That response means Codex used the wrong installation route.'
+require_text "$getting_started" 'If Codex says the plugin is not in the permitted recommended-plugin list, it used the built-in plugin-install control instead of the terminal commands.'
+require_text "$getting_started" 'codex plugin marketplace add /path/to/mobbin-apple-guidelines-stitch'
+require_text "$getting_started" 'Next: [Using Design Arc](using-design-arc.md).'
+
+require_text "$using_design_arc" '# Using Design Arc'
+require_text "$using_design_arc" 'How do I use Design Arc after installation?'
+require_text "$using_design_arc" '| First day | Open the project, run `$design-arc setup`, choose the two project preferences, and approve or decline its proposed home. |'
+require_text "$using_design_arc" '| Next day | Open that project’s pinned `Design Arc — <Project Name>` task and describe the journey in ordinary language. |'
+require_text "$using_design_arc" '| New product | Open the new saved project and run setup there once. Its preferences and optional home stay separate from every other product. |'
+require_text "$using_design_arc" 'Each home is a launchpad, not a workspace for the design review.'
+require_text "$using_design_arc" 'Every journey starter opens a clean local task in that same saved project'
+require_text "$using_design_arc" 'There is no global Design Arc home.'
+require_text "$using_design_arc" 'A project with no confirmed Design Arc setup receives no home and no sidebar item.'
+require_text "$using_design_arc" 'Design Arc reuses an existing home for the same title and project instead of creating a duplicate.'
+require_text "$using_design_arc" 'If it finds extra same-project homes, it reports them for you to clean up; it never deletes them.'
+require_text "$using_design_arc" 'If Codex cannot create or pin the task, Design Arc saves confirmed preferences, says clearly that no home is ready, and gives you the exact title, starter card, and manual create-and-pin steps.'
+require_text "$using_design_arc" 'Help me make our onboarding less confusing.'
+require_text "$using_design_arc" 'Audit how customers complete checkout and propose a better complete journey.'
+require_text "$using_design_arc" 'Redesign account recovery so people can get back in without weakening security.'
+require_text "$using_design_arc" '| Approval mode | Objective | Stitch Gate |'
+require_text "$using_design_arc" 'Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.'
+require_text "$using_design_arc" 'Next: [Evidence and methodology](evidence-and-methodology.md).'
+
+require_text "$evidence_methodology" '# Evidence and methodology'
+require_text "$evidence_methodology" 'How are Design Arc recommendations grounded and validated?'
+require_text "$evidence_methodology" '| Grounding layer | Pain point | How Design Arc solves it | Credible sources used |'
+require_text "$evidence_methodology" '| Platform requirements | Designs can feel unfamiliar, exclude users, or conflict with platform conventions. | Validate the journey against current guidance for its actual platform. | Apple HIG; Android and Material guidance; W3C web accessibility standards. |'
+require_text "$evidence_methodology" '| Product precedent | Teams copy attractive screenshots without understanding the complete journey or failure states. | Inspect relevant end-to-end product journeys and explain why a pattern fits the objective. | Authorized benchmark research through a provider such as Mobbin. |'
+require_text "$evidence_methodology" '| Product judgment | Opinions and trade-offs can be presented as if a source proved them. | Tie recommendations to the confirmed objective and label judgment separately from observed evidence. | User-confirmed objective and documented Design Arc synthesis—not an external authority. |'
+require_text "$evidence_methodology" '| Visualization and validation | Polished screens can conceal missing transitions, errors, and recovery states. | Visualize the complete journey and inspect every important state before approving it for frontend implementation. | Google Stitch as a visualization tool—not an evidence authority. |'
+require_text "$evidence_methodology" '| Motion specification | Codex + affected-platform guidance + inspected motion evidence | Defines what moves, why, how it behaves, its reduced-motion alternative, and what still requires implementation proof. |'
+require_text "$evidence_methodology" '### Motion grounding and implementation proof'
+require_text "$evidence_methodology" 'Design Arc specifies material on-screen animations and screen-to-screen transitions before frontend implementation.'
+require_text "$evidence_methodology" 'Every material motion, including retained native or existing behavior, gets a contract with: Motion ID; journey location; purpose; trigger; start/end state; spatial behavior; choreography; timing; easing/spring; interruption; reduced motion; evidence; provenance; implementation target; implementation source; proof status.'
+require_text "$evidence_methodology" 'Unsupported values are `unverified`.'
+require_text "$evidence_methodology" 'Static screens or sequences support only start/end state, changing element, journey location, and transition intent; they cannot support exact duration, easing, springs, velocity, interruption, or choreography.'
+require_text "$evidence_methodology" 'Directly applicable native or current first-party specifications and inspected playable evidence can support temporal behavior; otherwise temporal values remain labeled Design Arc judgment or `unverified`.'
+require_text "$evidence_methodology" 'Stitch prototypes are design evidence, not staging or device implementation proof.'
+require_text "$evidence_methodology" 'Each direction explains motion purpose and restraint, relevant precedent and platform guidance, provenance labels, reduced-motion implications, motion-specific risks, implementation complexity, and remaining proof.'
+require_text "$evidence_methodology" 'A Stitch verdict evaluates the same motion requirements and contract alignment, and `meets direction` records prototype limitations and remaining runtime proof before Fully automatic may continue.'
+require_text "$evidence_methodology" '[Motion grounding](trusted-sources/motion.md)'
+require_text "$evidence_methodology" '[Behavioral validation](validation/behavioral-validation.md)'
+require_text "$evidence_methodology" '[Trusted sources](trusted-sources/README.md)'
+require_text "$evidence_methodology" 'Next: [Upgrades and migration](upgrades-and-migration.md).'
+
+require_text "$upgrades_migration" '# Upgrades and migration'
+require_text "$upgrades_migration" 'What happens when Design Arc is upgraded or replaces an older plugin?'
+require_text "$upgrades_migration" 'codex plugin remove fb-ux@fb-ux-marketplace'
+require_text "$upgrades_migration" 'codex plugin remove apple-guidelines-stitch@fb-ux-marketplace'
+require_text "$upgrades_migration" 'codex plugin marketplace remove fb-ux-marketplace'
+require_text "$upgrades_migration" 'codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main'
+require_text "$upgrades_migration" 'codex plugin add design-arc@design-arc-marketplace'
+require_text "$upgrades_migration" 'Start a new Codex task.'
+require_text "$upgrades_migration" 'Never silently merge, rewrite, or delete either legacy preference file.'
+require_text "$upgrades_migration" 'Next: [Trust and sources](trust-limitations-and-sources.md).'
+
+require_text "$trust_sources" '# Trust, limitations and sources'
+require_text "$trust_sources" 'What can Design Arc prove, access, implement, or release?'
+require_text "$trust_sources" 'not bundled or official'
+require_text "$trust_sources" 'Design Arc is not listed in Codex’s built-in recommended-plugin directory.'
+require_text "$trust_sources" 'no documented public third-party directory submission route'
+require_text "$trust_sources" '[Trusted sources](trusted-sources/README.md)'
+require_text "$trust_sources" '[Codex operating layer](codex-operating-layer.md)'
+require_text "$trust_sources" 'Next: [Home](../README.md).'
+
+python3 - "$readme" "$getting_started" "$evidence_methodology" "$upgrades_migration" "$trust_sources" <<'PY'
 from pathlib import Path
 import re
 import sys
 
 text = Path(sys.argv[1]).read_text(encoding="utf-8")
-install_heading = text.index("## Install and set up in 60 seconds")
-approval_heading = text.index("## Approval and trust controls")
-install_section = text[install_heading:approval_heading]
+install_section = Path(sys.argv[2]).read_text(encoding="utf-8")
+methodology = Path(sys.argv[3]).read_text(encoding="utf-8")
+migration = Path(sys.argv[4]).read_text(encoding="utf-8")
+trust = Path(sys.argv[5]).read_text(encoding="utf-8")
 prompt_start = install_section.index("Install Design Arc as a Codex plugin, not as a standalone skill.")
 marketplace_command = "codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main"
 plugin_command = "codex plugin add design-arc@design-arc-marketplace"
@@ -113,14 +143,14 @@ if "Codex handles the installation" in install_section:
     raise SystemExit("FAIL: README must not promise that Codex infers the marketplace route automatically")
 if "skills.sh URL or package name" in install_section:
     raise SystemExit("FAIL: troubleshooting must not route Design Arc back to a standalone skills registry")
-if "Visual Gate" in text:
-    raise SystemExit("FAIL: README must use the required Stitch Gate name, not Visual Gate")
+if "Visual Gate" in "".join((text, install_section, methodology, migration, trust)):
+    raise SystemExit("FAIL: documentation must use the required Stitch Gate name, not Visual Gate")
 
 local_command = "codex plugin marketplace add /path/to/mobbin-apple-guidelines-stitch"
-if local_command not in text.splitlines():
-    raise SystemExit("FAIL: README must show the exact local-checkout marketplace command")
-if f"{local_command} --ref main" in text:
-    raise SystemExit("FAIL: local-checkout marketplace command must not use the Git-only --ref option")
+if local_command not in install_section.splitlines():
+    raise SystemExit("FAIL: getting-started must show the exact local-checkout marketplace command")
+if f"{local_command} --ref main" in install_section:
+    raise SystemExit("FAIL: documentation local-checkout marketplace command must not use the Git-only --ref option")
 
 headings = [
     "## You need Design Arc if…",
@@ -212,10 +242,9 @@ for superseded_label in (
     if superseded_label in workflow:
         raise SystemExit(f"FAIL: workflow retains superseded horizontal/manual label: {superseded_label}")
 
-methodology = text[text.index("## Methodology, sources, migration, and limitations"):]
 for provider in ("Apple", "Mobbin", "Stitch"):
     if provider not in methodology:
-        raise SystemExit(f"FAIL: {provider} is missing from the lower methodology section")
+        raise SystemExit(f"FAIL: {provider} is missing from evidence and methodology")
 
 migration_commands = [
     "codex plugin remove fb-ux@fb-ux-marketplace",
@@ -225,7 +254,6 @@ migration_commands = [
     "codex plugin add design-arc@design-arc-marketplace",
     "Start a new Codex task.",
 ]
-migration = text[text.index("### Saved preferences and migration"):]
 migration_positions = [migration.index(command) for command in migration_commands]
 if migration_positions != sorted(migration_positions):
     raise SystemExit("FAIL: migration steps are not in the required safe order")

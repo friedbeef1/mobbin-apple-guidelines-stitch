@@ -1,0 +1,64 @@
+# Evidence and methodology
+
+[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)
+
+How are Design Arc recommendations grounded and validated?
+
+## Grounding layers
+
+| Grounding layer | Pain point | How Design Arc solves it | Credible sources used |
+| --- | --- | --- | --- |
+| Platform requirements | Designs can feel unfamiliar, exclude users, or conflict with platform conventions. | Validate the journey against current guidance for its actual platform. | Apple HIG; Android and Material guidance; W3C web accessibility standards. |
+| Product precedent | Teams copy attractive screenshots without understanding the complete journey or failure states. | Inspect relevant end-to-end product journeys and explain why a pattern fits the objective. | Authorized benchmark research through a provider such as Mobbin. |
+| Product judgment | Opinions and trade-offs can be presented as if a source proved them. | Tie recommendations to the confirmed objective and label judgment separately from observed evidence. | User-confirmed objective and documented Design Arc synthesis—not an external authority. |
+| Visualization and validation | Polished screens can conceal missing transitions, errors, and recovery states. | Visualize the complete journey and inspect every important state before approving it for frontend implementation. | Google Stitch as a visualization tool—not an evidence authority. |
+
+## Choose how Design Arc grounds its recommendations
+
+| Evidence mode | Choose it when | What it means |
+| --- | --- | --- |
+| **Benchmarks** — recommended when relevant access is available | Inspected real-product journeys would add useful precedent to current platform guidance. | Design Arc inspects complete, relevant journeys, explains why each pattern helps the objective, and records limits. A library listing, popularity, metadata, or one screenshot is never proof of best-in-class quality. |
+| **Guidelines** | You want a first-party-guidance-led review without benchmark research or do not have authorized benchmark access. | Design Arc performs no benchmark lookup and makes no benchmark-evidence claim. It uses current first-party guidance for every affected platform. |
+
+The evidence choice is independent from approval behavior. Design Arc reports the active evidence mode, approval mode, and provenance of each at the start of every run.
+
+Apple Human Interface Guidelines are first-party authority for Apple targets. For Android or web targets, current first-party platform rules override conflicting Apple-inspired judgment. Requirements are kept distinct from product-specific judgment.
+
+Mobbin can be selected as a benchmark provider in Benchmarks mode. It remains an external source requiring separate access and authorization. Its examples are observed precedent, not a bundled integration or a source to copy. If access is unavailable, Design Arc stops and offers either a one-run Guidelines fallback or a confirmed saved switch; it never silently degrades or calls the result benchmark-backed.
+
+Google Stitch is an external visualization service requiring separate access and payload authorization. The board supports deeper exploration, while Codex must still return a reviewable journey map, key renders, identifiers, and validation verdict in the task. Apple, Google, Mobbin, and Stitch access is not bundled or official, and none of those services authorizes product-source changes.
+
+## Why each step is crucial
+
+“Performed in / by” names the primary platform, source, or decision-maker. Combined labels show where Codex orchestrates an external platform or requires a person’s decision.
+
+| Step | Performed in / by | Why it is crucial |
+| --- | --- | --- |
+| Setup and provenance | Codex + user | Makes the evidence and approval choices independent and records whether each came from the current request, saved preference, confirmed import, or first-use selection. |
+| Objective Confirmation | Codex + user | Prevents optimization for the wrong outcome by making the confirmed goal the evaluation criterion. |
+| Current-journey audit | Codex, using the supplied website or app | Maps the real entry points, states, friction, transitions, exits, and recovery paths instead of redesigning an imagined product. |
+| Evidence gathering | Codex + selected sources | Supplies relevant constraints or inspected precedent without confusing requirements, observations, and product judgment. |
+| Direction recommendations | Codex | Makes the strongest journey, alternatives, benefits, risks, and trade-offs decidable before visualization cost is incurred. |
+| Direction Gate | User in Codex, or the active automatic mode | Preserves user control where selected and records why automatic selection is allowed where selected. |
+| Full cross-platform validation | Codex + affected-platform first-party guidance | Catches navigation, accessibility, safe-area, and platform conflicts before they are baked into a proposal. |
+| Motion specification | Codex + affected-platform guidance + inspected motion evidence | Defines what moves, why, how it behaves, its reduced-motion alternative, and what still requires implementation proof. |
+| Complete Stitch generation | Codex + Google Stitch | Exposes missing transitions and loading, empty, error, success, cancellation, and recovery states across the complete journey. |
+| Inline evidence and render validation | Codex + target device or runtime | Keeps the proposal reviewable in the task and prevents attractive output or metadata from becoming a false compliance claim. |
+| Stitch Gate | User in Codex, or Fully automatic after `meets direction` | Separates a validated design proposal from authority to route it, implement it, or release it. |
+| Authorized routing | Codex + authorized Product/Captain/Integration owner | Preserves source, staging, deployment, and release ownership after design approval. |
+
+### Motion grounding and implementation proof
+
+Design Arc specifies material on-screen animations and screen-to-screen transitions before frontend implementation. It first checks the product's existing motion system and standard native behavior, then current first-party platform guidance, actually inspected motion precedent, and finally clearly labeled Design Arc judgment.
+
+Every material motion, including retained native or existing behavior, gets a contract with: Motion ID; journey location; purpose; trigger; start/end state; spatial behavior; choreography; timing; easing/spring; interruption; reduced motion; evidence; provenance; implementation target; implementation source; proof status. Unsupported values are `unverified`.
+
+Static screens or sequences support only start/end state, changing element, journey location, and transition intent; they cannot support exact duration, easing, springs, velocity, interruption, or choreography. Directly applicable native or current first-party specifications and inspected playable evidence can support temporal behavior; otherwise temporal values remain labeled Design Arc judgment or `unverified`.
+
+Stitch prototypes are design evidence, not staging or device implementation proof. When Stitch cannot represent required motion faithfully, Design Arc returns the start and end states plus the motion contract. The authorized implementation owner later builds it with the product's actual stack and validates the result in staging or on the target device.
+
+Each direction explains motion purpose and restraint, relevant precedent and platform guidance, provenance labels, reduced-motion implications, motion-specific risks, implementation complexity, and remaining proof. A Stitch verdict evaluates the same motion requirements and contract alignment, and `meets direction` records prototype limitations and remaining runtime proof before Fully automatic may continue.
+
+For the nontechnical explanation of what motion evidence can establish, when a recording is needed, and why a prototype is not runtime proof, read [Trusted sources](trusted-sources/README.md), the [Motion grounding](trusted-sources/motion.md) guide, and [Behavioral validation](validation/behavioral-validation.md).
+
+Next: [Upgrades and migration](upgrades-and-migration.md).
