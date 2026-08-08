@@ -203,9 +203,9 @@ def assert_installed_state(state_path: Path, source_root: Path, version: str, la
 
 def validate_baseline(args: argparse.Namespace) -> None:
     baseline = args.baseline.resolve()
-    assert_installed_state(args.state, baseline, "0.2.1", "fallback preflight")
+    assert_installed_state(args.state, baseline, "0.2.2", "fallback preflight")
     assert_marketplaces(read_json(args.marketplaces), baseline, "fallback preflight")
-    assert_exact_cache(args.codex_home.resolve(), baseline, "0.2.1", "fallback preflight")
+    assert_exact_cache(args.codex_home.resolve(), baseline, "0.2.2", "fallback preflight")
 
 
 def inject_preflight(args: argparse.Namespace) -> None:
@@ -232,12 +232,12 @@ def inject_preflight(args: argparse.Namespace) -> None:
 
 def validate_preflight_rejection(args: argparse.Namespace) -> None:
     baseline = args.baseline.resolve()
-    assert_installed_state(args.actual_state, baseline, "0.2.1", "preflight rejection")
+    assert_installed_state(args.actual_state, baseline, "0.2.2", "preflight rejection")
     assert_marketplaces(read_json(args.actual_marketplaces), baseline, "preflight rejection")
     require(not args.plugin_remove_marker.exists(), "preflight rejection must not execute plugin removal")
     require(not args.marketplace_remove_marker.exists(), "preflight rejection must not execute marketplace removal")
     roots = cache_roots(args.codex_home.resolve())
-    require(len(roots) == 1 and roots[0].name == "0.2.1", "preflight rejection must retain the public cache root")
+    require(len(roots) == 1 and roots[0].name == "0.2.2", "preflight rejection must retain the public cache root")
 
 
 def inject_target(args: argparse.Namespace) -> None:
@@ -245,7 +245,7 @@ def inject_target(args: argparse.Namespace) -> None:
     require(isinstance(value, dict), "target availability injection state must be an object")
     available = value.get("available")
     require(isinstance(available, list) and len(available) == 1, "target availability injection requires one available plugin")
-    available[0]["version"] = "0.2.1"
+    available[0]["version"] = "0.2.2"
     write_json(args.state, value)
 
 
@@ -274,7 +274,7 @@ def validate_available(args: argparse.Namespace) -> None:
 
 
 def validate_target(args: argparse.Namespace) -> None:
-    assert_available_state(args.state, args.target, "0.2.2", "target")
+    assert_available_state(args.state, args.target, "0.2.3", "target")
 
 
 def assert_projects(before_path: Path, after_path: Path, label: str) -> None:
@@ -290,10 +290,10 @@ def assert_projects(before_path: Path, after_path: Path, label: str) -> None:
 
 def validate_restoration(args: argparse.Namespace) -> None:
     baseline = args.baseline.resolve()
-    assert_installed_state(args.state, baseline, "0.2.1", "rollback restoration")
+    assert_installed_state(args.state, baseline, "0.2.2", "rollback restoration")
     source = assert_marketplaces(read_json(args.marketplaces), baseline, "rollback restoration")
-    assert_exact_cache(args.codex_home.resolve(), baseline, "0.2.1", "rollback restoration")
-    require(not list((args.codex_home / "plugins/cache").glob("*/design-arc/0.2.2")), "rollback restoration must leave no stale 0.2.2 cache")
+    assert_exact_cache(args.codex_home.resolve(), baseline, "0.2.2", "rollback restoration")
+    require(not list((args.codex_home / "plugins/cache").glob("*/design-arc/0.2.3")), "rollback restoration must leave no stale 0.2.3 cache")
     assert_projects(args.projects_before, args.projects_after, "rollback restoration")
     print(f"PASS: parsed restored marketplace source: {source}")
 
@@ -301,11 +301,11 @@ def validate_restoration(args: argparse.Namespace) -> None:
 def validate_final(args: argparse.Namespace) -> None:
     target = args.target.resolve()
     parsed_source = parsed_marketplace_source(read_json(args.marketplaces), "final upgrade")
-    assert_installed_state(args.state, parsed_source, "0.2.2", "final upgrade")
+    assert_installed_state(args.state, parsed_source, "0.2.3", "final upgrade")
     if args.route == "remove-add-fallback":
         require(parsed_source == target, "fallback marketplace source must be the isolated current checkout")
-    assert_exact_cache(args.codex_home.resolve(), target, "0.2.2", "final upgrade")
-    require(not list((args.codex_home / "plugins/cache").glob("*/design-arc/0.2.1")), "final upgrade must leave no stale 0.2.1 cache")
+    assert_exact_cache(args.codex_home.resolve(), target, "0.2.3", "final upgrade")
+    require(not list((args.codex_home / "plugins/cache").glob("*/design-arc/0.2.2")), "final upgrade must leave no stale 0.2.2 cache")
 
     prompt_items = read_json(args.prompt)
     require(isinstance(prompt_items, list), "new-task prompt input must be a JSON list")
@@ -316,7 +316,7 @@ def validate_final(args: argparse.Namespace) -> None:
         for content in item.get("content", [])
         if content.get("type") == "input_text"
     )
-    require(developer_text.count("- design-arc:design-arc:") == 1, "one new task must load Design Arc 0.2.2 exactly once")
+    require(developer_text.count("- design-arc:design-arc:") == 1, "one new task must load Design Arc 0.2.3 exactly once")
     assert_projects(args.projects_before, args.projects_after, "final upgrade")
     print(f"PASS: parsed marketplace source: {parsed_source}; route: {args.route}")
 

@@ -161,6 +161,18 @@ Rollback is exercised after injected failures at plugin removal, marketplace rem
 
 This evidence proves only the local immutable-`0.2.1`-to-current-`0.2.2` path and its rollback behavior. It does not claim that `0.2.2` is published, remotely available, installed for the user, or exercised against real project or task state.
 
+## Isolated 0.2.2 to 0.2.3 upgrade evidence — 2026-08-08
+
+This is local deterministic evidence only; it is not publication, a real-profile upgrade, real Stitch execution, or product-runtime proof. `scripts/test-plugin-upgrade.sh` checks out immutable public 0.2.2 commit `1c9b3796e6f5f0648bae5984f1b8e3013eeac56f`, uses a temporary `CODEX_HOME`, and creates only a temporary two-project fixture. It does not inspect or mutate the user's installed plugin, preferences, tasks, or projects.
+
+The RED identity, fresh-install, migration, and upgrade expectations required 0.2.3 while the unchanged canonical manifest still reported 0.2.2; each failed at the intended manifest-version boundary. The upgrade RED reached the immutable 0.2.2 baseline, rejected target availability, and restored the exact public package before reporting failure. Changing only `plugins/design-arc/.codex-plugin/plugin.json` to 0.2.3 made the same four focused release checks GREEN.
+
+The normal `codex plugin marketplace upgrade design-arc-marketplace` attempt did not produce the 0.2.3 installed state from the local immutable source, so the observed route was `remove-add-fallback`. Before any removal, the immutable restoration preflight required exactly one enabled canonical 0.2.2 installation, zero other available plugins, the exact parsed baseline marketplace and plugin source, one complete byte-identical 0.2.2 cache, and unchanged two-project bytes. Five injected preflight cases—missing, disabled, duplicate, unexpected-source, and cache-mismatch—must stop before either removal command.
+
+Only after that preflight passes may the fallback remove the canonical plugin and marketplace, add the isolated current checkout, require exactly one available 0.2.3 target, and reinstall `design-arc@design-arc-marketplace`. Injected failures preserve rollback coverage for plugin removal, marketplace removal, target marketplace add, target availability read and validation, plugin install, final state reads, prompt loading, preservation validation, and final validation; every restoration requires the immutable 0.2.2 package and unchanged project bytes.
+
+The passing comparison preserved exactly two preferences, two ready homes, two product sentinels, and two active reviews byte-for-byte, created zero homes, and continued zero reviews. The fixture covers Benchmarks with `benchmark_provider: mobbin` and Follow recommendation, Guidelines with Guided, distinct ready-home project and thread metadata, two product-state files, and two active-review thread identities with zero continuation counts. The final isolated state contains exactly one enabled canonical 0.2.3 plugin and a complete branch-identical cache, no stale 0.2.2 cache, no second available version, and one new task that loads the cached `$design-arc` skill exactly once.
+
 ## Actual Codex desktop project-home acceptance — 2026-08-07
 
 This is actual Codex app task-tool evidence, not a static instruction check and not a qualitative agent scenario. The acceptance was explicitly bounded to two temporary project tasks, and every mutating call targeted only the recorded temporary thread IDs.

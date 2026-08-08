@@ -101,7 +101,7 @@ do
     printf '%s\n' "$rollback_output" >&2
     fail "upgrade rollback scenario failed at $failure_point"
   }
-  printf '%s\n' "$rollback_output" | grep -F "PASS: restored exact Design Arc 0.2.1 after injected $failure_point failure" >/dev/null || {
+  printf '%s\n' "$rollback_output" | grep -F "PASS: restored exact Design Arc 0.2.2 after injected $failure_point failure" >/dev/null || {
     printf '%s\n' "$rollback_output" >&2
     fail "upgrade rollback scenario did not prove exact restoration at $failure_point"
   }
