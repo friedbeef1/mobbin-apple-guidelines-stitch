@@ -13,6 +13,14 @@ How are Design Arc recommendations grounded and validated?
 | Product judgment | Opinions and trade-offs can be presented as if a source proved them. | Tie recommendations to the confirmed objective and label judgment separately from observed evidence. | User-confirmed objective and documented Design Arc synthesis—not an external authority. |
 | Visualization and validation | Polished screens can conceal missing transitions, errors, and recovery states. | Visualize the complete journey and inspect every important state before approving it for frontend implementation. | Google Stitch as a visualization tool—not an evidence authority. |
 
+### Render conformance and repair
+
+Google Stitch remains an external visualizer, not a compliance authority. Codex compares the complete proposal with the approved direction in a conformance matrix for every material screen and state. It classifies each requirement as `match`, `repairable drift`, `direction decision required`, or `runtime proof`. Only repairable drift is corrected automatically; direction decisions and new authorization stop for the appropriate owner, while runtime proof remains unverified implementation evidence rather than a Stitch retry.
+
+The initial proposal may be followed by at most three correction rounds for the whole proposal. Each round batches every known repairable mismatch, generates a new proposal, and reinspects the complete result. That reinspection includes requirements that matched earlier and could have regressed. A written correction is not a corrected proposal; only the inspected replacement render proves the change.
+
+Codex stops early when two consecutive corrected proposals show no improvement or oscillate, access becomes unavailable, a correction would change direction, or new authorization is required. After the final complete inspection, `meets direction` requires every Stitch-expressible requirement to match; otherwise the remaining mismatch scope receives `meets with corrections` or `does not meet`. Prototype review never becomes runtime proof: only the authorized implementation owner can establish that later in staging or on a target device, and the Stitch verdict does not authorize source implementation, deployment, or release.
+
 ## Choose how Design Arc grounds its recommendations
 
 | Evidence mode | Choose it when | What it means |

@@ -31,6 +31,7 @@ If task tools are unavailable or fail, preference setup may still succeed, but D
 - Keeps current first-party requirements, inspected benchmark precedent, and product judgment distinguishable.
 - Presents a marked recommendation with meaningful alternatives and trade-offs before visualization.
 - Directs a complete visual proposal, critiques actual renders, and returns decision-ready evidence in the task instead of treating a board link or metadata as proof.
+- Codex compares the complete Stitch proposal with the approved direction, batches straightforward drift into at most three correction rounds, and reinspects every replacement render before assigning the Stitch verdict.
 - Records each active setting and its provenance, applies the chosen approval policy, and routes only validated design work to the authorized Product/Captain/Integration owner.
 
 ## What remains outside Codex

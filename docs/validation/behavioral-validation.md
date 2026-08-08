@@ -90,7 +90,9 @@ The mutation suite removes or reverses each load-bearing clause, including:
 - all twelve motion-methodology cases, including semantic mutations for contract values, Direction explanations, Motion+ assistance, and Stitch verdict/automatic-gate behavior;
 - evidence claims and implementation/release ownership.
 
-A passing mutation run means the checker rejected every weakened fixture. It does not mean an agent executed an end-to-end product journey.
+The deterministic suite records 151 deterministic mutation rejections. Fourteen render-repair mutations prove that the written contract rejects unbounded retries, per-mismatch retrying, user-dependent ordinary corrections, uninspected correction claims, skipped reinspection, unsafe direction changes, runtime-proof retries, premature early stopping, missing exhaustion handling, unexplained `meets direction`, incomplete repair records, and approval-mode bypasses.
+
+These are static instruction-contract mutations; they do not execute Stitch or prove that every future agent will follow the contract. A passing mutation run means the checker rejected every weakened fixture. It does not mean an agent executed an end-to-end product journey.
 
 ## Fresh-context observations
 

@@ -43,6 +43,12 @@ There is no global Design Arc home. A project with no confirmed Design Arc setup
 
 If Codex cannot create or pin the task, Design Arc saves confirmed preferences, says clearly that no home is ready, and gives you the exact title, starter card, and manual create-and-pin steps. Run `$design-arc home` later to report, create, recover, or repin the current project’s home.
 
+## What happens after Stitch renders
+
+Design Arc corrects straightforward Stitch drift before asking you to approve the visual proposal. The initial proposal may be followed by at most three correction rounds for the whole proposal. Each round batches every known repairable mismatch, generates a new proposal, and reinspects the complete result.
+
+If the proposal still does not match, Design Arc stops and flags every unresolved mismatch and the attempts already made. It asks sooner only when the correction would change the approved direction, requires new authorization, or cannot be proven in a prototype.
+
 ## Approval and trust controls
 
 > Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.
