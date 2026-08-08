@@ -166,9 +166,12 @@ workflow_table = """| Workflow step | Platform or source handling it | Human inv
 | Prepare the design handoff | Codex | |"""
 
 def validate_workflow(candidate):
-    expected_prefix = f"## The workflow\n\n{workflow_instruction}\n\n{workflow_table}\n"
-    if not candidate.startswith(expected_prefix):
+    expected_table = f"## The workflow\n\n{workflow_instruction}\n\n{workflow_table}"
+    following_prose = "Setup resolves two independent choices: how evidence is gathered and where Codex pauses for approval."
+    if not candidate.startswith(expected_table):
         raise ValueError("workflow must use the exact instruction, table header, separator, and ordered rows")
+    if not candidate[len(expected_table):].startswith(f"\n\n{following_prose}"):
+        raise ValueError("workflow table must end immediately after the final handoff row")
     if candidate.count("| ↓ | | |") != 10:
         raise ValueError("workflow must preserve the 10-row arrow sequence")
     if candidate.count("**👤 You**") != 3:
@@ -184,14 +187,19 @@ for mutated_workflow in (
         "| Audit the current journey | Your website or app + Codex | |\n| ↓ | | |\n| Describe the outcome you want | Codex | **👤 You** |",
         1,
     ),
+    workflow.replace(
+        "| Prepare the design handoff | Codex | |\n\nSetup resolves",
+        "| Prepare the design handoff | Codex | |\n| Record a follow-up | Codex | |\n\nSetup resolves",
+        1,
+    ),
 ):
     try:
         validate_workflow(mutated_workflow)
     except ValueError:
         pass
     else:
-        raise SystemExit("FAIL: workflow contract must reject instruction, header, and row-order mutations")
-print("PASS: workflow contract rejects instruction, header, and row-order mutations")
+        raise SystemExit("FAIL: workflow contract must reject instruction, header, row-order, and extra-row mutations")
+print("PASS: workflow contract rejects instruction, header, row-order, and extra-row mutations")
 
 for superseded_label in (
     "**Only the bold steps need you. Design Arc handles everything else.**",
