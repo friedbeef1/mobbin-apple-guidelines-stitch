@@ -96,7 +96,8 @@ fi
 
 alpha_root="$projects_root/alpha-product"
 beta_root="$projects_root/beta-product"
-mkdir -p "$alpha_root/.codex/design-arc/graphs" "$alpha_root/product" "$beta_root/.codex/design-arc/graphs" "$beta_root/product"
+mkdir -p "$alpha_root/.codex/design-arc/reviews/review-alpha" "$alpha_root/product" \
+  "$beta_root/.codex/design-arc/reviews/review-beta" "$beta_root/product"
 printf '%s\n' \
   'evidence_mode: benchmarks' \
   'benchmark_provider: mobbin' \
@@ -118,8 +119,8 @@ printf '%s\n' \
   '  thread_id: home-thread-beta' > "$beta_root/.codex/design-arc.yaml"
 printf '%s\n' "{\"review_id\":\"review-alpha\",\"thread_id\":\"review-thread-alpha\",\"workflow_version\":\"$baseline_version\",\"state\":\"awaiting-stitch-gate\",\"continuation_count\":0}" > "$alpha_root/.codex/design-arc-active-review.json"
 printf '%s\n' "{\"review_id\":\"review-beta\",\"thread_id\":\"review-thread-beta\",\"workflow_version\":\"$baseline_version\",\"state\":\"awaiting-direction-gate\",\"continuation_count\":0}" > "$beta_root/.codex/design-arc-active-review.json"
-sed 's/"review-001"/"review-alpha"/' "$repo_root/scripts/fixtures/graph-records/valid.json" > "$alpha_root/.codex/design-arc/graphs/review-alpha.json"
-sed -e 's/"project-alpha"/"project-beta"/' -e 's/"review-001"/"review-beta"/' "$repo_root/scripts/fixtures/graph-records/valid.json" > "$beta_root/.codex/design-arc/graphs/review-beta.json"
+sed 's/"review-001"/"review-alpha"/' "$repo_root/scripts/fixtures/graph-records/valid.json" > "$alpha_root/.codex/design-arc/reviews/review-alpha/graph.json"
+sed -e 's/"project-alpha"/"project-beta"/' -e 's/"review-001"/"review-beta"/' "$repo_root/scripts/fixtures/graph-records/valid.json" > "$beta_root/.codex/design-arc/reviews/review-beta/graph.json"
 printf '%s\n' 'alpha product sentinel: must remain byte-for-byte unchanged' > "$alpha_root/product/product-state.txt"
 printf '%s\n' 'beta product sentinel: must remain byte-for-byte unchanged' > "$beta_root/product/product-state.txt"
 snapshot_projects "$task_temp_dir/projects-before.json"
@@ -314,6 +315,7 @@ if ! python3 "$state_helper" validate-final \
   "$task_temp_dir/prompt-input-after.json" \
   "$codex_home" \
   "$current_checkout" \
+  "$projects_root" \
   "$task_temp_dir/projects-before.json" \
   "$task_temp_dir/projects-after.json" \
   "$upgrade_route" \

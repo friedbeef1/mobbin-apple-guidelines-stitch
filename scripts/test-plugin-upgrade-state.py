@@ -85,7 +85,7 @@ def project_snapshot(root: Path) -> dict[str, object]:
     review_paths = sorted(root.glob("*/.codex/design-arc-active-review.json"))
     reviews = [read_json(path) for path in review_paths]
     product_paths = sorted(root.glob("*/product/product-state.txt"))
-    graph_paths = sorted(root.glob("*/.codex/design-arc/graphs/*.json"))
+    graph_paths = sorted(root.glob("*/.codex/design-arc/reviews/*/graph.json"))
     return {
         "files": files,
         "participating_projects": [path.parents[1].name for path in preferences],
@@ -294,8 +294,37 @@ def assert_projects(before_path: Path, after_path: Path, label: str, workflow_ve
     require(after["review_thread_ids"] == ["review-thread-alpha", "review-thread-beta"], f"{label} must preserve active-review thread identities")
     require(after["review_continuation_counts"] == [0, 0], f"{label} must continue zero active reviews")
     require(after["review_workflow_versions"] == [workflow_version, workflow_version], f"{label} must pin both active reviews to {workflow_version}")
-    require(len(after["graph_records"]) == 2, f"{label} must preserve two graph records")
+    require(
+        after["product_sentinels"]
+        == ["alpha-product/product/product-state.txt", "beta-product/product/product-state.txt"],
+        f"{label} must preserve both exact product sentinels",
+    )
+    require(
+        after["graph_records"]
+        == [
+            "alpha-product/.codex/design-arc/reviews/review-alpha/graph.json",
+            "beta-product/.codex/design-arc/reviews/review-beta/graph.json",
+        ],
+        f"{label} must preserve both canonical graph records",
+    )
     require(after["preferences_without_graph_fields"] is True, f"{label} preferences must retain no graph field")
+
+
+def assert_graph_records_usable(projects_root: Path, validator: Path, label: str) -> None:
+    require(validator.is_file(), f"{label} installed graph validator must exist")
+    cases = (
+        ("alpha-product", "project-alpha", "review-alpha"),
+        ("beta-product", "project-beta", "review-beta"),
+    )
+    for product, project_id, review_id in cases:
+        graph = projects_root / product / ".codex/design-arc/reviews" / review_id / "graph.json"
+        result = subprocess.run(
+            [sys.executable, str(validator), str(graph), project_id, review_id],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        require(result.returncode == 0, f"{label} installed validator must accept {product} graph record")
 
 
 def validate_restoration(args: argparse.Namespace) -> None:
@@ -328,6 +357,11 @@ def validate_final(args: argparse.Namespace) -> None:
     )
     require(developer_text.count("- design-arc:design-arc:") == 1, "one new task must load Design Arc 0.3.0 exactly once")
     assert_projects(args.projects_before, args.projects_after, "final upgrade", args.baseline_version)
+    assert_graph_records_usable(
+        args.projects_root.resolve(),
+        cached_root / "skills/design-arc/scripts/validate-graph-record.py",
+        "final upgrade",
+    )
     contract_check = subprocess.run(
         [
             sys.executable,
@@ -431,6 +465,7 @@ def build_parser() -> argparse.ArgumentParser:
     final.add_argument("prompt", type=Path)
     final.add_argument("codex_home", type=Path)
     final.add_argument("target", type=Path)
+    final.add_argument("projects_root", type=Path)
     final.add_argument("projects_before", type=Path)
     final.add_argument("projects_after", type=Path)
     final.add_argument("route")
