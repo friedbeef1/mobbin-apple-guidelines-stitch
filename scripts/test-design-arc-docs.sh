@@ -101,6 +101,7 @@ require_text "$readme" 'Help me make our onboarding less confusing.'
 require_text "$readme" '## Trust'
 require_text "$readme" 'Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.'
 require_text "$readme" '## License'
+require_text "$readme" '[MIT License](LICENSE)'
 
 for file in "$getting_started" "$using_design_arc" "$evidence_methodology" "$upgrades_migration" "$trust_sources"
 do
@@ -195,9 +196,17 @@ migration = Path(sys.argv[4]).read_text(encoding="utf-8")
 trust = Path(sys.argv[5]).read_text(encoding="utf-8")
 prompt_start = install_section.index("Install Design Arc as a Codex plugin, not as a standalone skill.")
 marketplace_command = "codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main"
-plugin_command = "codex plugin add design-arc@design-arc-marketplace"
-if install_section.index(marketplace_command) < prompt_start or install_section.index(plugin_command) < prompt_start:
+plugin_command = "codex plugin install design-arc@design-arc-marketplace"
+if marketplace_command not in install_section:
+    raise SystemExit("FAIL: getting-started must include the exact marketplace command")
+if plugin_command not in install_section:
+    raise SystemExit("FAIL: getting-started must include the exact Design Arc install command")
+marketplace_position = install_section.index(marketplace_command)
+plugin_position = install_section.index(plugin_command)
+if marketplace_position < prompt_start or plugin_position < prompt_start:
     raise SystemExit("FAIL: explicit plugin commands must appear directly after the copyable Codex instruction")
+if marketplace_position > plugin_position:
+    raise SystemExit("FAIL: getting-started must add the marketplace before installing Design Arc")
 if "Codex handles the installation" in install_section:
     raise SystemExit("FAIL: README must not promise that Codex infers the marketplace route automatically")
 if "skills.sh URL or package name" in install_section:
@@ -476,4 +485,62 @@ PY
     fail 'escape-link mutation failed for the wrong reason'
   }
   printf '%s\n' 'PASS: escape-link mutation is rejected'
+
+  license_checkout="$task_temp_dir/license-link-fixture"
+  cp -R "$repo_root" "$license_checkout"
+  license_page="$license_checkout/README.md"
+
+  python3 - "$license_page" <<'PY'
+from pathlib import Path
+import sys
+
+page = Path(sys.argv[1])
+original = page.read_text(encoding="utf-8")
+target = "[MIT License](LICENSE)"
+if target not in original:
+    raise SystemExit("FAIL: license-link fixture requires the exact README licence link")
+page.write_text(original.replace(target, "[MIT licence](LICENSE)", 1), encoding="utf-8")
+PY
+
+  if output=$(DESIGN_ARC_DOCS_SKIP_BROKEN_LINK_MUTATION=1 sh "$license_checkout/scripts/test-design-arc-docs.sh" 2>&1)
+  then
+    printf '%s\n' "$output" >&2
+    fail 'license-link mutation was accepted'
+  fi
+
+  printf '%s\n' "$output" | grep -F 'missing required text in README.md: [MIT License](LICENSE)' >/dev/null || {
+    printf '%s\n' "$output" >&2
+    fail 'license-link mutation failed for the wrong reason'
+  }
+  printf '%s\n' 'PASS: license-link mutation is rejected'
+
+  command_order_checkout="$task_temp_dir/plugin-command-order-fixture"
+  cp -R "$repo_root" "$command_order_checkout"
+  command_order_page="$command_order_checkout/docs/getting-started.md"
+
+  python3 - "$command_order_page" <<'PY'
+from pathlib import Path
+import sys
+
+page = Path(sys.argv[1])
+original = page.read_text(encoding="utf-8")
+marketplace_command = "codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main"
+plugin_command = "codex plugin install design-arc@design-arc-marketplace"
+ordered_commands = f"{marketplace_command}\n{plugin_command}"
+if ordered_commands not in original:
+    raise SystemExit("FAIL: plugin-command-order fixture requires the ordered installation commands")
+page.write_text(original.replace(ordered_commands, f"{plugin_command}\n{marketplace_command}", 1), encoding="utf-8")
+PY
+
+  if output=$(DESIGN_ARC_DOCS_SKIP_BROKEN_LINK_MUTATION=1 sh "$command_order_checkout/scripts/test-design-arc-docs.sh" 2>&1)
+  then
+    printf '%s\n' "$output" >&2
+    fail 'plugin-command-order mutation was accepted'
+  fi
+
+  printf '%s\n' "$output" | grep -F 'FAIL: getting-started must add the marketplace before installing Design Arc' >/dev/null || {
+    printf '%s\n' "$output" >&2
+    fail 'plugin-command-order mutation failed for the wrong reason'
+  }
+  printf '%s\n' 'PASS: plugin-command-order mutation is rejected'
 fi
