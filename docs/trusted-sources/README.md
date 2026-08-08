@@ -16,6 +16,7 @@ The affected platform's current first-party rules govern that platform. Benchmar
 Read the focused guides for the source type and its limits:
 
 - [Platform guidance](platform-guidance.md) — first-party platform and accessibility authority.
+- [Motion grounding](motion.md) — why motion needs evidence, how to use precedent honestly, and what still needs runtime proof.
 - [Product benchmarks](product-benchmarks.md) — observed precedent and authorization limits.
 - [Visualization](visualization.md) — Stitch as a proposal and validation surface.
 

@@ -21,8 +21,9 @@ readme="$repo_root/README.md"
 operating_layer="$repo_root/docs/codex-operating-layer.md"
 behavioral_validation="$repo_root/docs/validation/behavioral-validation.md"
 prompts="$repo_root/examples/prompts.md"
+motion_sources="$repo_root/docs/trusted-sources/motion.md"
 
-for file in "$readme" "$operating_layer" "$behavioral_validation" "$prompts"
+for file in "$readme" "$operating_layer" "$behavioral_validation" "$prompts" "$motion_sources"
 do
   [ -f "$file" ] || fail "missing required documentation: ${file#"$repo_root/"}"
 done
@@ -44,6 +45,7 @@ require_text "$readme" 'Unsupported values are `unverified`.'
 require_text "$readme" 'Static screens or sequences support only start/end state, changing element, journey location, and transition intent; they cannot support exact duration, easing, springs, velocity, interruption, or choreography.'
 require_text "$readme" 'Directly applicable native or current first-party specifications and inspected playable evidence can support temporal behavior; otherwise temporal values remain labeled Design Arc judgment or `unverified`.'
 require_text "$readme" 'Stitch prototypes are design evidence, not staging or device implementation proof.'
+require_text "$readme" '[motion grounding guide](docs/trusted-sources/motion.md)'
 require_text "$readme" '## You need Design Arc if…'
 require_text "$readme" '## What Design Arc produces'
 require_text "$readme" '## The workflow'
@@ -162,6 +164,14 @@ approved_external_urls = {
     "https://www.w3.org/WAI/ARIA/apg/",
     "https://mobbin.com/",
     "https://stitch.withgoogle.com/",
+    "https://developer.apple.com/design/human-interface-guidelines/motion",
+    "https://developer.android.com/develop/ui/compose/animation/introduction",
+    "https://m3.material.io/styles/motion/overview/how-it-works",
+    "https://www.w3.org/TR/mediaqueries-5/#prefers-reduced-motion",
+    "https://docs.mobbin.com/mcp/introduction",
+    "https://motion.dev/docs/quick-start",
+    "https://motion.dev/docs/ai-kit-install",
+    "https://pageflows.com/",
 }
 actual_external_urls = {
     url
@@ -192,6 +202,17 @@ require_text "$operating_layer" 'No mode or external-service authorization autho
 require_text "$repo_root/docs/trusted-sources/platform-guidance.md" '## Motion guidance'
 require_text "$repo_root/docs/trusted-sources/platform-guidance.md" 'Existing product motion and standard native behavior come first.'
 require_text "$repo_root/docs/trusted-sources/platform-guidance.md" 'A screenshot or static screen sequence cannot prove exact motion timing, easing, velocity, spring behavior, or choreography.'
+
+require_text "$repo_root/docs/trusted-sources/README.md" '[Motion grounding](motion.md)'
+require_text "$motion_sources" '# Motion grounding'
+require_text "$motion_sources" 'Motion needs evidence because it changes what people perceive, control, and can tolerate, not just how a screen looks.'
+require_text "$motion_sources" 'Shipped-product precedent shows what was observed in a comparable journey; an implementation library supplies tools, not proof that its defaults fit this product.'
+require_text "$motion_sources" 'A static Mobbin screen or sequence can establish only the visible states, changing element, journey location, and intended transition.'
+require_text "$motion_sources" 'Use a recording or playable journey when the decision depends on timing, easing, spring behavior, velocity, choreography, interruption, reversal, or a missing intermediate state.'
+require_text "$motion_sources" 'Motion and Motion+ are optional implementation dependencies, never Design Arc requirements, evidence, authority, or bundled dependencies.'
+require_text "$motion_sources" 'For Android and web targets, their current first-party guidance takes precedence over conflicting Apple-inspired judgment.'
+require_text "$motion_sources" 'Every material motion contract must name a reduced-motion alternative; no animation is the fallback only when it still preserves the needed information and control.'
+require_text "$motion_sources" 'A prototype can communicate an intended interaction, but it cannot prove runtime quality.'
 
 require_text "$behavioral_validation" '# Design Arc instruction-contract validation'
 require_text "$behavioral_validation" 'plugins/design-arc/skills/design-arc/SKILL.md'

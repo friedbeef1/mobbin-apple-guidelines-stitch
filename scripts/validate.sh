@@ -28,6 +28,7 @@ for required_file in \
   examples/prompts.md \
   docs/codex-operating-layer.md \
   docs/trusted-sources/README.md \
+  docs/trusted-sources/motion.md \
   docs/trusted-sources/platform-guidance.md \
   docs/trusted-sources/product-benchmarks.md \
   docs/trusted-sources/visualization.md \
