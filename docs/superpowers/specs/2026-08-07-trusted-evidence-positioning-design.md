@@ -34,7 +34,7 @@ Apple, Android, web, Mobbin, and Stitch may be named in the explanation beneath 
 
 ## Proposed opening
 
-> **Move from uncertain product feedback to a complete design direction grounded in credible sources.**  
+> **Move from uncertain product feedback to a complete design direction grounded in credible sources.**
 > Design Arc audits the real journey, checks decisions against current first-party platform guidance and inspected real-product journeys, recommends the strongest path, and designs every important state before implementation begins.
 
 Then:
