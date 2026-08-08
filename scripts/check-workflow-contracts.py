@@ -317,6 +317,42 @@ FORBIDDEN_PROJECT_HOME_PATTERNS = {
 }
 
 
+RENDER_REPAIR_HEADING = "### Repair Stitch drift before the Stitch Gate"
+
+RENDER_REPAIR_CONTRACTS = {
+    "proposal-wide three-round bound": (
+        "Use one initial Stitch proposal followed by at most three batched correction rounds for the entire proposal.",
+        "The initial proposal is not a correction round, so the maximum is four rendered proposals.",
+    ),
+    "conformance matrix": (
+        "Before assigning a Stitch verdict, create a conformance matrix for every material screen and state.",
+        "Each row records the screen or state identifier; approved requirement and provenance; observed render evidence; classification; exact correction or next action; and inspected render identifier.",
+    ),
+    "classification boundary": (
+        "Classify every mismatch as `match`, `repairable drift`, `direction decision required`, or `runtime proof`.",
+        "Correct `repairable drift` automatically without asking the user because it does not change the approved direction.",
+        "Stop before correction when a direction decision or new external authorization is required.",
+        "Carry `runtime proof` forward as unverified implementation evidence; do not retry Stitch or claim the prototype proves it.",
+    ),
+    "inspection integrity": (
+        "A correction note, provider status, or command success is not proof of correction; only inspection of the newly generated render can change a mismatch to `match`.",
+        "After every correction round, inspect the complete resulting proposal again, including previously matching requirements that may have regressed.",
+    ),
+    "bounded convergence": (
+        "Stop early only when two consecutive corrected proposals show no improvement, two consecutive corrected proposals oscillate by fixing one requirement while breaking another, access becomes unavailable, the next correction changes direction, or new authorization is required.",
+        "After the third unsuccessful correction round, stop and assign `meets with corrections` or `does not meet` from the remaining mismatch scope.",
+    ),
+    "verdict integrity": (
+        "Assign `meets direction` only after the most recent complete proposal is inspected and every Stitch-expressible requirement matches.",
+        "Guided and Follow recommendation perform the repair loop before stopping at the Stitch Gate.",
+        "Fully automatic performs the same repair loop and continues past the Stitch Gate only on `meets direction`.",
+    ),
+    "repair record": (
+        "Record the initial proposal identifiers; each conformance matrix; correction round number; batched correction request and provenance; fixed, remaining, and newly introduced mismatches; stop reason; final Stitch verdict; and remaining runtime proof.",
+    ),
+}
+
+
 def markdown_section(text: str, heading: str, next_prefix: str) -> str | None:
     start = text.find(heading)
     if start < 0:
@@ -359,6 +395,14 @@ def main() -> int:
     for label, fragments in MOTION_CONTRACT_CASES.items():
         if any(fragment not in text for fragment in fragments):
             failures.append(f"missing or reversed motion {label} contract")
+
+    render_repair = markdown_section(text, RENDER_REPAIR_HEADING, "## ")
+    if render_repair is None:
+        failures.append("missing render-repair section")
+    else:
+        for label, fragments in RENDER_REPAIR_CONTRACTS.items():
+            if any(fragment not in render_repair for fragment in fragments):
+                failures.append(f"missing or reversed render-repair {label} contract")
 
     project_home = markdown_section(text, PROJECT_HOME_HEADING, "### ")
     if project_home is None:

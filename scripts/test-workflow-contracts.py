@@ -160,6 +160,62 @@ MUTATIONS = {
         "Do not claim product inspection, first-party guidance, benchmark evidence, or new Stitch output without current evidence for that exact claim.",
         "Claim inspection and evidence based on prior metadata.",
     ),
+    "repair round maximum": (
+        "The initial proposal is not a correction round, so the maximum is four rendered proposals.",
+        "The initial proposal is a correction round, so unlimited rendered proposals are allowed.",
+    ),
+    "proposal-wide batching": (
+        "Use one initial Stitch proposal followed by at most three batched correction rounds for the entire proposal.",
+        "Use one initial Stitch proposal followed by separate correction rounds for each screen.",
+    ),
+    "repair before user involvement": (
+        "Correct `repairable drift` automatically without asking the user because it does not change the approved direction.",
+        "Ask the user to approve every `repairable drift` correction before continuing.",
+    ),
+    "conformance matrix completeness": (
+        "Each row records the screen or state identifier; approved requirement and provenance; observed render evidence; classification; exact correction or next action; and inspected render identifier.",
+        "Each row records only the screen identifier and broad visual impression.",
+    ),
+    "correction proof requires render": (
+        "A correction note, provider status, or command success is not proof of correction; only inspection of the newly generated render can change a mismatch to `match`.",
+        "A correction note, provider status, or command success is proof of correction without inspecting a render.",
+    ),
+    "complete reinspection": (
+        "After every correction round, inspect the complete resulting proposal again, including previously matching requirements that may have regressed.",
+        "After every correction round, inspect only the corrected requirements.",
+    ),
+    "direction decision stop": (
+        "Stop before correction when a direction decision or new external authorization is required.",
+        "Automatically correct mismatches that require a direction decision or new external authorization.",
+    ),
+    "runtime proof boundary": (
+        "Carry `runtime proof` forward as unverified implementation evidence; do not retry Stitch or claim the prototype proves it.",
+        "Retry Stitch until `runtime proof` is resolved and claim the prototype proves it.",
+    ),
+    "two-round early-stop evidence": (
+        "Stop early only when two consecutive corrected proposals show no improvement, two consecutive corrected proposals oscillate by fixing one requirement while breaking another, access becomes unavailable, the next correction changes direction, or new authorization is required.",
+        "Stop after one corrected proposal that appears unchanged.",
+    ),
+    "third-round exhaustion verdict": (
+        "After the third unsuccessful correction round, stop and assign `meets with corrections` or `does not meet` from the remaining mismatch scope.",
+        "After the third unsuccessful correction round, keep retrying until the proposal matches.",
+    ),
+    "no unexplained meets-direction verdict": (
+        "Assign `meets direction` only after the most recent complete proposal is inspected and every Stitch-expressible requirement matches.",
+        "Assign `meets direction` before complete inspection when mismatches remain unexplained.",
+    ),
+    "repair run record": (
+        "Record the initial proposal identifiers; each conformance matrix; correction round number; batched correction request and provenance; fixed, remaining, and newly introduced mismatches; stop reason; final Stitch verdict; and remaining runtime proof.",
+        "Record only the final Stitch verdict and omit repair evidence.",
+    ),
+    "guided and follow repair timing": (
+        "Guided and Follow recommendation perform the repair loop before stopping at the Stitch Gate.",
+        "Guided and Follow recommendation stop at the Stitch Gate before the repair loop.",
+    ),
+    "fully automatic repair verdict": (
+        "Fully automatic performs the same repair loop and continues past the Stitch Gate only on `meets direction`.",
+        "Fully automatic bypasses the repair loop and continues past the Stitch Gate on any verdict.",
+    ),
     "motion case 01 evidence precedence": (
         "Use this motion-evidence precedence: existing product motion; native platform behavior and standard components; current first-party platform guidance; inspected relevant shipped-product motion; labeled Design Arc judgment.",
         "Use labeled Design Arc judgment before checking product, platform, or shipped-product motion.",

@@ -334,6 +334,36 @@ Fully automatic may continue on `meets direction` only after this motion evaluat
 
 Inspect the actual renders for journey coherence, hierarchy, navigation, targets, spacing, containment, safe areas, orientation, text size, accessibility, errors, and recovery. Give exactly one Stitch verdict: `meets direction`, `meets with corrections`, or `does not meet`.
 
+### Repair Stitch drift before the Stitch Gate
+
+Use one initial Stitch proposal followed by at most three batched correction rounds for the entire proposal. The initial proposal is not a correction round, so the maximum is four rendered proposals.
+
+Before assigning a Stitch verdict, create a conformance matrix for every material screen and state. Each row records the screen or state identifier; approved requirement and provenance; observed render evidence; classification; exact correction or next action; and inspected render identifier.
+
+Classify every mismatch as `match`, `repairable drift`, `direction decision required`, or `runtime proof`. Correct `repairable drift` automatically without asking the user because it does not change the approved direction. Stop before correction when a direction decision or new external authorization is required. Carry `runtime proof` forward as unverified implementation evidence; do not retry Stitch or claim the prototype proves it.
+
+A correction note, provider status, or command success is not proof of correction; only inspection of the newly generated render can change a mismatch to `match`. After every correction round, inspect the complete resulting proposal again, including previously matching requirements that may have regressed.
+
+Run this bounded sequence:
+
+```text
+initial complete proposal
+→ conformance inspection
+→ batched repairable-drift correction
+→ complete reinspection
+→ repeat for at most three correction rounds
+→ final verdict
+→ existing Stitch Gate policy
+```
+
+Each correction names the source render and affected screen/state IDs, preserves matching requirements, records new identifiers, and includes newly introduced drift in the next round. A clearly labeled user exception cannot change the verdict to `meets direction` or waive first-party platform or accessibility requirements.
+
+Stop early only when two consecutive corrected proposals show no improvement, two consecutive corrected proposals oscillate by fixing one requirement while breaking another, access becomes unavailable, the next correction changes direction, or new authorization is required. After the third unsuccessful correction round, stop and assign `meets with corrections` or `does not meet` from the remaining mismatch scope.
+
+Assign `meets direction` only after the most recent complete proposal is inspected and every Stitch-expressible requirement matches. Guided and Follow recommendation perform the repair loop before stopping at the Stitch Gate. Fully automatic performs the same repair loop and continues past the Stitch Gate only on `meets direction`.
+
+Record the initial proposal identifiers; each conformance matrix; correction round number; batched correction request and provenance; fixed, remaining, and newly introduced mismatches; stop reason; final Stitch verdict; and remaining runtime proof.
+
 ## Apply the Stitch Gate and hand off
 
 - **Guided and Follow recommendation:** stop after the verdict and request approval.
