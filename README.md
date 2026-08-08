@@ -9,12 +9,12 @@ Design Arc gives teams a stronger basis for making design decisions. Instead of 
 
 This matters because attractive screens can still fail when they ignore familiar platform behavior, borrow an isolated pattern without understanding the surrounding journey, or present opinion as fact. Grounding keeps the reasoning visible without pretending that a source can make the product decision for you.
 
-| Grounding layer | Why it matters | Credible sources used |
-| --- | --- | --- |
-| Platform requirements | Keeps the proposal usable, familiar, accessible, and appropriate for the target platform. | Apple Human Interface Guidelines for Apple products; Android and Material guidance for Android; W3C standards for the web. |
-| Product precedent | Shows how complete real journeys handle similar decisions and non-happy states without treating popularity as proof. | Relevant end-to-end journeys inspected through an authorized benchmark provider such as Mobbin. |
-| Product judgment | Makes trade-offs and recommendations explicit where sources do not determine one correct answer. | Design Arc synthesis against the user-confirmed objective, clearly labeled as judgment. |
-| Visualization and validation | Makes the proposed journey concrete enough to inspect across every material state. | Google Stitch as an external visualization surface, not an authority or evidence source. |
+| Grounding layer | Pain point | How Design Arc solves it | Credible sources used |
+| --- | --- | --- | --- |
+| Platform requirements | Designs can feel unfamiliar, exclude users, or conflict with platform conventions. | Validate the journey against current guidance for its actual platform. | Apple HIG; Android and Material guidance; W3C web accessibility standards. |
+| Product precedent | Teams copy attractive screenshots without understanding the complete journey or failure states. | Inspect relevant end-to-end product journeys and explain why a pattern fits the objective. | Authorized benchmark research through a provider such as Mobbin. |
+| Product judgment | Opinions and trade-offs can be presented as if a source proved them. | Tie recommendations to the confirmed objective and label judgment separately from observed evidence. | User-confirmed objective and documented Design Arc synthesis—not an external authority. |
+| Visualization and validation | Polished screens can conceal missing transitions, errors, and recovery states. | Visualize the complete journey and inspect every important state before approving it for frontend implementation. | Google Stitch as a visualization tool—not an evidence authority. |
 
 If you want the underlying detail, you can also [see which trusted sources Design Arc uses and why](docs/trusted-sources/README.md).
 
