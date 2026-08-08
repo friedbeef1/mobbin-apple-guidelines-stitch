@@ -196,7 +196,7 @@ migration = Path(sys.argv[4]).read_text(encoding="utf-8")
 trust = Path(sys.argv[5]).read_text(encoding="utf-8")
 prompt_start = install_section.index("Install Design Arc as a Codex plugin, not as a standalone skill.")
 marketplace_command = "codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main"
-plugin_command = "codex plugin install design-arc@design-arc-marketplace"
+plugin_command = "codex plugin add design-arc@design-arc-marketplace"
 if marketplace_command not in install_section:
     raise SystemExit("FAIL: getting-started must include the exact marketplace command")
 if plugin_command not in install_section:
@@ -206,7 +206,7 @@ plugin_position = install_section.index(plugin_command)
 if marketplace_position < prompt_start or plugin_position < prompt_start:
     raise SystemExit("FAIL: explicit plugin commands must appear directly after the copyable Codex instruction")
 if marketplace_position > plugin_position:
-    raise SystemExit("FAIL: getting-started must add the marketplace before installing Design Arc")
+    raise SystemExit("FAIL: getting-started must add the marketplace before adding Design Arc")
 if "Codex handles the installation" in install_section:
     raise SystemExit("FAIL: README must not promise that Codex infers the marketplace route automatically")
 if "skills.sh URL or package name" in install_section:
@@ -525,7 +525,7 @@ import sys
 page = Path(sys.argv[1])
 original = page.read_text(encoding="utf-8")
 marketplace_command = "codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main"
-plugin_command = "codex plugin install design-arc@design-arc-marketplace"
+plugin_command = "codex plugin add design-arc@design-arc-marketplace"
 ordered_commands = f"{marketplace_command}\n{plugin_command}"
 if ordered_commands not in original:
     raise SystemExit("FAIL: plugin-command-order fixture requires the ordered installation commands")
@@ -538,7 +538,7 @@ PY
     fail 'plugin-command-order mutation was accepted'
   fi
 
-  printf '%s\n' "$output" | grep -F 'FAIL: getting-started must add the marketplace before installing Design Arc' >/dev/null || {
+  printf '%s\n' "$output" | grep -F 'FAIL: getting-started must add the marketplace before adding Design Arc' >/dev/null || {
     printf '%s\n' "$output" >&2
     fail 'plugin-command-order mutation failed for the wrong reason'
   }
