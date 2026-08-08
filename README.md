@@ -41,20 +41,11 @@ It turns comments such as “this feels confusing” into a product objective, a
 
 ## The workflow
 
-```text
-setup → objective → current-journey audit → evidence → directions
-      → Direction Gate → full first-party validation → motion specification
-      → complete visual journey
-      → render validation → Stitch Gate → authorized design handoff
-```
+**Only the bold steps need you. Design Arc handles everything else.**
 
-**Your part is only the decisions. Design Arc does the work between them.**
-
-| When | What you do | What Design Arc handles |
-| --- | --- | --- |
-| Every review | Describe the problem and the outcome you want. | Confirm the objective; audit the existing journey; inspect every important state; gather and label evidence; recommend a direction; check platform guidance; specify motion; visualize the complete journey; and validate the proposal. |
-| Once per project | Choose the evidence and approval preferences, and optionally approve a pinned project home. | Save those choices for the project, keep products separate, and reuse the same home on later visits. |
-| Only when requested | Authorize an external source or tool, or approve a direction or visual proposal when your chosen mode pauses. | Prepare the evidence, alternatives, recommendation, trade-offs, complete states, and approval-ready record before asking you. |
+**Choose preferences once** → **Describe the outcome you want** → audit the current journey → gather and label evidence → recommend a direction<br>
+→ **Authorize external access if requested** → **Approve the direction if your mode pauses** → validate against platform guidance → specify motion<br>
+→ visualize the complete journey → validate every important state → **Approve the visual proposal if your mode pauses** → prepare the design handoff
 
 Setup resolves two independent choices: how evidence is gathered and where Codex pauses for approval. Every route establishes the objective before inspection or research, audits the actual product, preserves platform rules, and stops at a design-only handoff boundary.
 
