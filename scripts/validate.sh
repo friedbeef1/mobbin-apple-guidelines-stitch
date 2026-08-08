@@ -183,6 +183,16 @@ else
   fail 'isolated plugin upgrade smoke failed'
 fi
 
+if DESIGN_ARC_UPGRADE_BASELINE_SHA=489988474dce4a4b0da7a5c48104e9d548c107bd \
+  DESIGN_ARC_UPGRADE_BASELINE_VERSION=0.2.3 \
+  DESIGN_ARC_TEST_DOWNGRADE=1 \
+  sh "$repo_root/scripts/test-plugin-upgrade.sh"
+then
+  :
+else
+  fail 'isolated exact-candidate upgrade and downgrade smoke failed'
+fi
+
 if git -C "$repo_root" rev-parse --is-inside-work-tree >/dev/null 2>&1
 then
   git -C "$repo_root" diff --check

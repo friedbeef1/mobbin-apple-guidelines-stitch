@@ -9,6 +9,7 @@ import json
 import os
 from pathlib import Path
 import re
+import subprocess
 import sys
 
 
@@ -84,6 +85,7 @@ def project_snapshot(root: Path) -> dict[str, object]:
     review_paths = sorted(root.glob("*/.codex/design-arc-active-review.json"))
     reviews = [read_json(path) for path in review_paths]
     product_paths = sorted(root.glob("*/product/product-state.txt"))
+    graph_paths = sorted(root.glob("*/.codex/design-arc/graphs/*.json"))
     return {
         "files": files,
         "participating_projects": [path.parents[1].name for path in preferences],
@@ -91,7 +93,12 @@ def project_snapshot(root: Path) -> dict[str, object]:
         "home_states": sorted(home_states),
         "review_thread_ids": sorted(review["thread_id"] for review in reviews),
         "review_continuation_counts": [review["continuation_count"] for review in reviews],
+        "review_workflow_versions": sorted(review["workflow_version"] for review in reviews),
         "product_sentinels": [path.relative_to(root).as_posix() for path in product_paths],
+        "graph_records": [path.relative_to(root).as_posix() for path in graph_paths],
+        "preferences_without_graph_fields": all(
+            "graph_assistance" not in path.read_text(encoding="utf-8") for path in preferences
+        ),
     }
 
 
@@ -203,9 +210,9 @@ def assert_installed_state(state_path: Path, source_root: Path, version: str, la
 
 def validate_baseline(args: argparse.Namespace) -> None:
     baseline = args.baseline.resolve()
-    assert_installed_state(args.state, baseline, "0.2.2", "fallback preflight")
+    assert_installed_state(args.state, baseline, args.version, "fallback preflight")
     assert_marketplaces(read_json(args.marketplaces), baseline, "fallback preflight")
-    assert_exact_cache(args.codex_home.resolve(), baseline, "0.2.2", "fallback preflight")
+    assert_exact_cache(args.codex_home.resolve(), baseline, args.version, "fallback preflight")
 
 
 def inject_preflight(args: argparse.Namespace) -> None:
@@ -232,12 +239,12 @@ def inject_preflight(args: argparse.Namespace) -> None:
 
 def validate_preflight_rejection(args: argparse.Namespace) -> None:
     baseline = args.baseline.resolve()
-    assert_installed_state(args.actual_state, baseline, "0.2.2", "preflight rejection")
+    assert_installed_state(args.actual_state, baseline, args.version, "preflight rejection")
     assert_marketplaces(read_json(args.actual_marketplaces), baseline, "preflight rejection")
     require(not args.plugin_remove_marker.exists(), "preflight rejection must not execute plugin removal")
     require(not args.marketplace_remove_marker.exists(), "preflight rejection must not execute marketplace removal")
     roots = cache_roots(args.codex_home.resolve())
-    require(len(roots) == 1 and roots[0].name == "0.2.2", "preflight rejection must retain the public cache root")
+    require(len(roots) == 1 and roots[0].name == args.version, "preflight rejection must retain the baseline cache root")
 
 
 def inject_target(args: argparse.Namespace) -> None:
@@ -274,10 +281,10 @@ def validate_available(args: argparse.Namespace) -> None:
 
 
 def validate_target(args: argparse.Namespace) -> None:
-    assert_available_state(args.state, args.target, "0.2.3", "target")
+    assert_available_state(args.state, args.target, "0.3.0", "target")
 
 
-def assert_projects(before_path: Path, after_path: Path, label: str) -> None:
+def assert_projects(before_path: Path, after_path: Path, label: str, workflow_version: str) -> None:
     before = read_json(before_path)
     after = read_json(after_path)
     require(after == before, f"{label} must preserve every participating project byte and identity")
@@ -286,26 +293,29 @@ def assert_projects(before_path: Path, after_path: Path, label: str) -> None:
     require(after["home_thread_ids"] == ["home-thread-alpha", "home-thread-beta"], f"{label} must preserve home thread identities")
     require(after["review_thread_ids"] == ["review-thread-alpha", "review-thread-beta"], f"{label} must preserve active-review thread identities")
     require(after["review_continuation_counts"] == [0, 0], f"{label} must continue zero active reviews")
+    require(after["review_workflow_versions"] == [workflow_version, workflow_version], f"{label} must pin both active reviews to {workflow_version}")
+    require(len(after["graph_records"]) == 2, f"{label} must preserve two graph records")
+    require(after["preferences_without_graph_fields"] is True, f"{label} preferences must retain no graph field")
 
 
 def validate_restoration(args: argparse.Namespace) -> None:
     baseline = args.baseline.resolve()
-    assert_installed_state(args.state, baseline, "0.2.2", "rollback restoration")
+    assert_installed_state(args.state, baseline, args.version, "rollback restoration")
     source = assert_marketplaces(read_json(args.marketplaces), baseline, "rollback restoration")
-    assert_exact_cache(args.codex_home.resolve(), baseline, "0.2.2", "rollback restoration")
-    require(not list((args.codex_home / "plugins/cache").glob("*/design-arc/0.2.3")), "rollback restoration must leave no stale 0.2.3 cache")
-    assert_projects(args.projects_before, args.projects_after, "rollback restoration")
+    assert_exact_cache(args.codex_home.resolve(), baseline, args.version, "rollback restoration")
+    require(not list((args.codex_home / "plugins/cache").glob("*/design-arc/0.3.0")), "rollback restoration must leave no stale 0.3.0 cache")
+    assert_projects(args.projects_before, args.projects_after, "rollback restoration", args.version)
     print(f"PASS: parsed restored marketplace source: {source}")
 
 
 def validate_final(args: argparse.Namespace) -> None:
     target = args.target.resolve()
     parsed_source = parsed_marketplace_source(read_json(args.marketplaces), "final upgrade")
-    assert_installed_state(args.state, parsed_source, "0.2.3", "final upgrade")
+    assert_installed_state(args.state, parsed_source, "0.3.0", "final upgrade")
     if args.route == "remove-add-fallback":
         require(parsed_source == target, "fallback marketplace source must be the isolated current checkout")
-    assert_exact_cache(args.codex_home.resolve(), target, "0.2.3", "final upgrade")
-    require(not list((args.codex_home / "plugins/cache").glob("*/design-arc/0.2.2")), "final upgrade must leave no stale 0.2.2 cache")
+    cached_root = assert_exact_cache(args.codex_home.resolve(), target, "0.3.0", "final upgrade")
+    require(not list((args.codex_home / "plugins/cache").glob(f"*/design-arc/{args.baseline_version}")), "final upgrade must leave no stale baseline cache")
 
     prompt_items = read_json(args.prompt)
     require(isinstance(prompt_items, list), "new-task prompt input must be a JSON list")
@@ -316,9 +326,44 @@ def validate_final(args: argparse.Namespace) -> None:
         for content in item.get("content", [])
         if content.get("type") == "input_text"
     )
-    require(developer_text.count("- design-arc:design-arc:") == 1, "one new task must load Design Arc 0.2.3 exactly once")
-    assert_projects(args.projects_before, args.projects_after, "final upgrade")
+    require(developer_text.count("- design-arc:design-arc:") == 1, "one new task must load Design Arc 0.3.0 exactly once")
+    assert_projects(args.projects_before, args.projects_after, "final upgrade", args.baseline_version)
+    contract_check = subprocess.run(
+        [
+            sys.executable,
+            str(Path(__file__).with_name("check-workflow-contracts.py")),
+            "--skill",
+            str(cached_root / "skills/design-arc/SKILL.md"),
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    require(contract_check.returncode == 0, "installed 0.3.0 skill must resolve the graph-active new-review contract")
     print(f"PASS: parsed marketplace source: {parsed_source}; route: {args.route}")
+    print("PASS: installed 0.3.0 contract resolves graph active only for the next new review")
+
+
+def validate_downgrade(args: argparse.Namespace) -> None:
+    baseline = args.baseline.resolve()
+    assert_installed_state(args.state, baseline, "0.2.3", "simulated downgrade")
+    assert_marketplaces(read_json(args.marketplaces), baseline, "simulated downgrade")
+    cached_root = assert_exact_cache(args.codex_home.resolve(), baseline, "0.2.3", "simulated downgrade")
+    require(not list((args.codex_home / "plugins/cache").glob("*/design-arc/0.3.0")), "simulated downgrade must leave no 0.3.0 cache")
+    require(not (cached_root / "skills/design-arc/references/graph-record.schema.json").exists(), "exact 0.2.3 must ignore unsupported graph schema")
+    require(not (cached_root / "skills/design-arc/scripts/validate-graph-record.py").exists(), "exact 0.2.3 must ignore unsupported graph validator")
+    assert_projects(args.projects_before, args.projects_after, "simulated downgrade", "0.2.3")
+    prompt_items = read_json(args.prompt)
+    require(isinstance(prompt_items, list), "downgrade prompt input must be a JSON list")
+    developer_text = "\n".join(
+        content.get("text", "")
+        for item in prompt_items
+        if item.get("role") == "developer"
+        for content in item.get("content", [])
+        if content.get("type") == "input_text"
+    )
+    require(developer_text.count("- design-arc:design-arc:") == 1, "downgraded task must load exact Design Arc 0.2.3 once")
+    print("PASS: exact 0.2.3 downgrade ignores unsupported graph machinery and preserves graph records/state")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -335,6 +380,7 @@ def build_parser() -> argparse.ArgumentParser:
     preflight.add_argument("marketplaces", type=Path)
     preflight.add_argument("codex_home", type=Path)
     preflight.add_argument("baseline", type=Path)
+    preflight.add_argument("version")
     preflight.set_defaults(func=validate_baseline)
 
     injection = subparsers.add_parser("inject-preflight")
@@ -348,6 +394,7 @@ def build_parser() -> argparse.ArgumentParser:
     rejected.add_argument("actual_marketplaces", type=Path)
     rejected.add_argument("codex_home", type=Path)
     rejected.add_argument("baseline", type=Path)
+    rejected.add_argument("version")
     rejected.add_argument("plugin_remove_marker", type=Path)
     rejected.add_argument("marketplace_remove_marker", type=Path)
     rejected.set_defaults(func=validate_preflight_rejection)
@@ -373,6 +420,7 @@ def build_parser() -> argparse.ArgumentParser:
     restoration.add_argument("marketplaces", type=Path)
     restoration.add_argument("codex_home", type=Path)
     restoration.add_argument("baseline", type=Path)
+    restoration.add_argument("version")
     restoration.add_argument("projects_before", type=Path)
     restoration.add_argument("projects_after", type=Path)
     restoration.set_defaults(func=validate_restoration)
@@ -386,7 +434,18 @@ def build_parser() -> argparse.ArgumentParser:
     final.add_argument("projects_before", type=Path)
     final.add_argument("projects_after", type=Path)
     final.add_argument("route")
+    final.add_argument("baseline_version")
     final.set_defaults(func=validate_final)
+
+    downgrade = subparsers.add_parser("validate-downgrade")
+    downgrade.add_argument("state", type=Path)
+    downgrade.add_argument("marketplaces", type=Path)
+    downgrade.add_argument("prompt", type=Path)
+    downgrade.add_argument("codex_home", type=Path)
+    downgrade.add_argument("baseline", type=Path)
+    downgrade.add_argument("projects_before", type=Path)
+    downgrade.add_argument("projects_after", type=Path)
+    downgrade.set_defaults(func=validate_downgrade)
     return parser
 
 

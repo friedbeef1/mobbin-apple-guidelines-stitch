@@ -1,5 +1,5 @@
 #!/bin/sh
-# Exercise an immutable public Design Arc 0.2.2 installation upgrading to this checkout.
+# Exercise an exact Design Arc baseline installation upgrading to this checkout.
 
 set -eu
 
@@ -7,10 +7,12 @@ script_dir=$(CDPATH= cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH= cd "$script_dir/.." && pwd)
 state_helper="$script_dir/test-plugin-upgrade-state.py"
 codex_bin=${CODEX_BIN:-codex}
-published_sha=1c9b3796e6f5f0648bae5984f1b8e3013eeac56f
+published_sha=${DESIGN_ARC_UPGRADE_BASELINE_SHA:-1c9b3796e6f5f0648bae5984f1b8e3013eeac56f}
+baseline_version=${DESIGN_ARC_UPGRADE_BASELINE_VERSION:-0.2.2}
+test_downgrade=${DESIGN_ARC_TEST_DOWNGRADE:-0}
 task_temp_dir=$(mktemp -d "${TMPDIR:-/tmp}/design-arc-upgrade-smoke.XXXXXX")
-published_checkout="$task_temp_dir/published-0.2.2"
-current_checkout="$task_temp_dir/current-0.2.3"
+published_checkout="$task_temp_dir/baseline-$baseline_version"
+current_checkout="$task_temp_dir/current-0.3.0"
 codex_home="$task_temp_dir/codex-home"
 projects_root="$task_temp_dir/projects"
 plugin_remove_marker="$task_temp_dir/plugin-remove.executed"
@@ -59,21 +61,22 @@ rollback_after_failure() {
     "$task_temp_dir/marketplaces-after-rollback.json" \
     "$codex_home" \
     "$published_checkout" \
+    "$baseline_version" \
     "$task_temp_dir/projects-before.json" \
     "$task_temp_dir/projects-after.json" \
     > "$task_temp_dir/rollback-validation.out" 2> "$task_temp_dir/rollback-validation.err"
   then
     sed -n '1,200p' "$task_temp_dir/rollback-validation.err" >&2
-    fail "rollback did not exactly restore immutable public 0.2.2 after $failure_point"
+    fail "rollback did not exactly restore Design Arc $baseline_version after $failure_point"
   fi
   sed -n '1,200p' "$task_temp_dir/rollback-validation.out"
 
   if [ "$injected_failure" = "$failure_point" ]
   then
-    printf '%s\n' "PASS: restored exact Design Arc 0.2.2 after injected $failure_point failure"
+    printf '%s\n' "PASS: restored exact Design Arc $baseline_version after injected $failure_point failure"
     exit 0
   fi
-  fail "upgrade failed at $failure_point; exact immutable public 0.2.2 was restored"
+  fail "upgrade failed at $failure_point; exact Design Arc $baseline_version was restored"
 }
 
 trap cleanup EXIT HUP INT TERM
@@ -93,7 +96,7 @@ fi
 
 alpha_root="$projects_root/alpha-product"
 beta_root="$projects_root/beta-product"
-mkdir -p "$alpha_root/.codex" "$alpha_root/product" "$beta_root/.codex" "$beta_root/product"
+mkdir -p "$alpha_root/.codex/design-arc/graphs" "$alpha_root/product" "$beta_root/.codex/design-arc/graphs" "$beta_root/product"
 printf '%s\n' \
   'evidence_mode: benchmarks' \
   'benchmark_provider: mobbin' \
@@ -113,8 +116,10 @@ printf '%s\n' \
   '  title: Design Arc — Beta Product' \
   '  state: ready' \
   '  thread_id: home-thread-beta' > "$beta_root/.codex/design-arc.yaml"
-printf '%s\n' '{"thread_id":"review-thread-alpha","state":"awaiting-stitch-gate","continuation_count":0}' > "$alpha_root/.codex/design-arc-active-review.json"
-printf '%s\n' '{"thread_id":"review-thread-beta","state":"awaiting-direction-gate","continuation_count":0}' > "$beta_root/.codex/design-arc-active-review.json"
+printf '%s\n' "{\"review_id\":\"review-alpha\",\"thread_id\":\"review-thread-alpha\",\"workflow_version\":\"$baseline_version\",\"state\":\"awaiting-stitch-gate\",\"continuation_count\":0}" > "$alpha_root/.codex/design-arc-active-review.json"
+printf '%s\n' "{\"review_id\":\"review-beta\",\"thread_id\":\"review-thread-beta\",\"workflow_version\":\"$baseline_version\",\"state\":\"awaiting-direction-gate\",\"continuation_count\":0}" > "$beta_root/.codex/design-arc-active-review.json"
+sed 's/"review-001"/"review-alpha"/' "$repo_root/scripts/fixtures/graph-records/valid.json" > "$alpha_root/.codex/design-arc/graphs/review-alpha.json"
+sed -e 's/"project-alpha"/"project-beta"/' -e 's/"review-001"/"review-beta"/' "$repo_root/scripts/fixtures/graph-records/valid.json" > "$beta_root/.codex/design-arc/graphs/review-beta.json"
 printf '%s\n' 'alpha product sentinel: must remain byte-for-byte unchanged' > "$alpha_root/product/product-state.txt"
 printf '%s\n' 'beta product sentinel: must remain byte-for-byte unchanged' > "$beta_root/product/product-state.txt"
 snapshot_projects "$task_temp_dir/projects-before.json"
@@ -122,8 +127,8 @@ snapshot_projects "$task_temp_dir/projects-before.json"
 CODEX_HOME="$codex_home" "$codex_bin" --version > "$task_temp_dir/codex-version.txt"
 CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace add "$published_checkout" --json > "$task_temp_dir/marketplace-add-0.2.2.json"
 CODEX_HOME="$codex_home" "$codex_bin" plugin list --available --json > "$task_temp_dir/baseline-available.json"
-python3 "$state_helper" validate-available "$task_temp_dir/baseline-available.json" "$published_checkout" 0.2.2 baseline
-CODEX_HOME="$codex_home" "$codex_bin" plugin add design-arc@design-arc-marketplace --json > "$task_temp_dir/plugin-add-0.2.2.json"
+python3 "$state_helper" validate-available "$task_temp_dir/baseline-available.json" "$published_checkout" "$baseline_version" baseline
+CODEX_HOME="$codex_home" "$codex_bin" plugin add design-arc@design-arc-marketplace --json > "$task_temp_dir/plugin-add-baseline.json"
 CODEX_HOME="$codex_home" "$codex_bin" plugin list --available --json > "$task_temp_dir/before-upgrade.json"
 
 if CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace upgrade design-arc-marketplace --json > "$task_temp_dir/marketplace-upgrade.json" 2> "$task_temp_dir/marketplace-upgrade.stderr"
@@ -147,7 +152,7 @@ raise SystemExit(
     if isinstance(installed, list)
     and len(installed) == 1
     and installed[0].get("pluginId") == "design-arc@design-arc-marketplace"
-    and installed[0].get("version") == "0.2.3"
+    and installed[0].get("version") == "0.3.0"
     and installed[0].get("enabled") is True
     and installed[0].get("installed") is True
     else 1
@@ -170,6 +175,7 @@ else
     "$task_temp_dir/marketplaces-after-refresh.json" \
     "$codex_home" \
     "$published_checkout" \
+    "$baseline_version" \
     > "$task_temp_dir/preflight-validation.out" 2> "$task_temp_dir/preflight-validation.err"
   then
     case "$injected_failure" in
@@ -181,6 +187,7 @@ else
           "$task_temp_dir/preflight-actual-marketplaces.json" \
           "$codex_home" \
           "$published_checkout" \
+          "$baseline_version" \
           "$plugin_remove_marker" \
           "$marketplace_remove_marker"
         printf '%s\n' "PASS: fallback preflight rejected $injected_failure without plugin or marketplace removal"
@@ -195,7 +202,7 @@ else
   if [ "$injected_failure" = plugin-remove ]
   then
     fallback_failure=plugin-remove
-  elif CODEX_HOME="$codex_home" "$codex_bin" plugin remove design-arc@design-arc-marketplace --json > "$task_temp_dir/plugin-remove-0.2.2.json" 2> "$task_temp_dir/plugin-remove-0.2.2.stderr"
+  elif CODEX_HOME="$codex_home" "$codex_bin" plugin remove design-arc@design-arc-marketplace --json > "$task_temp_dir/plugin-remove-baseline.json" 2> "$task_temp_dir/plugin-remove-baseline.stderr"
   then
     printf '%s\n' executed > "$plugin_remove_marker"
   else
@@ -207,7 +214,7 @@ else
     if [ "$injected_failure" = marketplace-remove ]
     then
       fallback_failure=marketplace-remove
-    elif CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace remove design-arc-marketplace --json > "$task_temp_dir/marketplace-remove-0.2.2.json" 2> "$task_temp_dir/marketplace-remove-0.2.2.stderr"
+    elif CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace remove design-arc-marketplace --json > "$task_temp_dir/marketplace-remove-baseline.json" 2> "$task_temp_dir/marketplace-remove-baseline.stderr"
     then
       printf '%s\n' executed > "$marketplace_remove_marker"
     else
@@ -220,7 +227,7 @@ else
     if [ "$injected_failure" = marketplace-add ]
     then
       fallback_failure=marketplace-add
-    elif ! CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace add "$current_checkout" --json > "$task_temp_dir/marketplace-add-0.2.3.json" 2> "$task_temp_dir/marketplace-add-0.2.3.stderr"
+    elif ! CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace add "$current_checkout" --json > "$task_temp_dir/marketplace-add-0.3.0.json" 2> "$task_temp_dir/marketplace-add-0.3.0.stderr"
     then
       fallback_failure=marketplace-add
     fi
@@ -254,7 +261,7 @@ else
     if [ "$injected_failure" = plugin-add ]
     then
       fallback_failure=plugin-add
-    elif ! CODEX_HOME="$codex_home" "$codex_bin" plugin add design-arc@design-arc-marketplace --json > "$task_temp_dir/plugin-add-0.2.3.json" 2> "$task_temp_dir/plugin-add-0.2.3.stderr"
+    elif ! CODEX_HOME="$codex_home" "$codex_bin" plugin add design-arc@design-arc-marketplace --json > "$task_temp_dir/plugin-add-0.3.0.json" 2> "$task_temp_dir/plugin-add-0.3.0.stderr"
     then
       fallback_failure=plugin-add
     fi
@@ -310,15 +317,41 @@ if ! python3 "$state_helper" validate-final \
   "$task_temp_dir/projects-before.json" \
   "$task_temp_dir/projects-after.json" \
   "$upgrade_route" \
+  "$baseline_version" \
   > "$task_temp_dir/final-validation.out" 2> "$task_temp_dir/final-validation.err"
 then
   rollback_after_failure final-validation
 fi
 sed -n '1,200p' "$task_temp_dir/final-validation.out"
 
+if [ "$test_downgrade" = 1 ]
+then
+  [ "$baseline_version" = 0.2.3 ] || fail 'downgrade proof requires the exact 0.2.3 candidate baseline'
+  CODEX_HOME="$codex_home" "$codex_bin" plugin remove design-arc@design-arc-marketplace --json > "$task_temp_dir/downgrade-remove-plugin.json"
+  CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace remove design-arc-marketplace --json > "$task_temp_dir/downgrade-remove-marketplace.json"
+  CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace add "$published_checkout" --json > "$task_temp_dir/downgrade-add-marketplace.json"
+  CODEX_HOME="$codex_home" "$codex_bin" plugin add design-arc@design-arc-marketplace --json > "$task_temp_dir/downgrade-add-plugin.json"
+  CODEX_HOME="$codex_home" "$codex_bin" plugin list --available --json > "$task_temp_dir/after-downgrade.json"
+  CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace list --json > "$task_temp_dir/marketplaces-after-downgrade.json"
+  (
+    cd "$beta_root"
+    CODEX_HOME="$codex_home" "$codex_bin" debug prompt-input 'Start the next Design Arc review while preserving unsupported graph state.' > "$task_temp_dir/prompt-input-downgrade.json"
+  )
+  snapshot_projects "$task_temp_dir/projects-after-downgrade.json"
+  python3 "$state_helper" validate-downgrade \
+    "$task_temp_dir/after-downgrade.json" \
+    "$task_temp_dir/marketplaces-after-downgrade.json" \
+    "$task_temp_dir/prompt-input-downgrade.json" \
+    "$codex_home" \
+    "$published_checkout" \
+    "$task_temp_dir/projects-before.json" \
+    "$task_temp_dir/projects-after-downgrade.json"
+fi
+
 version=$(sed -n '1p' "$task_temp_dir/codex-version.txt")
-printf '%s\n' "PASS: baseline installed/available Design Arc 0.2.2 from immutable local checkout $published_sha"
-printf '%s\n' 'PASS: target installed Design Arc 0.2.3; available versions after install: 0'
-printf '%s\n' 'PASS: preserved 2 preferences, 2 ready homes, 2 product sentinels, 2 active reviews; new homes: 0; review continuations: 0'
-printf '%s\n' "PASS: isolated Design Arc 0.2.2 to 0.2.3 upgrade via $upgrade_route ($version)"
+printf '%s\n' "PASS: baseline installed/available Design Arc $baseline_version from exact local checkout $published_sha"
+printf '%s\n' 'PASS: target installed Design Arc 0.3.0; available versions after install: 0'
+printf '%s\n' 'PASS: preserved 2 preferences without graph fields, 2 ready homes, 2 product sentinels, 2 graph records, 2 version-pinned active reviews; new homes: 0; review continuations: 0'
+printf '%s\n' 'PASS: installed contract resolves the next new review graph active; existing active reviews remain pinned'
+printf '%s\n' "PASS: isolated Design Arc $baseline_version to 0.3.0 upgrade via $upgrade_route ($version)"
 printf '%s\n' 'PASS: isolated Design Arc plugin upgrade smoke'
