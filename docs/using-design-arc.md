@@ -35,6 +35,31 @@ Graph assistance is active by default for every new 0.3.0 review in both existin
 
 Graph assistance adds no approval gate. Objective Confirmation, the Direction Gate, the Stitch Gate, the active approval mode, and the full review of every important state remain exactly the same.
 
+The loop controls what happens and when Design Arc stops. The relationship map helps Design Arc understand what each correction affects; it advises the loop but never replaces it.
+
+```mermaid
+flowchart TD
+    A["Confirm the user’s objective"] --> B["Inspect the current journey"]
+    B --> C["Gather credible evidence"]
+    C --> D["Build the relationship map"]
+
+    D --> E["Recommend a design direction"]
+    E --> F["Direction approval"]
+    F --> G["Generate the complete proposal in Stitch"]
+
+    G --> H["Inspect every important state"]
+    H --> I{"Anything incorrect?"}
+
+    I -- "No" --> J["Final verdict"]
+    I -- "Yes" --> K["Find affected requirements, screens and states"]
+    K --> L["Prepare one proposal-wide correction batch"]
+    L --> M["Send corrections to Stitch"]
+    M --> H
+
+    J --> N["Visual proposal approval"]
+    L -. "Maximum three correction rounds" .-> J
+```
+
 Use these controls when you want to inspect or change the assistance:
 
 ```text
