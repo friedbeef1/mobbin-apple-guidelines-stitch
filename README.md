@@ -48,7 +48,13 @@ setup → objective → current-journey audit → evidence → directions
       → render validation → Stitch Gate → authorized design handoff
 ```
 
-**What you need to do:** Tell Codex what outcome you want. On first use, choose how evidence and approvals should work; later, only authorize external access or approve a gate when your chosen mode asks. Codex handles the audit, research, recommendations, platform checks, motion specification, visual journey, and validation.
+**Your part is only the decisions. Design Arc does the work between them.**
+
+| When | What you do | What Design Arc handles |
+| --- | --- | --- |
+| Every review | Describe the problem and the outcome you want. | Confirm the objective; audit the existing journey; inspect every important state; gather and label evidence; recommend a direction; check platform guidance; specify motion; visualize the complete journey; and validate the proposal. |
+| Once per project | Choose the evidence and approval preferences, and optionally approve a pinned project home. | Save those choices for the project, keep products separate, and reuse the same home on later visits. |
+| Only when requested | Authorize an external source or tool, or approve a direction or visual proposal when your chosen mode pauses. | Prepare the evidence, alternatives, recommendation, trade-offs, complete states, and approval-ready record before asking you. |
 
 Setup resolves two independent choices: how evidence is gathered and where Codex pauses for approval. Every route establishes the objective before inspection or research, audits the actual product, preserves platform rules, and stops at a design-only handoff boundary.
 
