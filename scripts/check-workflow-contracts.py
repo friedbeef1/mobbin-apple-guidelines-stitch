@@ -194,6 +194,82 @@ MOTION_CONTRACT_CASES = {
 }
 
 
+GRAPH_CONTRACT_CASES = {
+    "case 01 controls": (
+        "Graph controls are `$design-arc graph`, `$design-arc graph on`, `$design-arc graph off`, `$design-arc graph explain`, `$design-arc graph rebuild`, `$design-arc graph clear`, `$design-arc graph global off`, and `$design-arc graph global on`.",
+    ),
+    "case 02 natural-language controls": (
+        "Equivalent natural-language requests activate the same graph report, one-review override, project setting, explanation, rebuild, clear, or laptop-global safety flow without requiring command syntax.",
+    ),
+    "case 03 storage separation": (
+        "Save the project setting only as `graph_assistance: on|off` in that project's `.codex/design-arc.yaml`; keep laptop-global graph safety state isolated under the active Codex profile, never in a project or product file.",
+    ),
+    "case 04 disabling precedence": (
+        "Resolve graph assistance independently for a new review: an explicit one-review off override, project off, or global off each disables it; global on is only permission to resolve the project and can never force-enable project off.",
+    ),
+    "case 05 existing-project default": (
+        "For every new 0.3.0 review in an existing project whose preference has no `graph_assistance` field, resolve graph assistance to active by default.",
+    ),
+    "case 06 new-project default": (
+        "For every new 0.3.0 review in a new project whose preference has no `graph_assistance` field, resolve graph assistance to active by default.",
+    ),
+    "case 07 resolution does not rewrite": (
+        "Default resolution and one-review overrides do not rewrite `.codex/design-arc.yaml`, laptop-global safety state, or `design_arc_home` metadata merely because a review resolved them.",
+    ),
+    "case 08 review pinning": (
+        "At new-review start, assign one stable `review_id` and record `workflow_version: 0.3.0`; an already-active review retains its recorded workflow version and never changes behavior mid-review after an upgrade, downgrade, or setting change.",
+    ),
+    "case 09 graph path isolation": (
+        "Store each record only at `.codex/design-arc/reviews/<review_id>/graph.json`, require schema `design-arc.graph/v1`, and validate the current project ID and review ID before use; never read a graph from another project or review.",
+    ),
+    "case 10 status provenance": (
+        "At review start, report the graph active state and its provenance as current-request one-review override, saved project setting, laptop-global safety off, or 0.3.0 default; `graph explain` also reports the resolution chain, review ID, workflow version, graph path, and latest validation or fallback result.",
+    ),
+    "case 11 invalid fallback": (
+        "Validate the complete graph before every use; if it is missing, invalid, corrupt, incomplete, contradictory, unsupported, unproven, or identity-mismatched, ignore it, report the reason, and continue the unchanged standard workflow without graph assistance.",
+    ),
+    "case 12 graph is not authority": (
+        "The graph advises correction planning only: it is not evidence, proof, approval, a source of requirements, or authority, and creating or using it adds no design approval gate.",
+    ),
+    "case 13 platform precedence": (
+        "Current first-party requirements for the target platform override every conflicting graph relationship or graph-assisted suggestion.",
+    ),
+    "case 14 accessibility precedence": (
+        "Current accessibility requirements override every conflicting graph relationship or graph-assisted suggestion and cannot be waived by an exception edge.",
+    ),
+    "case 15 evidence precedence": (
+        "Current inspected evidence and its recorded provenance override stale, inferred, unsupported, or contradictory graph relationships; never turn a relationship into an evidence claim.",
+    ),
+    "case 16 correction trace": (
+        "Before a graph-assisted correction, trace render → screen/state → approved requirement → provenance → dependent states → regression checks, and omit any relationship that cannot complete this supported trace.",
+    ),
+    "case 17 repair batching": (
+        "Use supported graph relationships only to batch compatible `repairable drift` across the proposal; never split the proposal-wide correction budget per node, screen, state, or branch.",
+    ),
+    "case 18 complete reinspection": (
+        "After every graph-assisted correction round, perform the unchanged complete-proposal inspection, including previously matching and graph-unrelated screens and states that may have regressed.",
+    ),
+    "case 19 three-round limit": (
+        "Graph assistance preserves one initial Stitch proposal followed by at most three batched correction rounds for the entire proposal and never resets, extends, or bypasses that limit.",
+    ),
+    "case 20 gates unchanged": (
+        "Graph assistance never bypasses Objective Confirmation, Direction Gate, Stitch Gate, their approval-mode behavior, or the requirement that Fully automatic continues only on `meets direction`.",
+    ),
+    "case 21 runtime proof": (
+        "Graph relationships cannot establish runtime proof; carry implementation, staging, device, accessibility, performance, and production proof forward as unverified until current measured evidence establishes it.",
+    ),
+    "case 22 rebuild scope": (
+        "`graph rebuild` reconstructs only the current review's graph from current authoritative workflow evidence, validates the replacement before use, and preserves the review ID, workflow version, project preference, home metadata, and product files.",
+    ),
+    "case 23 clear scope": (
+        "`graph clear` is destructive, requires explicit confirmation for the exact current-review graph path, deletes only that graph after confirmation, and then continues the standard workflow without graph assistance; it never clears preferences, homes, product files, other reviews, or other projects.",
+    ),
+    "case 24 downgrade and authority boundaries": (
+        "Older workflow versions ignore unsupported graph records but preserve them during downgrade; graph controls, records, explanations, rebuilds, clears, and suggestions never authorize source implementation, dependency or provider changes, staging, deployment, release, or profile upgrade.",
+    ),
+}
+
+
 PROJECT_HOME_HEADING = "### Project home"
 PROJECT_HOME_MUTATION_HEADING = "#### Reuse, create, recover, and verify"
 
@@ -402,6 +478,10 @@ def main() -> int:
     for label, fragments in MOTION_CONTRACT_CASES.items():
         if any(fragment not in text for fragment in fragments):
             failures.append(f"missing or reversed motion {label} contract")
+
+    for label, fragments in GRAPH_CONTRACT_CASES.items():
+        if any(fragment not in text for fragment in fragments):
+            failures.append(f"missing or reversed graph {label} contract")
 
     render_repair = markdown_section(text, RENDER_REPAIR_HEADING, "## ")
     if render_repair is None:

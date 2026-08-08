@@ -25,6 +25,7 @@ Store project-scoped choices in `.codex/design-arc.yaml`:
 evidence_mode: benchmarks
 benchmark_provider: mobbin
 approval_mode: guided
+graph_assistance: on
 ```
 
 Valid evidence modes are `benchmarks` and `guidelines`. `benchmark_provider` is valid only with Benchmarks; currently document `mobbin` when the user chooses that external provider. Valid approval modes are `guided`, `follow-recommendation`, and `fully-automatic`. Do not create a global preference.
@@ -41,7 +42,18 @@ Valid evidence modes are `benchmarks` and `guidelines`. `benchmark_provider` is 
 - `$design-arc mode follow-recommendation` — save Follow recommendation.
 - `$design-arc mode fully-automatic` — save Fully automatic.
 
+Graph controls are `$design-arc graph`, `$design-arc graph on`, `$design-arc graph off`, `$design-arc graph explain`, `$design-arc graph rebuild`, `$design-arc graph clear`, `$design-arc graph global off`, and `$design-arc graph global on`.
+
+- `$design-arc graph` — report the current review's resolved graph state and provenance without changing it.
+- `$design-arc graph on` or `$design-arc graph off` — save only this project's graph setting.
+- `$design-arc graph explain` — report how the state resolved and whether the current graph is usable.
+- `$design-arc graph rebuild` — reconstruct only the current review's graph from current authoritative workflow evidence.
+- `$design-arc graph clear` — request deletion of only the current review's graph under the confirmation rule below.
+- `$design-arc graph global off` or `$design-arc graph global on` — save only the laptop/profile safety state; global on never overrides project off.
+
 A natural-language request such as “use Guidelines for this run” or “follow your recommendation this time” is a one-run override, not permission to rewrite the file. A setting command explicitly authorizes changing only that named project preference.
+
+Equivalent natural-language requests activate the same graph report, one-review override, project setting, explanation, rebuild, clear, or laptop-global safety flow without requiring command syntax. Distinguish “for this review” from “for this project” and “on this laptop”; when scope is materially ambiguous, ask before saving or deleting anything.
 
 Outside a Design Arc home, an ordinary product-journey request activates Design Arc in the current task; briefly disclose that Design Arc is being used and continue without requiring `$design-arc`. Resolve setup and the objective in the required order before doing product work.
 
@@ -82,6 +94,8 @@ design_arc_home:
 ```
 
 Include only the ID fields currently known. Every home-state write must preserve `evidence_mode`, `benchmark_provider` when present, and `approval_mode` unchanged. Preference commands likewise preserve the complete `design_arc_home` block. A one-run override changes neither preference values nor home metadata.
+
+Every home-state write also preserves `graph_assistance` when present. Graph project-setting commands preserve all evidence, approval, and home values; graph global commands do not touch project files or homes.
 
 #### Resolve and confirm
 
@@ -167,6 +181,64 @@ For first use, ask the user to choose independently:
 - **Fully automatic.** Continue only from an explicit current-request objective, select the marked direction, and pass Stitch Gate only on `meets direction`.
 
 Allow free-form input. Before saving first-use choices, state the proposed file values and obtain confirmation.
+
+### Graph assistance for 0.3.0 reviews
+
+Design Arc 0.3.0 may maintain a validated project-local relationship record to plan more precise corrections. The authoritative setup, objective, evidence, direction, Stitch, and repair workflow remains unchanged.
+
+#### Resolution and review identity
+
+Save the project setting only as `graph_assistance: on|off` in that project's `.codex/design-arc.yaml`; keep laptop-global graph safety state isolated under the active Codex profile, never in a project or product file. The profile state is a safety control shared by this Codex installation, not a design preference and not a source of project truth.
+
+Resolve graph assistance independently for a new review: an explicit one-review off override, project off, or global off each disables it; global on is only permission to resolve the project and can never force-enable project off. An explicit one-review on cannot override project off or global off. A saved project on remains disabled while global off is active and becomes eligible again when the global safety state is on.
+
+For every new 0.3.0 review in an existing project whose preference has no `graph_assistance` field, resolve graph assistance to active by default.
+
+For every new 0.3.0 review in a new project whose preference has no `graph_assistance` field, resolve graph assistance to active by default.
+
+Default resolution and one-review overrides do not rewrite `.codex/design-arc.yaml`, laptop-global safety state, or `design_arc_home` metadata merely because a review resolved them. Write a project or global setting only when the user issues or clearly requests that scoped setting change.
+
+At new-review start, assign one stable `review_id` and record `workflow_version: 0.3.0`; an already-active review retains its recorded workflow version and never changes behavior mid-review after an upgrade, downgrade, or setting change. Resolve the graph state once for that review and record it with the identity; later commands may disable use or manage its record, but do not rewrite the review's starting version.
+
+At review start, report the graph active state and its provenance as current-request one-review override, saved project setting, laptop-global safety off, or 0.3.0 default; `graph explain` also reports the resolution chain, review ID, workflow version, graph path, and latest validation or fallback result. Keep graph provenance distinct from evidence-mode and approval-mode provenance.
+
+#### Record, validation, and fallback
+
+Store each record only at `.codex/design-arc/reviews/<review_id>/graph.json`, require schema `design-arc.graph/v1`, and validate the current project ID and review ID before use; never read a graph from another project or review. Build the record only from authoritative facts established by the current workflow, keep edge provenance and support explicit, and replace relationships when their supporting facts change rather than treating stale links as current.
+
+When graph assistance is active, construct or update the current review record as stable workflow facts become available. Before relying on it, run the bundled validator as `python3 scripts/validate-graph-record.py GRAPH_PATH EXPECTED_PROJECT_ID EXPECTED_REVIEW_ID`; do not silently normalize or partially trust a rejected record.
+
+Validate the complete graph before every use; if it is missing, invalid, corrupt, incomplete, contradictory, unsupported, unproven, or identity-mismatched, ignore it, report the reason, and continue the unchanged standard workflow without graph assistance. Graph failure is a downgrade in assistance, not a blocked gate; preserve the rejected file for explanation or confirmed rebuild/clear unless using it would cross a project boundary.
+
+The graph advises correction planning only: it is not evidence, proof, approval, a source of requirements, or authority, and creating or using it adds no design approval gate. Source every graph node and relationship from the workflow record; never source the workflow record from an unsupported graph inference.
+
+Current first-party requirements for the target platform override every conflicting graph relationship or graph-assisted suggestion.
+
+Current accessibility requirements override every conflicting graph relationship or graph-assisted suggestion and cannot be waived by an exception edge.
+
+Current inspected evidence and its recorded provenance override stale, inferred, unsupported, or contradictory graph relationships; never turn a relationship into an evidence claim.
+
+#### Correction planning and unchanged inspection
+
+Before a graph-assisted correction, trace render → screen/state → approved requirement → provenance → dependent states → regression checks, and omit any relationship that cannot complete this supported trace. Use the trace to identify the smallest compatible correction batch and the states most likely to regress; record which relationships informed the batch.
+
+Use supported graph relationships only to batch compatible `repairable drift` across the proposal; never split the proposal-wide correction budget per node, screen, state, or branch. Direction decisions, authorization requirements, and runtime proof remain outside automatic correction.
+
+After every graph-assisted correction round, perform the unchanged complete-proposal inspection, including previously matching and graph-unrelated screens and states that may have regressed. The graph may focus attention but never narrows the required conformance matrix or replaces render inspection.
+
+Graph assistance preserves one initial Stitch proposal followed by at most three batched correction rounds for the entire proposal and never resets, extends, or bypasses that limit.
+
+Graph assistance never bypasses Objective Confirmation, Direction Gate, Stitch Gate, their approval-mode behavior, or the requirement that Fully automatic continues only on `meets direction`.
+
+Graph relationships cannot establish runtime proof; carry implementation, staging, device, accessibility, performance, and production proof forward as unverified until current measured evidence establishes it.
+
+#### Explain, rebuild, clear, and downgrade
+
+`graph rebuild` reconstructs only the current review's graph from current authoritative workflow evidence, validates the replacement before use, and preserves the review ID, workflow version, project preference, home metadata, and product files. Rebuild is not permission to redo research, change an approved direction, create requirements, or use another review's record; if validation fails, report fallback and keep the standard workflow active.
+
+`graph clear` is destructive, requires explicit confirmation for the exact current-review graph path, deletes only that graph after confirmation, and then continues the standard workflow without graph assistance; it never clears preferences, homes, product files, other reviews, or other projects. Before asking, state the exact path and that clearing does not turn the saved project or global setting off; without confirmation, leave the record unchanged.
+
+Older workflow versions ignore unsupported graph records but preserve them during downgrade; graph controls, records, explanations, rebuilds, clears, and suggestions never authorize source implementation, dependency or provider changes, staging, deployment, release, or profile upgrade. Upgrade or downgrade handling must preserve project preferences, homes, active review identity/version records, graph files, and product files unless the user separately authorizes an exact destructive action.
 
 ### Legacy preference import
 
