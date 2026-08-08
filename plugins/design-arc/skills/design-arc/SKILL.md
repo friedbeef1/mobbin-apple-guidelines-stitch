@@ -241,9 +241,12 @@ Synthesize the audit and selected evidence into one recommended direction and me
 - journey sequence and outcome logic;
 - screens and states to add, remove, merge, or retain;
 - key interaction changes and supporting evidence;
+- material motion scope, retained existing or native behavior, proposed custom behavior, and unresolved motion evidence;
 - benefits, risks, trade-offs, and unresolved questions.
 
 At the Direction Gate, present one unmistakably marked recommendation plus meaningful alternatives and their trade-offs.
+
+At the Direction Gate, include a motion summary that identifies the material motion scope, retained native or existing behavior, proposed custom behavior, and unresolved evidence.
 
 - **Guided:** report the active settings and provenance, then stop for the user's direction choice.
 - **Follow recommendation:** record that the active mode selected the marked recommendation, then continue.
@@ -259,15 +262,39 @@ Recheck the complete selected direction against current first-party guidance for
 
 Identify every material on-screen animation and screen-to-screen transition in the selected direction. If existing product motion or standard native behavior is sufficient, record that choice instead of inventing custom motion.
 
-Resolve motion evidence in this order: the product's existing motion system; native platform behavior; current first-party platform motion guidance; actually inspected motion precedent; clearly labeled Design Arc judgment. Prefer the product's established motion tokens and platform-native components when they satisfy the interaction purpose.
+Apply the least-motion principle: use no more motion than the stated interaction purpose requires, and remove decorative motion without a justified purpose. Motion must communicate feedback, continuity, hierarchy, status, recovery, or another stated purpose.
 
-A static screenshot or screen sequence may support transition intent, but only inspected motion playback supports claims about duration, easing, velocity, spring behavior, or choreography. Never convert an unobserved benchmark animation into an exact motion claim.
+#### Ground motion evidence
 
-For each custom or product-defining motion, record its purpose, trigger, start and end states, spatial behavior, timing or spring behavior, interruption behavior, reduced-motion alternative, evidence provenance, implementation target, and proof status. Motion must communicate feedback, continuity, hierarchy, status, recovery, or another stated purpose; decoration alone is not sufficient justification.
+Use this motion-evidence precedence: existing product motion; native platform behavior and standard components; current first-party platform guidance; inspected relevant shipped-product motion; labeled Design Arc judgment. Prefer established product tokens and standard native components when they satisfy the interaction purpose. If sources conflict, the current target platform's first-party requirements govern that platform.
 
-Treat Stitch prototype behavior as design evidence only. If Stitch cannot express a required animation faithfully, return its start and end states plus the motion contract and do not claim that motion is validated. Actual staging or device motion requires later measured implementation proof; it cannot be claimed from a Stitch render or prototype.
+In Benchmarks mode, authorized shipped-product motion may be inspected as precedent. Static screens or sequences support only start/end state, changing element, journey location, and transition intent; they cannot support exact duration, easing, springs, velocity, interruption, or choreography. Never convert an unobserved benchmark animation into an exact motion claim.
 
-Design Arc specifies and critiques motion but does not implement application code. Passing the Stitch Gate may route the approved motion contract to the authorized stack-specific implementation owner; it does not authorize that implementation.
+For playable motion evidence, record source; product/journey; frame rate when known; observed duration/path/order; interruption/reversal; measurement method; confidence; and missing states. Frame-derived values are estimates.
+
+Every temporal claim uses exactly one label: `directly observed`, `measured estimate`, `pattern-level inference`, `Design Arc judgment`, or `unverified`. The label describes the support for that claim, not the quality or authority of the source as a whole.
+
+When necessary playable evidence is unavailable, report the limitation and offer an accessible live product, user recording, authorized Page Flows recording, native default, or labeled proposal requiring implementation validation. Never invent it.
+
+In Guidelines mode, perform no benchmark lookup, make no real-product motion claim, and report that no benchmark motion was inspected. Use current first-party guidance, standard native behavior, and labeled judgment without implying shipped-product precedent.
+
+#### Write the material motion contracts
+
+Every material motion contract includes: Motion ID; journey location; purpose; trigger; start/end state; spatial behavior; choreography; timing; easing/spring; interruption; reduced motion; evidence; provenance; implementation target; implementation source; proof status. Unsupported values are `unverified`.
+
+Use one contract per motion or transition that affects continuity, feedback, hierarchy, status, recovery, spatial understanding, input, or accessibility. Record `none` only when absence is an inspected and deliberate value; use `unverified` when the value is unknown or unsupported. Reduced motion is a required alternative, not optional polish or `none`: preserve essential state and feedback without relying on nonessential displacement, scaling, parallax, or continuous motion.
+
+`implementation target` names the application surface, component, or state change that an authorized owner would build. `implementation source` names the selected existing product token, native primitive or standard component, or separately approved library or custom implementation. Neither field is evidence that implementation occurred.
+
+Motion+ is optional implementation assistance, never real-product evidence, an evidence authority, a dependency, or implicit authorization to install or implement. If an authorized implementation owner later selects Motion or Motion+, list that choice only as the implementation source and validate the resulting behavior independently.
+
+#### Preserve prototype, proof, and authority boundaries
+
+Stitch and other design prototypes can illustrate states and transition intent but cannot prove timing, easing, springs, interruption, reduced-motion behavior, performance, or runtime implementation quality. If a prototype cannot express the required motion faithfully, return the start/end states and complete motion contract, label unsupported behavior `unverified`, and do not claim validation.
+
+Only measured staging or target-device behavior can establish implementation proof. Record the tested runtime, viewport or device, accessibility setting, measurement method, result, and remaining gaps; a render, prototype, specification, source code, or library choice alone is not proof.
+
+Design Arc may specify and critique motion, but it does not authorize application-code implementation, dependency installation, staging, deployment, or release. Passing the Stitch Gate may route an approved contract to the authorized implementation owner; that owner retains stack, source, staging, and release authority.
 
 Stitch is an external visualization service, not a bundled or official Design Arc integration. Obtain whatever separate access and payload authorization the environment requires. Use an existing project and design system when supplied. Generate every material state required by the selected journey, including entry, transition, loading, empty, error, success, cancellation, and recovery. Record exact requested viewports, safe areas, assets, interaction states, project or board identifiers, and new screen identifiers.
 
@@ -293,7 +320,7 @@ Report these fields in the Codex conversation:
 - **Directions:** marked recommendation, alternatives, exact journey changes, and trade-offs.
 - **Gates:** Objective Confirmation, Direction Gate, and Stitch Gate status and reason.
 - **Proposal:** journey map, embedded key renders, viewports, identifiers, and material states.
-- **Motion:** material animations and transitions, source precedence, motion contracts, reduced-motion alternatives, and design-versus-implementation proof status.
+- **Motion:** material animations and transitions, motion scope, evidence and provenance, complete contracts, reduced motion, implementation source, proof, and remaining uncertainty.
 - **Validation:** Stitch verdict, corrections, blocked proof, and remaining device or implementation checks.
 - **Authority:** design-only status and next authorized owner.
 
@@ -302,6 +329,10 @@ Report these fields in the Codex conversation:
 Do not claim product inspection, first-party guidance, benchmark evidence, or new Stitch output without current evidence for that exact claim. Do not claim exact render dimensions from metadata alone. Do not claim accessibility, safe-area, browser, native, or device compliance from appearance alone; identify the measured implementation proof still required.
 
 No approval mode waives current-source evidence, external authorization, platform precedence, complete-state coverage, render critique, or ownership. If any required source or service is unavailable, report the exact blocked gate and the partial evidence that remains valid.
+
+Relevant run records include motion scope, evidence, provenance, contracts, reduced motion, implementation source, proof, and remaining uncertainty.
+
+Fully automatic mode never bypasses motion evidence integrity.
 
 ## Common mistakes
 
@@ -312,6 +343,9 @@ No approval mode waives current-source evidence, external authorization, platfor
 - Falling back from Benchmarks without the user's choice.
 - Calling a popular screenshot “best in class” without inspecting its journey.
 - Inferring exact motion timing, easing, springs, or choreography from a screenshot or static screen sequence.
+- Reporting a frame-derived value as exact or omitting the temporal-claim label.
+- Claiming shipped-product motion precedent in Guidelines mode.
+- Treating Motion or Motion+ as evidence, authority, or permission to install a dependency.
 - Treating a Stitch prototype as staging or device implementation proof.
 - Inventing custom motion when existing product or standard native behavior already serves the purpose.
 - Looking up benchmarks or implying benchmark support in Guidelines mode.

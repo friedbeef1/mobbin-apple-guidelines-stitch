@@ -160,29 +160,69 @@ MUTATIONS = {
         "Do not claim product inspection, first-party guidance, benchmark evidence, or new Stitch output without current evidence for that exact claim.",
         "Claim inspection and evidence based on prior metadata.",
     ),
-    "material motion inventory": (
-        "Identify every material on-screen animation and screen-to-screen transition in the selected direction. If existing product motion or standard native behavior is sufficient, record that choice instead of inventing custom motion.",
-        "Invent custom animation for every screen without checking existing or native behavior.",
+    "motion case 01 evidence precedence": (
+        "Use this motion-evidence precedence: existing product motion; native platform behavior and standard components; current first-party platform guidance; inspected relevant shipped-product motion; labeled Design Arc judgment.",
+        "Use labeled Design Arc judgment before checking product, platform, or shipped-product motion.",
     ),
-    "motion source precedence": (
-        "Resolve motion evidence in this order: the product's existing motion system; native platform behavior; current first-party platform motion guidance; actually inspected motion precedent; clearly labeled Design Arc judgment.",
-        "Use unlabeled Design Arc judgment before checking the product or platform.",
+    "motion case 02 benchmark and static limits": (
+        "Static screens or sequences support only start/end state, changing element, journey location, and transition intent; they cannot support exact duration, easing, springs, velocity, interruption, or choreography.",
+        "Static screens support exact duration, easing, springs, velocity, interruption, and choreography.",
     ),
-    "motion playback evidence": (
-        "A static screenshot or screen sequence may support transition intent, but only inspected motion playback supports claims about duration, easing, velocity, spring behavior, or choreography.",
-        "Infer exact timing, easing, velocity, and choreography from a screenshot.",
+    "motion case 02 benchmark authorization": (
+        "In Benchmarks mode, authorized shipped-product motion may be inspected as precedent.",
+        "In Benchmarks mode, inspect shipped-product motion without authorization.",
     ),
-    "motion specification fields": (
-        "For each custom or product-defining motion, record its purpose, trigger, start and end states, spatial behavior, timing or spring behavior, interruption behavior, reduced-motion alternative, evidence provenance, implementation target, and proof status.",
-        "For each motion, record only its name and duration.",
+    "motion case 03 playable evidence record": (
+        "For playable motion evidence, record source; product/journey; frame rate when known; observed duration/path/order; interruption/reversal; measurement method; confidence; and missing states. Frame-derived values are estimates.",
+        "For playable motion evidence, record only the source and copy frame-derived values as exact.",
     ),
-    "stitch motion proof limit": (
-        "Treat Stitch prototype behavior as design evidence only. If Stitch cannot express a required animation faithfully, return its start and end states plus the motion contract and do not claim that motion is validated.",
-        "Treat every Stitch screen transition as complete production motion proof.",
+    "motion case 04 temporal claim labels": (
+        "Every temporal claim uses exactly one label: `directly observed`, `measured estimate`, `pattern-level inference`, `Design Arc judgment`, or `unverified`.",
+        "Temporal claims need no evidence label.",
     ),
-    "staging motion proof": (
-        "Actual staging or device motion requires later measured implementation proof; it cannot be claimed from a Stitch render or prototype.",
-        "Claim staging and device motion compliance from the Stitch prototype.",
+    "motion case 05 unavailable playable evidence": (
+        "When necessary playable evidence is unavailable, report the limitation and offer an accessible live product, user recording, authorized Page Flows recording, native default, or labeled proposal requiring implementation validation. Never invent it.",
+        "When playable evidence is unavailable, invent a plausible animation from a static screen.",
+    ),
+    "motion case 06 Guidelines isolation": (
+        "In Guidelines mode, perform no benchmark lookup, make no real-product motion claim, and report that no benchmark motion was inspected.",
+        "In Guidelines mode, imply real-product motion was inspected without a benchmark lookup.",
+    ),
+    "motion case 07 complete contract fields": (
+        "Every material motion contract includes: Motion ID; journey location; purpose; trigger; start/end state; spatial behavior; choreography; timing; easing/spring; interruption; reduced motion; evidence; provenance; implementation target; implementation source; proof status. Unsupported values are `unverified`.",
+        "Every material motion contract includes only Motion ID, purpose, and timing; omit unsupported fields.",
+    ),
+    "motion case 08 Motion+ boundary": (
+        "Motion+ is optional implementation assistance, never real-product evidence, an evidence authority, a dependency, or implicit authorization to install or implement.",
+        "Motion+ is required evidence and implicit authorization to install the implementation dependency.",
+    ),
+    "motion case 09 direction summary": (
+        "At the Direction Gate, include a motion summary that identifies the material motion scope, retained native or existing behavior, proposed custom behavior, and unresolved evidence.",
+        "At the Direction Gate, omit the motion scope and unresolved evidence.",
+    ),
+    "motion case 09 least-motion principle": (
+        "Apply the least-motion principle: use no more motion than the stated interaction purpose requires, and remove decorative motion without a justified purpose.",
+        "Add decorative motion even when it serves no interaction purpose.",
+    ),
+    "motion case 10 prototype proof boundary": (
+        "Stitch and other design prototypes can illustrate states and transition intent but cannot prove timing, easing, springs, interruption, reduced-motion behavior, performance, or runtime implementation quality.",
+        "Treat a Stitch prototype as proof of timing, reduced-motion behavior, performance, and runtime implementation quality.",
+    ),
+    "motion case 10 staging and device proof": (
+        "Only measured staging or target-device behavior can establish implementation proof.",
+        "A static design specification establishes implementation proof without staging or device measurement.",
+    ),
+    "motion case 10 implementation authority": (
+        "Design Arc may specify and critique motion, but it does not authorize application-code implementation, dependency installation, staging, deployment, or release.",
+        "A Design Arc motion contract authorizes implementation, dependency installation, staging, deployment, and release.",
+    ),
+    "motion case 11 run record": (
+        "Relevant run records include motion scope, evidence, provenance, contracts, reduced motion, implementation source, proof, and remaining uncertainty.",
+        "Relevant run records omit provenance, implementation source, proof, and uncertainty.",
+    ),
+    "motion case 12 automatic integrity": (
+        "Fully automatic mode never bypasses motion evidence integrity.",
+        "Fully automatic mode may bypass motion evidence integrity.",
     ),
     "implementation boundary": (
         "Design approval never authorizes source implementation, staging, live deployment, release, destructive changes, provider changes, or work outside the authorized integration lane.",

@@ -4,7 +4,7 @@
 
 The contract under validation is the embedded skill at `plugins/design-arc/skills/design-arc/SKILL.md`. `scripts/check-workflow-contracts.py` checks required clauses, and `scripts/test-workflow-contracts.py` mutates each clause to prove that missing or reversed behavior is rejected.
 
-These are executable static instruction-contract guards; they do not execute an agent or prove runtime agent behavior. They protect the written contract against regression across setup, evidence selection, approval behavior, preference migration, objective handling, platform precedence, evidence integrity, and implementation boundaries.
+These are executable static instruction-contract guards; they do not execute an agent or prove runtime agent behavior. They protect the written contract against regression across setup, evidence selection, approval behavior, preference migration, objective handling, platform precedence, motion evidence and specification, evidence integrity, and implementation boundaries.
 
 Fresh-context scenario evidence is qualitative unless the prompt, environment, output, and scoring are stored reproducibly. The observations below are therefore reported separately from deterministic pass/fail results and are not presented as a runtime guarantee.
 
@@ -56,6 +56,25 @@ These documentation and interface cases describe the user-visible contract. The 
 | Direction evidence | Any approval mode | Present one unmistakably marked recommendation plus meaningful alternatives, evidence, risks, and trade-offs. Automatic selection remains visible. |
 | Authorization boundary | Any gate passes | Authorize only a coordinated design handoff, never source implementation, staging, deployment, release, destructive/provider changes, or work outside the authorized lane. |
 
+## Motion contract cases
+
+The executable checker protects these twelve motion-methodology cases. Each row states an instruction contract, not a claim that an agent or shipped interface executed the behavior.
+
+| Case | Required instruction behavior |
+| --- | --- |
+| 1. Evidence precedence | Resolve existing product motion, native platform behavior and standard components, current first-party guidance, inspected shipped-product motion, then labeled Design Arc judgment. |
+| 2. Benchmark and static limits | Permit authorized shipped-product precedent in Benchmarks mode, while limiting static screens and sequences to states, changing elements, journey location, and intent rather than temporal mechanics. |
+| 3. Playable evidence | Record source, journey, known frame rate, observed path and order, interruption and reversal, measurement method, confidence, missing states, and the estimated status of frame-derived values. |
+| 4. Temporal labels | Give every temporal claim exactly one allowed observation, estimate, inference, judgment, or unverified label. |
+| 5. Missing playback | Report the limitation, offer one of the allowed playable/default/proposal paths, and never invent unavailable motion. |
+| 6. Guidelines isolation | Perform no benchmark lookup, make no real-product motion claim, and explicitly report that no benchmark motion was inspected. |
+| 7. Complete contract | Require all named motion fields and use `unverified` for unsupported values. |
+| 8. Motion+ boundary | Keep Motion+ optional and separate from evidence, authority, dependencies, and implementation permission. |
+| 9. Direction and restraint | Include motion scope and uncertainty at the Direction Gate and apply the least-motion principle. |
+| 10. Prototype, proof, and authority | Keep prototypes separate from measured staging/device proof and preserve implementation, dependency, staging, deployment, and release ownership. |
+| 11. Run record | Preserve scope, evidence, provenance, contracts, reduced motion, implementation source, proof, and remaining uncertainty. |
+| 12. Fully automatic | Never let Fully automatic bypass motion evidence integrity. |
+
 ## Mutation coverage
 
 The mutation suite removes or reverses each load-bearing clause, including:
@@ -68,6 +87,7 @@ The mutation suite removes or reverses each load-bearing clause, including:
 - Guided/Follow objective confirmation and Fully automatic's explicit-objective rule;
 - Direction and Stitch gate verdict behavior;
 - Android/web first-party precedence;
+- all twelve motion-methodology cases, with separate mutations for case 9's Direction and least-motion clauses and case 10's prototype, staging/device proof, and authority clauses;
 - evidence claims and implementation/release ownership.
 
 A passing mutation run means the checker rejected every weakened fixture. It does not mean an agent executed an end-to-end product journey.

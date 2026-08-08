@@ -83,18 +83,6 @@ REQUIRED_CONTRACTS = {
     "evidence integrity": (
         "Do not claim product inspection, first-party guidance, benchmark evidence, or new Stitch output without current evidence for that exact claim.",
     ),
-    "motion grounding": (
-        "Identify every material on-screen animation and screen-to-screen transition in the selected direction. If existing product motion or standard native behavior is sufficient, record that choice instead of inventing custom motion.",
-        "Resolve motion evidence in this order: the product's existing motion system; native platform behavior; current first-party platform motion guidance; actually inspected motion precedent; clearly labeled Design Arc judgment.",
-        "A static screenshot or screen sequence may support transition intent, but only inspected motion playback supports claims about duration, easing, velocity, spring behavior, or choreography.",
-    ),
-    "motion specification": (
-        "For each custom or product-defining motion, record its purpose, trigger, start and end states, spatial behavior, timing or spring behavior, interruption behavior, reduced-motion alternative, evidence provenance, implementation target, and proof status.",
-    ),
-    "motion proof boundary": (
-        "Treat Stitch prototype behavior as design evidence only. If Stitch cannot express a required animation faithfully, return its start and end states plus the motion contract and do not claim that motion is validated.",
-        "Actual staging or device motion requires later measured implementation proof; it cannot be claimed from a Stitch render or prototype.",
-    ),
     "authorization boundary": (
         "Design approval never authorizes source implementation, staging, live deployment, release, destructive changes, provider changes, or work outside the authorized integration lane.",
     ),
@@ -140,6 +128,50 @@ REQUIRED_CONTRACTS = {
         "A plugin upgrade is laptop/profile-scoped and must not run project setup, create or replace a project home, change title or pin state, rewrite `.codex/design-arc.yaml`, touch product files, or continue an active review.",
         "After the upgrade, verify exactly one enabled `design-arc@design-arc-marketplace`, report its version, and report `project homes recreated: 0` and `project preferences changed: 0` only when current evidence supports both claims.",
         "An already-open task may retain older task context; keep its project home unchanged and tell the user to start the next review from that existing home so a clean task loads the upgraded plugin.",
+    ),
+}
+
+
+MOTION_CONTRACT_CASES = {
+    "case 01 evidence precedence": (
+        "Use this motion-evidence precedence: existing product motion; native platform behavior and standard components; current first-party platform guidance; inspected relevant shipped-product motion; labeled Design Arc judgment.",
+    ),
+    "case 02 benchmark and static limits": (
+        "In Benchmarks mode, authorized shipped-product motion may be inspected as precedent.",
+        "Static screens or sequences support only start/end state, changing element, journey location, and transition intent; they cannot support exact duration, easing, springs, velocity, interruption, or choreography.",
+    ),
+    "case 03 playable evidence record": (
+        "For playable motion evidence, record source; product/journey; frame rate when known; observed duration/path/order; interruption/reversal; measurement method; confidence; and missing states. Frame-derived values are estimates.",
+    ),
+    "case 04 temporal claim labels": (
+        "Every temporal claim uses exactly one label: `directly observed`, `measured estimate`, `pattern-level inference`, `Design Arc judgment`, or `unverified`.",
+    ),
+    "case 05 unavailable playable evidence": (
+        "When necessary playable evidence is unavailable, report the limitation and offer an accessible live product, user recording, authorized Page Flows recording, native default, or labeled proposal requiring implementation validation. Never invent it.",
+    ),
+    "case 06 Guidelines isolation": (
+        "In Guidelines mode, perform no benchmark lookup, make no real-product motion claim, and report that no benchmark motion was inspected.",
+    ),
+    "case 07 complete material motion contract": (
+        "Every material motion contract includes: Motion ID; journey location; purpose; trigger; start/end state; spatial behavior; choreography; timing; easing/spring; interruption; reduced motion; evidence; provenance; implementation target; implementation source; proof status. Unsupported values are `unverified`.",
+    ),
+    "case 08 Motion+ boundary": (
+        "Motion+ is optional implementation assistance, never real-product evidence, an evidence authority, a dependency, or implicit authorization to install or implement.",
+    ),
+    "case 09 direction summary and least motion": (
+        "At the Direction Gate, include a motion summary that identifies the material motion scope, retained native or existing behavior, proposed custom behavior, and unresolved evidence.",
+        "Apply the least-motion principle: use no more motion than the stated interaction purpose requires, and remove decorative motion without a justified purpose.",
+    ),
+    "case 10 prototype, proof, and authority boundaries": (
+        "Stitch and other design prototypes can illustrate states and transition intent but cannot prove timing, easing, springs, interruption, reduced-motion behavior, performance, or runtime implementation quality.",
+        "Only measured staging or target-device behavior can establish implementation proof.",
+        "Design Arc may specify and critique motion, but it does not authorize application-code implementation, dependency installation, staging, deployment, or release.",
+    ),
+    "case 11 motion run record": (
+        "Relevant run records include motion scope, evidence, provenance, contracts, reduced motion, implementation source, proof, and remaining uncertainty.",
+    ),
+    "case 12 automatic evidence integrity": (
+        "Fully automatic mode never bypasses motion evidence integrity.",
     ),
 }
 
@@ -305,6 +337,10 @@ def main() -> int:
     for label, fragments in REQUIRED_CONTRACTS.items():
         if any(fragment not in text for fragment in fragments):
             failures.append(f"missing or reversed {label} contract")
+
+    for label, fragments in MOTION_CONTRACT_CASES.items():
+        if any(fragment not in text for fragment in fragments):
+            failures.append(f"missing or reversed motion {label} contract")
 
     project_home = markdown_section(text, PROJECT_HOME_HEADING, "### ")
     if project_home is None:
