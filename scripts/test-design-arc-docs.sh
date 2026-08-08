@@ -140,28 +140,59 @@ if positions != sorted(positions) or len(set(positions)) != len(positions):
 workflow_start = text.index("## The workflow")
 workflow_end = text.index("## Example: from “confusing onboarding” to a complete direction")
 workflow = text[workflow_start:workflow_end]
-required_workflow_rows = [
-    "| Describe the outcome you want | Codex | **👤 You** |",
-    "| ↓ | | |",
-    "| Audit the current journey | Your website or app + Codex | |",
-    "| Gather and label evidence | Mobbin + Codex in Benchmarks mode, and official platform guidance + Codex in Guidelines mode | |",
-    "| Recommend a design direction | Codex | |",
-    "| Approve design direction | Codex | **👤 You** |",
-    "| Validate against platform guidance | Apple, Android, Material, or W3C guidance + Codex | |",
-    "| Decide on any design motion | Relevant official guidance + inspected motion evidence + Codex | |",
-    "| Visualize the complete journey | Google Stitch + Codex | |",
-    "| Validate every important state | Google Stitch renders + Codex | |",
-    "| Approve the visual proposal | Codex | **👤 You** |",
-    "| Prepare the design handoff | Codex | |",
-]
-for row in required_workflow_rows:
-    if row not in workflow:
-        raise SystemExit(f"FAIL: workflow is missing required row: {row}")
+workflow_instruction = "**Only rows marked 👤 You require your involvement. Design Arc handles every unmarked step.**"
+workflow_table = """| Workflow step | Platform or source handling it | Human involvement |
+| --- | --- | --- |
+| Describe the outcome you want | Codex | **👤 You** |
+| ↓ | | |
+| Audit the current journey | Your website or app + Codex | |
+| ↓ | | |
+| Gather and label evidence | Mobbin + Codex in Benchmarks mode, and official platform guidance + Codex in Guidelines mode | |
+| ↓ | | |
+| Recommend a design direction | Codex | |
+| ↓ | | |
+| Approve design direction | Codex | **👤 You** |
+| ↓ | | |
+| Validate against platform guidance | Apple, Android, Material, or W3C guidance + Codex | |
+| ↓ | | |
+| Decide on any design motion | Relevant official guidance + inspected motion evidence + Codex | |
+| ↓ | | |
+| Visualize the complete journey | Google Stitch + Codex | |
+| ↓ | | |
+| Validate every important state | Google Stitch renders + Codex | |
+| ↓ | | |
+| Approve the visual proposal | Codex | **👤 You** |
+| ↓ | | |
+| Prepare the design handoff | Codex | |"""
 
-if workflow.count("| ↓ | | |") != 10:
-    raise SystemExit("FAIL: workflow must preserve the 10-row arrow sequence")
-if workflow.count("**👤 You**") != 3:
-    raise SystemExit("FAIL: workflow must contain exactly three human-involvement markers")
+def validate_workflow(candidate):
+    expected_prefix = f"## The workflow\n\n{workflow_instruction}\n\n{workflow_table}\n"
+    if not candidate.startswith(expected_prefix):
+        raise ValueError("workflow must use the exact instruction, table header, separator, and ordered rows")
+    if candidate.count("| ↓ | | |") != 10:
+        raise ValueError("workflow must preserve the 10-row arrow sequence")
+    if candidate.count("**👤 You**") != 3:
+        raise ValueError("workflow must contain exactly three human-involvement markers")
+
+validate_workflow(workflow)
+
+for mutated_workflow in (
+    workflow.replace(workflow_instruction, "**Design Arc handles every step.**", 1),
+    workflow.replace("| Workflow step | Platform or source handling it | Human involvement |", "| Workflow | Platform | Human |", 1),
+    workflow.replace(
+        "| Describe the outcome you want | Codex | **👤 You** |\n| ↓ | | |\n| Audit the current journey | Your website or app + Codex | |",
+        "| Audit the current journey | Your website or app + Codex | |\n| ↓ | | |\n| Describe the outcome you want | Codex | **👤 You** |",
+        1,
+    ),
+):
+    try:
+        validate_workflow(mutated_workflow)
+    except ValueError:
+        pass
+    else:
+        raise SystemExit("FAIL: workflow contract must reject instruction, header, and row-order mutations")
+print("PASS: workflow contract rejects instruction, header, and row-order mutations")
+
 for superseded_label in (
     "**Only the bold steps need you. Design Arc handles everything else.**",
     "**Choose preferences once**",
