@@ -35,6 +35,14 @@ def write_json(path: Path, value: object) -> None:
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def plugin_version(source_root: Path) -> str:
+    manifest = read_json(source_root.resolve() / "plugins/design-arc/.codex-plugin/plugin.json")
+    require(isinstance(manifest, dict), "target plugin manifest must be an object")
+    version = manifest.get("version")
+    require(isinstance(version, str) and version, "target plugin manifest must declare a version")
+    return version
+
+
 def normalized(path: Path | str) -> str:
     return str(Path(path).resolve())
 
@@ -281,7 +289,7 @@ def validate_available(args: argparse.Namespace) -> None:
 
 
 def validate_target(args: argparse.Namespace) -> None:
-    assert_available_state(args.state, args.target, "0.3.0", "target")
+    assert_available_state(args.state, args.target, plugin_version(args.target), "target")
 
 
 def assert_projects(before_path: Path, after_path: Path, label: str, workflow_version: str) -> None:
@@ -332,18 +340,18 @@ def validate_restoration(args: argparse.Namespace) -> None:
     assert_installed_state(args.state, baseline, args.version, "rollback restoration")
     source = assert_marketplaces(read_json(args.marketplaces), baseline, "rollback restoration")
     assert_exact_cache(args.codex_home.resolve(), baseline, args.version, "rollback restoration")
-    require(not list((args.codex_home / "plugins/cache").glob("*/design-arc/0.3.0")), "rollback restoration must leave no stale 0.3.0 cache")
     assert_projects(args.projects_before, args.projects_after, "rollback restoration", args.version)
     print(f"PASS: parsed restored marketplace source: {source}")
 
 
 def validate_final(args: argparse.Namespace) -> None:
     target = args.target.resolve()
+    target_version = plugin_version(target)
     parsed_source = parsed_marketplace_source(read_json(args.marketplaces), "final upgrade")
-    assert_installed_state(args.state, parsed_source, "0.3.0", "final upgrade")
+    assert_installed_state(args.state, parsed_source, target_version, "final upgrade")
     if args.route == "remove-add-fallback":
         require(parsed_source == target, "fallback marketplace source must be the isolated current checkout")
-    cached_root = assert_exact_cache(args.codex_home.resolve(), target, "0.3.0", "final upgrade")
+    cached_root = assert_exact_cache(args.codex_home.resolve(), target, target_version, "final upgrade")
     require(not list((args.codex_home / "plugins/cache").glob(f"*/design-arc/{args.baseline_version}")), "final upgrade must leave no stale baseline cache")
 
     prompt_items = read_json(args.prompt)
@@ -355,7 +363,7 @@ def validate_final(args: argparse.Namespace) -> None:
         for content in item.get("content", [])
         if content.get("type") == "input_text"
     )
-    require(developer_text.count("- design-arc:design-arc:") == 1, "one new task must load Design Arc 0.3.0 exactly once")
+    require(developer_text.count("- design-arc:design-arc:") == 1, f"one new task must load Design Arc {target_version} exactly once")
     assert_projects(args.projects_before, args.projects_after, "final upgrade", args.baseline_version)
     assert_graph_records_usable(
         args.projects_root.resolve(),
@@ -373,9 +381,9 @@ def validate_final(args: argparse.Namespace) -> None:
         text=True,
         check=False,
     )
-    require(contract_check.returncode == 0, "installed 0.3.0 skill must resolve the graph-active new-review contract")
+    require(contract_check.returncode == 0, f"installed {target_version} skill must resolve the graph-active new-review contract")
     print(f"PASS: parsed marketplace source: {parsed_source}; route: {args.route}")
-    print("PASS: installed 0.3.0 contract resolves graph active only for the next new review")
+    print(f"PASS: installed {target_version} contract resolves graph active only for the next new review")
 
 
 def validate_downgrade(args: argparse.Namespace) -> None:
@@ -383,7 +391,6 @@ def validate_downgrade(args: argparse.Namespace) -> None:
     assert_installed_state(args.state, baseline, "0.2.3", "simulated downgrade")
     assert_marketplaces(read_json(args.marketplaces), baseline, "simulated downgrade")
     cached_root = assert_exact_cache(args.codex_home.resolve(), baseline, "0.2.3", "simulated downgrade")
-    require(not list((args.codex_home / "plugins/cache").glob("*/design-arc/0.3.0")), "simulated downgrade must leave no 0.3.0 cache")
     require(not (cached_root / "skills/design-arc/references/graph-record.schema.json").exists(), "exact 0.2.3 must ignore unsupported graph schema")
     require(not (cached_root / "skills/design-arc/scripts/validate-graph-record.py").exists(), "exact 0.2.3 must ignore unsupported graph validator")
     assert_projects(args.projects_before, args.projects_after, "simulated downgrade", "0.2.3")

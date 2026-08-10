@@ -1,16 +1,16 @@
 # Design Arc prompt examples
 
-You do not need to remember a command for ordinary journey work. Describe the product journey and the outcome you want; Design Arc activates in the current task, or the project’s pinned home opens a clean task in that same project.
+Use `$design-arc`, ask for Design Arc by name, or return through the project’s pinned home. Codex may select Design Arc for an unprefixed request, but automatic selection is not guaranteed and an ordinary Codex response is not presented as Design Arc work.
 
 ## Plain-language journey starters
 
-> Help me make our onboarding less confusing.
+> `$design-arc` Help me make our onboarding less confusing.
 
-> Audit how customers complete checkout and propose a better complete journey.
+> `$design-arc` Audit how customers complete checkout and propose a better complete journey.
 
-> Redesign account recovery so people can get back in without weakening security.
+> `$design-arc` Redesign account recovery so people can get back in without weakening security.
 
-Other natural starters work too: describe the journey, who is using it, and what should become easier or more successful. If the outcome is unclear, Design Arc offers a few choices and lets you write your own.
+Other natural starters work too after Design Arc is active: describe the journey, who is using it, and what should become easier or more successful. If the outcome is unclear, Design Arc offers a few choices and lets you write your own.
 
 ## Returning through a project home
 

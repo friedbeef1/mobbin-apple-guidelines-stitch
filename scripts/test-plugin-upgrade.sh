@@ -9,10 +9,27 @@ state_helper="$script_dir/test-plugin-upgrade-state.py"
 codex_bin=${CODEX_BIN:-codex}
 published_sha=${DESIGN_ARC_UPGRADE_BASELINE_SHA:-1c9b3796e6f5f0648bae5984f1b8e3013eeac56f}
 baseline_version=${DESIGN_ARC_UPGRADE_BASELINE_VERSION:-0.2.2}
+target_version=$(python3 - "$repo_root/plugins/design-arc/.codex-plugin/plugin.json" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+manifest = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+version = manifest.get("version")
+if not isinstance(version, str) or not version:
+    raise SystemExit("target plugin manifest must declare a version")
+print(version)
+PY
+)
+if [ -n "${DESIGN_ARC_UPGRADE_TARGET_VERSION:-}" ] && [ "$DESIGN_ARC_UPGRADE_TARGET_VERSION" != "$target_version" ]
+then
+  printf '%s\n' "FAIL: requested target version $DESIGN_ARC_UPGRADE_TARGET_VERSION does not match manifest version $target_version" >&2
+  exit 1
+fi
 test_downgrade=${DESIGN_ARC_TEST_DOWNGRADE:-0}
 task_temp_dir=$(mktemp -d "${TMPDIR:-/tmp}/design-arc-upgrade-smoke.XXXXXX")
 published_checkout="$task_temp_dir/baseline-$baseline_version"
-current_checkout="$task_temp_dir/current-0.3.0"
+current_checkout="$task_temp_dir/current-$target_version"
 codex_home="$task_temp_dir/codex-home"
 projects_root="$task_temp_dir/projects"
 plugin_remove_marker="$task_temp_dir/plugin-remove.executed"
@@ -141,19 +158,20 @@ fi
 CODEX_HOME="$codex_home" "$codex_bin" plugin list --available --json > "$task_temp_dir/after-refresh.json"
 CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace list --json > "$task_temp_dir/marketplaces-after-refresh.json"
 
-if python3 - "$task_temp_dir/after-refresh.json" <<'PY'
+if python3 - "$task_temp_dir/after-refresh.json" "$target_version" <<'PY'
 import json
 from pathlib import Path
 import sys
 
 state = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
 installed = state.get("installed")
+target_version = sys.argv[2]
 raise SystemExit(
     0
     if isinstance(installed, list)
     and len(installed) == 1
     and installed[0].get("pluginId") == "design-arc@design-arc-marketplace"
-    and installed[0].get("version") == "0.3.0"
+    and installed[0].get("version") == target_version
     and installed[0].get("enabled") is True
     and installed[0].get("installed") is True
     else 1
@@ -228,7 +246,7 @@ else
     if [ "$injected_failure" = marketplace-add ]
     then
       fallback_failure=marketplace-add
-    elif ! CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace add "$current_checkout" --json > "$task_temp_dir/marketplace-add-0.3.0.json" 2> "$task_temp_dir/marketplace-add-0.3.0.stderr"
+    elif ! CODEX_HOME="$codex_home" "$codex_bin" plugin marketplace add "$current_checkout" --json > "$task_temp_dir/marketplace-add-target.json" 2> "$task_temp_dir/marketplace-add-target.stderr"
     then
       fallback_failure=marketplace-add
     fi
@@ -262,7 +280,7 @@ else
     if [ "$injected_failure" = plugin-add ]
     then
       fallback_failure=plugin-add
-    elif ! CODEX_HOME="$codex_home" "$codex_bin" plugin add design-arc@design-arc-marketplace --json > "$task_temp_dir/plugin-add-0.3.0.json" 2> "$task_temp_dir/plugin-add-0.3.0.stderr"
+    elif ! CODEX_HOME="$codex_home" "$codex_bin" plugin add design-arc@design-arc-marketplace --json > "$task_temp_dir/plugin-add-target.json" 2> "$task_temp_dir/plugin-add-target.stderr"
     then
       fallback_failure=plugin-add
     fi
@@ -352,8 +370,8 @@ fi
 
 version=$(sed -n '1p' "$task_temp_dir/codex-version.txt")
 printf '%s\n' "PASS: baseline installed/available Design Arc $baseline_version from exact local checkout $published_sha"
-printf '%s\n' 'PASS: target installed Design Arc 0.3.0; available versions after install: 0'
+printf '%s\n' "PASS: target installed Design Arc $target_version; available versions after install: 0"
 printf '%s\n' 'PASS: preserved 2 preferences without graph fields, 2 ready homes, 2 product sentinels, 2 graph records, 2 version-pinned active reviews; new homes: 0; review continuations: 0'
 printf '%s\n' 'PASS: installed contract resolves the next new review graph active; existing active reviews remain pinned'
-printf '%s\n' "PASS: isolated Design Arc $baseline_version to 0.3.0 upgrade via $upgrade_route ($version)"
+printf '%s\n' "PASS: isolated Design Arc $baseline_version to $target_version upgrade via $upgrade_route ($version)"
 printf '%s\n' 'PASS: isolated Design Arc plugin upgrade smoke'

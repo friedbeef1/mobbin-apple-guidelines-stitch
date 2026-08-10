@@ -44,7 +44,7 @@ metadata = metadata_path.read_text(encoding="utf-8")
 
 expected_plugin = {
     "name": "design-arc",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "description": "Outcome-led UI journey design for Codex.",
     "skills": "./skills/",
     "author": {"name": "James Yeang"},
@@ -59,9 +59,9 @@ expected_plugin = {
         "category": "Productivity",
         "capabilities": ["Outcome-led journey design", "Evidence-grounded validation"],
         "defaultPrompt": [
-            "Help me make our onboarding less confusing.",
-            "Audit how customers complete checkout and propose a better complete journey.",
-            "Redesign account recovery so people can get back in without weakening security.",
+            "$design-arc Help me make our onboarding less confusing.",
+            "$design-arc Audit how customers complete checkout and propose a better complete journey.",
+            "$design-arc Redesign account recovery so people can get back in without weakening security.",
         ],
     },
 }
@@ -86,7 +86,7 @@ if marketplace != expected_marketplace:
 expected_metadata = '''interface:
   display_name: "Design Arc"
   short_description: "Turn ambiguous UI feedback into complete, evidence-grounded journeys"
-  default_prompt: "Help me make this product journey less confusing."
+  default_prompt: "$design-arc Help me make this product journey less confusing."
 '''
 if metadata != expected_metadata:
     raise SystemExit("Design Arc agent metadata must match the canonical identity contract")

@@ -412,9 +412,25 @@ MUTATIONS = {
         "Do not launch a worktree, continue the journey inside the home, specify a model, or invent another project.",
         "Launch every journey in a new worktree with a guessed project.",
     ),
-    "natural language activation": (
-        "Outside a Design Arc home, an ordinary product-journey request activates Design Arc in the current task; briefly disclose that Design Arc is being used and continue without requiring `$design-arc`.",
-        "Require `$design-arc` before responding to any journey request.",
+    "consent direct invocation": (
+        "Treat Design Arc as directly invoked when the current request includes `$design-arc`, explicitly asks to use Design Arc by name, or is a journey starter submitted inside a confirmed Design Arc home.",
+        "Require another activation question even after the user directly invokes Design Arc.",
+    ),
+    "consent required outside direct invocation": (
+        "If Codex has selected this skill for a suitable request that did not directly invoke Design Arc, ask for the user's approval before beginning Design Arc.",
+        "Outside a Design Arc home, activate Design Arc immediately without asking the user.",
+    ),
+    "consent pre-approval isolation": (
+        "Before approval, do not resolve Design Arc setup, inspect the product, gather evidence, create preferences, create a project home, or write review records.",
+        "Before approval, inspect the product and create Design Arc records.",
+    ),
+    "consent decline boundary": (
+        "If the user declines, continue with the ordinary request without Design Arc and do not imply that its workflow or evidence controls were applied.",
+        "If the user declines, continue silently under Design Arc controls.",
+    ),
+    "unprefixed selection integrity": (
+        "Skill selection is not guaranteed for an unprefixed request, so never claim that Design Arc reviewed work unless this skill actually loaded.",
+        "Claim that Design Arc reviewed every suitable unprefixed request even when the skill did not load.",
     ),
     "unavailable tool fallback": (
         "If task discovery, creation, title, or pin tools are unavailable or fail, complete confirmed preference setup, do not claim a home or launch succeeded, and return the exact canonical home title plus the full starter card and manual create-and-pin steps.",
@@ -704,7 +720,7 @@ GRAPH_MUTATIONS = {
 
 
 EXPECTED_GRAPH_MUTATION_COUNT = 24
-EXPECTED_TOTAL_MUTATION_COUNT = 175
+EXPECTED_TOTAL_MUTATION_COUNT = 179
 
 
 ORDERED_MUTATION_MARKERS = (

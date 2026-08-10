@@ -6,7 +6,11 @@ How do I use Design Arc after installation?
 
 ## Start a review in ordinary language
 
-You do not need to remember a command for ordinary journey work. Describe the journey in ordinary language, such as:
+For guaranteed activation, start with `$design-arc`. Explicitly asking Codex to “use Design Arc” also invokes it directly, as does choosing a journey starter inside a confirmed Design Arc project home.
+
+If Codex selects Design Arc for a request that could benefit from it but you have not invoked it directly, it asks for your permission before beginning. Until you approve, it does not start Design Arc setup, inspect your product, gather Design Arc evidence, or create Design Arc project or review records. Automatic skill selection is not guaranteed, so use `$design-arc`, ask for Design Arc by name, or use the confirmed project home when you want to be certain it is active. Design Arc does not run continuously or silently in every task.
+
+Examples of requests for which Codex may offer Design Arc include:
 
 - “Help me make our onboarding less confusing.”
 - “Audit how customers complete checkout and propose a better complete journey.”

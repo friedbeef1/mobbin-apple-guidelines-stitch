@@ -176,6 +176,13 @@ else
   fail 'isolated plugin migration smoke failed'
 fi
 
+if DESIGN_ARC_UPGRADE_TARGET_VERSION=9.9.9 sh "$repo_root/scripts/test-plugin-upgrade.sh" >/dev/null 2>&1
+then
+  fail 'upgrade harness accepted a target version that disagrees with the manifest'
+else
+  printf '%s\n' 'PASS: upgrade harness rejects a target-version mismatch'
+fi
+
 if sh "$repo_root/scripts/test-plugin-upgrade.sh"
 then
   :
@@ -191,6 +198,15 @@ then
   :
 else
   fail 'isolated exact-candidate upgrade and downgrade smoke failed'
+fi
+
+if DESIGN_ARC_UPGRADE_BASELINE_SHA=55b03baf4a8dc0b52f0702f1236a865ac2c797b6 \
+  DESIGN_ARC_UPGRADE_BASELINE_VERSION=0.3.0 \
+  sh "$repo_root/scripts/test-plugin-upgrade.sh"
+then
+  :
+else
+  fail 'isolated public 0.3.0 to 0.3.1 upgrade smoke failed'
 fi
 
 if git -C "$repo_root" rev-parse --is-inside-work-tree >/dev/null 2>&1

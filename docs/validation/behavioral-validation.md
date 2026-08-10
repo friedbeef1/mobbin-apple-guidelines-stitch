@@ -90,7 +90,7 @@ The mutation suite removes or reverses each load-bearing clause, including:
 - all twelve motion-methodology cases, including semantic mutations for contract values, Direction explanations, Motion+ assistance, and Stitch verdict/automatic-gate behavior;
 - evidence claims and implementation/release ownership.
 
-The deterministic suite records 151 deterministic mutation rejections. Fourteen render-repair mutations prove that the written contract rejects unbounded retries, per-mismatch retrying, user-dependent ordinary corrections, uninspected correction claims, skipped reinspection, unsafe direction changes, runtime-proof retries, premature early stopping, missing exhaustion handling, unexplained `meets direction`, incomplete repair records, and approval-mode bypasses.
+The deterministic suite records 179 deterministic mutation rejections. Fourteen render-repair mutations prove that the written contract rejects unbounded retries, per-mismatch retrying, user-dependent ordinary corrections, uninspected correction claims, skipped reinspection, unsafe direction changes, runtime-proof retries, premature early stopping, missing exhaustion handling, unexplained `meets direction`, incomplete repair records, and approval-mode bypasses. Five activation-integrity mutations separately prove that direct invocation starts immediately, an indirectly selected skill asks first, pre-approval work remains isolated, declining does not let Design Arc claim control of the ordinary request, and an unselected skill cannot be credited with work it did not perform.
 
 These are static instruction-contract mutations; they do not execute Stitch or prove that every future agent will follow the contract. A passing mutation run means the checker rejected every weakened fixture. It does not mean an agent executed an end-to-end product journey.
 
@@ -215,6 +215,20 @@ Design Arc — Testing FB Lanes: Visible — project ID c5384f95-2b8b-46fa-99ee-
 This is evidence from a genuinely separate Codex task/session that both project homes remained distinct and non-duplicated. It was not an application process restart and is not presented as restart evidence.
 
 Final cleanup set `pinned: false` and `archived: true` for both home fixtures and the verifier task. A post-cleanup visible-task list filtered to all three recorded IDs reported `temporaryAcceptanceTasksStillPinned: 0`. This proves the three temporary acceptance tasks are no longer pinned; it does not claim that archived task records were deleted from storage.
+
+## Design Arc 0.3.1 activation and upgrade evidence — 2026-08-10
+
+See the concise [0.3.1 readiness audit](0.3.1-readiness-audit.md) for the release requirement map and boundaries.
+
+The `0.3.1` patch makes activation explicit without changing the established review workflow. Direct `$design-arc` invocation, an explicit request to use Design Arc, or a confirmed Design Arc project-home starter begins immediately. If Codex selects the skill for an ordinary suitable request, Design Arc asks permission before setup, product inspection, evidence gathering, or creation of project and review records. If permission is declined, Codex may still answer the ordinary request, but it does not claim that Design Arc is running or controlling the work.
+
+A fresh isolated task exposed an important runtime boundary: the direct `$design-arc` prompt loaded the candidate and proceeded without a redundant activation question, while the same unprefixed prompt received an ordinary Codex answer because the skill was not selected. The release therefore does not promise automatic interception of every suitable request. Marketplace and agent starter prompts include `$design-arc`, and the documentation points returning users to their confirmed project home.
+
+The release expectations were changed before the package version: identity, fresh installation, two-plugin migration, documentation, activation contracts, and the public `0.3.0` upgrade target all failed at their intended boundaries. After the skill, documentation, manifest, and generic upgrade harness were updated, those focused checks passed with exactly 179 rejected contract mutations.
+
+The isolated upgrade proof checks out public `0.3.0` commit `55b03baf4a8dc0b52f0702f1236a865ac2c797b6`, uses a temporary `CODEX_HOME`, and creates two temporary projects. The observed Codex CLI 0.146.1 route was `remove-add-fallback`. It installed exactly one enabled `0.3.1` plugin and preserved two preferences, two ready homes, two product sentinels, two graph records, and two version-pinned active reviews byte-for-byte. It created zero homes and continued zero active reviews. A fresh prompt load found the installed Design Arc skill exactly once.
+
+This is deterministic package, instruction-contract, and isolated CLI evidence. It does not claim that a model executed a complete Design Arc review, that real Stitch output was corrected, or that a user's installed plugin or real projects were changed.
 
 ## Historical regression context
 

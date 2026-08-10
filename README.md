@@ -70,7 +70,9 @@ Codex handles the installation and may request download permission.
 
 ## Start a review
 
-Help me make our onboarding less confusing.
+`$design-arc` Help me make our onboarding less confusing.
+
+Use `$design-arc`, ask for Design Arc by name, or choose a starter from the project home. Codex may recognize an unprefixed journey request and offer Design Arc, but automatic skill selection is not guaranteed.
 [Learn how to use Design Arc.](docs/using-design-arc.md)
 
 ## Trust

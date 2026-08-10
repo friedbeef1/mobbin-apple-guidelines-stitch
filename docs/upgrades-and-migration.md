@@ -43,6 +43,12 @@ Upgrading to 0.3.0 preserves project preferences, homes, active-review identity 
 
 Downgrading to an older workflow leaves graph records in place but ignores them; it does not delete or reinterpret them. The downgrade likewise preserves preferences, homes, active-review identity and workflow versions, and product files. Neither direction of upgrade turns graph assistance on or off for a project merely by reading existing state.
 
+### Upgrading from 0.3.0 to 0.3.1
+
+Version `0.3.1` adds an activation-integrity boundary. Direct use of `$design-arc`, an explicit request to use Design Arc, or a confirmed project-home starter still begins immediately. If Codex selects the skill for an ordinary suitable request, it asks before Design Arc starts setup, inspection, evidence gathering, or record creation. Automatic selection is not guaranteed, so an unprefixed response is never presented as Design Arc work unless the skill actually loaded.
+
+The patch does not rewrite project preferences, recreate pinned homes, change product files, alter graph records, or convert active reviews. An active review stays pinned to the workflow version under which it began; start the next review from the same home to load the upgraded plugin in a clean task.
+
 ## Saved preferences and migration
 
 Design Arc stores project choices in `.codex/design-arc.yaml`:

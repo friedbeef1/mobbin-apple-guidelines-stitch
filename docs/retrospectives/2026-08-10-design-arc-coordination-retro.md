@@ -17,7 +17,7 @@ The release was successful and independently reviewed, but it took too many corr
 | Project Git | 41 commits were present across branches in the 48-hour window. Public `main` reached Design Arc `0.3.0` at `22233eea4d18a253bd499efc21a58ab61026eb88`. Work covered evidence positioning, motion, documentation navigation, Stitch repair, graph assistance, validation, and release. |
 | Codex-wide configuration | One unrelated `writing-for-agents` skill family changed. No existing global skill captured the Codex-plugin publication versus installed-upgrade boundary. Vendor imports and caches were excluded as noise. |
 | Obsidian | No modified files were found in the window. |
-| Current task | Publication was explicitly approved; GitHub `main`, a fresh public clone, the full validator, version `0.3.0`, remote SHA, and rendered README were verified. The installed plugin was deliberately left unchanged. A later consent-gated activation change exists only as uncommitted work in another checkout and is not treated as a proven lesson. |
+| Current task | Publication was explicitly approved; GitHub `main`, a fresh public clone, the full validator, version `0.3.0`, remote SHA, and rendered README were verified. The installed plugin was deliberately left unchanged. At the time of this retrospective, a later consent-gated activation change existed only as uncommitted work and was therefore not treated as proven. It was subsequently validated as part of the separate `0.3.1` readiness work. |
 
 ## What shipped and why it matters
 
@@ -113,7 +113,7 @@ Correction: add a reusable skill that maps the user's exact authorization to the
 
 ## Practices deliberately not converted into skills
 
-- **Consent-gated natural-language Design Arc activation:** currently uncommitted and not yet validated in real use.
+- **Consent-gated natural-language Design Arc activation:** was not converted into a global way-of-working skill. It was later validated as a Design Arc-specific `0.3.1` behavior contract, where it belongs.
 - **A separate bounded-candidate skill:** the no-guidance baseline already produced the desired lean approach, so another skill would duplicate existing capability.
 - **Project-specific Design Arc graph rules:** already enforced inside the plugin and its deterministic tests; duplicating them globally would invite drift.
 - **Every wording preference from the README iterations:** useful locally, but too specific to justify global context cost.
