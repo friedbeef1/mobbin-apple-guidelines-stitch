@@ -43,26 +43,33 @@ The loop controls what happens and when Design Arc stops. The relationship map h
 
 ```mermaid
 flowchart TD
-    A["Confirm the user’s objective"] --> B["Inspect the current journey"]
-    B --> C["Gather credible evidence"]
-    C --> D["Build the relationship map"]
+    A["Confirm the user’s objective<br/>You + Codex"] --> B["Inspect the current journey<br/>Your website or app + Codex"]
+    B --> C{"Select evidence mode<br/>Codex; You when a choice is required"}
+    C -- "Guidelines mode" --> C1["Official Apple Human Interface Guidelines for Apple,<br/>Android and Material guidance for Android,<br/>or W3C guidance for web + Codex"]
+    C -- "Benchmarks mode" --> C2["Mobbin journey benchmarks + applicable<br/>official platform guidance + Codex"]
+    C1 --> D["Build the relationship map<br/>Codex local graph record"]
+    C2 --> D
 
-    D --> E["Recommend a design direction"]
-    E --> F["Direction approval"]
-    F --> G["Generate the complete proposal in Stitch"]
+    D --> E["Recommend a design direction<br/>Codex"]
+    E --> F["Direction approval<br/>You + Codex"]
+    F --> G["Generate the complete proposal<br/>Google Stitch + Codex"]
 
-    G --> H["Inspect every important state"]
-    H --> I{"Anything incorrect?"}
+    G --> H["Inspect every important state<br/>Google Stitch renders + Codex"]
+    H --> I{"Anything incorrect?<br/>Codex verdict"}
 
-    I -- "No" --> J["Final verdict"]
-    I -- "Yes" --> K["Find affected requirements, screens and states"]
-    K --> L["Prepare one proposal-wide correction batch"]
-    L --> M["Send corrections to Stitch"]
+    I -- "No" --> J["Final verdict<br/>Codex"]
+    I -- "Yes" --> K["Find affected requirements, screens and states<br/>Codex relationship-map reasoning"]
+    K --> L["Prepare one proposal-wide correction batch<br/>Codex"]
+    L --> M["Send corrections<br/>Google Stitch + Codex"]
     M --> H
 
-    J --> N["Visual proposal approval"]
+    J --> N["Visual proposal approval<br/>You + Codex"]
     L -. "Maximum three correction rounds" .-> J
 ```
+
+Official Apple guidance governs Apple platform requirements; the applicable first-party guidance does the same for Android or web. Mobbin supplies product precedent only in Benchmarks mode. Google Stitch visualizes and revises the proposal, but does not prove that it is correct.
+
+Design Arc bundles no MCP server, so the generic diagram does not invent an MCP name. Mobbin and Google Stitch are external services, not automatically MCPs. When a particular review actually uses an MCP, its run record and evidence labels name the exact configured MCP server or tool; otherwise they name the browser or manual access path used. Design Arc does not imply an official Mobbin or Google Stitch MCP integration.
 
 Use these controls when you want to inspect or change the assistance:
 
