@@ -34,9 +34,10 @@ operating_layer="$repo_root/docs/codex-operating-layer.md"
 behavioral_validation="$repo_root/docs/validation/behavioral-validation.md"
 prompts="$repo_root/examples/prompts.md"
 motion_sources="$repo_root/docs/trusted-sources/motion.md"
+trusted_source_library="$repo_root/docs/trusted-sources/README.md"
 shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)'
 
-for file in "$readme" "$getting_started" "$using_design_arc" "$evidence_methodology" "$upgrades_migration" "$trust_sources" "$operating_layer" "$behavioral_validation" "$prompts" "$motion_sources"
+for file in "$readme" "$getting_started" "$using_design_arc" "$evidence_methodology" "$upgrades_migration" "$trust_sources" "$operating_layer" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library"
 do
   [ -f "$file" ] || fail "missing required documentation: ${file#"$repo_root/"}"
 done
@@ -245,6 +246,10 @@ require_text "$trust_sources" 'A failed graph record reduces assistance rather t
 require_text "$trust_sources" '[Trusted sources](trusted-sources/README.md)'
 require_text "$trust_sources" '[Codex operating layer](codex-operating-layer.md)'
 require_text "$trust_sources" 'Next: [Home](../README.md).'
+
+require_text "$trusted_source_library" '| Visualization and validation | A concrete proposed journey that can be inspected across material states. | Codex-generated static journey boards by default; optional [Google Stitch](https://stitch.withgoogle.com/) workspace. | Evidence, platform compliance, accessibility, or implementation readiness by itself. |'
+require_text "$trusted_source_library" '[Visualization](visualization.md) — Codex static boards by default and Stitch as an optional persistent editing workspace.'
+require_text "$operating_layer" 'After a Guided or Follow recommendation visual approval, or a Fully automatic `meets direction` verdict'
 
 python3 - "$readme" "$getting_started" "$evidence_methodology" "$upgrades_migration" "$trust_sources" <<'PY'
 from pathlib import Path

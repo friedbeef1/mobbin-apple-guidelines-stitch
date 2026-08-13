@@ -61,6 +61,8 @@ Design Arc audits the real journey, checks decisions against current first-party
 
 Setup resolves two independent choices: how evidence is gathered and where Codex pauses for approval. Every route establishes the objective before inspection or research, audits the actual product, preserves platform rules, and stops at a design-only handoff boundary.
 
+Codex produces a consolidated static journey board first, without building disposable app logic. Design Arc recommends the optional Stitch workspace early when one genuine canvas need appears—such as multi-screen editing, visual variants, another-day continuation, collaboration, or export—but you always choose whether to move.
+
 ## Install
 
 **Ask Codex:** Install the Design Arc plugin from

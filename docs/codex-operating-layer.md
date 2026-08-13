@@ -78,4 +78,4 @@ Codex must not claim a journey was inspected, guidance was current, benchmark ev
 
 ## Authorized boundary
 
-After a Guided or Follow recommendation Stitch approval, or a Fully automatic `meets direction` verdict, Codex may route the validated design proposal to the authorized owner. No mode or external-service authorization authorizes source implementation, staging, deployment, or release. Destructive changes, provider changes, live actions, and work outside the authorized integration lane require separate scope and permission.
+After a Guided or Follow recommendation visual approval, or a Fully automatic `meets direction` verdict, Codex may route the validated design proposal to the authorized owner. No mode or external-service authorization authorizes source implementation, staging, deployment, or release. Destructive changes, provider changes, live actions, and work outside the authorized integration lane require separate scope and permission.
