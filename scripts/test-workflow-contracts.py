@@ -69,28 +69,28 @@ MUTATIONS = {
         "Report the active modes without their provenance.",
     ),
     "benchmarks guided combination": (
-        "| Benchmarks | Guided | Direction Gate stops; Stitch Gate stops |",
+        "| Benchmarks | Guided | Direction Gate stops; Visual Proposal Gate stops |",
         "| Benchmarks | Guided | Both gates continue |",
     ),
     "benchmarks follow combination": (
-        "| Benchmarks | Follow recommendation | Direction Gate continues with the marked recommendation; Stitch Gate stops |",
+        "| Benchmarks | Follow recommendation | Direction Gate continues with the marked recommendation; Visual Proposal Gate stops |",
         "| Benchmarks | Follow recommendation | Both gates continue |",
     ),
     "benchmarks automatic combination": (
-        "| Benchmarks | Fully automatic | Direction Gate continues; Stitch Gate continues only on `meets direction` |",
-        "| Benchmarks | Fully automatic | Stitch Gate continues on any verdict |",
+        "| Benchmarks | Fully automatic | Direction Gate continues; Visual Proposal Gate continues only on `meets direction` |",
+        "| Benchmarks | Fully automatic | Visual Proposal Gate continues on any verdict |",
     ),
     "guidelines guided combination": (
-        "| Guidelines | Guided | Direction Gate stops; Stitch Gate stops |",
+        "| Guidelines | Guided | Direction Gate stops; Visual Proposal Gate stops |",
         "| Guidelines | Guided | Both gates continue |",
     ),
     "guidelines follow combination": (
-        "| Guidelines | Follow recommendation | Direction Gate continues with the marked recommendation; Stitch Gate stops |",
+        "| Guidelines | Follow recommendation | Direction Gate continues with the marked recommendation; Visual Proposal Gate stops |",
         "| Guidelines | Follow recommendation | Both gates continue |",
     ),
     "guidelines automatic combination": (
-        "| Guidelines | Fully automatic | Direction Gate continues; Stitch Gate continues only on `meets direction` |",
-        "| Guidelines | Fully automatic | Stitch Gate continues on any verdict |",
+        "| Guidelines | Fully automatic | Direction Gate continues; Visual Proposal Gate continues only on `meets direction` |",
+        "| Guidelines | Fully automatic | Visual Proposal Gate continues on any verdict |",
     ),
     "benchmark journey quality": (
         "Inspect complete, relevant real-product journeys and explain why each selected pattern is useful for the established objective.",
@@ -149,15 +149,15 @@ MUTATIONS = {
         "At the Direction Gate, present only one direction without trade-offs.",
     ),
     "automatic stitch verdict": (
-        "Fully automatic continues only when the Stitch verdict is `meets direction`; `meets with corrections` and `does not meet` both stop.",
-        "Fully automatic continues when the Stitch verdict is `meets with corrections`.",
+        "Fully automatic continues only when the visual verdict is `meets direction`; `meets with corrections` and `does not meet` both stop.",
+        "Fully automatic continues when the visual verdict is `meets with corrections`.",
     ),
     "platform precedence": (
         "For Android or web targets, current first-party platform rules override conflicting Apple-inspired judgment.",
         "For Android or web targets, Apple-inspired judgment overrides first-party rules.",
     ),
     "source evidence integrity": (
-        "Do not claim product inspection, first-party guidance, benchmark evidence, or new Stitch output without current evidence for that exact claim.",
+        "Do not claim product inspection, first-party guidance, benchmark evidence, or new generated output without current evidence for that exact claim.",
         "Claim inspection and evidence based on prior metadata.",
     ),
     "repair round maximum": (
@@ -165,7 +165,7 @@ MUTATIONS = {
         "The initial proposal is a correction round, so unlimited rendered proposals are allowed.",
     ),
     "proposal-wide batching": (
-        "Each correction request identifies the source render and affected screen/state IDs; states the observed mismatch and exact approved requirement; changes only `repairable drift`; preserves already matching requirements and the approved direction; requests a complete enough result to re-inspect affected and potentially regressed states; and records the new render or screen identifiers returned by Stitch.",
+        "Each correction request identifies the source render and affected screen/state IDs; states the observed mismatch and exact approved requirement; changes only `repairable drift`; preserves already matching requirements and the approved direction; requests a complete enough result to re-inspect affected and potentially regressed states; and records the new render or screen identifiers returned by the active renderer.",
         "Each correction request may target one mismatch at a time, need not state the approved requirement, may change matching requirements, and may rely on a summary instead of enough output to inspect regressions.",
     ),
     "repair before user involvement": (
@@ -189,7 +189,7 @@ MUTATIONS = {
         "Automatically correct mismatches that require a direction decision or new external authorization.",
     ),
     "runtime proof boundary": (
-        "Carry `runtime proof` forward as unverified implementation evidence; do not retry Stitch or claim the prototype proves it.",
+        "Carry `runtime proof` forward as unverified implementation evidence; do not retry the renderer or claim the prototype proves it.",
         "Retry Stitch until `runtime proof` is resolved and claim the prototype proves it.",
     ),
     "two-round early-stop evidence": (
@@ -201,20 +201,20 @@ MUTATIONS = {
         "After the third unsuccessful correction round, keep retrying until the proposal matches and treat any remaining mismatch as `meets direction`.",
     ),
     "no unexplained meets-direction verdict": (
-        "Assign `meets direction` only after the most recent complete proposal is inspected and every Stitch-expressible requirement matches.",
+        "Assign `meets direction` only after the most recent complete proposal is inspected and every renderer-expressible requirement matches.",
         "Assign `meets direction` before complete inspection when mismatches remain unexplained.",
     ),
     "repair run record": (
-        "Record the initial proposal identifiers; each conformance matrix; correction round number; batched correction request and provenance; fixed, remaining, and newly introduced mismatches; stop reason; final Stitch verdict; and remaining runtime proof.",
-        "Record only the final Stitch verdict and omit repair evidence.",
+        "Record the initial proposal identifiers; each conformance matrix; correction round number; batched correction request and provenance; fixed, remaining, and newly introduced mismatches; stop reason; final visual verdict; and remaining runtime proof.",
+        "Record only the final visual verdict and omit repair evidence.",
     ),
     "guided and follow repair timing": (
-        "Guided and Follow recommendation perform the repair loop before stopping at the Stitch Gate. After an unresolved verdict in Guided or Follow recommendation, offer the user choices to revise the direction, accept a clearly labeled product exception where allowed, or stop; an exception cannot change the verdict to `meets direction` or waive a current first-party platform or accessibility requirement.",
-        "Guided and Follow recommendation stop at the Stitch Gate before the repair loop and silently treat unresolved drift as approved.",
+        "Guided and Follow recommendation perform the repair loop before stopping at the Visual Proposal Gate. After an unresolved verdict in Guided or Follow recommendation, offer the user choices to revise the direction, accept a clearly labeled product exception where allowed, or stop; an exception cannot change the verdict to `meets direction` or waive a current first-party platform or accessibility requirement.",
+        "Guided and Follow recommendation stop at the Visual Proposal Gate before the repair loop and silently treat unresolved drift as approved.",
     ),
     "fully automatic repair verdict": (
-        "Fully automatic performs the same repair loop and continues past the Stitch Gate only on `meets direction`.",
-        "Fully automatic bypasses the repair loop and continues past the Stitch Gate on any verdict.",
+        "Fully automatic performs the same repair loop and continues past the Visual Proposal Gate only on `meets direction`.",
+        "Fully automatic bypasses the repair loop and continues past the Visual Proposal Gate on any verdict.",
     ),
     "motion case 01 evidence precedence": (
         "Use this motion-evidence precedence: existing product motion; native platform behavior and standard components; current first-party platform guidance; inspected relevant shipped-product motion; labeled Design Arc judgment.",
@@ -321,7 +321,7 @@ MUTATIONS = {
         "Direction Gate is satisfied by empty headings or field names alone.",
     ),
     "motion case 10 prototype proof boundary": (
-        "Stitch and other design prototypes can illustrate states and transition intent but cannot prove timing, easing, springs, interruption, reduced-motion behavior, performance, or runtime implementation quality.",
+        "Generated screens and design prototypes can illustrate states and transition intent but cannot prove timing, easing, springs, interruption, reduced-motion behavior, performance, or runtime implementation quality.",
         "Treat a Stitch prototype as proof of timing, reduced-motion behavior, performance, and runtime implementation quality.",
     ),
     "motion case 10 staging and device proof": (
@@ -333,8 +333,8 @@ MUTATIONS = {
         "A Design Arc motion contract authorizes implementation, dependency installation, staging, deployment, and release.",
     ),
     "motion case 10 verdict evaluation": (
-        "Before assigning a Stitch verdict, explicitly evaluate motion purpose and least-motion restraint, provenance labels and citations, reduced-motion behavior, alignment with every material motion contract, prototype limitations, and remaining runtime proof.",
-        "Assign the Stitch verdict from visual polish without evaluating motion provenance, reduced motion, contract alignment, or remaining proof.",
+        "Before assigning a visual verdict, explicitly evaluate motion purpose and least-motion restraint, provenance labels and citations, reduced-motion behavior, alignment with every material motion contract, prototype limitations, and remaining runtime proof.",
+        "Assign the visual verdict from visual polish without evaluating motion provenance, reduced motion, contract alignment, or remaining proof.",
     ),
     "motion case 10 meets-direction semantics": (
         "A `meets direction` verdict is valid only when the prototype aligns with those motion requirements within its capabilities and every limitation and remaining runtime proof item is documented; any unexplained gap yields `meets with corrections` or `does not meet`.",
@@ -355,6 +355,38 @@ MUTATIONS = {
     "implementation boundary": (
         "Design approval never authorizes source implementation, staging, live deployment, release, destructive changes, provider changes, or work outside the authorized integration lane.",
         "Design approval authorizes implementation and live deployment.",
+    ),
+    "renderer default avoids disposable app logic": (
+        "Generate one complete static journey board in Codex by default; do not build application logic, navigation logic, APIs, databases, production components, or throwaway prototype infrastructure merely to visualize the proposal.",
+        "Build a coded interactive application prototype by default.",
+    ),
+    "Stitch remains optional": (
+        "Google Stitch is an optional renderer and persistent design workspace, not a mandatory workflow stage or evidence authority.",
+        "Google Stitch is mandatory for every Design Arc review.",
+    ),
+    "single-trigger recommendation threshold": (
+        "Recommend Stitch when any one genuine trigger occurs: a second meaningful visual direction; a change spanning three or more screens; precise layout, spacing, or styling iteration; user-directed canvas editing; likely continuation on another day; a journey becoming difficult to review as one board; noticeable unrelated drift after one Codex correction round; device variants; collaboration; or design export.",
+        "Recommend Stitch only after several triggers occur together.",
+    ),
+    "repeat recommendation boundary": (
+        "The first recommendation names the specific benefit; a later recommendation is brief and appears only after another genuine trigger or materially larger scope.",
+        "Repeat the recommendation after every small edit.",
+    ),
+    "advisory transfer": (
+        "A Stitch recommendation is advisory: never transfer automatically, and continuing in Codex remains available.",
+        "Automatically transfer the proposal to Stitch after a trigger.",
+    ),
+    "phase-scoped stay choice": (
+        "Treat `stay in Codex` as a choice for the current editing phase, not a permanent suppression.",
+        "Treat `stay in Codex` as a permanent global preference.",
+    ),
+    "review-scoped recommendation suppression": (
+        "If the user says not to recommend Stitch again for this review, suppress every further Stitch recommendation for that review.",
+        "Continue recommending Stitch during the review after the user opts out.",
+    ),
+    "renderer-neutral validation": (
+        "Apply the same complete-state conformance matrix, proposal-wide correction budget, full reinspection, three-verdict standard, and Visual Proposal Gate regardless of renderer.",
+        "Use a lighter validation standard for Codex-generated screens.",
     ),
     "saved project resolution": (
         "Call `list_projects` before any home lookup or creation and resolve the current saved project's `projectId` and saved-project name; use the workspace-folder name only when the saved-project name is unavailable.",
@@ -693,11 +725,11 @@ GRAPH_MUTATIONS = {
         "After graph-assisted correction, inspect only the linked changed nodes.",
     ),
     "graph case 19 three-round limit": (
-        "Graph assistance preserves one initial Stitch proposal followed by at most three batched correction rounds for the entire proposal and never resets, extends, or bypasses that limit.",
+        "Graph assistance preserves one initial visual proposal followed by at most three batched correction rounds for the entire proposal and never resets, extends, or bypasses that limit.",
         "Reset the three-round limit whenever the graph changes the correction batch.",
     ),
     "graph case 20 gates unchanged": (
-        "Graph assistance never bypasses Objective Confirmation, Direction Gate, Stitch Gate, their approval-mode behavior, or the requirement that Fully automatic continues only on `meets direction`.",
+        "Graph assistance never bypasses Objective Confirmation, Direction Gate, Visual Proposal Gate, their approval-mode behavior, or the requirement that Fully automatic continues only on `meets direction`.",
         "Graph confidence may bypass objective and design gates or continue on unresolved verdicts.",
     ),
     "graph case 21 runtime proof": (
@@ -720,7 +752,7 @@ GRAPH_MUTATIONS = {
 
 
 EXPECTED_GRAPH_MUTATION_COUNT = 24
-EXPECTED_TOTAL_MUTATION_COUNT = 179
+EXPECTED_TOTAL_MUTATION_COUNT = 187
 
 
 ORDERED_MUTATION_MARKERS = (

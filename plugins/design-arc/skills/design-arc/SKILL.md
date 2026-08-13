@@ -13,7 +13,7 @@ Resolve setup before product inspection, external research, or generation. Then 
 
 Use this state machine:
 
-`setup → objective → current-journey audit → evidence → directions → Direction Gate → full first-party validation → complete Stitch journey → render validation → Stitch Gate → authorized handoff`
+`setup → objective → current-journey audit → evidence → directions → Direction Gate → full first-party validation → complete visual journey → render validation → Visual Proposal Gate → authorized handoff`
 
 Setup controls how evidence is gathered and where approval pauses occur. It never lowers evidence quality.
 
@@ -178,15 +178,15 @@ For first use, ask the user to choose independently:
 
 - **Benchmarks — recommended when relevant access is available.** Use inspected real-product journeys plus current first-party guidance.
 - **Guidelines.** Use current first-party platform guidance without benchmark research.
-- **Guided — recommended for a new project.** Stop at Objective Confirmation, Direction Gate, and Stitch Gate.
-- **Follow recommendation.** Stop at Objective Confirmation, automatically select the marked direction, and stop at Stitch Gate.
-- **Fully automatic.** Continue only from an explicit current-request objective, select the marked direction, and pass Stitch Gate only on `meets direction`.
+- **Guided — recommended for a new project.** Stop at Objective Confirmation, Direction Gate, and Visual Proposal Gate.
+- **Follow recommendation.** Stop at Objective Confirmation, automatically select the marked direction, and stop at Visual Proposal Gate.
+- **Fully automatic.** Continue only from an explicit current-request objective, select the marked direction, and pass Visual Proposal Gate only on `meets direction`.
 
 Allow free-form input. Before saving first-use choices, state the proposed file values and obtain confirmation.
 
 ### Graph assistance for 0.3.0 reviews
 
-Design Arc 0.3.0 may maintain a validated project-local relationship record to plan more precise corrections. The authoritative setup, objective, evidence, direction, Stitch, and repair workflow remains unchanged.
+Design Arc 0.3.0 may maintain a validated project-local relationship record to plan more precise corrections. The authoritative setup, objective, evidence, direction, visualization, and repair workflow remains unchanged.
 
 #### Resolution and review identity
 
@@ -234,9 +234,9 @@ Use supported graph relationships only to batch compatible `repairable drift` ac
 
 After every graph-assisted correction round, perform the unchanged complete-proposal inspection, including previously matching and graph-unrelated screens and states that may have regressed. The graph may focus attention but never narrows the required conformance matrix or replaces render inspection.
 
-Graph assistance preserves one initial Stitch proposal followed by at most three batched correction rounds for the entire proposal and never resets, extends, or bypasses that limit.
+Graph assistance preserves one initial visual proposal followed by at most three batched correction rounds for the entire proposal and never resets, extends, or bypasses that limit.
 
-Graph assistance never bypasses Objective Confirmation, Direction Gate, Stitch Gate, their approval-mode behavior, or the requirement that Fully automatic continues only on `meets direction`.
+Graph assistance never bypasses Objective Confirmation, Direction Gate, Visual Proposal Gate, their approval-mode behavior, or the requirement that Fully automatic continues only on `meets direction`.
 
 Graph relationships cannot establish runtime proof; carry implementation, staging, device, accessibility, performance, and production proof forward as unverified until current measured evidence establishes it.
 
@@ -266,12 +266,12 @@ Evidence selection and approval behavior remain independent:
 
 | Evidence | Approval | Gate behavior |
 |---|---|---|
-| Benchmarks | Guided | Direction Gate stops; Stitch Gate stops |
-| Benchmarks | Follow recommendation | Direction Gate continues with the marked recommendation; Stitch Gate stops |
-| Benchmarks | Fully automatic | Direction Gate continues; Stitch Gate continues only on `meets direction` |
-| Guidelines | Guided | Direction Gate stops; Stitch Gate stops |
-| Guidelines | Follow recommendation | Direction Gate continues with the marked recommendation; Stitch Gate stops |
-| Guidelines | Fully automatic | Direction Gate continues; Stitch Gate continues only on `meets direction` |
+| Benchmarks | Guided | Direction Gate stops; Visual Proposal Gate stops |
+| Benchmarks | Follow recommendation | Direction Gate continues with the marked recommendation; Visual Proposal Gate stops |
+| Benchmarks | Fully automatic | Direction Gate continues; Visual Proposal Gate continues only on `meets direction` |
+| Guidelines | Guided | Direction Gate stops; Visual Proposal Gate stops |
+| Guidelines | Follow recommendation | Direction Gate continues with the marked recommendation; Visual Proposal Gate stops |
+| Guidelines | Fully automatic | Direction Gate continues; Visual Proposal Gate continues only on `meets direction` |
 
 ## Establish the objective
 
@@ -283,7 +283,7 @@ Make the user's desired outcome the criterion for every audit finding, evidence 
 - If the objective is missing or materially ambiguous, stop and ask; never invent it.
 - Do not inspect, research, or generate until the objective is confirmed or is explicit under Fully automatic.
 
-Objective Confirmation is separate from the two design gates. “Follow your recommendation” changes the Direction Gate policy for one run; it does not confirm an objective or bypass Stitch Gate. “Bypass both gates” is a one-run Fully automatic alias, but still requires an explicit current-request objective.
+Objective Confirmation is separate from the two design gates. “Follow your recommendation” changes the Direction Gate policy for one run; it does not confirm an objective or bypass Visual Proposal Gate. “Bypass both gates” is a one-run Fully automatic alias, but still requires an explicit current-request objective.
 
 ## Audit the real journey
 
@@ -350,6 +350,24 @@ An automatic selection is still visible and auditable; never hide the alternativ
 
 Recheck the complete selected direction against current first-party guidance for every affected platform. Resolve conflicts before generation and report any product-specific judgment separately.
 
+### Choose and manage the visualization surface
+
+Generate one complete static journey board in Codex by default; do not build application logic, navigation logic, APIs, databases, production components, or throwaway prototype infrastructure merely to visualize the proposal. Include every material entry, transition, loading, empty, error, success, cancellation, and recovery state. Prefer one cohesive board first; generate an individual high-resolution screen only when closer inspection or a focused correction requires it.
+
+Google Stitch is an optional renderer and persistent design workspace, not a mandatory workflow stage or evidence authority. Recommend it early when sustained visual editing is becoming easier on a canvas than through bounded image revisions in Codex.
+
+Recommend Stitch when any one genuine trigger occurs: a second meaningful visual direction; a change spanning three or more screens; precise layout, spacing, or styling iteration; user-directed canvas editing; likely continuation on another day; a journey becoming difficult to review as one board; noticeable unrelated drift after one Codex correction round; device variants; collaboration; or design export.
+
+Do not recommend Stitch merely because it is available, Mobbin supplied precedent, several material states exist, the first board has minor repairable drift, or one screen needs a bounded label, color, or control correction.
+
+The first recommendation names the specific benefit; a later recommendation is brief and appears only after another genuine trigger or materially larger scope. Use this shape: “This is becoming easier to manage in Stitch because <specific trigger and benefit>. I recommend moving there, but I can continue in Codex if you prefer.”
+
+A Stitch recommendation is advisory: never transfer automatically, and continuing in Codex remains available. Treat `stay in Codex` as a choice for the current editing phase, not a permanent suppression. If the user says not to recommend Stitch again for this review, suppress every further Stitch recommendation for that review.
+
+When Stitch is selected, preserve the approved journey requirements, require separately authorized access, and compare retrieved or supplied changes before treating them as the current proposal. A Stitch share link, exported screens, Figma or HTML/CSS export, or `DESIGN.md` may support the return path. Use an exact configured Stitch MCP server or tool only when it is actually available and separately authorized; never imply that Design Arc bundles one. Retrieval means “inspect and show what changed,” not “silently approve or overwrite the direction.”
+
+Apply the same complete-state conformance matrix, proposal-wide correction budget, full reinspection, three-verdict standard, and Visual Proposal Gate regardless of renderer. `Visual Proposal Gate` is the renderer-neutral user-facing name for the existing `Stitch Gate` contract in 0.3.x records; do not create an additional gate or require preference migration.
+
 ### Specify motion before visualization
 
 Identify every material on-screen animation and screen-to-screen transition in the selected direction. If existing product motion or standard native behavior is sufficient, record that choice instead of inventing custom motion.
@@ -396,31 +414,31 @@ After separate authorization from the implementation owner, Motion+ assistance m
 
 #### Preserve prototype, proof, and authority boundaries
 
-Stitch and other design prototypes can illustrate states and transition intent but cannot prove timing, easing, springs, interruption, reduced-motion behavior, performance, or runtime implementation quality. If a prototype cannot express the required motion faithfully, return the start/end states and complete motion contract, label unsupported behavior `unverified`, and do not claim validation.
+Generated screens and design prototypes can illustrate states and transition intent but cannot prove timing, easing, springs, interruption, reduced-motion behavior, performance, or runtime implementation quality. If a prototype cannot express the required motion faithfully, return the start/end states and complete motion contract, label unsupported behavior `unverified`, and do not claim validation.
 
 Only measured staging or target-device behavior can establish implementation proof. Record the tested runtime, viewport or device, accessibility setting, measurement method, result, and remaining gaps; a render, prototype, specification, source code, or library choice alone is not proof.
 
-Design Arc may specify and critique motion, but it does not authorize application-code implementation, dependency installation, staging, deployment, or release. Passing the Stitch Gate may route an approved contract to the authorized implementation owner; that owner retains stack, source, staging, and release authority.
+Design Arc may specify and critique motion, but it does not authorize application-code implementation, dependency installation, staging, deployment, or release. Passing the Visual Proposal Gate may route an approved contract to the authorized implementation owner; that owner retains stack, source, staging, and release authority.
 
-Stitch is an external visualization service, not a bundled or official Design Arc integration. Obtain whatever separate access and payload authorization the environment requires. Use an existing project and design system when supplied. Generate every material state required by the selected journey, including entry, transition, loading, empty, error, success, cancellation, and recovery. Record exact requested viewports, safe areas, assets, interaction states, project or board identifiers, and new screen identifiers.
+For the default Codex route, generate the complete static board directly and avoid disposable application logic. When the user chooses Stitch, treat it as an external visualization service, not a bundled Design Arc integration; obtain whatever separate access and payload authorization the environment requires and use an existing project and design system when supplied. With either renderer, generate every material state required by the selected journey, including entry, transition, loading, empty, error, success, cancellation, and recovery. Record exact requested viewports, safe areas, assets, interaction states, renderer or board identifiers, and new screen identifiers.
 
 Return decision-ready evidence in Codex: an inline journey map, embedded key renders, concise generator recommendations, exact verified render dimensions, identifiers, and evidence provenance. A board offers deeper exploration; it is not a substitute for the evidence in chat.
 
-Before assigning a Stitch verdict, explicitly evaluate motion purpose and least-motion restraint, provenance labels and citations, reduced-motion behavior, alignment with every material motion contract, prototype limitations, and remaining runtime proof.
+Before assigning a visual verdict, explicitly evaluate motion purpose and least-motion restraint, provenance labels and citations, reduced-motion behavior, alignment with every material motion contract, prototype limitations, and remaining runtime proof.
 
 A `meets direction` verdict is valid only when the prototype aligns with those motion requirements within its capabilities and every limitation and remaining runtime proof item is documented; any unexplained gap yields `meets with corrections` or `does not meet`.
 
 Fully automatic may continue on `meets direction` only after this motion evaluation is recorded; it cannot waive a missing or contradictory motion check.
 
-Inspect the actual renders for journey coherence, hierarchy, navigation, targets, spacing, containment, safe areas, orientation, text size, accessibility, errors, and recovery. Give exactly one Stitch verdict: `meets direction`, `meets with corrections`, or `does not meet`.
+Inspect the actual renders for journey coherence, hierarchy, navigation, targets, spacing, containment, safe areas, orientation, text size, accessibility, errors, and recovery. Give exactly one visual verdict: `meets direction`, `meets with corrections`, or `does not meet`.
 
-### Repair Stitch drift before the Stitch Gate
+### Repair visual drift before the Visual Proposal Gate
 
-Use one initial Stitch proposal followed by at most three batched correction rounds for the entire proposal. The initial proposal is not a correction round, so the maximum is four rendered proposals.
+Use one initial visual proposal followed by at most three batched correction rounds for the entire proposal. The initial proposal is not a correction round, so the maximum is four rendered proposals.
 
-Before assigning a Stitch verdict, create a conformance matrix for every material screen and state. Each row records the screen or state identifier; approved requirement and provenance; observed render evidence; classification; exact correction or next action; and inspected render identifier.
+Before assigning a visual verdict, create a conformance matrix for every material screen and state. Each row records the screen or state identifier; approved requirement and provenance; observed render evidence; classification; exact correction or next action; and inspected render identifier.
 
-Classify every mismatch as `match`, `repairable drift`, `direction decision required`, or `runtime proof`. Correct `repairable drift` automatically without asking the user because it does not change the approved direction. Stop before correction when a direction decision or new external authorization is required. Carry `runtime proof` forward as unverified implementation evidence; do not retry Stitch or claim the prototype proves it.
+Classify every mismatch as `match`, `repairable drift`, `direction decision required`, or `runtime proof`. Correct `repairable drift` automatically without asking the user because it does not change the approved direction. Stop before correction when a direction decision or new external authorization is required. Carry `runtime proof` forward as unverified implementation evidence; do not retry the renderer or claim the prototype proves it.
 
 A correction note, provider status, or command success is not proof of correction; only inspection of the newly generated render can change a mismatch to `match`. After every correction round, inspect the complete resulting proposal again, including previously matching requirements that may have regressed.
 
@@ -433,23 +451,23 @@ initial complete proposal
 → complete reinspection
 → repeat for at most three correction rounds
 → final verdict
-→ existing Stitch Gate policy
+→ existing Visual Proposal Gate policy
 ```
 
-Each correction request identifies the source render and affected screen/state IDs; states the observed mismatch and exact approved requirement; changes only `repairable drift`; preserves already matching requirements and the approved direction; requests a complete enough result to re-inspect affected and potentially regressed states; and records the new render or screen identifiers returned by Stitch. Add newly introduced drift to the next batched round.
+Each correction request identifies the source render and affected screen/state IDs; states the observed mismatch and exact approved requirement; changes only `repairable drift`; preserves already matching requirements and the approved direction; requests a complete enough result to re-inspect affected and potentially regressed states; and records the new render or screen identifiers returned by the active renderer. Add newly introduced drift to the next batched round.
 
 Stop early only when two consecutive corrected proposals show no improvement, two consecutive corrected proposals oscillate by fixing one requirement while breaking another, access becomes unavailable, the next correction changes direction, or new authorization is required. After the third unsuccessful correction round, stop and assign `meets with corrections` or `does not meet` from the remaining mismatch scope. Use `meets with corrections` only when unresolved bounded mismatches remain and the approved direction is still recognizable. Use `does not meet` when the proposal materially contradicts or fails to represent the approved direction.
 
-Assign `meets direction` only after the most recent complete proposal is inspected and every Stitch-expressible requirement matches. Guided and Follow recommendation perform the repair loop before stopping at the Stitch Gate. After an unresolved verdict in Guided or Follow recommendation, offer the user choices to revise the direction, accept a clearly labeled product exception where allowed, or stop; an exception cannot change the verdict to `meets direction` or waive a current first-party platform or accessibility requirement. Fully automatic performs the same repair loop and continues past the Stitch Gate only on `meets direction`.
+Assign `meets direction` only after the most recent complete proposal is inspected and every renderer-expressible requirement matches. Guided and Follow recommendation perform the repair loop before stopping at the Visual Proposal Gate. After an unresolved verdict in Guided or Follow recommendation, offer the user choices to revise the direction, accept a clearly labeled product exception where allowed, or stop; an exception cannot change the verdict to `meets direction` or waive a current first-party platform or accessibility requirement. Fully automatic performs the same repair loop and continues past the Visual Proposal Gate only on `meets direction`.
 
-Record the initial proposal identifiers; each conformance matrix; correction round number; batched correction request and provenance; fixed, remaining, and newly introduced mismatches; stop reason; final Stitch verdict; and remaining runtime proof.
+Record the initial proposal identifiers; each conformance matrix; correction round number; batched correction request and provenance; fixed, remaining, and newly introduced mismatches; stop reason; final visual verdict; and remaining runtime proof.
 
-## Apply the Stitch Gate and hand off
+## Apply the Visual Proposal Gate and hand off
 
 - **Guided and Follow recommendation:** stop after the verdict and request approval.
-- **Fully automatic:** Fully automatic continues only when the Stitch verdict is `meets direction`; `meets with corrections` and `does not meet` both stop.
+- **Fully automatic:** Fully automatic continues only when the visual verdict is `meets direction`; `meets with corrections` and `does not meet` both stop.
 
-Passing Stitch Gate authorizes only a coordinated handoff of the validated design proposal. Design approval never authorizes source implementation, staging, live deployment, release, destructive changes, provider changes, or work outside the authorized integration lane. Treat later refinements as amendments to one canonical handoff rather than duplicate tasks.
+Passing Visual Proposal Gate authorizes only a coordinated handoff of the validated design proposal. Design approval never authorizes source implementation, staging, live deployment, release, destructive changes, provider changes, or work outside the authorized integration lane. Treat later refinements as amendments to one canonical handoff rather than duplicate tasks.
 
 ## Required run record
 
@@ -460,15 +478,15 @@ Report these fields in the Codex conversation:
 - **Current journey:** surface, platform, entry, steps, material states, friction, and evidence status.
 - **Evidence:** source type, current links, inspected scope, what each source supports, and limitations.
 - **Directions:** marked recommendation, alternatives, exact journey changes, and trade-offs.
-- **Gates:** Objective Confirmation, Direction Gate, and Stitch Gate status and reason.
+- **Gates:** Objective Confirmation, Direction Gate, and Visual Proposal Gate status and reason.
 - **Proposal:** journey map, embedded key renders, viewports, identifiers, and material states.
 - **Motion:** material animations and transitions, motion scope, evidence and provenance, complete contracts, reduced motion, implementation source, proof, and remaining uncertainty.
-- **Validation:** Stitch verdict, corrections, blocked proof, and remaining device or implementation checks.
+- **Validation:** visual verdict, corrections, blocked proof, and remaining device or implementation checks.
 - **Authority:** design-only status and next authorized owner.
 
 ## Evidence and authorization integrity
 
-Do not claim product inspection, first-party guidance, benchmark evidence, or new Stitch output without current evidence for that exact claim. Do not claim exact render dimensions from metadata alone. Do not claim accessibility, safe-area, browser, native, or device compliance from appearance alone; identify the measured implementation proof still required.
+Do not claim product inspection, first-party guidance, benchmark evidence, or new generated output without current evidence for that exact claim. Do not claim exact render dimensions from metadata alone. Do not claim accessibility, safe-area, browser, native, or device compliance from appearance alone; identify the measured implementation proof still required.
 
 No approval mode waives current-source evidence, external authorization, platform precedence, complete-state coverage, render critique, or ownership. If any required source or service is unavailable, report the exact blocked gate and the partial evidence that remains valid.
 
@@ -493,6 +511,6 @@ Fully automatic mode never bypasses motion evidence integrity.
 - Looking up benchmarks or implying benchmark support in Guidelines mode.
 - Inventing a missing objective under Fully automatic.
 - Hiding alternatives because Follow recommendation is active.
-- Treating `meets with corrections` as permission to pass Stitch Gate.
+- Treating `meets with corrections` as permission to pass Visual Proposal Gate.
 - Omitting non-happy states from the generated journey.
 - Treating a design approval as implementation or release authorization.

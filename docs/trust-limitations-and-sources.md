@@ -10,7 +10,7 @@ Apple Human Interface Guidelines are first-party authority for Apple targets. Fo
 
 Mobbin can be selected as a benchmark provider in Benchmarks mode. It remains an external source requiring separate access and authorization. Its examples are observed precedent, not a bundled integration or a source to copy. If access is unavailable, Design Arc stops and offers either a one-run Guidelines fallback or a confirmed saved switch; it never silently degrades or calls the result benchmark-backed.
 
-Google Stitch is an external visualization service requiring separate access and payload authorization. The board supports deeper exploration, while Codex must still return a reviewable journey map, key renders, identifiers, and validation verdict in the task. Apple, Google, Mobbin, and Stitch access is not bundled or official, and none of those services authorizes product-source changes.
+Codex generates static journey boards by default. Google Stitch is an optional external visualization workspace requiring separate access and payload authorization. Either route must still return a reviewable journey map, key renders, identifiers, and validation verdict in the task. Apple, Google, Mobbin, and Stitch access is not bundled by Design Arc, and none of those services authorizes product-source changes.
 
 Stitch prototypes are design evidence, not staging or device implementation proof. A prototype can communicate an intended interaction, but it cannot prove runtime quality.
 
@@ -28,9 +28,9 @@ Design Arc is not listed in Codex’s built-in recommended-plugin directory. Cod
 
 ## Evidence, implementation, and release boundaries
 
-Design Arc must not claim current product inspection, first-party guidance, benchmark evidence, new Stitch output, exact render dimensions, accessibility, safe-area behavior, native/browser behavior, or physical-device compliance without corresponding current-task proof.
+Design Arc must not claim current product inspection, first-party guidance, benchmark evidence, new generated output, exact render dimensions, accessibility, safe-area behavior, native/browser behavior, or physical-device compliance without corresponding current-task proof.
 
-A validated visual journey remains a design proposal. No evidence mode, approval mode, external-service access, provider authorization, Direction decision, or Stitch verdict authorizes source implementation, staging, deployment, live release, destructive or provider changes, or work outside the authorized integration lane. Those actions require their own scope, owner, authorization, and evidence.
+A validated visual journey remains a design proposal. No evidence mode, approval mode, external-service access, provider authorization, Direction decision, or visual verdict authorizes source implementation, staging, deployment, live release, destructive or provider changes, or work outside the authorized integration lane. Those actions require their own scope, owner, authorization, and evidence.
 
 For the complete source library, see [Trusted sources](trusted-sources/README.md). For the technical operating boundary, see [Codex operating layer](codex-operating-layer.md).
 

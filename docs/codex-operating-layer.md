@@ -20,7 +20,7 @@ Plugin upgrades are profile-scoped and project-preserving. They do not run setup
 6. If fallback fails, remove only partial Design Arc replacement state, restore the exact prior plugin and marketplace, verify one enabled prior version, and confirm discovered project preferences remain byte-identical.
 7. Finish with the old and new versions, route used, installed-copy count, preservation results, fallback or rollback status, and any inventory limitation.
 
-The upgrade contract does not weaken Objective Confirmation, evidence integrity, the Direction Gate, the Stitch Gate, external-service authorization, or implementation and release boundaries. It changes only the shared plugin installation.
+The upgrade contract does not weaken Objective Confirmation, evidence integrity, the Direction Gate, the Visual Proposal Gate, external-service authorization, or implementation and release boundaries. It changes only the shared plugin installation.
 
 If task tools are unavailable or fail, preference setup may still succeed, but Design Arc must not claim that the home exists. It returns the exact title and complete starter card with manual create-and-pin steps, and keeps the home pending until title, project identity, and pinning are verified.
 
@@ -31,14 +31,14 @@ If task tools are unavailable or fail, preference setup may still succeed, but D
 - Keeps current first-party requirements, inspected benchmark precedent, and product judgment distinguishable.
 - Presents a marked recommendation with meaningful alternatives and trade-offs before visualization.
 - Directs a complete visual proposal, critiques actual renders, and returns decision-ready evidence in the task instead of treating a board link or metadata as proof.
-- Codex compares the complete Stitch proposal with the approved direction, batches straightforward drift into at most three correction rounds, and reinspects every replacement render before assigning the Stitch verdict.
+- Codex compares the complete rendered proposal with the approved direction, batches straightforward drift into at most three correction rounds, and reinspects every replacement render before assigning the visual verdict.
 - Records each active setting and its provenance, applies the chosen approval policy, and routes only validated design work to the authorized Product/Captain/Integration owner.
 
 ## What remains outside Codex
 
 The user owns the product objective, setup choices, and final design decisions. First-party sources remain authoritative for their platforms. Apple Human Interface Guidelines govern Apple targets; Android or web first-party rules override conflicting Apple-inspired judgment on those targets.
 
-Mobbin is an optional external benchmark provider. Google Stitch is an external visualization service. Both require separate access and authorization, neither is bundled or official, and neither authorizes product-source changes. Stitch output is a proposal, not implementation, accessibility, safe-area, browser/native, or physical-device proof.
+Mobbin is an optional external benchmark provider. Codex generates static journey boards by default; Google Stitch is an optional external visualization workspace. External access requires separate authorization, none is bundled by Design Arc, and none authorizes product-source changes. Generated output is a proposal, not implementation, accessibility, safe-area, browser/native, or physical-device proof.
 
 ## Preference and provenance
 
@@ -60,7 +60,7 @@ Objective handling precedes inspection and research. Guided and Follow recommend
 
 Approval modes change pauses, not rigor:
 
-| Mode | Direction Gate | Stitch Gate |
+| Mode | Direction Gate | Visual Proposal Gate |
 | --- | --- | --- |
 | Guided | Stop for the user's choice | Stop after render validation |
 | Follow recommendation | Continue with the visible marked recommendation | Stop after render validation |

@@ -142,11 +142,17 @@ require_text "$using_design_arc" 'If Codex cannot create or pin the task, Design
 require_text "$using_design_arc" 'Help me make our onboarding less confusing.'
 require_text "$using_design_arc" 'Audit how customers complete checkout and propose a better complete journey.'
 require_text "$using_design_arc" 'Redesign account recovery so people can get back in without weakening security.'
-require_text "$using_design_arc" 'Design Arc corrects straightforward Stitch drift before asking you to approve the visual proposal.'
+require_text "$using_design_arc" 'Design Arc generates one complete static journey board in Codex by default.'
+require_text "$using_design_arc" 'It does not build disposable application logic merely to visualize the proposal.'
+require_text "$using_design_arc" 'Stitch is optional and Design Arc recommends it when any one genuine canvas trigger occurs.'
+require_text "$using_design_arc" 'A Stitch recommendation is advisory and never transfers the proposal automatically.'
+require_text "$using_design_arc" 'If you say not to recommend Stitch again for this review, Design Arc suppresses every further recommendation for that review.'
+require_text "$using_design_arc" 'The same validation and correction rules apply whether Codex or Stitch renders the screens.'
+require_text "$using_design_arc" 'Design Arc corrects straightforward visual drift before asking you to approve the visual proposal.'
 require_text "$using_design_arc" 'The initial proposal may be followed by at most three correction rounds for the whole proposal.'
 require_text "$using_design_arc" 'Each round batches every known repairable mismatch, generates a new proposal, and reinspects the complete result.'
 require_text "$using_design_arc" 'If the proposal still does not match, Design Arc stops and flags every unresolved mismatch and the attempts already made.'
-require_text "$using_design_arc" '| Approval mode | Objective | Stitch Gate |'
+require_text "$using_design_arc" '| Approval mode | Objective | Visual Proposal Gate |'
 require_text "$using_design_arc" 'Select evidence mode<br/>Codex; You when a choice is required'
 require_text "$using_design_arc" 'C -- "Guidelines mode" --> C1'
 require_text "$using_design_arc" 'Official Apple Human Interface Guidelines for Apple,'
@@ -155,10 +161,12 @@ require_text "$using_design_arc" 'or W3C guidance for web + Codex'
 require_text "$using_design_arc" 'C -- "Benchmarks mode" --> C2'
 require_text "$using_design_arc" 'Mobbin journey benchmarks + applicable'
 require_text "$using_design_arc" 'Google Stitch + Codex'
-require_text "$using_design_arc" 'Google Stitch renders + Codex'
+require_text "$using_design_arc" 'Generated screens + Codex'
 require_text "$using_design_arc" 'Design Arc bundles no MCP server'
+require_text "$using_design_arc" 'Google now provides an official Stitch MCP server and SDK'
+require_text "$using_design_arc" 'only when it is separately installed, configured, and authorized'
 require_text "$using_design_arc" 'name the exact configured MCP server or tool'
-require_text "$using_design_arc" 'does not imply an official Mobbin or Google Stitch MCP integration'
+require_text "$using_design_arc" 'does not imply an official Mobbin MCP integration'
 require_text "$using_design_arc" 'Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.'
 require_text "$using_design_arc" 'Design Arc understands how requirements, evidence and screens affect one another, helping it make more precise corrections without surrendering approval control.'
 require_text "$using_design_arc" 'Graph assistance is active by default for every new 0.3.0 review in both existing and new projects when no project or laptop safety control turns it off.'
@@ -183,9 +191,11 @@ require_text "$evidence_methodology" '| Grounding layer | Pain point | How Desig
 require_text "$evidence_methodology" '| Platform requirements | Designs can feel unfamiliar, exclude users, or conflict with platform conventions. | Validate the journey against current guidance for its actual platform. | Apple HIG; Android and Material guidance; W3C web accessibility standards. |'
 require_text "$evidence_methodology" '| Product precedent | Teams copy attractive screenshots without understanding the complete journey or failure states. | Inspect relevant end-to-end product journeys and explain why a pattern fits the objective. | Authorized benchmark research through a provider such as Mobbin. |'
 require_text "$evidence_methodology" '| Product judgment | Opinions and trade-offs can be presented as if a source proved them. | Tie recommendations to the confirmed objective and label judgment separately from observed evidence. | User-confirmed objective and documented Design Arc synthesis—not an external authority. |'
-require_text "$evidence_methodology" '| Visualization and validation | Polished screens can conceal missing transitions, errors, and recovery states. | Visualize the complete journey and inspect every important state before approving it for frontend implementation. | Google Stitch as a visualization tool—not an evidence authority. |'
+require_text "$evidence_methodology" '| Visualization and validation | Polished screens can conceal missing transitions, errors, and recovery states. | Visualize the complete journey and inspect every important state before approving it for frontend implementation. | Codex-generated static journey boards by default; optional Google Stitch workspace—not an evidence authority. |'
+require_text "$evidence_methodology" 'A single genuine trigger is enough for Design Arc to recommend Stitch'
+require_text "$evidence_methodology" 'Staying in Codex remains available, and the user always approves any transfer.'
 require_text "$evidence_methodology" '| Relationship context | A correction can miss dependent states when requirements, evidence, and screens are considered separately. | Keep validated relationships visible to plan the smallest compatible correction batch and the regression checks that follow. | The current Design Arc workflow record; the relationship record adds context only. |'
-require_text "$evidence_methodology" 'First-party guidance remains authoritative for its platform, authorized benchmark evidence remains precedent, Stitch remains visualization, and the graph remains relationship context only.'
+require_text "$evidence_methodology" 'First-party guidance remains authoritative for its platform, authorized benchmark evidence remains precedent, Codex or Stitch provides visualization, and the graph remains relationship context only.'
 require_text "$evidence_methodology" 'A graph relationship is not evidence, proof, approval, a source of requirements, or authority.'
 require_text "$evidence_methodology" 'The graph can focus correction planning but never replaces complete render inspection or the proposal-wide correction limit.'
 require_text "$evidence_methodology" '| Motion specification | Codex + affected-platform guidance + inspected motion evidence | Defines what moves, why, how it behaves, its reduced-motion alternative, and what still requires implementation proof. |'
@@ -200,7 +210,7 @@ require_text "$evidence_methodology" 'Static screens or sequences support only s
 require_text "$evidence_methodology" 'Directly applicable native or current first-party specifications and inspected playable evidence can support temporal behavior; otherwise temporal values remain labeled Design Arc judgment or `unverified`.'
 require_text "$evidence_methodology" 'Stitch prototypes are design evidence, not staging or device implementation proof.'
 require_text "$evidence_methodology" 'Each direction explains motion purpose and restraint, relevant precedent and platform guidance, provenance labels, reduced-motion implications, motion-specific risks, implementation complexity, and remaining proof.'
-require_text "$evidence_methodology" 'A Stitch verdict evaluates the same motion requirements and contract alignment, and `meets direction` records prototype limitations and remaining runtime proof before Fully automatic may continue.'
+require_text "$evidence_methodology" 'A visual verdict evaluates the same motion requirements and contract alignment, and `meets direction` records prototype limitations and remaining runtime proof before Fully automatic may continue.'
 require_text "$evidence_methodology" '[Motion grounding](trusted-sources/motion.md)'
 require_text "$evidence_methodology" '[Behavioral validation](validation/behavioral-validation.md)'
 require_text "$evidence_methodology" '[Trusted sources](trusted-sources/README.md)'
@@ -226,7 +236,7 @@ require_text "$upgrades_migration" 'Next: [Trust and sources](trust-limitations-
 
 require_text "$trust_sources" '# Trust, limitations and sources'
 require_text "$trust_sources" 'What can Design Arc prove, access, implement, or release?'
-require_text "$trust_sources" 'not bundled or official'
+require_text "$trust_sources" 'access is not bundled by Design Arc'
 require_text "$trust_sources" 'Design Arc is not listed in Codex’s built-in recommended-plugin directory.'
 require_text "$trust_sources" 'no documented public third-party directory submission route'
 require_text "$trust_sources" 'Graph assistance is a project-local relationship record for correction planning, not a new source of truth.'
@@ -264,7 +274,7 @@ if "Codex handles the installation" in install_section:
 if "skills.sh URL or package name" in install_section:
     raise SystemExit("FAIL: troubleshooting must not route Design Arc back to a standalone skills registry")
 if "Visual Gate" in "".join((text, install_section, methodology, migration, trust)):
-    raise SystemExit("FAIL: documentation must use the required Stitch Gate name, not Visual Gate")
+    raise SystemExit("FAIL: documentation must use the required Visual Proposal Gate name, not Visual Gate")
 
 local_command = "codex plugin marketplace add /path/to/mobbin-apple-guidelines-stitch"
 if local_command not in install_section.splitlines():
@@ -307,9 +317,9 @@ workflow_table = """| Workflow step | Platform or source handling it | Human inv
 | ↓ | | |
 | Decide on any design motion | Relevant official guidance + inspected motion evidence + Codex | |
 | ↓ | | |
-| Visualize the complete journey | Google Stitch + Codex | |
+| Visualize the complete journey | Codex-generated static journey board by default; optional Google Stitch workspace | |
 | ↓ | | |
-| Validate every important state | Google Stitch renders + Codex | |
+| Validate every important state | Generated journey screens + Codex | |
 | ↓ | | |
 | Approve the visual proposal | Codex | **👤 You** |
 | ↓ | | |
@@ -421,7 +431,7 @@ require_text "$operating_layer" 'If task tools are unavailable or fail, preferen
 require_text "$operating_layer" '.codex/design-arc.yaml'
 require_text "$operating_layer" 'evidence and approval choices independently'
 require_text "$operating_layer" 'Android or web first-party rules override conflicting Apple-inspired judgment'
-require_text "$operating_layer" 'Codex compares the complete Stitch proposal with the approved direction, batches straightforward drift into at most three correction rounds, and reinspects every replacement render before assigning the Stitch verdict.'
+require_text "$operating_layer" 'Codex compares the complete rendered proposal with the approved direction, batches straightforward drift into at most three correction rounds, and reinspects every replacement render before assigning the visual verdict.'
 require_text "$operating_layer" 'No mode or external-service authorization authorizes source implementation, staging, deployment, or release.'
 
 require_text "$repo_root/docs/trusted-sources/platform-guidance.md" '## Motion guidance'
@@ -452,7 +462,7 @@ require_text "$behavioral_validation" 'used the restricted built-in plugin-insta
 require_text "$behavioral_validation" 'executed both terminal commands, verified `design-arc@design-arc-marketplace` as installed and enabled'
 require_text "$behavioral_validation" 'presented Benchmarks/Guidelines and Guided/Follow recommendation/Fully automatic independently'
 require_text "$behavioral_validation" 'Fourteen render-repair mutations prove that the written contract rejects unbounded retries, per-mismatch retrying, user-dependent ordinary corrections, uninspected correction claims, skipped reinspection, unsafe direction changes, runtime-proof retries, premature early stopping, missing exhaustion handling, unexplained `meets direction`, incomplete repair records, and approval-mode bypasses.'
-require_text "$behavioral_validation" '179 deterministic mutation rejections'
+require_text "$behavioral_validation" '187 deterministic mutation rejections'
 require_text "$behavioral_validation" 'Five activation-integrity mutations separately prove that direct invocation starts immediately, an indirectly selected skill asks first, pre-approval work remains isolated, declining does not let Design Arc claim control of the ordinary request, and an unselected skill cannot be credited with work it did not perform.'
 require_text "$behavioral_validation" 'the direct `$design-arc` prompt loaded the candidate and proceeded without a redundant activation question, while the same unprefixed prompt received an ordinary Codex answer because the skill was not selected.'
 require_text "$behavioral_validation" 'These are static instruction-contract mutations; they do not execute Stitch or prove that every future agent will follow the contract.'

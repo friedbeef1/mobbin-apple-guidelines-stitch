@@ -51,9 +51,9 @@ Design Arc audits the real journey, checks decisions against current first-party
 | ↓ | | |
 | Decide on any design motion | Relevant official guidance + inspected motion evidence + Codex | |
 | ↓ | | |
-| Visualize the complete journey | Google Stitch + Codex | |
+| Visualize the complete journey | Codex-generated static journey board by default; optional Google Stitch workspace | |
 | ↓ | | |
-| Validate every important state | Google Stitch renders + Codex | |
+| Validate every important state | Generated journey screens + Codex | |
 | ↓ | | |
 | Approve the visual proposal | Codex | **👤 You** |
 | ↓ | | |

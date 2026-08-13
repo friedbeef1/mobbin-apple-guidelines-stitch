@@ -37,7 +37,7 @@ Design Arc understands how requirements, evidence and screens affect one another
 
 Graph assistance is active by default for every new 0.3.0 review in both existing and new projects when no project or laptop safety control turns it off. That default does not rewrite a project preference, home, or laptop setting. An active review remains exactly as it started; its next clean review gains the 0.3.0 assistance.
 
-Graph assistance adds no approval gate. Objective Confirmation, the Direction Gate, the Stitch Gate, the active approval mode, and the full review of every important state remain exactly the same.
+Graph assistance adds no approval gate. Objective Confirmation, the Direction Gate, the Visual Proposal Gate, the active approval mode, and the full review of every important state remain exactly the same.
 
 The loop controls what happens and when Design Arc stops. The relationship map helps Design Arc understand what each correction affects; it advises the loop but never replaces it.
 
@@ -52,24 +52,26 @@ flowchart TD
 
     D --> E["Recommend a design direction<br/>Codex"]
     E --> F["Direction approval<br/>You + Codex"]
-    F --> G["Generate the complete proposal<br/>Google Stitch + Codex"]
+    F --> G["Generate one complete static journey board<br/>Codex by default"]
+    G -. "Canvas trigger + user chooses Stitch" .-> GS["Continue in an editable workspace<br/>Google Stitch + Codex"]
+    GS --> H
 
-    G --> H["Inspect every important state<br/>Google Stitch renders + Codex"]
+    G --> H["Inspect every important state<br/>Generated screens + Codex"]
     H --> I{"Anything incorrect?<br/>Codex verdict"}
 
     I -- "No" --> J["Final verdict<br/>Codex"]
     I -- "Yes" --> K["Find affected requirements, screens and states<br/>Codex relationship-map reasoning"]
     K --> L["Prepare one proposal-wide correction batch<br/>Codex"]
-    L --> M["Send corrections<br/>Google Stitch + Codex"]
+    L --> M["Send corrections to the active renderer<br/>Codex, or Google Stitch + Codex"]
     M --> H
 
     J --> N["Visual proposal approval<br/>You + Codex"]
     L -. "Maximum three correction rounds" .-> J
 ```
 
-Official Apple guidance governs Apple platform requirements; the applicable first-party guidance does the same for Android or web. Mobbin supplies product precedent only in Benchmarks mode. Google Stitch visualizes and revises the proposal, but does not prove that it is correct.
+Official Apple guidance governs Apple platform requirements; the applicable first-party guidance does the same for Android or web. Mobbin supplies product precedent only in Benchmarks mode. Codex generates the static journey board by default. Google Stitch is an optional editable visualization workspace; neither renderer proves that a proposal is correct.
 
-Design Arc bundles no MCP server, so the generic diagram does not invent an MCP name. Mobbin and Google Stitch are external services, not automatically MCPs. When a particular review actually uses an MCP, its run record and evidence labels name the exact configured MCP server or tool; otherwise they name the browser or manual access path used. Design Arc does not imply an official Mobbin or Google Stitch MCP integration.
+Design Arc bundles no MCP server, so the generic diagram does not invent a connection that is not configured. Mobbin and Google Stitch are external services, not automatically available to Codex. Google now provides an official Stitch MCP server and SDK, but Design Arc uses that route only when it is separately installed, configured, and authorized. When a particular review actually uses an MCP, its run record and evidence labels name the exact configured MCP server or tool; otherwise they name the browser or manual access path used. Design Arc does not imply an official Mobbin MCP integration.
 
 Use these controls when you want to inspect or change the assistance:
 
@@ -108,9 +110,19 @@ There is no global Design Arc home. A project with no confirmed Design Arc setup
 
 If Codex cannot create or pin the task, Design Arc saves confirmed preferences, says clearly that no home is ready, and gives you the exact title, starter card, and manual create-and-pin steps. Run `$design-arc home` later to report, create, recover, or repin the current project’s home.
 
-## What happens after Stitch renders
+## Choosing Codex or Stitch for the screens
 
-Design Arc corrects straightforward Stitch drift before asking you to approve the visual proposal. The initial proposal may be followed by at most three correction rounds for the whole proposal. Each round batches every known repairable mismatch, generates a new proposal, and reinspects the complete result.
+Design Arc generates one complete static journey board in Codex by default. It does not build disposable application logic merely to visualize the proposal. The board covers every important state, while separate high-resolution screens are generated only when closer inspection or a focused correction needs them.
+
+Stitch is optional and Design Arc recommends it when any one genuine canvas trigger occurs. Triggers include a second meaningful visual direction, changes across three or more screens, precise visual iteration, self-editing, another-day continuation, a board becoming difficult to review, unrelated drift after one Codex correction round, device variants, collaboration, or design export.
+
+The first recommendation explains the specific benefit. Design Arc may recommend Stitch again, briefly, only after another genuine trigger or materially larger scope. A Stitch recommendation is advisory and never transfers the proposal automatically. You can stay in Codex. That choice applies to the current editing phase; Design Arc may ask again if the work materially grows. If you say not to recommend Stitch again for this review, Design Arc suppresses every further recommendation for that review.
+
+When you choose Stitch, Design Arc preserves the approved requirements and compares the latest retrieved or supplied Stitch changes before accepting them as the current proposal. Stitch access—including an exact Stitch MCP when actually configured—remains separately authorized. Design Arc itself bundles no MCP.
+
+## What happens after screens render
+
+Design Arc corrects straightforward visual drift before asking you to approve the visual proposal. The initial proposal may be followed by at most three correction rounds for the whole proposal. Each round batches every known repairable mismatch, generates a new proposal, and reinspects the complete result. The same validation and correction rules apply whether Codex or Stitch renders the screens.
 
 If the proposal still does not match, Design Arc stops and flags every unresolved mismatch and the attempts already made. It asks sooner only when the correction would change the approved direction, requires new authorization, or cannot be proven in a prototype.
 
@@ -118,9 +130,9 @@ If the proposal still does not match, Design Arc stops and flags every unresolve
 
 > Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.
 
-Objective Confirmation establishes the product outcome before the audit or evidence gathering begins. The Direction Gate confirms the recommended design direction; the Stitch Gate confirms the validated visual proposal.
+Objective Confirmation establishes the product outcome before the audit or evidence gathering begins. The Direction Gate confirms the recommended design direction; the Visual Proposal Gate confirms the validated visual proposal. Existing 0.3.x review records may call this the Stitch Gate; it is the same gate, not an additional approval.
 
-| Approval mode | Objective | Stitch Gate |
+| Approval mode | Objective | Visual Proposal Gate |
 | --- | --- | --- |
 | **Guided** — recommended for a new project | Confirm; stop at Direction Gate | Stop for approval |
 | **Follow recommendation** | Confirm; continue at Direction Gate with the visibly marked recommendation | Stop for approval |
