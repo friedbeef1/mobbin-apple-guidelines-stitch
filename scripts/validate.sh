@@ -40,6 +40,7 @@ for required_file in \
   plugins/design-arc/skills/design-arc/references/graph-record.schema.json \
   plugins/design-arc/skills/design-arc/scripts/validate-graph-record.py \
   scripts/check-workflow-contracts.py \
+  scripts/compose-design-arc-skills.py \
   scripts/test-design-arc-docs.sh \
   scripts/test-design-arc-identity.sh \
   scripts/test-plugin-install.sh \
@@ -49,9 +50,14 @@ for required_file in \
   scripts/test-test-validate.sh \
   scripts/test-validate.sh \
   scripts/test-graph-records.py \
+  scripts/test-skill-composition.py \
   scripts/validate-graph-record.py \
   scripts/test-workflow-contracts.py \
-  scripts/validate.sh
+  scripts/validate.sh \
+  shared/design-arc/VERSION \
+  shared/design-arc/methodology.md \
+  shared/design-arc/overlays/codex.md \
+  shared/design-arc/overlays/claude.md
 do
   require_file "$required_file"
 done
@@ -79,6 +85,8 @@ sh "$repo_root/scripts/test-design-arc-identity.sh"
 sh "$repo_root/scripts/test-design-arc-docs.sh"
 python3 "$repo_root/scripts/check-workflow-contracts.py"
 python3 "$repo_root/scripts/test-workflow-contracts.py"
+python3 "$repo_root/scripts/compose-design-arc-skills.py" --platform codex --check
+python3 "$repo_root/scripts/test-skill-composition.py"
 if python3 "$repo_root/scripts/test-graph-records.py"
 then
   :
@@ -148,11 +156,13 @@ sh -n \
   "$repo_root/scripts/validate.sh"
 python3 - \
   "$repo_root/scripts/check-workflow-contracts.py" \
+  "$repo_root/scripts/compose-design-arc-skills.py" \
   "$repo_root/scripts/test-graph-records.py" \
   "$repo_root/scripts/test-plugin-upgrade-state.py" \
   "$repo_root/plugins/design-arc/skills/design-arc/scripts/validate-graph-record.py" \
   "$repo_root/scripts/validate-graph-record.py" \
-  "$repo_root/scripts/test-workflow-contracts.py" <<'PY'
+  "$repo_root/scripts/test-workflow-contracts.py" \
+  "$repo_root/scripts/test-skill-composition.py" <<'PY'
 from pathlib import Path
 import sys
 
@@ -206,7 +216,7 @@ if DESIGN_ARC_UPGRADE_BASELINE_SHA=55b03baf4a8dc0b52f0702f1236a865ac2c797b6 \
 then
   :
 else
-  fail 'isolated public 0.3.0 to 0.3.1 upgrade smoke failed'
+  fail 'isolated public 0.3.0 to 0.4.0 upgrade smoke failed'
 fi
 
 if git -C "$repo_root" rev-parse --is-inside-work-tree >/dev/null 2>&1

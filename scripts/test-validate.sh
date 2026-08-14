@@ -63,6 +63,7 @@ printf '%s\n' 'PASS: validator negative cases'
 sh "$repo_root/scripts/test-design-arc-identity.sh"
 sh "$repo_root/scripts/test-design-arc-docs.sh"
 python3 "$repo_root/scripts/test-workflow-contracts.py"
+python3 "$repo_root/scripts/test-skill-composition.py"
 python3 "$repo_root/scripts/test-graph-records.py"
 
 if validation_output=$("$validator" 2>&1)
@@ -82,6 +83,7 @@ for expected_output in \
   'PASS: isolated Design Arc plugin upgrade smoke' \
   'PASS: exact 0.2.3 downgrade ignores unsupported graph machinery and preserves graph records/state' \
   'PASS: credential, local-path, and media safety scans' \
+  'PASS: composition check enforces version parity and package containment' \
   'PASS: shell and Python syntax checks' \
   'PASS: Design Arc repository validation'
 do
