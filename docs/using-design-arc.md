@@ -8,6 +8,8 @@ How do I use Design Arc after installation?
 
 For guaranteed activation, start with `$design-arc`. Explicitly asking Codex to “use Design Arc” also invokes it directly, as does choosing a journey starter inside a confirmed Design Arc project home.
 
+In Claude Code, use `/design-arc:design-arc` for a review and add `setup`, `mode`, or `graph` when you want that focused action. Explicitly asking Claude Code to use Design Arc also invokes it directly. The Claude adapter does not create a Codex task or project home.
+
 If Codex selects Design Arc for a request that could benefit from it but you have not invoked it directly, it asks for your permission before beginning. Until you approve, it does not start Design Arc setup, inspect your product, gather Design Arc evidence, or create Design Arc project or review records. Automatic skill selection is not guaranteed, so use `$design-arc`, ask for Design Arc by name, or use the confirmed project home when you want to be certain it is active. Design Arc does not run continuously or silently in every task.
 
 Examples of requests for which Codex may offer Design Arc include:
@@ -30,6 +32,8 @@ $design-arc mode fully-automatic
 ```
 
 Natural-language requests such as “use Guidelines for this run” or “follow your recommendation this time” are one-run overrides; they do not rewrite the saved project preference.
+
+The workflow, evidence rules, approval modes, renderer choice, and design-only handoff boundary are shared. Invocation, saved preferences, active-review records, return paths, and adapter upgrades are platform-specific. Codex and Claude Code never merge, migrate, resume, or continue an active review across runtimes.
 
 ## More precise corrections in 0.3.0
 
@@ -97,6 +101,18 @@ Rebuild reconstructs only the current review from current authoritative workflow
 ## Coming back tomorrow
 
 Setup can add one approved, pinned home named `Design Arc — <Project Name>` to each project where you choose to use Design Arc.
+
+That pinned-home model is Codex-specific. In Claude Code, reopen the product project in a clean session and invoke `/design-arc:design-arc`; Claude reads only the project’s `.claude/design-arc.yaml` and Claude-local review state. A new session does not continue a Codex review, and an already-open session keeps the runtime and workflow version with which it started.
+
+The optional `CLAUDE.md` reminder is proposed separately during Claude setup and is written only after approval for that exact edit. Its complete marked block is:
+
+```markdown
+<!-- design-arc:reminder:start -->
+When a UI journey request matches Design Arc, suggest `/design-arc:design-arc` and wait for explicit approval unless the user invoked Design Arc directly. Never claim Design Arc ran unless the skill loaded.
+<!-- design-arc:reminder:end -->
+```
+
+Setup preserves every byte outside that block, never adds a duplicate, and leaves `CLAUDE.md` unchanged when permission is declined or safe insertion is unavailable. The reminder helps Claude offer the skill; it does not start Design Arc automatically and does not replace the slash command.
 
 | When | What you do |
 | --- | --- |

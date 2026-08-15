@@ -4,7 +4,20 @@
 
 What happens when Design Arc is upgraded or replaces an older plugin?
 
-## Upgrade once without rebuilding projects
+## Upgrade Codex and Claude Code independently
+
+The Codex and Claude Code packages share the Design Arc release version, but they are separate installations. Upgrading one adapter never installs, removes, or upgrades the other.
+
+| Adapter | Supported upgrade request | State that remains owned by it |
+| --- | --- | --- |
+| **Codex** | Ask Codex to upgrade Design Arc safely through its configured marketplace. | `.codex/design-arc.yaml`, homes, reviews, graphs, and product files |
+| **Claude Code** | `claude plugin update design-arc@design-arc-marketplace` | `.claude/design-arc.yaml`, approved reminder block, reviews, graphs, and product files |
+
+Before either change, verify the installed version, requested version, source, and route. Re-read installed state afterward instead of treating command success as proof. Start a new clean session in the adapter you changed; an already-open session keeps its pinned runtime and workflow version.
+
+A Claude Code adapter change preserves `.claude/design-arc.yaml`, the approved `CLAUDE.md` reminder block, reviews, graphs, product files, and active sessions byte-for-byte. It also leaves all Codex state untouched. The same boundary applies in reverse to a Codex upgrade. Neither route runs project setup or imports preferences during an adapter change.
+
+## Codex upgrade details
 
 Tell Codex:
 
@@ -91,5 +104,11 @@ To replace the former installed plugins, use this safe order:
 5. Start a new Codex task.
 
 The legacy project preference files remain untouched for recovery even after a confirmed import.
+
+## Claude preference import is one-time and optional
+
+Claude Code may propose importing portable values from `.codex/design-arc.yaml` only when `.claude/design-arc.yaml` does not exist. It validates the complete portable mapping, shows the proposed values and ignored Codex-only fields, and waits for explicit import approval. Only evidence mode, a valid benchmark provider, approval mode, and graph assistance can be copied.
+
+The operation creates Claude preferences without changing any Codex bytes. Homes, active reviews, review directories, and graph records never cross runtimes. A decline or malformed value imports nothing and routes to fresh Claude setup instead. Once Claude preferences exist, setup uses them and does not offer the import again.
 
 Next: [Trust and sources](trust-limitations-and-sources.md).

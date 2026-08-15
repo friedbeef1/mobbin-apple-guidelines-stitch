@@ -48,8 +48,8 @@ import sys
 
 text = Path(sys.argv[1]).read_text(encoding="utf-8")
 line_count = len(text.splitlines())
-if not 80 <= line_count <= 110:
-    raise SystemExit(f"FAIL: README must contain 80-110 lines; found {line_count}")
+if not 80 <= line_count <= 130:
+    raise SystemExit(f"FAIL: README must contain 80-130 lines; found {line_count}")
 
 ask_codex_instruction = "**Ask Codex:** Install the Design Arc plugin from\nhttps://github.com/friedbeef1/mobbin-apple-guidelines-stitch"
 if ask_codex_instruction not in text:
@@ -89,6 +89,9 @@ require_text "$readme" 'Move from uncertain product feedback to a complete desig
 require_text "$readme" 'Design Arc audits the real journey, checks decisions against current first-party platform guidance and inspected real-product journeys, recommends the strongest path, and designs every important state before implementation begins.'
 require_text "$readme" '## You need Design Arc if…'
 require_text "$readme" '## What Design Arc produces'
+require_text "$readme" '## Choose Codex or Claude Code'
+require_text "$readme" '| Use | Choose it when | Start Design Arc |'
+require_text "$readme" 'The workflow is shared; installation, invocation, project state, re-entry, and upgrades stay platform-specific.'
 require_text "$readme" '## The workflow'
 require_text "$readme" '## Documentation'
 require_text "$readme" '[Getting started](docs/getting-started.md)'
@@ -97,6 +100,8 @@ require_text "$readme" '[Evidence and methodology](docs/evidence-and-methodology
 require_text "$readme" '[Upgrades and migration](docs/upgrades-and-migration.md)'
 require_text "$readme" '[Trust and sources](docs/trust-limitations-and-sources.md)'
 require_text "$readme" '## Install'
+require_text "$readme" '**Ask Claude Code:** Add the Design Arc marketplace from'
+require_text "$readme" '/design-arc:design-arc setup'
 require_text "$readme" '## Start a review'
 require_text "$readme" 'Help me make our onboarding less confusing.'
 require_text "$readme" '## Trust'
@@ -111,6 +116,18 @@ done
 
 require_text "$getting_started" '# Getting started'
 require_text "$getting_started" 'How do I install Design Arc and begin my first review?'
+require_text "$getting_started" '## Choose your host'
+require_text "$getting_started" '| **Codex** | `$design-arc` | `.codex/design-arc.yaml` | A confirmed pinned project home |'
+require_text "$getting_started" '| **Claude Code** | `/design-arc:design-arc` | `.claude/design-arc.yaml` | A clean project session; optional approved `CLAUDE.md` reminder |'
+require_text "$getting_started" '## Install in Claude Code'
+require_text "$getting_started" 'claude plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch'
+require_text "$getting_started" 'claude plugin install design-arc@design-arc-marketplace'
+require_text "$getting_started" 'Start a new Claude Code session, then run:'
+require_text "$getting_started" '/design-arc:design-arc setup'
+require_text "$getting_started" 'Claude setup offers a one-time import only when `.claude/design-arc.yaml` is absent and `.codex/design-arc.yaml` contains a completely valid portable preference mapping.'
+require_text "$getting_started" 'It shows the proposed values, ignores Codex-only home and review state, and copies only after explicit import approval; the Codex file remains byte-for-byte unchanged.'
+require_text "$getting_started" 'Preference or import approval does not authorize a `CLAUDE.md` edit.'
+require_text "$getting_started" '[Anthropic’s plugin guide](https://code.claude.com/docs/en/discover-plugins)'
 require_text "$getting_started" 'Design Arc is installed once for your Codex profile. Each participating project keeps its own setup and may have one approved, pinned home.'
 require_text "$getting_started" 'Install Design Arc as a Codex plugin, not as a standalone skill.'
 require_text "$getting_started" 'Add https://github.com/friedbeef1/mobbin-apple-guidelines-stitch as a plugin marketplace using ref `main`, then install `design-arc@design-arc-marketplace`.'
@@ -126,6 +143,12 @@ require_text "$getting_started" 'Next: [Using Design Arc](using-design-arc.md).'
 
 require_text "$using_design_arc" '# Using Design Arc'
 require_text "$using_design_arc" 'For guaranteed activation, start with `$design-arc`.'
+require_text "$using_design_arc" 'In Claude Code, use `/design-arc:design-arc` for a review and add `setup`, `mode`, or `graph` when you want that focused action.'
+require_text "$using_design_arc" 'Codex and Claude Code never merge, migrate, resume, or continue an active review across runtimes.'
+require_text "$using_design_arc" 'The optional `CLAUDE.md` reminder is proposed separately during Claude setup and is written only after approval for that exact edit.'
+require_text "$using_design_arc" '<!-- design-arc:reminder:start -->'
+require_text "$using_design_arc" 'When a UI journey request matches Design Arc, suggest `/design-arc:design-arc` and wait for explicit approval unless the user invoked Design Arc directly. Never claim Design Arc ran unless the skill loaded.'
+require_text "$using_design_arc" '<!-- design-arc:reminder:end -->'
 require_text "$using_design_arc" 'If Codex selects Design Arc for a request that could benefit from it but you have not invoked it directly, it asks for your permission before beginning.'
 require_text "$using_design_arc" 'Automatic skill selection is not guaranteed'
 require_text "$using_design_arc" 'Design Arc does not run continuously or silently in every task.'
@@ -219,6 +242,11 @@ require_text "$evidence_methodology" 'Next: [Upgrades and migration](upgrades-an
 
 require_text "$upgrades_migration" '# Upgrades and migration'
 require_text "$upgrades_migration" 'What happens when Design Arc is upgraded or replaces an older plugin?'
+require_text "$upgrades_migration" '## Upgrade Codex and Claude Code independently'
+require_text "$upgrades_migration" 'Upgrading one adapter never installs, removes, or upgrades the other.'
+require_text "$upgrades_migration" 'claude plugin update design-arc@design-arc-marketplace'
+require_text "$upgrades_migration" 'A Claude Code adapter change preserves `.claude/design-arc.yaml`, the approved `CLAUDE.md` reminder block, reviews, graphs, product files, and active sessions byte-for-byte.'
+require_text "$upgrades_migration" 'Start a new clean session in the adapter you changed; an already-open session keeps its pinned runtime and workflow version.'
 require_text "$upgrades_migration" 'codex plugin remove fb-ux@fb-ux-marketplace'
 require_text "$upgrades_migration" 'codex plugin remove apple-guidelines-stitch@fb-ux-marketplace'
 require_text "$upgrades_migration" 'codex plugin marketplace remove fb-ux-marketplace'
@@ -237,6 +265,14 @@ require_text "$upgrades_migration" 'Next: [Trust and sources](trust-limitations-
 
 require_text "$trust_sources" '# Trust, limitations and sources'
 require_text "$trust_sources" 'What can Design Arc prove, access, implement, or release?'
+require_text "$trust_sources" 'Installing either adapter authorizes only that local plugin installation.'
+require_text "$trust_sources" 'Benchmark, browser, visualization, MCP, provider, and product access each require their own authorization, including approval for the data sent.'
+require_text "$trust_sources" '## Claude Code, Claude Desktop, and MCP'
+require_text "$trust_sources" 'Design Arc 0.4.0 is packaged and verified for Claude Code.'
+require_text "$trust_sources" 'It is not a Claude Desktop chat extension and does not install or configure a Desktop MCP server.'
+require_text "$trust_sources" 'Claude Desktop chat MCP configuration is separate from Claude Code configuration.'
+require_text "$trust_sources" '[Anthropic’s Claude Code Desktop guide](https://code.claude.com/docs/en/desktop)'
+require_text "$trust_sources" '[Anthropic’s MCP guide](https://code.claude.com/docs/en/mcp)'
 require_text "$trust_sources" 'access is not bundled by Design Arc'
 require_text "$trust_sources" 'Design Arc is not listed in Codex’s built-in recommended-plugin directory.'
 require_text "$trust_sources" 'no documented public third-party directory submission route'
@@ -291,6 +327,7 @@ headings = re.findall(r"^#{1,2} .+$", text, re.MULTILINE)
 expected_headings = [
     "# Design Arc",
     "## Documentation",
+    "## Choose Codex or Claude Code",
     "## You need Design Arc if…",
     "## What Design Arc produces",
     "## The workflow",
@@ -308,31 +345,31 @@ workflow = text[workflow_start:workflow_end]
 workflow_instruction = "**Only rows marked 👤 You require your involvement. Design Arc handles every unmarked step.**"
 workflow_table = """| Workflow step | Platform or source handling it | Human involvement |
 | --- | --- | --- |
-| Describe the outcome you want | Codex | **👤 You** |
+| Describe the outcome you want | Codex or Claude Code | **👤 You** |
 | ↓ | | |
-| Audit the current journey | Your website or app + Codex | |
+| Audit the current journey | Your website or app + the active host | |
 | ↓ | | |
-| Gather and label evidence | Mobbin + Codex in Benchmarks mode, and official platform guidance + Codex in Guidelines mode | |
+| Gather and label evidence | Mobbin + the active host in Benchmarks mode, and official platform guidance + the active host in Guidelines mode | |
 | ↓ | | |
-| Recommend a design direction | Codex | |
+| Recommend a design direction | Codex or Claude Code | |
 | ↓ | | |
-| Approve design direction | Codex | **👤 You** |
+| Approve design direction | Codex or Claude Code | **👤 You** |
 | ↓ | | |
-| Validate against platform guidance | Apple, Android, Material, or W3C guidance + Codex | |
+| Validate against platform guidance | Apple, Android, Material, or W3C guidance + the active host | |
 | ↓ | | |
-| Decide on any design motion | Relevant official guidance + inspected motion evidence + Codex | |
+| Decide on any design motion | Relevant official guidance + inspected motion evidence + the active host | |
 | ↓ | | |
-| Visualize the complete journey | Codex-generated static journey board by default; optional Google Stitch workspace | |
+| Visualize the complete journey | Static journey board in the active host by default; optional Google Stitch workspace | |
 | ↓ | | |
-| Validate every important state | Generated journey screens + Codex | |
+| Validate every important state | Generated journey screens + the active host | |
 | ↓ | | |
-| Approve the visual proposal | Codex | **👤 You** |
+| Approve the visual proposal | Codex or Claude Code | **👤 You** |
 | ↓ | | |
-| Prepare the design handoff | Codex | |"""
+| Prepare the design handoff | Codex or Claude Code | |"""
 
 def validate_workflow(candidate):
     expected_table = f"## The workflow\n\n{workflow_instruction}\n\n{workflow_table}"
-    following_prose = "Setup resolves two independent choices: how evidence is gathered and where Codex pauses for approval."
+    following_prose = "Setup resolves two independent choices: how evidence is gathered and where Design Arc pauses for approval."
     if not candidate.startswith(expected_table):
         raise ValueError("workflow must use the exact instruction, table header, separator, and ordered rows")
     if not candidate[len(expected_table):].startswith(f"\n\n{following_prose}"):
@@ -348,13 +385,13 @@ for mutated_workflow in (
     workflow.replace(workflow_instruction, "**Design Arc handles every step.**", 1),
     workflow.replace("| Workflow step | Platform or source handling it | Human involvement |", "| Workflow | Platform | Human |", 1),
     workflow.replace(
-        "| Describe the outcome you want | Codex | **👤 You** |\n| ↓ | | |\n| Audit the current journey | Your website or app + Codex | |",
-        "| Audit the current journey | Your website or app + Codex | |\n| ↓ | | |\n| Describe the outcome you want | Codex | **👤 You** |",
+        "| Describe the outcome you want | Codex or Claude Code | **👤 You** |\n| ↓ | | |\n| Audit the current journey | Your website or app + the active host | |",
+        "| Audit the current journey | Your website or app + the active host | |\n| ↓ | | |\n| Describe the outcome you want | Codex or Claude Code | **👤 You** |",
         1,
     ),
     workflow.replace(
-        "| Prepare the design handoff | Codex | |\n\nSetup resolves",
-        "| Prepare the design handoff | Codex | |\n| Record a follow-up | Codex | |\n\nSetup resolves",
+        "| Prepare the design handoff | Codex or Claude Code | |\n\nSetup resolves",
+        "| Prepare the design handoff | Codex or Claude Code | |\n| Record a follow-up | Codex or Claude Code | |\n\nSetup resolves",
         1,
     ),
 ):

@@ -79,6 +79,7 @@ for expected_output in \
   'PASS: plugin and embedded skill validation for Design Arc' \
   'PASS: accepted valid fixture valid.json' \
   'PASS: isolated Design Arc plugin installation smoke' \
+  'PASS: isolated Claude Code Design Arc marketplace install and load smoke' \
   'PASS: isolated Design Arc plugin migration smoke' \
   'PASS: isolated Design Arc plugin upgrade smoke' \
   'PASS: exact 0.2.3 downgrade ignores unsupported graph machinery and preserves graph records/state' \

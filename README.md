@@ -14,6 +14,17 @@ Design Arc audits the real journey, checks decisions against current first-party
 | [Upgrades and migration](docs/upgrades-and-migration.md) | Safe upgrades, preservation, and legacy preferences. |
 | [Trust and sources](docs/trust-limitations-and-sources.md) | Boundaries, limitations, and trusted sources. |
 
+## Choose Codex or Claude Code
+
+Use the adapter for the host where you want to do the review. Both adapters use the same Design Arc methodology and approval gates.
+
+| Use | Choose it when | Start Design Arc |
+| --- | --- | --- |
+| **Codex** | Your product work already runs in Codex and you want a pinned project home for returning later. | `$design-arc` |
+| **Claude Code** | Your product work runs in Claude Code and you want a namespaced skill plus an optional project reminder. | `/design-arc:design-arc` |
+
+The workflow is shared; installation, invocation, project state, re-entry, and upgrades stay platform-specific.
+
 ## You need Design Arc if…
 
 - Feedback such as “this feels confusing” keeps producing circular discussion instead of a testable product decision.
@@ -29,7 +40,7 @@ Design Arc audits the real journey, checks decisions against current first-party
 - Evidence appropriate to the product and platform, with current links, limitations, and observed-versus-inferred status.
 - One unmistakably recommended direction plus meaningful alternatives, benefits, risks, and trade-offs.
 - A complete visual proposal covering entry, transition, loading, empty, error, success, cancellation, and recovery states.
-- Decision-ready evidence in the Codex task: journey map, key renders, identifiers, validation verdict, gate record, and next authorized owner.
+- Decision-ready evidence in the active Codex task or Claude Code session: journey map, key renders, identifiers, validation verdict, gate record, and next authorized owner.
 
 ## The workflow
 
@@ -37,44 +48,47 @@ Design Arc audits the real journey, checks decisions against current first-party
 
 | Workflow step | Platform or source handling it | Human involvement |
 | --- | --- | --- |
-| Describe the outcome you want | Codex | **👤 You** |
+| Describe the outcome you want | Codex or Claude Code | **👤 You** |
 | ↓ | | |
-| Audit the current journey | Your website or app + Codex | |
+| Audit the current journey | Your website or app + the active host | |
 | ↓ | | |
-| Gather and label evidence | Mobbin + Codex in Benchmarks mode, and official platform guidance + Codex in Guidelines mode | |
+| Gather and label evidence | Mobbin + the active host in Benchmarks mode, and official platform guidance + the active host in Guidelines mode | |
 | ↓ | | |
-| Recommend a design direction | Codex | |
+| Recommend a design direction | Codex or Claude Code | |
 | ↓ | | |
-| Approve design direction | Codex | **👤 You** |
+| Approve design direction | Codex or Claude Code | **👤 You** |
 | ↓ | | |
-| Validate against platform guidance | Apple, Android, Material, or W3C guidance + Codex | |
+| Validate against platform guidance | Apple, Android, Material, or W3C guidance + the active host | |
 | ↓ | | |
-| Decide on any design motion | Relevant official guidance + inspected motion evidence + Codex | |
+| Decide on any design motion | Relevant official guidance + inspected motion evidence + the active host | |
 | ↓ | | |
-| Visualize the complete journey | Codex-generated static journey board by default; optional Google Stitch workspace | |
+| Visualize the complete journey | Static journey board in the active host by default; optional Google Stitch workspace | |
 | ↓ | | |
-| Validate every important state | Generated journey screens + Codex | |
+| Validate every important state | Generated journey screens + the active host | |
 | ↓ | | |
-| Approve the visual proposal | Codex | **👤 You** |
+| Approve the visual proposal | Codex or Claude Code | **👤 You** |
 | ↓ | | |
-| Prepare the design handoff | Codex | |
+| Prepare the design handoff | Codex or Claude Code | |
 
-Setup resolves two independent choices: how evidence is gathered and where Codex pauses for approval. Every route establishes the objective before inspection or research, audits the actual product, preserves platform rules, and stops at a design-only handoff boundary.
+Setup resolves two independent choices: how evidence is gathered and where Design Arc pauses for approval. Every route establishes the objective before inspection or research, audits the actual product, preserves platform rules, and stops at a design-only handoff boundary.
 
-Codex produces a consolidated static journey board first, without building disposable app logic. Design Arc recommends the optional Stitch workspace early when one genuine canvas need appears—such as multi-screen editing, visual variants, another-day continuation, collaboration, or export—but you always choose whether to move.
+The active host produces a consolidated static journey board first, without building disposable app logic. Design Arc recommends the optional Stitch workspace early when one genuine canvas need appears—such as multi-screen editing, visual variants, another-day continuation, collaboration, or export—but you always choose whether to move.
 
 ## Install
 
 **Ask Codex:** Install the Design Arc plugin from
 https://github.com/friedbeef1/mobbin-apple-guidelines-stitch
 
-Codex handles the installation and may request download permission.
+**Ask Claude Code:** Add the Design Arc marketplace from
+https://github.com/friedbeef1/mobbin-apple-guidelines-stitch and install `design-arc@design-arc-marketplace`.
+
+Follow the exact platform commands in [Getting started](docs/getting-started.md). Installation may require download permission.
 
 ## Start a review
 
 `$design-arc` Help me make our onboarding less confusing.
 
-Use `$design-arc`, ask for Design Arc by name, or choose a starter from the project home. Codex may recognize an unprefixed journey request and offer Design Arc, but automatic skill selection is not guaranteed.
+In Claude Code, start with `/design-arc:design-arc` and run `/design-arc:design-arc setup` once per participating project. In Codex, use `$design-arc`, ask for Design Arc by name, or choose a starter from the project home. Either host may recognize an unprefixed journey request and offer Design Arc, but automatic skill selection is not guaranteed.
 [Learn how to use Design Arc.](docs/using-design-arc.md)
 
 ## Trust

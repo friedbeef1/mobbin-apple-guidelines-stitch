@@ -10,7 +10,9 @@ Apple Human Interface Guidelines are first-party authority for Apple targets. Fo
 
 Mobbin can be selected as a benchmark provider in Benchmarks mode. It remains an external source requiring separate access and authorization. Its examples are observed precedent, not a bundled integration or a source to copy. If access is unavailable, Design Arc stops and offers either a one-run Guidelines fallback or a confirmed saved switch; it never silently degrades or calls the result benchmark-backed.
 
-Codex generates static journey boards by default. Google Stitch is an optional external visualization workspace requiring separate access and payload authorization. Either route must still return a reviewable journey map, key renders, identifiers, and validation verdict in the task. Apple, Google, Mobbin, and Stitch access is not bundled by Design Arc, and none of those services authorizes product-source changes.
+Codex or Claude Code generates static journey boards in the active host by default. Google Stitch is an optional external visualization workspace requiring separate access and payload authorization. Either route must still return a reviewable journey map, key renders, identifiers, and validation verdict in the active task or session. Apple, Google, Mobbin, and Stitch access is not bundled by Design Arc, and none of those services authorizes product-source changes.
+
+Installing either adapter authorizes only that local plugin installation. Benchmark, browser, visualization, MCP, provider, and product access each require their own authorization, including approval for the data sent. Installing Design Arc never supplies credentials, accepts provider terms, enables a connector, or authorizes product-source changes.
 
 Stitch prototypes are design evidence, not staging or device implementation proof. A prototype can communicate an intended interaction, but it cannot prove runtime quality.
 
@@ -25,6 +27,14 @@ A failed graph record reduces assistance rather than blocking the review: Design
 ## Plugin discovery boundary
 
 Design Arc is not listed in Codex’s built-in recommended-plugin directory. Codex CLI 0.146 introduced workspace plugin publishing, but this account exposes no `codex plugin publish` command and current official documentation provides no documented public third-party directory submission route. The GitHub marketplace commands in [Getting started](getting-started.md) are therefore the canonical public installation path. Do not claim that bare-name discovery, skills.sh, or an official marketplace listing is available. See the [official Codex 0.146 update](https://learn.chatgpt.com/docs/whats-new#organize-sessions-and-extend-codex-cli-01460).
+
+## Claude Code, Claude Desktop, and MCP
+
+Design Arc 0.4.0 is packaged and verified for Claude Code. Its Claude package contains one skill and no agents, hooks, MCP servers, or LSP servers. The namespaced slash command and `.claude` project state belong to Claude Code.
+
+It is not a Claude Desktop chat extension and does not install or configure a Desktop MCP server. Claude Desktop’s Code surface may share Claude Code plugin settings, but this release does not claim Desktop visual or interaction QA. Claude Desktop chat MCP configuration is separate from Claude Code configuration. An MCP that happens to be configured in either product is still external to Design Arc and requires its own access, authentication, tool-use, and payload authorization.
+
+For platform details, use [Anthropic’s Claude Code Desktop guide](https://code.claude.com/docs/en/desktop) and [Anthropic’s MCP guide](https://code.claude.com/docs/en/mcp) as secondary references. Design Arc’s own package inventory and authorization boundary above remain the release contract.
 
 ## Evidence, implementation, and release boundaries
 
