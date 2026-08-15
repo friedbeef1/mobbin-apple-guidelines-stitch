@@ -10,6 +10,7 @@ Design Arc audits the real journey, checks decisions against current first-party
 | --- | --- |
 | [Getting started](docs/getting-started.md) | Simple installation and first use. |
 | [Using Design Arc](docs/using-design-arc.md) | Project homes, approvals, and everyday review work. |
+| [FAQ](docs/faq.md) | Plain-language answers about project homes, commands, and returning later. |
 | [Advanced controls](docs/advanced-controls.md) | Optional commands, graph controls, and technical troubleshooting. |
 | [Evidence and methodology](docs/evidence-and-methodology.md) | Evidence modes, complete states, motion, and validation. |
 | [Upgrades and migration](docs/upgrades-and-migration.md) | Safe upgrades, preservation, and legacy preferences. |

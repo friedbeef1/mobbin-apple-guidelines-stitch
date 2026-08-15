@@ -52,18 +52,25 @@ advanced_controls="$repo_root/docs/advanced-controls.md"
 evidence_methodology="$repo_root/docs/evidence-and-methodology.md"
 upgrades_migration="$repo_root/docs/upgrades-and-migration.md"
 trust_sources="$repo_root/docs/trust-limitations-and-sources.md"
+faq="$repo_root/docs/faq.md"
 operating_layer="$repo_root/docs/codex-operating-layer.md"
 behavioral_validation="$repo_root/docs/validation/behavioral-validation.md"
 prompts="$repo_root/examples/prompts.md"
 motion_sources="$repo_root/docs/trusted-sources/motion.md"
 trusted_source_library="$repo_root/docs/trusted-sources/README.md"
 visualization_sources="$repo_root/docs/trusted-sources/visualization.md"
-shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)'
+shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [FAQ](faq.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)'
 
-for file in "$readme" "$getting_started" "$using_design_arc" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$trust_sources" "$operating_layer" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
+for file in "$readme" "$getting_started" "$using_design_arc" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$trust_sources" "$operating_layer" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
 do
   [ -f "$file" ] || fail "missing required documentation: ${file#"$repo_root/"}"
 done
+
+require_text "$readme" '[FAQ](docs/faq.md)'
+require_text "$faq" '## What is a project home?'
+require_text "$faq" 'A project home is an optional pinned Codex task for one particular product.'
+require_text "$faq" 'It does not contain your application, create another project, or run continuously.'
+require_text "$faq" 'Claude Code does not use project homes.'
 
 python3 - "$readme" <<'PY'
 from pathlib import Path
