@@ -374,9 +374,9 @@ Recheck the complete selected direction against current first-party guidance for
 
 ### Choose and manage the visualization surface
 
-Generate one complete static journey board in Codex by default; do not build application logic, navigation logic, APIs, databases, production components, or throwaway prototype infrastructure merely to visualize the proposal. Include every material entry, transition, loading, empty, error, success, cancellation, and recovery state. Prefer one cohesive board first; generate an individual high-resolution screen only when closer inspection or a focused correction requires it.
+Confirm that the active host is Codex before recommending a visualization path. Create static screen images and complete journey boards directly in Codex by default. Do not build application logic, navigation logic, APIs, databases, production components, or throwaway prototype infrastructure merely to visualize the proposal. Include every material entry, transition, loading, empty, error, success, cancellation, and recovery state. Prefer one cohesive board first; generate an individual high-resolution screen only when closer inspection or a focused correction requires it.
 
-Google Stitch is an optional renderer and persistent design workspace, not a mandatory workflow stage or evidence authority. Recommend it early when sustained visual editing is becoming easier on a canvas than through bounded image revisions in Codex.
+Google Stitch is valuable for canvas-based editing, multiple visual alternatives, and sustained visual refinement. Recommend Stitch when those benefits materially help the review, while keeping direct Codex generation as the default. Stitch remains optional and separately authorized.
 
 Recommend Stitch when any one genuine trigger occurs: a second meaningful visual direction; a change spanning three or more screens; precise layout, spacing, or styling iteration; user-directed canvas editing; likely continuation on another day; a journey becoming difficult to review as one board; noticeable unrelated drift after one Codex correction round; device variants; collaboration; or design export.
 
@@ -386,9 +386,9 @@ The first recommendation names the specific benefit; a later recommendation is b
 
 A Stitch recommendation is advisory: never transfer automatically, and continuing in Codex remains available. Treat `stay in Codex` as a choice for the current editing phase, not a permanent suppression. If the user says not to recommend Stitch again for this review, suppress every further Stitch recommendation for that review.
 
-When Stitch is selected, preserve the approved journey requirements, require separately authorized access, and compare retrieved or supplied changes before treating them as the current proposal. A Stitch share link, exported screens, Figma or HTML/CSS export, or `DESIGN.md` may support the return path. Use an exact configured Stitch MCP server or tool only when it is actually available and separately authorized; never imply that Design Arc bundles one. Retrieval means “inspect and show what changed,” not “silently approve or overwrite the direction.”
+Before using Stitch, prepare the complete evidence-grounded journey, requirements, and important-state inventory. When Stitch is selected, preserve the approved journey requirements, require separately authorized access, and compare retrieved or supplied changes before treating them as the current proposal. A Stitch share link, exported screens, Figma or HTML/CSS export, or `DESIGN.md` may support the return path. Use an exact configured Stitch MCP server or tool only when it is actually available and separately authorized; never imply that Design Arc bundles one. Retrieval means “inspect and show what changed,” not “silently approve or overwrite the direction.”
 
-Apply the same complete-state conformance matrix, proposal-wide correction budget, full reinspection, three-verdict standard, and Visual Proposal Gate regardless of renderer. `Visual Proposal Gate` is the renderer-neutral user-facing name for the existing `Stitch Gate` contract in 0.3.x records; do not create an additional gate or require preference migration.
+Stitch is a visualization tool, not an evidence authority. The active host must validate returned screens and apply the existing proposal-wide correction loop of up to three correction rounds. Apply the same complete-state conformance matrix, full reinspection, three-verdict standard, and Visual Proposal Gate regardless of renderer. `Visual Proposal Gate` is the renderer-neutral user-facing name for the existing `Stitch Gate` contract in 0.3.x records; do not create an additional gate or require preference migration.
 
 ### Specify motion before visualization
 

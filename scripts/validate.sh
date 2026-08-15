@@ -58,6 +58,7 @@ for required_file in \
   scripts/test-plugin-migration.sh \
   scripts/test-plugin-upgrade-state.py \
   scripts/test-plugin-upgrade.sh \
+  scripts/test-runtime-visualization-contracts.py \
   scripts/test-test-validate.sh \
   scripts/test-validate.sh \
   scripts/test-graph-records.py \
@@ -100,6 +101,7 @@ sh "$repo_root/scripts/test-design-arc-docs.sh"
 python3 "$repo_root/scripts/check-workflow-contracts.py"
 python3 "$repo_root/scripts/check-claude-state-contracts.py"
 python3 "$repo_root/scripts/test-workflow-contracts.py"
+python3 "$repo_root/scripts/test-runtime-visualization-contracts.py"
 python3 "$repo_root/scripts/test-claude-state-contracts.py"
 python3 "$repo_root/scripts/compose-design-arc-skills.py" --platform codex --check
 python3 "$repo_root/scripts/compose-design-arc-skills.py" --platform claude --check
@@ -191,6 +193,7 @@ python3 - \
   "$repo_root/scripts/validate-graph-record.py" \
   "$repo_root/scripts/test-workflow-contracts.py" \
   "$repo_root/scripts/test-claude-state-contracts.py" \
+  "$repo_root/scripts/test-runtime-visualization-contracts.py" \
   "$repo_root/scripts/test-skill-composition.py" <<'PY'
 from pathlib import Path
 import sys

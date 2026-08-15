@@ -357,11 +357,11 @@ MUTATIONS = {
         "Design approval authorizes implementation and live deployment.",
     ),
     "renderer default avoids disposable app logic": (
-        "Generate one complete static journey board in Codex by default; do not build application logic, navigation logic, APIs, databases, production components, or throwaway prototype infrastructure merely to visualize the proposal.",
+        "Confirm that the active host is Codex before recommending a visualization path. Create static screen images and complete journey boards directly in Codex by default.",
         "Build a coded interactive application prototype by default.",
     ),
     "Stitch remains optional": (
-        "Google Stitch is an optional renderer and persistent design workspace, not a mandatory workflow stage or evidence authority.",
+        "Google Stitch is valuable for canvas-based editing, multiple visual alternatives, and sustained visual refinement. Recommend Stitch when those benefits materially help the review, while keeping direct Codex generation as the default. Stitch remains optional and separately authorized.",
         "Google Stitch is mandatory for every Design Arc review.",
     ),
     "single-trigger recommendation threshold": (
@@ -385,7 +385,7 @@ MUTATIONS = {
         "Continue recommending Stitch during the review after the user opts out.",
     ),
     "renderer-neutral validation": (
-        "Apply the same complete-state conformance matrix, proposal-wide correction budget, full reinspection, three-verdict standard, and Visual Proposal Gate regardless of renderer.",
+        "Stitch is a visualization tool, not an evidence authority. The active host must validate returned screens and apply the existing proposal-wide correction loop of up to three correction rounds.",
         "Use a lighter validation standard for Codex-generated screens.",
     ),
     "saved project resolution": (

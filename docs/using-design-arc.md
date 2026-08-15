@@ -75,7 +75,16 @@ flowchart TD
     L -. "Maximum three correction rounds" .-> J
 ```
 
-Official Apple guidance governs Apple platform requirements; the applicable first-party guidance does the same for Android or web. Mobbin supplies product precedent only in Benchmarks mode. The active host generates the static journey board by default. Google Stitch is an optional editable visualization workspace; neither renderer proves that a proposal is correct.
+Official Apple guidance governs Apple platform requirements; the applicable first-party guidance does the same for Android or web. Mobbin supplies product precedent only in Benchmarks mode.
+
+Visualization adapts to the active host:
+
+- **Codex** creates static screen images and complete journey boards directly by default. Stitch remains optional, and is recommended when canvas editing, multiple visual alternatives, or sustained refinement materially helps.
+- **Claude Code** does not claim native image generation. It can prepare HTML/CSS, SVG, specifications, and lightweight static journey boards, and recommends Stitch early for polished mockups, visual exploration, editable layouts, or continued refinement. It does not send users to Codex unless they request a cross-platform handoff.
+
+Before Stitch is used, the active host prepares the complete evidence-grounded journey, requirements, and important-state inventory. Stitch visualizes rather than establishes correctness; Codex or Claude Code validates the returned screens and applies the same proposal-wide correction loop of up to three rounds. Stitch remains optional and separately authorized.
+
+Claude's decision prompt is: “Claude can prepare a lightweight static journey board here. For polished, editable screen mockups, I recommend a Stitch-ready visual proposal. Which would you prefer?”
 
 Design Arc bundles no MCP server, so the generic diagram does not invent a connection that is not configured. Mobbin and Google Stitch are external services, not automatically available to the active host. Google now provides an official Stitch MCP server and SDK, but Design Arc uses that route only when it is separately installed, configured, and authorized. When a particular review actually uses an MCP, its run record and evidence labels name the exact configured MCP server or tool; otherwise they name the browser or manual access path used. Design Arc does not imply an official Mobbin MCP integration.
 

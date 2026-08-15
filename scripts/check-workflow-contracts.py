@@ -87,8 +87,11 @@ REQUIRED_CONTRACTS = {
         "Design approval never authorizes source implementation, staging, live deployment, release, destructive changes, provider changes, or work outside the authorized integration lane.",
     ),
     "renderer choice and default": (
-        "Generate one complete static journey board in Codex by default; do not build application logic, navigation logic, APIs, databases, production components, or throwaway prototype infrastructure merely to visualize the proposal.",
-        "Google Stitch is an optional renderer and persistent design workspace, not a mandatory workflow stage or evidence authority.",
+        "Confirm that the active host is Codex before recommending a visualization path.",
+        "Create static screen images and complete journey boards directly in Codex by default.",
+        "Google Stitch is valuable for canvas-based editing, multiple visual alternatives, and sustained visual refinement.",
+        "Recommend Stitch when those benefits materially help the review, while keeping direct Codex generation as the default.",
+        "Stitch remains optional and separately authorized.",
     ),
     "low-threshold Stitch recommendation": (
         "Recommend Stitch when any one genuine trigger occurs: a second meaningful visual direction; a change spanning three or more screens; precise layout, spacing, or styling iteration; user-directed canvas editing; likely continuation on another day; a journey becoming difficult to review as one board; noticeable unrelated drift after one Codex correction round; device variants; collaboration; or design export.",
@@ -100,8 +103,9 @@ REQUIRED_CONTRACTS = {
         "If the user says not to recommend Stitch again for this review, suppress every further Stitch recommendation for that review.",
     ),
     "renderer-neutral validation": (
-        "Apply the same complete-state conformance matrix, proposal-wide correction budget, full reinspection, three-verdict standard, and Visual Proposal Gate regardless of renderer.",
-        "When Stitch is selected, preserve the approved journey requirements, require separately authorized access, and compare retrieved or supplied changes before treating them as the current proposal.",
+        "Before using Stitch, prepare the complete evidence-grounded journey, requirements, and important-state inventory.",
+        "Stitch is a visualization tool, not an evidence authority.",
+        "The active host must validate returned screens and apply the existing proposal-wide correction loop of up to three correction rounds.",
     ),
     "project home resolution": (
         "Call `list_projects` before any home lookup or creation and resolve the current saved project's `projectId` and saved-project name; use the workspace-folder name only when the saved-project name is unavailable.",
