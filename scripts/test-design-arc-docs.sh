@@ -24,6 +24,15 @@ require_text() {
   grep -F "$text" "$file" >/dev/null || fail "missing required text in ${file#"$repo_root/"}: $text"
 }
 
+forbid_text() {
+  file=$1
+  text=$2
+  if grep -F "$text" "$file" >/dev/null
+  then
+    fail "forbidden text remains in ${file#"$repo_root/"}: $text"
+  fi
+}
+
 readme="$repo_root/README.md"
 getting_started="$repo_root/docs/getting-started.md"
 using_design_arc="$repo_root/docs/using-design-arc.md"
@@ -142,50 +151,64 @@ require_text "$getting_started" 'codex plugin marketplace add /path/to/mobbin-ap
 require_text "$getting_started" 'Next: [Using Design Arc](using-design-arc.md).'
 
 require_text "$using_design_arc" '# Using Design Arc'
-require_text "$using_design_arc" 'For guaranteed activation, start with `$design-arc`.'
+require_text "$using_design_arc" 'In Codex, guaranteed activation starts with `$design-arc`.'
 require_text "$using_design_arc" 'In Claude Code, use `/design-arc:design-arc` for a review and add `setup`, `mode`, or `graph` when you want that focused action.'
 require_text "$using_design_arc" 'Codex and Claude Code never merge, migrate, resume, or continue an active review across runtimes.'
 require_text "$using_design_arc" 'The optional `CLAUDE.md` reminder is proposed separately during Claude setup and is written only after approval for that exact edit.'
 require_text "$using_design_arc" '<!-- design-arc:reminder:start -->'
 require_text "$using_design_arc" 'When a UI journey request matches Design Arc, suggest `/design-arc:design-arc` and wait for explicit approval unless the user invoked Design Arc directly. Never claim Design Arc ran unless the skill loaded.'
 require_text "$using_design_arc" '<!-- design-arc:reminder:end -->'
-require_text "$using_design_arc" 'If Codex selects Design Arc for a request that could benefit from it but you have not invoked it directly, it asks for your permission before beginning.'
+require_text "$using_design_arc" 'If the active host selects Design Arc for a suitable request that did not invoke it directly, it asks for permission before beginning.'
 require_text "$using_design_arc" 'Automatic skill selection is not guaranteed'
 require_text "$using_design_arc" 'Design Arc does not run continuously or silently in every task.'
 require_text "$using_design_arc" 'How do I use Design Arc after installation?'
-require_text "$using_design_arc" '| First day | Open the project, run `$design-arc setup`, choose the two project preferences, and approve or decline its proposed home. |'
-require_text "$using_design_arc" '| Next day | Open that project’s pinned `Design Arc — <Project Name>` task and describe the journey in ordinary language. |'
-require_text "$using_design_arc" '| New product | Open the new saved project and run setup there once. Its preferences and optional home stay separate from every other product. |'
+require_text "$using_design_arc" 'The active host is Codex for the Codex adapter and Claude Code for the Claude adapter.'
+require_text "$using_design_arc" '### Graph commands by host'
+require_text "$using_design_arc" '/design-arc:design-arc graph on'
+require_text "$using_design_arc" '/design-arc:design-arc graph off'
+require_text "$using_design_arc" '/design-arc:design-arc graph explain'
+require_text "$using_design_arc" '/design-arc:design-arc graph rebuild'
+require_text "$using_design_arc" '/design-arc:design-arc graph clear'
+require_text "$using_design_arc" '/design-arc:design-arc graph global off'
+require_text "$using_design_arc" '/design-arc:design-arc graph global on'
+require_text "$using_design_arc" '## Return to a project'
+require_text "$using_design_arc" '| When | Codex | Claude Code |'
+require_text "$using_design_arc" '| First day | Run `$design-arc setup`, confirm preferences, and approve or decline the proposed project home. | Run `/design-arc:design-arc setup`, confirm preferences, and separately approve or decline the optional `CLAUDE.md` reminder. |'
+require_text "$using_design_arc" '| Next day | Open the pinned `Design Arc — <Project Name>` task and describe the journey. | Open the product project in a new clean Claude Code session and invoke `/design-arc:design-arc`. |'
+require_text "$using_design_arc" '| New product | Open the new saved project and run `$design-arc setup`; its optional home remains separate. | Open the new product project and run `/design-arc:design-arc setup`; its Claude preferences remain separate. |'
+require_text "$using_design_arc" '### Codex project homes'
 require_text "$using_design_arc" 'Each home is a launchpad, not a workspace for the design review.'
 require_text "$using_design_arc" 'Every journey starter opens a clean local task in that same saved project'
 require_text "$using_design_arc" 'There is no global Design Arc home.'
-require_text "$using_design_arc" 'A project with no confirmed Design Arc setup receives no home and no sidebar item.'
+require_text "$using_design_arc" 'A project with no confirmed Codex setup receives no home and no sidebar item.'
 require_text "$using_design_arc" 'Design Arc reuses an existing home for the same title and project instead of creating a duplicate.'
 require_text "$using_design_arc" 'If it finds extra same-project homes, it reports them for you to clean up; it never deletes them.'
 require_text "$using_design_arc" 'If Codex cannot create or pin the task, Design Arc saves confirmed preferences, says clearly that no home is ready, and gives you the exact title, starter card, and manual create-and-pin steps.'
 require_text "$using_design_arc" 'Help me make our onboarding less confusing.'
 require_text "$using_design_arc" 'Audit how customers complete checkout and propose a better complete journey.'
 require_text "$using_design_arc" 'Redesign account recovery so people can get back in without weakening security.'
-require_text "$using_design_arc" 'Design Arc generates one complete static journey board in Codex by default.'
+require_text "$using_design_arc" '## Choosing the active host or Stitch for the screens'
+require_text "$using_design_arc" 'Design Arc generates one complete static journey board in the active host by default: Codex for the Codex adapter and Claude Code for the Claude adapter.'
 require_text "$using_design_arc" 'It does not build disposable application logic merely to visualize the proposal.'
 require_text "$using_design_arc" 'Stitch is optional and Design Arc recommends it when any one genuine canvas trigger occurs.'
 require_text "$using_design_arc" 'A Stitch recommendation is advisory and never transfers the proposal automatically.'
+require_text "$using_design_arc" 'You can stay in the active host.'
 require_text "$using_design_arc" 'If you say not to recommend Stitch again for this review, Design Arc suppresses every further recommendation for that review.'
-require_text "$using_design_arc" 'The same validation and correction rules apply whether Codex or Stitch renders the screens.'
+require_text "$using_design_arc" 'The same validation and correction rules apply whether the active host or Stitch renders the screens.'
 require_text "$using_design_arc" 'Design Arc corrects straightforward visual drift before asking you to approve the visual proposal.'
 require_text "$using_design_arc" 'The initial proposal may be followed by at most three correction rounds for the whole proposal.'
 require_text "$using_design_arc" 'Each round batches every known repairable mismatch, generates a new proposal, and reinspects the complete result.'
 require_text "$using_design_arc" 'If the proposal still does not match, Design Arc stops and flags every unresolved mismatch and the attempts already made.'
 require_text "$using_design_arc" '| Approval mode | Objective | Visual Proposal Gate |'
-require_text "$using_design_arc" 'Select evidence mode<br/>Codex; You when a choice is required'
+require_text "$using_design_arc" 'Select evidence mode<br/>Active host; You when a choice is required'
 require_text "$using_design_arc" 'C -- "Guidelines mode" --> C1'
 require_text "$using_design_arc" 'Official Apple Human Interface Guidelines for Apple,'
 require_text "$using_design_arc" 'Android and Material guidance for Android,'
-require_text "$using_design_arc" 'or W3C guidance for web + Codex'
+require_text "$using_design_arc" 'or W3C guidance for web + active host'
 require_text "$using_design_arc" 'C -- "Benchmarks mode" --> C2'
 require_text "$using_design_arc" 'Mobbin journey benchmarks + applicable'
-require_text "$using_design_arc" 'Google Stitch + Codex'
-require_text "$using_design_arc" 'Generated screens + Codex'
+require_text "$using_design_arc" 'Google Stitch + active host'
+require_text "$using_design_arc" 'Generated screens + active host'
 require_text "$using_design_arc" 'Design Arc bundles no MCP server'
 require_text "$using_design_arc" 'Google now provides an official Stitch MCP server and SDK'
 require_text "$using_design_arc" 'only when it is separately installed, configured, and authorized'
@@ -193,7 +216,7 @@ require_text "$using_design_arc" 'name the exact configured MCP server or tool'
 require_text "$using_design_arc" 'does not imply an official Mobbin MCP integration'
 require_text "$using_design_arc" 'Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.'
 require_text "$using_design_arc" 'Design Arc understands how requirements, evidence and screens affect one another, helping it make more precise corrections without surrendering approval control.'
-require_text "$using_design_arc" 'Graph assistance is active by default for every new 0.3.0 review in both existing and new projects when no project or laptop safety control turns it off.'
+require_text "$using_design_arc" 'Graph assistance is active by default for every new 0.3.0 review in both existing and new projects when no project or host-local safety control turns it off.'
 require_text "$using_design_arc" 'An active review remains exactly as it started; its next clean review gains the 0.3.0 assistance.'
 require_text "$using_design_arc" 'Graph assistance adds no approval gate.'
 require_text "$using_design_arc" '$design-arc graph on'
@@ -208,6 +231,17 @@ require_text "$using_design_arc" 'If the record is missing, invalid, or cannot b
 require_text "$using_design_arc" 'Rebuild reconstructs only the current review from current authoritative workflow facts; it does not redo research, change an approved direction, or create requirements.'
 require_text "$using_design_arc" 'Clear is destructive: it requires explicit confirmation for the exact current-review graph path and deletes only that record.'
 require_text "$using_design_arc" 'Next: [Evidence and methodology](evidence-and-methodology.md).'
+
+for forbidden_shared_runtime in \
+  'Generate one complete static journey board<br/>Codex by default' \
+  'Codex generates the static journey board by default.' \
+  'after one Codex correction round' \
+  'You can stay in Codex.' \
+  'The same validation and correction rules apply whether Codex or Stitch renders the screens.' \
+  '## Choosing Codex or Stitch for the screens'
+do
+  forbid_text "$using_design_arc" "$forbidden_shared_runtime"
+done
 
 require_text "$evidence_methodology" '# Evidence and methodology'
 require_text "$evidence_methodology" 'How are Design Arc recommendations grounded and validated?'
