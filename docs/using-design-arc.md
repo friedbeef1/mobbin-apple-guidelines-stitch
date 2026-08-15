@@ -109,6 +109,8 @@ Claude Code:
 
 `graph` reports the current review without changing anything. `graph on` and `graph off` save a setting for this project only. `graph global off` is a laptop safety ceiling; `graph global on` removes that ceiling but never overrides a project that is off. A one-review request can turn assistance off for that review, but cannot override a project or laptop safety control.
 
+Claude Code resolves its profile root from a non-empty `CLAUDE_CONFIG_DIR`, falling back to `~/.claude`, and never treats an empty value as `/`. Its graph `project_id` is an opaque SHA-256 identity derived from the canonical project root; the raw local path is never stored in the graph.
+
 At the start of a review, Design Arc reports whether assistance is active and why. Graph status has its own provenance; it is separate from evidence-mode and approval-mode provenance. `graph explain` also shows the resolution chain, review identity, workflow version, record location, and the latest validation or fallback result.
 
 If the record is missing, invalid, or cannot be trusted, Design Arc reports the reason and continues the unchanged standard workflow without graph assistance. This is a reduction in assistance, not a blocked review or a reason to bypass the usual evidence and approval controls.

@@ -84,7 +84,7 @@ def methodology_for(platform: str) -> str:
         "shared by this Codex installation":
             "shared by this Claude Code installation",
         "$CODEX_HOME/design-arc-global.yaml":
-            "$CLAUDE_CONFIG_DIR/design-arc-global.yaml",
+            "<resolved Claude Code profile root>/design-arc-global.yaml",
         "do not rewrite `.codex/design-arc.yaml`, laptop-global safety state, or `design_arc_home` metadata merely because a review resolved them":
             "do not rewrite `.claude/design-arc.yaml` or laptop-global safety state merely because a review resolved them",
         "Store each record only at `.codex/design-arc/reviews/<review_id>/graph.json`":
@@ -118,7 +118,7 @@ def methodology_for(platform: str) -> str:
         methodology = methodology.replace(original, replacement, 1)
     methodology = methodology.replace(
         "$CODEX_HOME/design-arc-global.yaml",
-        "$CLAUDE_CONFIG_DIR/design-arc-global.yaml",
+        "<resolved Claude Code profile root>/design-arc-global.yaml",
     )
     return methodology.replace("$design-arc", "/design-arc:design-arc")
 

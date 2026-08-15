@@ -17,6 +17,11 @@ External tools and services remain separately authorized. This plugin bundles
 no MCP server, agent, or hook and does not imply connectivity to a benchmark,
 visualization, or other external service.
 
+Resolve the Claude Code profile root before any graph-global read or write: use the non-empty `CLAUDE_CONFIG_DIR` value when present, otherwise use `~/.claude`; canonicalize the chosen root and never treat an empty variable as `/`.
+Store laptop-global graph safety only at `<resolved Claude Code profile root>/design-arc-global.yaml`; never read or write `/design-arc-global.yaml`.
+
+For Claude Code graph records, define `project_id` as `claude-code:` plus the lowercase SHA-256 hex digest of the UTF-8 canonical project root (the Git top level when available, otherwise the session working directory); recompute it before validation and never store the raw local path in the graph.
+
 ## Claude Code project setup and re-entry
 
 For Claude Code, `/design-arc:design-arc` replaces the `$design-arc` examples

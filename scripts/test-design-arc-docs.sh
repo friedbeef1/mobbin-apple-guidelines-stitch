@@ -44,9 +44,10 @@ behavioral_validation="$repo_root/docs/validation/behavioral-validation.md"
 prompts="$repo_root/examples/prompts.md"
 motion_sources="$repo_root/docs/trusted-sources/motion.md"
 trusted_source_library="$repo_root/docs/trusted-sources/README.md"
+visualization_sources="$repo_root/docs/trusted-sources/visualization.md"
 shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)'
 
-for file in "$readme" "$getting_started" "$using_design_arc" "$evidence_methodology" "$upgrades_migration" "$trust_sources" "$operating_layer" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library"
+for file in "$readme" "$getting_started" "$using_design_arc" "$evidence_methodology" "$upgrades_migration" "$trust_sources" "$operating_layer" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
 do
   [ -f "$file" ] || fail "missing required documentation: ${file#"$repo_root/"}"
 done
@@ -227,6 +228,8 @@ require_text "$using_design_arc" '$design-arc graph clear'
 require_text "$using_design_arc" '$design-arc graph global off'
 require_text "$using_design_arc" '$design-arc graph global on'
 require_text "$using_design_arc" 'Graph status has its own provenance; it is separate from evidence-mode and approval-mode provenance.'
+require_text "$using_design_arc" 'Claude Code resolves its profile root from a non-empty `CLAUDE_CONFIG_DIR`, falling back to `~/.claude`, and never treats an empty value as `/`.'
+require_text "$using_design_arc" 'Its graph `project_id` is an opaque SHA-256 identity derived from the canonical project root; the raw local path is never stored in the graph.'
 require_text "$using_design_arc" 'If the record is missing, invalid, or cannot be trusted, Design Arc reports the reason and continues the unchanged standard workflow without graph assistance.'
 require_text "$using_design_arc" 'Rebuild reconstructs only the current review from current authoritative workflow facts; it does not redo research, change an approved direction, or create requirements.'
 require_text "$using_design_arc" 'Clear is destructive: it requires explicit confirmation for the exact current-review graph path and deletes only that record.'
@@ -249,14 +252,14 @@ require_text "$evidence_methodology" '| Grounding layer | Pain point | How Desig
 require_text "$evidence_methodology" '| Platform requirements | Designs can feel unfamiliar, exclude users, or conflict with platform conventions. | Validate the journey against current guidance for its actual platform. | Apple HIG; Android and Material guidance; W3C web accessibility standards. |'
 require_text "$evidence_methodology" '| Product precedent | Teams copy attractive screenshots without understanding the complete journey or failure states. | Inspect relevant end-to-end product journeys and explain why a pattern fits the objective. | Authorized benchmark research through a provider such as Mobbin. |'
 require_text "$evidence_methodology" '| Product judgment | Opinions and trade-offs can be presented as if a source proved them. | Tie recommendations to the confirmed objective and label judgment separately from observed evidence. | User-confirmed objective and documented Design Arc synthesis—not an external authority. |'
-require_text "$evidence_methodology" '| Visualization and validation | Polished screens can conceal missing transitions, errors, and recovery states. | Visualize the complete journey and inspect every important state before approving it for frontend implementation. | Codex-generated static journey boards by default; optional Google Stitch workspace—not an evidence authority. |'
+require_text "$evidence_methodology" '| Visualization and validation | Polished screens can conceal missing transitions, errors, and recovery states. | Visualize the complete journey and inspect every important state before approving it for frontend implementation. | Active-host static journey boards by default; optional Google Stitch workspace—not an evidence authority. |'
 require_text "$evidence_methodology" 'A single genuine trigger is enough for Design Arc to recommend Stitch'
-require_text "$evidence_methodology" 'Staying in Codex remains available, and the user always approves any transfer.'
+require_text "$evidence_methodology" 'Staying in the active host remains available, and the user always approves any transfer.'
 require_text "$evidence_methodology" '| Relationship context | A correction can miss dependent states when requirements, evidence, and screens are considered separately. | Keep validated relationships visible to plan the smallest compatible correction batch and the regression checks that follow. | The current Design Arc workflow record; the relationship record adds context only. |'
-require_text "$evidence_methodology" 'First-party guidance remains authoritative for its platform, authorized benchmark evidence remains precedent, Codex or Stitch provides visualization, and the graph remains relationship context only.'
+require_text "$evidence_methodology" 'First-party guidance remains authoritative for its platform, authorized benchmark evidence remains precedent, the active host or Stitch provides visualization, and the graph remains relationship context only.'
 require_text "$evidence_methodology" 'A graph relationship is not evidence, proof, approval, a source of requirements, or authority.'
 require_text "$evidence_methodology" 'The graph can focus correction planning but never replaces complete render inspection or the proposal-wide correction limit.'
-require_text "$evidence_methodology" '| Motion specification | Codex + affected-platform guidance + inspected motion evidence | Defines what moves, why, how it behaves, its reduced-motion alternative, and what still requires implementation proof. |'
+require_text "$evidence_methodology" '| Motion specification | Active host + affected-platform guidance + inspected motion evidence | Defines what moves, why, how it behaves, its reduced-motion alternative, and what still requires implementation proof. |'
 require_text "$evidence_methodology" 'The initial proposal may be followed by at most three correction rounds for the whole proposal.'
 require_text "$evidence_methodology" 'Each round batches every known repairable mismatch, generates a new proposal, and reinspects the complete result.'
 require_text "$evidence_methodology" 'A written correction is not a corrected proposal; only the inspected replacement render proves the change.'
@@ -317,9 +320,23 @@ require_text "$trust_sources" '[Trusted sources](trusted-sources/README.md)'
 require_text "$trust_sources" '[Codex operating layer](codex-operating-layer.md)'
 require_text "$trust_sources" 'Next: [Home](../README.md).'
 
-require_text "$trusted_source_library" '| Visualization and validation | A concrete proposed journey that can be inspected across material states. | Codex-generated static journey boards by default; optional [Google Stitch](https://stitch.withgoogle.com/) workspace. | Evidence, platform compliance, accessibility, or implementation readiness by itself. |'
-require_text "$trusted_source_library" '[Visualization](visualization.md) — Codex static boards by default and Stitch as an optional persistent editing workspace.'
+require_text "$trusted_source_library" '| Visualization and validation | A concrete proposed journey that can be inspected across material states. | Active-host static journey boards by default; optional [Google Stitch](https://stitch.withgoogle.com/) workspace. | Evidence, platform compliance, accessibility, or implementation readiness by itself. |'
+require_text "$trusted_source_library" '[Visualization](visualization.md) — active-host static boards by default and Stitch as an optional persistent editing workspace.'
+require_text "$visualization_sources" 'Design Arc generates a consolidated static journey board in the active host by default: Codex for the Codex adapter and Claude Code for the Claude adapter.'
+require_text "$visualization_sources" 'The active host is the lower-friction route for a bounded proposal and a few corrections.'
 require_text "$operating_layer" 'After a Guided or Follow recommendation visual approval, or a Fully automatic `meets direction` verdict'
+
+for shared_doc in "$evidence_methodology" "$trusted_source_library" "$visualization_sources"
+do
+  for forbidden_shared_runtime in \
+    'Codex-generated static journey boards by default' \
+    'Codex generates one consolidated static journey board by default' \
+    'Staying in Codex remains available' \
+    'Codex static boards by default'
+  do
+    forbid_text "$shared_doc" "$forbidden_shared_runtime"
+  done
+done
 
 python3 - "$readme" "$getting_started" "$evidence_methodology" "$upgrades_migration" "$trust_sources" <<'PY'
 from pathlib import Path
@@ -530,6 +547,8 @@ require_text "$motion_sources" 'A prototype can communicate an intended interact
 
 require_text "$behavioral_validation" '# Design Arc instruction-contract validation'
 require_text "$behavioral_validation" 'plugins/design-arc/skills/design-arc/SKILL.md'
+require_text "$behavioral_validation" 'claude-plugins/design-arc/skills/design-arc/SKILL.md'
+require_text "$behavioral_validation" '`scripts/check-claude-state-contracts.py` protects Claude setup, import, reminder, profile-root, project-identity, runtime-isolation, and upgrade boundaries.'
 require_text "$behavioral_validation" 'executable static instruction-contract guards; they do not execute an agent or prove runtime agent behavior.'
 require_text "$behavioral_validation" 'Fresh-context scenario evidence is qualitative unless the prompt, environment, output, and scoring are stored reproducibly.'
 require_text "$behavioral_validation" '## Fresh-task installation and setup evidence — 2026-08-07'
@@ -562,8 +581,14 @@ require_text "$behavioral_validation" '| New product | Reuse the installed plugi
 require_text "$behavioral_validation" '| Multiple products | Keep at most one approved home per participating project and never create a global home. |'
 require_text "$behavioral_validation" '| Duplicate discovery | Reuse the matching same-project home, report extras for user cleanup, and create no known duplicate. |'
 require_text "$behavioral_validation" '| Task tools unavailable | Save only confirmed preferences, report that no home is ready, and provide the exact title, card, and manual create-and-pin steps. |'
+require_text "$behavioral_validation" '## Claude Code setup and return contract'
+require_text "$behavioral_validation" '| First use | Confirm `.claude/design-arc.yaml` independently and separately approve or decline the exact `CLAUDE.md` reminder block. |'
+require_text "$behavioral_validation" '| Next-day return | Open the same product project in a clean Claude Code session and invoke `/design-arc:design-arc`; do not create or reuse a Codex home. |'
+require_text "$behavioral_validation" '| Runtime isolation | Keep Claude preferences, active reviews, review artifacts, graphs, and sessions under Claude ownership; never merge or continue a Codex active review. |'
 
 require_text "$prompts" '# Design Arc prompt examples'
+require_text "$prompts" 'The examples below use the Codex command surface unless a Claude Code equivalent is shown.'
+require_text "$prompts" 'In Claude Code, start a review with `/design-arc:design-arc`; use `.claude/design-arc.yaml`, and return in a clean project session rather than through a Codex home.'
 require_text "$prompts" 'Use `$design-arc`, ask for Design Arc by name, or return through the project’s pinned home.'
 require_text "$prompts" 'automatic selection is not guaranteed and an ordinary Codex response is not presented as Design Arc work.'
 require_text "$prompts" '## Plain-language journey starters'
@@ -580,6 +605,8 @@ require_text "$prompts" '$design-arc mode follow-recommendation'
 require_text "$prompts" '$design-arc mode fully-automatic'
 require_text "$prompts" 'use Guidelines for this run'
 require_text "$prompts" 'Bypass both gates'
+forbid_text "$prompts" 'stop at the Stitch Gate'
+forbid_text "$prompts" 'continues through Stitch only when the verdict'
 
 printf '%s\n' 'PASS: Design Arc product documentation'
 

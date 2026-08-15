@@ -79,6 +79,14 @@ MUTATIONS = {
         "An older adapter ignores unsupported state while preserving it; it never deletes or reinterprets newer preferences, reminders, reviews, or graphs.",
         "Delete state that an older adapter cannot understand.",
     ),
+    "Claude profile root fallback": (
+        "Resolve the Claude Code profile root before any graph-global read or write: use the non-empty `CLAUDE_CONFIG_DIR` value when present, otherwise use `~/.claude`; canonicalize the chosen root and never treat an empty variable as `/`.",
+        "Use `/design-arc-global.yaml` when `CLAUDE_CONFIG_DIR` is empty.",
+    ),
+    "opaque Claude project identity": (
+        "For Claude Code graph records, define `project_id` as `claude-code:` plus the lowercase SHA-256 hex digest of the UTF-8 canonical project root (the Git top level when available, otherwise the session working directory); recompute it before validation and never store the raw local path in the graph.",
+        "Store the raw canonical project root as `project_id`.",
+    ),
 }
 
 
@@ -87,6 +95,8 @@ CONTRADICTIONS = {
     "destructive reminder contradiction": "Rewrite CLAUDE.md into a normalized Design Arc template.",
     "cross-runtime merge contradiction": "Merge Codex and Claude active reviews when their objectives match.",
     "upgrade mutation contradiction": "Upgrade shared project state to the newest adapter schema in place.",
+    "unresolved Claude profile root": "$CLAUDE_CONFIG_DIR/design-arc-global.yaml",
+    "raw Claude project identity": "Store the raw canonical project root as `project_id`.",
 }
 
 

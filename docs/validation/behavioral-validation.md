@@ -2,7 +2,7 @@
 
 ## What the executable checks prove
 
-The contract under validation is the embedded skill at `plugins/design-arc/skills/design-arc/SKILL.md`. `scripts/check-workflow-contracts.py` checks required clauses, and `scripts/test-workflow-contracts.py` mutates each clause to prove that missing or reversed behavior is rejected.
+The canonical workflow contract is composed into the Codex skill at `plugins/design-arc/skills/design-arc/SKILL.md` and the Claude Code skill at `claude-plugins/design-arc/skills/design-arc/SKILL.md`. `scripts/check-workflow-contracts.py` checks the shared methodology, and `scripts/test-workflow-contracts.py` mutates each clause to prove that missing or reversed behavior is rejected. `scripts/check-claude-state-contracts.py` protects Claude setup, import, reminder, profile-root, project-identity, runtime-isolation, and upgrade boundaries.
 
 These are executable static instruction-contract guards; they do not execute an agent or prove runtime agent behavior. They protect the written contract against regression across setup, evidence selection, approval behavior, preference migration, objective handling, platform precedence, motion evidence and specification, evidence integrity, and implementation boundaries.
 
@@ -12,7 +12,7 @@ Fresh-context scenario evidence is qualitative unless the prompt, environment, o
 
 Evidence and approval choices are independent, producing six supported combinations:
 
-| Evidence | Approval | Required Direction behavior | Required Stitch behavior |
+| Evidence | Approval | Required Direction behavior | Required Visual Proposal Gate behavior |
 | --- | --- | --- | --- |
 | Benchmarks | Guided | Stop for the user's selection | Stop after render validation |
 | Benchmarks | Follow recommendation | Continue with the visible marked recommendation | Stop after render validation |
@@ -23,7 +23,7 @@ Evidence and approval choices are independent, producing six supported combinati
 
 Every combination also retains setup-before-inspection, objective handling, current-journey audit, current first-party validation, complete-state coverage, render critique, evidence integrity, and the design-only handoff boundary.
 
-## Returning-user product story contract
+## Codex returning-user product story contract
 
 These documentation and interface cases describe the user-visible contract. The executable skill checker separately protects the underlying project identity, confirmation, recovery, and deduplication rules.
 
@@ -37,6 +37,19 @@ These documentation and interface cases describe the user-visible contract. The 
 | Duplicate discovery | Reuse the matching same-project home, report extras for user cleanup, and create no known duplicate. |
 | Task tools unavailable | Save only confirmed preferences, report that no home is ready, and provide the exact title, card, and manual create-and-pin steps. |
 
+## Claude Code setup and return contract
+
+These clauses are statically checked in the generated Claude Code skill; they are not claims that an agent performed project writes or resumed a real session.
+
+| Case | Required user-visible behavior |
+| --- | --- |
+| First use | Confirm `.claude/design-arc.yaml` independently and separately approve or decline the exact `CLAUDE.md` reminder block. |
+| Optional Codex import | Offer only a complete, validated, explicitly approved portable preference copy; leave all Codex bytes and active-review state untouched. |
+| Next-day return | Open the same product project in a clean Claude Code session and invoke `/design-arc:design-arc`; do not create or reuse a Codex home. |
+| Graph identity | Resolve a non-empty Claude profile root with a safe default and validate an opaque project identity without storing the raw local path. |
+| Runtime isolation | Keep Claude preferences, active reviews, review artifacts, graphs, and sessions under Claude ownership; never merge or continue a Codex active review. |
+| Adapter change | Preserve both runtimes' project state, leave already-open sessions pinned, and load the changed package only in a new clean session. |
+
 ## Contract cases
 
 | Case | Project state and request | Required instruction behavior |
@@ -47,7 +60,7 @@ These documentation and interface cases describe the user-visible contract. The 
 | One-run benchmark fallback | Saved Benchmarks; access is unavailable | Stop and offer a one-run Guidelines fallback or confirmed saved switch. A one-run fallback preserves the saved Benchmarks value and makes no benchmark claim. |
 | Benchmark quality | Authorized Benchmarks run | Inspect complete relevant journeys and explain why each pattern helps the confirmed objective; reject library presence, metadata, popularity, or one screenshot as best-in-class proof. |
 | Guidelines isolation | Active Guidelines | Perform no benchmark lookup and make no benchmark-evidence claim. |
-| Fully automatic objective | Active Fully automatic; current request states an explicit objective | The objective may be treated as established without a confirmation pause. Direction continues with the marked recommendation; Stitch continues only on `meets direction`. |
+| Fully automatic objective | Active Fully automatic; current request states an explicit objective | The objective may be treated as established without a confirmation pause. Direction continues with the marked recommendation; the Visual Proposal Gate continues only on `meets direction`. |
 | Missing objective | Active Fully automatic; `Redesign this onboarding.` | Stop before product inspection, research, or generation and ask for an objective. Do not invent it. |
 | Android/web precedence | Objective concerns Android or web | Apply current Android or web first-party rules over conflicting Apple-inspired judgment. |
 | Legacy FB UX import | New preference absent; only `.codex/fb-ux.yaml` exists | Show Benchmarks + provider `mobbin` + preserved approval mapping and ask once before writing the new file. Leave the old file untouched. |
@@ -85,7 +98,7 @@ The mutation suite removes or reverses each load-bearing clause, including:
 - benchmark quality, Guidelines isolation, unavailable access, and one-run fallback;
 - both legacy mappings, confirmation, dual-file conflict, and file preservation;
 - Guided/Follow objective confirmation and Fully automatic's explicit-objective rule;
-- Direction and Stitch gate verdict behavior;
+- Direction and Visual Proposal Gate verdict behavior;
 - Android/web first-party precedence;
 - all twelve motion-methodology cases, including semantic mutations for contract values, Direction explanations, Motion+ assistance, and Stitch verdict/automatic-gate behavior;
 - evidence claims and implementation/release ownership.

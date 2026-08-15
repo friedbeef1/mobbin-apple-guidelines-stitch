@@ -1,5 +1,7 @@
 # Design Arc prompt examples
 
+The examples below use the Codex command surface unless a Claude Code equivalent is shown. In Claude Code, start a review with `/design-arc:design-arc`; use `.claude/design-arc.yaml`, and return in a clean project session rather than through a Codex home.
+
 Use `$design-arc`, ask for Design Arc by name, or return through the project’s pinned home. Codex may select Design Arc for an unprefixed request, but automatic selection is not guaranteed and an ordinary Codex response is not presented as Design Arc work.
 
 ## Plain-language journey starters
@@ -52,11 +54,11 @@ Design Arc resolves the evidence approach and approval behavior independently. A
 
 ## Save Guidelines and Follow recommendation
 
-> `$design-arc evidence guidelines`. `$design-arc mode follow-recommendation`. Save both for this project. My objective is to reduce uncertainty during account recovery without weakening security. Confirm that objective, audit the real journey, use current first-party guidance without benchmark lookup, show your recommendation and alternatives, follow the marked recommendation, and stop at the Stitch Gate.
+> `$design-arc evidence guidelines`. `$design-arc mode follow-recommendation`. Save both for this project. My objective is to reduce uncertainty during account recovery without weakening security. Confirm that objective, audit the real journey, use current first-party guidance without benchmark lookup, show your recommendation and alternatives, follow the marked recommendation, and stop at the Visual Proposal Gate.
 
 ## Save Fully automatic
 
-> `$design-arc mode fully-automatic`. Save it for this project. My explicit objective is to help new users reach their first useful result with fewer unnecessary decisions. Review the Android and web onboarding journey, apply current Android and web first-party rules over conflicting Apple-inspired judgment, use the saved evidence choice, show the marked direction and alternatives, and continue through Stitch only when the verdict is `meets direction`. Preserve all source, staging, deployment, release, device-proof, external-service, and lane-ownership boundaries.
+> `$design-arc mode fully-automatic`. Save it for this project. My explicit objective is to help new users reach their first useful result with fewer unnecessary decisions. Review the Android and web onboarding journey, apply current Android and web first-party rules over conflicting Apple-inspired judgment, use the saved evidence choice, show the marked direction and alternatives, and continue past the Visual Proposal Gate only when the verdict is `meets direction`. Preserve all source, staging, deployment, release, device-proof, external-service, and lane-ownership boundaries.
 
 ## Report active settings
 
@@ -66,7 +68,7 @@ Design Arc resolves the evidence approach and approval behavior independently. A
 
 > Use `$design-arc` with Guidelines and Guided for this run only. My objective is to improve first-session activation without forcing optional profile setup. Confirm the objective, perform no benchmark lookup, stop at both design gates, and do not change the saved project preference.
 
-The shorter phrase `use Guidelines for this run` changes only the current evidence route. `Follow your recommendation` is a one-run Follow recommendation alias and still stops at the Stitch Gate.
+The shorter phrase `use Guidelines for this run` changes only the current evidence route. `Follow your recommendation` is a one-run Follow recommendation alias and still stops at the Visual Proposal Gate.
 
 ## Missing benchmark access
 

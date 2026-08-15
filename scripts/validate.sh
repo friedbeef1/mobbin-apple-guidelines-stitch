@@ -255,6 +255,15 @@ else
   fail 'isolated public 0.3.0 to 0.4.0 upgrade smoke failed'
 fi
 
+if DESIGN_ARC_UPGRADE_BASELINE_SHA=bd5443df13bab19ba066be8014ff2e1ae87cc9f6 \
+  DESIGN_ARC_UPGRADE_BASELINE_VERSION=0.3.1 \
+  sh "$repo_root/scripts/test-plugin-upgrade.sh"
+then
+  :
+else
+  fail 'isolated public 0.3.1 to 0.4.0 upgrade smoke failed'
+fi
+
 if git -C "$repo_root" rev-parse --is-inside-work-tree >/dev/null 2>&1
 then
   git -C "$repo_root" diff --check

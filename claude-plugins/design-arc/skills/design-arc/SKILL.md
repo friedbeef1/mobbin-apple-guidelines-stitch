@@ -17,6 +17,11 @@ External tools and services remain separately authorized. This plugin bundles
 no MCP server, agent, or hook and does not imply connectivity to a benchmark,
 visualization, or other external service.
 
+Resolve the Claude Code profile root before any graph-global read or write: use the non-empty `CLAUDE_CONFIG_DIR` value when present, otherwise use `~/.claude`; canonicalize the chosen root and never treat an empty variable as `/`.
+Store laptop-global graph safety only at `<resolved Claude Code profile root>/design-arc-global.yaml`; never read or write `/design-arc-global.yaml`.
+
+For Claude Code graph records, define `project_id` as `claude-code:` plus the lowercase SHA-256 hex digest of the UTF-8 canonical project root (the Git top level when available, otherwise the session working directory); recompute it before validation and never store the raw local path in the graph.
+
 ## Claude Code project setup and re-entry
 
 For Claude Code, `/design-arc:design-arc` replaces the `$design-arc` examples
@@ -184,11 +189,11 @@ Design Arc 0.3.0 may maintain a validated project-local relationship record to p
 
 Save the project setting only as `graph_assistance: on|off` in that project's `.claude/design-arc.yaml`; keep laptop-global graph safety state isolated under the active Claude Code profile, never in a project or product file. The profile state is a safety control shared by this Claude Code installation, not a design preference and not a source of project truth.
 
-Read laptop-global safety only from `$CLAUDE_CONFIG_DIR/design-arc-global.yaml`, whose root mapping uses `schema: design-arc.global/v1` and `graph_assistance_ceiling: on|off`; no other path or field controls the laptop ceiling. Additional mapping entries are forward-compatible state owned by later Design Arc versions and are ignored by 0.3.0 resolution.
+Read laptop-global safety only from `<resolved Claude Code profile root>/design-arc-global.yaml`, whose root mapping uses `schema: design-arc.global/v1` and `graph_assistance_ceiling: on|off`; no other path or field controls the laptop ceiling. Additional mapping entries are forward-compatible state owned by later Design Arc versions and are ignored by 0.3.0 resolution.
 
 When the global file is absent, treat the ceiling as on without creating it; malformed YAML, a non-mapping root, a missing or unsupported schema, or a missing or invalid ceiling fails safe as global off, is reported, and is never rewritten merely by resolution.
 
-A confirmed global command changes only `graph_assistance_ceiling`, preserves the valid schema and every unrelated mapping entry, writes a same-directory temporary file with mode `0600`, flushes and fsyncs it, atomically replaces `$CLAUDE_CONFIG_DIR/design-arc-global.yaml`, and fsyncs the parent directory; `global off` writes off, while `global on` writes on only to clear the laptop ceiling and never force-enables project off. If the existing file is malformed or uses an unsupported schema, report that replacing it with the two-field v1 document will discard unreadable or unsupported state and require explicit confirmation for that repair before the atomic write.
+A confirmed global command changes only `graph_assistance_ceiling`, preserves the valid schema and every unrelated mapping entry, writes a same-directory temporary file with mode `0600`, flushes and fsyncs it, atomically replaces `<resolved Claude Code profile root>/design-arc-global.yaml`, and fsyncs the parent directory; `global off` writes off, while `global on` writes on only to clear the laptop ceiling and never force-enables project off. If the existing file is malformed or uses an unsupported schema, report that replacing it with the two-field v1 document will discard unreadable or unsupported state and require explicit confirmation for that repair before the atomic write.
 
 Resolve graph assistance independently for a new review: an explicit one-review off override, project off, or global off each disables it; global on is only permission to resolve the project and can never force-enable project off. An explicit one-review on cannot override project off or global off. A saved project on remains disabled while global off is active and becomes eligible again when the global safety state is on.
 
