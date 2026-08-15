@@ -53,7 +53,7 @@ The workflow is shared; installation, invocation, project state, re-entry, and u
 | ↓ | | |
 | Audit the current journey | Your website or app + the active host | |
 | ↓ | | |
-| Gather and label evidence | Mobbin + the active host in Benchmarks mode, and official platform guidance + the active host in Guidelines mode | |
+| Gather and label evidence | Mobbin + the active host in Guidelines + Benchmarks mode, and official platform guidance + the active host in Guidelines only mode | |
 | ↓ | | |
 | Recommend a design direction | Codex or Claude Code | |
 | ↓ | | |

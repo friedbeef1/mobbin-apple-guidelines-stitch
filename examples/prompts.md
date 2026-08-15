@@ -48,11 +48,11 @@ Design Arc resolves the evidence approach and approval behavior independently. A
 
 > `$design-arc setup`. Help me choose the evidence approach and approval behavior independently. Show the proposed `.codex/design-arc.yaml` values before saving them. Then help me choose or write the objective for our onboarding review before inspecting the product.
 
-## Save Benchmarks and Guided
+## Save Guidelines + Benchmarks and Guided
 
 > `$design-arc evidence benchmarks`, using our separately authorized Mobbin access. `$design-arc mode guided`. Save both for this project. For the checkout review, first suggest two or three plausible objectives and let me choose one or enter my own. After I confirm it, inspect the complete current journey, use relevant full-journey benchmarks and current first-party platform guidance, and stop at the Direction and Stitch gates.
 
-## Save Guidelines and Follow recommendation
+## Save Guidelines only and Follow recommendation
 
 > `$design-arc evidence guidelines`. `$design-arc mode follow-recommendation`. Save both for this project. My objective is to reduce uncertainty during account recovery without weakening security. Confirm that objective, audit the real journey, use current first-party guidance without benchmark lookup, show your recommendation and alternatives, follow the marked recommendation, and stop at the Visual Proposal Gate.
 
@@ -66,17 +66,17 @@ Design Arc resolves the evidence approach and approval behavior independently. A
 
 ## Override one run without changing the project
 
-> Use `$design-arc` with Guidelines and Guided for this run only. My objective is to improve first-session activation without forcing optional profile setup. Confirm the objective, perform no benchmark lookup, stop at both design gates, and do not change the saved project preference.
+> Use `$design-arc` with Guidelines only and Guided for this run only. My objective is to improve first-session activation without forcing optional profile setup. Confirm the objective, perform no benchmark lookup, stop at both design gates, and do not change the saved project preference.
 
-The shorter phrase `use Guidelines for this run` changes only the current evidence route. `Follow your recommendation` is a one-run Follow recommendation alias and still stops at the Visual Proposal Gate.
+The shorter phrase `use Guidelines only for this run` changes only the current evidence route. `Follow your recommendation` is a one-run Follow recommendation alias and still stops at the Visual Proposal Gate.
 
 ## Missing benchmark access
 
-> Use `$design-arc` with the saved Benchmarks preference. If authorized benchmark access is unavailable, stop and let me choose between a one-run Guidelines fallback and a saved switch. Do not silently degrade or call a Guidelines result benchmark-backed.
+> Use `$design-arc` with the saved Guidelines + Benchmarks preference. If authorized benchmark access is unavailable, stop and let me choose between a one-run Guidelines only fallback and a saved switch. Do not silently degrade or call a Guidelines only result benchmark-backed.
 
 After the stop, a one-run response can be:
 
-> Use Guidelines for this run. Keep the saved Benchmarks preference unchanged, perform no benchmark lookup or benchmark-evidence claim, and continue under the active approval mode.
+> Use Guidelines only for this run. Keep the saved Guidelines + Benchmarks preference unchanged, perform no benchmark lookup or benchmark-evidence claim, and continue under the active approval mode.
 
 ## Bypass both gates for one explicit objective
 
@@ -94,6 +94,6 @@ If both legacy files exist:
 
 ## Switch saved evidence route
 
-> `$design-arc evidence guidelines`. Save Guidelines for this project and omit `benchmark_provider`. Do not look up or claim benchmark evidence on later Guidelines runs.
+> `$design-arc evidence guidelines`. Save Guidelines only for this project and omit `benchmark_provider`. Do not look up or claim benchmark evidence on later Guidelines only runs.
 
-> `$design-arc evidence benchmarks`. Confirm that relevant external benchmark access is authorized, then save Benchmarks and the selected provider for this project.
+> `$design-arc evidence benchmarks`. Confirm that relevant external benchmark access is authorized, then save Guidelines + Benchmarks and the selected provider for this project.

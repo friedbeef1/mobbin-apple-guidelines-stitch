@@ -41,23 +41,23 @@ REQUIRED_CONTRACTS = {
         "Always report the active evidence mode and approval mode, and the provenance of each independently.",
     ),
     "six mode combinations": (
-        "| Benchmarks | Guided | Direction Gate stops; Visual Proposal Gate stops |",
-        "| Benchmarks | Follow recommendation | Direction Gate continues with the marked recommendation; Visual Proposal Gate stops |",
-        "| Benchmarks | Fully automatic | Direction Gate continues; Visual Proposal Gate continues only on `meets direction` |",
-        "| Guidelines | Guided | Direction Gate stops; Visual Proposal Gate stops |",
-        "| Guidelines | Follow recommendation | Direction Gate continues with the marked recommendation; Visual Proposal Gate stops |",
-        "| Guidelines | Fully automatic | Direction Gate continues; Visual Proposal Gate continues only on `meets direction` |",
+        "| Guidelines + Benchmarks | Guided | Direction Gate stops; Visual Proposal Gate stops |",
+        "| Guidelines + Benchmarks | Follow recommendation | Direction Gate continues with the marked recommendation; Visual Proposal Gate stops |",
+        "| Guidelines + Benchmarks | Fully automatic | Direction Gate continues; Visual Proposal Gate continues only on `meets direction` |",
+        "| Guidelines only | Guided | Direction Gate stops; Visual Proposal Gate stops |",
+        "| Guidelines only | Follow recommendation | Direction Gate continues with the marked recommendation; Visual Proposal Gate stops |",
+        "| Guidelines only | Fully automatic | Direction Gate continues; Visual Proposal Gate continues only on `meets direction` |",
     ),
     "benchmark evidence quality": (
         "Inspect complete, relevant real-product journeys and explain why each selected pattern is useful for the established objective.",
         "Library presence, metadata, popularity, or one screenshot never proves best-in-class quality.",
     ),
     "guidelines isolation": (
-        "In Guidelines mode, perform no benchmark lookup and make no benchmark-evidence claim.",
+        "In Guidelines only mode, perform no benchmark lookup and make no benchmark-evidence claim.",
     ),
     "missing benchmark access": (
         "If benchmark access is missing, stop; never degrade silently.",
-        "Offer either a one-run Guidelines fallback that does not rewrite the saved preference, or a confirmed saved switch to Guidelines.",
+        "Offer either a one-run Guidelines only fallback that does not rewrite the saved preference, or a confirmed saved switch to Guidelines only.",
     ),
     "legacy preference mapping": (
         "`.codex/fb-ux.yaml` maps to `evidence_mode: benchmarks`, `benchmark_provider: mobbin`, and its preserved approval mode.",
@@ -162,7 +162,7 @@ MOTION_CONTRACT_CASES = {
         "Use this motion-evidence precedence: existing product motion; native platform behavior and standard components; current first-party platform guidance; inspected relevant shipped-product motion; labeled Design Arc judgment.",
     ),
     "case 02 benchmark and static limits": (
-        "In Benchmarks mode, authorized shipped-product motion may be inspected as precedent.",
+        "In Guidelines + Benchmarks mode, authorized shipped-product motion may be inspected as precedent.",
         "Static screens or sequences support only start/end state, changing element, journey location, and transition intent; they cannot support exact duration, easing, springs, velocity, interruption, or choreography.",
     ),
     "case 03 playable evidence record": (
@@ -175,7 +175,7 @@ MOTION_CONTRACT_CASES = {
         "When necessary playable evidence is unavailable, report the limitation and offer an accessible live product, user recording, authorized Page Flows recording, native default, or labeled proposal requiring implementation validation. Never invent it.",
     ),
     "case 06 Guidelines isolation": (
-        "In Guidelines mode, perform no benchmark lookup, make no real-product motion claim, and report that no benchmark motion was inspected.",
+        "In Guidelines only mode, perform no benchmark lookup, make no real-product motion claim, and report that no benchmark motion was inspected.",
     ),
     "case 07 complete material motion contract": (
         "Every material motion contract includes: Motion ID; journey location; purpose; trigger; start/end state; spatial behavior; choreography; timing; easing/spring; interruption; reduced motion; evidence; provenance; implementation target; implementation source; proof status. Unsupported values are `unverified`.",

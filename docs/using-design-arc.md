@@ -18,7 +18,7 @@ Examples of requests for which Codex or Claude Code may offer Design Arc include
 - “Audit how customers complete checkout and propose a better complete journey.”
 - “Redesign account recovery so people can get back in without weakening security.”
 
-Natural-language requests such as “use Guidelines for this run” or “follow your recommendation this time” are one-run overrides; they do not rewrite the saved project preference.
+Natural-language requests such as “use Guidelines only for this run” or “follow your recommendation this time” are one-run overrides; they do not rewrite the saved project preference.
 
 The workflow, evidence rules, approval modes, renderer choice, and design-only handoff boundary are shared. Invocation, saved preferences, active-review records, return paths, and adapter upgrades are platform-specific. Codex and Claude Code never merge, migrate, resume, or continue an active review across runtimes.
 
@@ -38,8 +38,8 @@ The loop controls what happens and when Design Arc stops. The relationship map h
 flowchart TD
     A["Confirm the user’s objective<br/>You + active host"] --> B["Inspect the current journey<br/>Your website or app + active host"]
     B --> C{"Select evidence mode<br/>Active host; You when a choice is required"}
-    C -- "Guidelines mode" --> C1["Official Apple Human Interface Guidelines for Apple,<br/>Android and Material guidance for Android,<br/>or W3C guidance for web + active host"]
-    C -- "Benchmarks mode" --> C2["Mobbin journey benchmarks + applicable<br/>official platform guidance + active host"]
+    C -- "Guidelines only mode" --> C1["Official Apple Human Interface Guidelines for Apple,<br/>Android and Material guidance for Android,<br/>or W3C guidance for web + active host"]
+    C -- "Guidelines + Benchmarks mode" --> C2["Mobbin journey benchmarks + applicable<br/>official platform guidance + active host"]
     C1 --> D["Build the relationship map<br/>Active-host local graph record"]
     C2 --> D
 
@@ -62,7 +62,7 @@ flowchart TD
     L -. "Maximum three correction rounds" .-> J
 ```
 
-Official Apple guidance governs Apple platform requirements; the applicable first-party guidance does the same for Android or web. Mobbin supplies product precedent only in Benchmarks mode.
+Official Apple guidance governs Apple platform requirements; the applicable first-party guidance does the same for Android or web. Mobbin supplies product precedent only in Guidelines + Benchmarks mode.
 
 Visualization adapts to the active host:
 

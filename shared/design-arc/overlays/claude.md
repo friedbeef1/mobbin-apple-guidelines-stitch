@@ -34,7 +34,7 @@ When `.claude/design-arc.yaml` already exists, treat it as the Claude saved pref
 
 Only when the Claude preference is absent, inspect `.codex/design-arc.yaml`
 read-only if it exists. The portable fields are `evidence_mode`,
-`benchmark_provider` when valid for Benchmarks, `approval_mode`, and
+`benchmark_provider` when valid for Guidelines + Benchmarks, `approval_mode`, and
 `graph_assistance`; validate the complete portable mapping before proposing an
 import. Codex-only home metadata and all review state are not portable. Show
 the proposed values, identify ignored Codex-only fields, and ask for explicit

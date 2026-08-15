@@ -72,7 +72,7 @@ benchmark_provider: mobbin
 approval_mode: guided
 ```
 
-If the new file is absent, Design Arc can propose an import. `.codex/fb-ux.yaml` maps to Benchmarks with provider `mobbin`; `.codex/apple-guidelines-stitch.yaml` maps to Guidelines. Each mapping preserves the former approval mode. Design Arc shows the proposed mapping and asks once before importing. If both legacy files exist, it asks which one to import or offers fresh setup. Never silently merge, rewrite, or delete either legacy preference file.
+If the new file is absent, Design Arc can propose an import. `.codex/fb-ux.yaml` maps to Guidelines + Benchmarks with provider `mobbin`; `.codex/apple-guidelines-stitch.yaml` maps to Guidelines only. Each mapping preserves the former approval mode. Design Arc shows the proposed mapping and asks once before importing. If both legacy files exist, it asks which one to import or offers fresh setup. Never silently merge, rewrite, or delete either legacy preference file.
 
 To replace the former installed plugins, use this safe order:
 

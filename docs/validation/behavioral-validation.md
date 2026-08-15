@@ -14,12 +14,12 @@ Evidence and approval choices are independent, producing six supported combinati
 
 | Evidence | Approval | Required Direction behavior | Required Visual Proposal Gate behavior |
 | --- | --- | --- | --- |
-| Benchmarks | Guided | Stop for the user's selection | Stop after render validation |
-| Benchmarks | Follow recommendation | Continue with the visible marked recommendation | Stop after render validation |
-| Benchmarks | Fully automatic | Continue with the visible marked recommendation | Continue only on `meets direction` |
-| Guidelines | Guided | Stop for the user's selection | Stop after render validation |
-| Guidelines | Follow recommendation | Continue with the visible marked recommendation | Stop after render validation |
-| Guidelines | Fully automatic | Continue with the visible marked recommendation | Continue only on `meets direction` |
+| Guidelines + Benchmarks | Guided | Stop for the user's selection | Stop after render validation |
+| Guidelines + Benchmarks | Follow recommendation | Continue with the visible marked recommendation | Stop after render validation |
+| Guidelines + Benchmarks | Fully automatic | Continue with the visible marked recommendation | Continue only on `meets direction` |
+| Guidelines only | Guided | Stop for the user's selection | Stop after render validation |
+| Guidelines only | Follow recommendation | Continue with the visible marked recommendation | Stop after render validation |
+| Guidelines only | Fully automatic | Continue with the visible marked recommendation | Continue only on `meets direction` |
 
 Every combination also retains setup-before-inspection, objective handling, current-journey audit, current first-party validation, complete-state coverage, render critique, evidence integrity, and the design-only handoff boundary.
 
@@ -55,16 +55,16 @@ These clauses are statically checked in the generated Claude Code skill; they ar
 | Case | Project state and request | Required instruction behavior |
 | --- | --- | --- |
 | First use | No `.codex/design-arc.yaml`; `$design-arc setup` | Ask for evidence and approval choices independently, show proposed values, confirm before saving, and report first-use provenance for both. |
-| Saved values | Saved Benchmarks + Guided; no override | Use both saved values, report saved-preference provenance for each, and preserve Objective Confirmation and both gates. |
-| Independent overrides | Saved Benchmarks + Fully automatic; request says `use Guidelines and Guided for this run` | Apply both current-request overrides independently, do not rewrite the saved file, perform no benchmark lookup, and stop at Objective Confirmation. |
-| One-run benchmark fallback | Saved Benchmarks; access is unavailable | Stop and offer a one-run Guidelines fallback or confirmed saved switch. A one-run fallback preserves the saved Benchmarks value and makes no benchmark claim. |
-| Benchmark quality | Authorized Benchmarks run | Inspect complete relevant journeys and explain why each pattern helps the confirmed objective; reject library presence, metadata, popularity, or one screenshot as best-in-class proof. |
-| Guidelines isolation | Active Guidelines | Perform no benchmark lookup and make no benchmark-evidence claim. |
+| Saved values | Saved Guidelines + Benchmarks + Guided; no override | Use both saved values, report saved-preference provenance for each, and preserve Objective Confirmation and both gates. |
+| Independent overrides | Saved Guidelines + Benchmarks + Fully automatic; request says `use Guidelines only and Guided for this run` | Apply both current-request overrides independently, do not rewrite the saved file, perform no benchmark lookup, and stop at Objective Confirmation. |
+| One-run benchmark fallback | Saved Guidelines + Benchmarks; access is unavailable | Stop and offer a one-run Guidelines only fallback or confirmed saved switch. A one-run fallback preserves the saved Guidelines + Benchmarks value and makes no benchmark claim. |
+| Benchmark quality | Authorized Guidelines + Benchmarks run | Inspect complete relevant journeys and explain why each pattern helps the confirmed objective; reject library presence, metadata, popularity, or one screenshot as best-in-class proof. |
+| Guidelines only isolation | Active Guidelines only | Perform no benchmark lookup and make no benchmark-evidence claim. |
 | Fully automatic objective | Active Fully automatic; current request states an explicit objective | The objective may be treated as established without a confirmation pause. Direction continues with the marked recommendation; the Visual Proposal Gate continues only on `meets direction`. |
 | Missing objective | Active Fully automatic; `Redesign this onboarding.` | Stop before product inspection, research, or generation and ask for an objective. Do not invent it. |
 | Android/web precedence | Objective concerns Android or web | Apply current Android or web first-party rules over conflicting Apple-inspired judgment. |
-| Legacy FB UX import | New preference absent; only `.codex/fb-ux.yaml` exists | Show Benchmarks + provider `mobbin` + preserved approval mapping and ask once before writing the new file. Leave the old file untouched. |
-| Legacy Apple-led import | New preference absent; only `.codex/apple-guidelines-stitch.yaml` exists | Show Guidelines + preserved approval mapping and ask once before writing the new file. Leave the old file untouched. |
+| Legacy FB UX import | New preference absent; only `.codex/fb-ux.yaml` exists | Show Guidelines + Benchmarks + provider `mobbin` + preserved approval mapping and ask once before writing the new file. Leave the old file untouched. |
+| Legacy Apple-led import | New preference absent; only `.codex/apple-guidelines-stitch.yaml` exists | Show Guidelines only + preserved approval mapping and ask once before writing the new file. Leave the old file untouched. |
 | Dual legacy conflict | New preference absent; both old files exist | Present both mappings and require the user to choose one or start fresh; never merge automatically. |
 | Direction evidence | Any approval mode | Present one unmistakably marked recommendation plus meaningful alternatives, evidence, risks, and trade-offs. Automatic selection remains visible. |
 | Authorization boundary | Any gate passes | Authorize only a coordinated design handoff, never source implementation, staging, deployment, release, destructive/provider changes, or work outside the authorized lane. |
@@ -76,11 +76,11 @@ The executable checker protects these twelve motion-methodology cases. Each row 
 | Case | Required instruction behavior |
 | --- | --- |
 | 1. Evidence precedence | Resolve existing product motion, native platform behavior and standard components, current first-party guidance, inspected shipped-product motion, then labeled Design Arc judgment. |
-| 2. Benchmark and static limits | Permit authorized shipped-product precedent in Benchmarks mode, while limiting static screens and sequences to states, changing elements, journey location, and intent rather than temporal mechanics. |
+| 2. Benchmark and static limits | Permit authorized shipped-product precedent in Guidelines + Benchmarks mode, while limiting static screens and sequences to states, changing elements, journey location, and intent rather than temporal mechanics. |
 | 3. Playable evidence | Record source, journey, known frame rate, observed path and order, interruption and reversal, measurement method, confidence, missing states, and the estimated status of frame-derived values. |
 | 4. Temporal labels | Give every temporal claim exactly one allowed observation, estimate, inference, judgment, or unverified label. |
 | 5. Missing playback | Report the limitation, offer one of the allowed playable/default/proposal paths, and never invent unavailable motion. |
-| 6. Guidelines isolation | Perform no benchmark lookup, make no real-product motion claim, and explicitly report that no benchmark motion was inspected. |
+| 6. Guidelines only isolation | Perform no benchmark lookup, make no real-product motion claim, and explicitly report that no benchmark motion was inspected. |
 | 7. Complete contract | Require all named fields, define reproducible target/timing/easing/interruption/provenance/source/proof semantics, and use `unverified` for unsupported values. |
 | 8. Motion+ boundary | Keep Motion+ outside Design Arc requirements, evidence, authority, and dependencies while allowing separately authorized implementation help across documentation, source retrieval, tuning, inspection, auditing, and design-system adaptation. |
 | 9. Direction and restraint | Require each direction to explain purpose and restraint, evidence and guidance, provenance labels, reduced motion, risks, complexity, and remaining proof; headings alone do not pass. |
@@ -95,7 +95,7 @@ The mutation suite removes or reverses each load-bearing clause, including:
 - all setup, evidence, and mode commands;
 - resolution precedence and independent provenance;
 - all six evidence/approval combinations;
-- benchmark quality, Guidelines isolation, unavailable access, and one-run fallback;
+- benchmark quality, Guidelines only isolation, unavailable access, and one-run fallback;
 - both legacy mappings, confirmation, dual-file conflict, and file preservation;
 - Guided/Follow objective confirmation and Fully automatic's explicit-objective rule;
 - Direction and Visual Proposal Gate verdict behavior;
@@ -111,7 +111,7 @@ These are static instruction-contract mutations; they do not execute Stitch or p
 
 During consolidation, fresh agents were shown either the old two-plugin instructions or the new Design Arc skill.
 
-The old instructions could infer several safe behaviors, including objective protection and gate boundaries, but had no canonical single preference, independent evidence/approval provenance, or import contract. With Design Arc, representative scenarios resolved first-use choices independently, preserved saved settings under one-run overrides, offered explicit fallback choices when benchmark access was missing, isolated Guidelines from benchmark claims, and preserved the Fully automatic verdict and authorization boundaries.
+The old instructions could infer several safe behaviors, including objective protection and gate boundaries, but had no canonical single preference, independent evidence/approval provenance, or import contract. With Design Arc, representative scenarios resolved first-use choices independently, preserved saved settings under one-run overrides, offered explicit fallback choices when benchmark access was missing, isolated Guidelines only from benchmark claims, and preserved the Fully automatic verdict and authorization boundaries.
 
 These observations are qualitative. They document what was seen during implementation, while the deterministic checker and mutation suite remain the reproducible repository evidence.
 
@@ -140,7 +140,7 @@ Scoring: GREEN because both canonical terminal commands ran successfully, the re
 
 ### Setup GREEN
 
-A separate fresh read-only task invoked `$design-arc setup` with no Design Arc or legacy project preference present. It wrote no files and presented Benchmarks/Guidelines and Guided/Follow recommendation/Fully automatic independently, with the recommended choices identified.
+A separate fresh read-only task invoked `$design-arc setup` with no Design Arc or legacy project preference present. It wrote no files and presented Guidelines + Benchmarks/Guidelines only and Guided/Follow recommendation/Fully automatic independently, with the recommended choices identified.
 
 Scoring: GREEN because the installed plugin skill loaded, setup preceded product work, both choices were independent, and no preference was written without confirmation.
 
@@ -166,7 +166,7 @@ The actual route first attempted `codex plugin marketplace upgrade design-arc-ma
 
 Only after that preflight passed did the tested route remove the one canonical plugin and marketplace, add the isolated current checkout, require exactly one parsed available `0.2.2` before installing it, and reinstall `design-arc@design-arc-marketplace`. The successful final validator reads the marketplace list and reports its parsed source; it does not infer the source from the shell's target variable. The same parser is used after either a refresh-success or fallback route. No network source or user profile was involved.
 
-The fixture discovers both temporary `.codex/design-arc.yaml` files and snapshots every fixture file before and after. The preferences deliberately cover Benchmarks with `benchmark_provider: mobbin` and Follow recommendation, Guidelines with Guided, and distinct ready-home project and thread metadata. Separate product-file and active-review sentinels record two product states, two review thread identities, and a zero continuation count. The passing comparison proves those bytes and identities remained unchanged, with zero replacement homes and zero review continuations in the tested fixture.
+The fixture discovers both temporary `.codex/design-arc.yaml` files and snapshots every fixture file before and after. The preferences deliberately cover Guidelines + Benchmarks with `benchmark_provider: mobbin` and Follow recommendation, Guidelines only with Guided, and distinct ready-home project and thread metadata. Separate product-file and active-review sentinels record two product states, two review thread identities, and a zero continuation count. The passing comparison proves those bytes and identities remained unchanged, with zero replacement homes and zero review continuations in the tested fixture.
 
 The final isolated state contains exactly one enabled canonical plugin, one cached plugin manifest at `0.2.2`, one branch-identical complete plugin tree and cached `$design-arc` skill, no `0.2.1` cache, and no second available version. One new `codex debug prompt-input` task loads the cached Design Arc skill exactly once.
 
@@ -184,7 +184,7 @@ The normal `codex plugin marketplace upgrade design-arc-marketplace` attempt did
 
 Only after that preflight passes may the fallback remove the canonical plugin and marketplace, add the isolated current checkout, require exactly one available 0.2.3 target, and reinstall `design-arc@design-arc-marketplace`. Injected failures preserve rollback coverage for plugin removal, marketplace removal, target marketplace add, target availability read and validation, plugin install, final state reads, prompt loading, and preservation validation; every restoration requires the immutable 0.2.2 package and unchanged project bytes.
 
-The passing comparison preserved exactly two preferences, two ready homes, two product sentinels, and two active reviews byte-for-byte, created zero homes, and continued zero reviews. The fixture covers Benchmarks with `benchmark_provider: mobbin` and Follow recommendation, Guidelines with Guided, distinct ready-home project and thread metadata, two product-state files, and two active-review thread identities with zero continuation counts. The final isolated state contains exactly one enabled canonical 0.2.3 plugin and a complete branch-identical cache, no stale 0.2.2 cache, no second available version, and one new task that loads the cached `$design-arc` skill exactly once.
+The passing comparison preserved exactly two preferences, two ready homes, two product sentinels, and two active reviews byte-for-byte, created zero homes, and continued zero reviews. The fixture covers Guidelines + Benchmarks with `benchmark_provider: mobbin` and Follow recommendation, Guidelines only with Guided, distinct ready-home project and thread metadata, two product-state files, and two active-review thread identities with zero continuation counts. The final isolated state contains exactly one enabled canonical 0.2.3 plugin and a complete branch-identical cache, no stale 0.2.2 cache, no second available version, and one new task that loads the cached `$design-arc` skill exactly once.
 
 ## Isolated 0.2.2 and 0.2.3 to 0.3.0 transition evidence — 2026-08-08
 
@@ -209,7 +209,7 @@ The read-only preflight called `codex_app__list_threads({limit: 50})` and found 
 
 The exercised app schemas were `codex_app__create_thread({target: {type: "project", projectId, environment: {type: "local"}}, prompt})`, `codex_app__wait_threads({targets: [{threadId, hostId}], timeoutMs: 60000})`, `codex_app__set_thread_title({threadId, title})`, `codex_app__set_thread_pinned({threadId, pinned})`, `codex_app__list_threads({limit: 50})`, and `codex_app__set_thread_archived({threadId, hostId: "local", archived: true})`. Creation supplied no model or thinking override.
 
-Each initial prompt identified itself as Design Arc acceptance only and prohibited file inspection, edits, research, further task creation, and running Design Arc. It requested only a compact launchpad card and then a wait. Both tasks returned only that inert card: correct project name, installed status, sample Guidelines/Guided preferences, and five plain-language starters. Neither task performed a product audit or research, and neither wrote project files.
+Each initial prompt identified itself as Design Arc acceptance only and prohibited file inspection, edits, research, further task creation, and running Design Arc. It requested only a compact launchpad card and then a wait. Both tasks returned only that inert card: correct project name, installed status, sample Guidelines only/Guided preferences, and five plain-language starters. Neither task performed a product audit or research, and neither wrote project files.
 
 | Saved project | Temporary thread ID | Mutation and observed result |
 | --- | --- | --- |

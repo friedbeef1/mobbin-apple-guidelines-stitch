@@ -34,7 +34,7 @@ When `.claude/design-arc.yaml` already exists, treat it as the Claude saved pref
 
 Only when the Claude preference is absent, inspect `.codex/design-arc.yaml`
 read-only if it exists. The portable fields are `evidence_mode`,
-`benchmark_provider` when valid for Benchmarks, `approval_mode`, and
+`benchmark_provider` when valid for Guidelines + Benchmarks, `approval_mode`, and
 `graph_assistance`; validate the complete portable mapping before proposing an
 import. Codex-only home metadata and all review state are not portable. Show
 the proposed values, identify ignored Codex-only fields, and ask for explicit
@@ -106,14 +106,14 @@ approval_mode: guided
 graph_assistance: on
 ```
 
-Valid evidence modes are `benchmarks` and `guidelines`. `benchmark_provider` is valid only with Benchmarks; currently document `mobbin` when the user chooses that external provider. Valid approval modes are `guided`, `follow-recommendation`, and `fully-automatic`. Do not create a global preference.
+Valid evidence modes are `benchmarks` and `guidelines`; retain these saved values for backward compatibility. Present them to users as **Guidelines + Benchmarks** and **Guidelines only**. `benchmark_provider` is valid only with Guidelines + Benchmarks; currently document `mobbin` when the user chooses that external provider. Valid approval modes are `guided`, `follow-recommendation`, and `fully-automatic`. Do not create a global preference.
 
 ### Commands
 
 - `/design-arc:design-arc setup` — resolve migration and any missing project choices.
 - `/design-arc:design-arc upgrade` — safely upgrade the Claude Code plugin while preserving preferences, reminders, reviews, graphs, product files, and active sessions.
-- `/design-arc:design-arc evidence benchmarks` — save Benchmarks for this project after confirming provider access.
-- `/design-arc:design-arc evidence guidelines` — save Guidelines and omit `benchmark_provider`.
+- `/design-arc:design-arc evidence benchmarks` — save Guidelines + Benchmarks for this project after confirming provider access.
+- `/design-arc:design-arc evidence guidelines` — save Guidelines only and omit `benchmark_provider`.
 - `/design-arc:design-arc mode` — report the saved and active approval mode and provenance.
 - `/design-arc:design-arc mode guided` — save Guided.
 - `/design-arc:design-arc mode follow-recommendation` — save Follow recommendation.
@@ -128,7 +128,7 @@ Graph controls are `/design-arc:design-arc graph`, `/design-arc:design-arc graph
 - `/design-arc:design-arc graph clear` — request deletion of only the current review's graph under the confirmation rule below.
 - `/design-arc:design-arc graph global off` or `/design-arc:design-arc graph global on` — save only the laptop/profile safety state; global on never overrides project off.
 
-A natural-language request such as “use Guidelines for this run” or “follow your recommendation this time” is a one-run override, not permission to rewrite the file. A setting command explicitly authorizes changing only that named project preference.
+A natural-language request such as “use Guidelines only for this run” or “follow your recommendation this time” is a one-run override, not permission to rewrite the file. A setting command explicitly authorizes changing only that named project preference.
 
 Equivalent natural-language requests activate the same graph report, one-review override, project setting, explanation, rebuild, clear, or laptop-global safety flow without requiring command syntax. Distinguish “for this review” from “for this project” and “on this laptop”; when scope is materially ambiguous, ask before saving or deleting anything.
 
@@ -173,8 +173,8 @@ Always report the active evidence mode and approval mode, and the provenance of 
 
 For first use, ask the user to choose independently:
 
-- **Benchmarks — recommended when relevant access is available.** Use inspected real-product journeys plus current first-party guidance.
-- **Guidelines.** Use current first-party platform guidance without benchmark research.
+- **Guidelines + Benchmarks — recommended when relevant access is available.** Use inspected real-product journeys plus current first-party guidance.
+- **Guidelines only.** Use current first-party platform guidance without benchmark research.
 - **Guided — recommended for a new project.** Stop at Objective Confirmation, Direction Gate, and Visual Proposal Gate.
 - **Follow recommendation.** Stop at Objective Confirmation, automatically select the marked direction, and stop at Visual Proposal Gate.
 - **Fully automatic.** Continue only from an explicit current-request objective, select the marked direction, and pass Visual Proposal Gate only on `meets direction`.
@@ -251,12 +251,12 @@ Evidence selection and approval behavior remain independent:
 
 | Evidence | Approval | Gate behavior |
 |---|---|---|
-| Benchmarks | Guided | Direction Gate stops; Visual Proposal Gate stops |
-| Benchmarks | Follow recommendation | Direction Gate continues with the marked recommendation; Visual Proposal Gate stops |
-| Benchmarks | Fully automatic | Direction Gate continues; Visual Proposal Gate continues only on `meets direction` |
-| Guidelines | Guided | Direction Gate stops; Visual Proposal Gate stops |
-| Guidelines | Follow recommendation | Direction Gate continues with the marked recommendation; Visual Proposal Gate stops |
-| Guidelines | Fully automatic | Direction Gate continues; Visual Proposal Gate continues only on `meets direction` |
+| Guidelines + Benchmarks | Guided | Direction Gate stops; Visual Proposal Gate stops |
+| Guidelines + Benchmarks | Follow recommendation | Direction Gate continues with the marked recommendation; Visual Proposal Gate stops |
+| Guidelines + Benchmarks | Fully automatic | Direction Gate continues; Visual Proposal Gate continues only on `meets direction` |
+| Guidelines only | Guided | Direction Gate stops; Visual Proposal Gate stops |
+| Guidelines only | Follow recommendation | Direction Gate continues with the marked recommendation; Visual Proposal Gate stops |
+| Guidelines only | Fully automatic | Direction Gate continues; Visual Proposal Gate continues only on `meets direction` |
 
 ## Establish the objective
 
@@ -283,7 +283,7 @@ Do not redesign an imagined product. If current product evidence is unavailable,
 
 ## Gather evidence
 
-### Benchmarks
+### Guidelines + Benchmarks
 
 Confirm external benchmark access before research. Apply a light current first-party constraint check before looking for precedent so examples do not normalize a platform conflict.
 
@@ -291,11 +291,11 @@ Inspect complete, relevant real-product journeys and explain why each selected p
 
 Mobbin is an optional external benchmark provider, not a bundled or official Design Arc integration. Access and authorization remain external and separate.
 
-If benchmark access is missing, stop; never degrade silently. Offer either a one-run Guidelines fallback that does not rewrite the saved preference, or a confirmed saved switch to Guidelines. Do not continue until the user chooses, and do not describe a fallback result as benchmark-backed.
+If benchmark access is missing, stop; never degrade silently. Offer either a one-run Guidelines only fallback that does not rewrite the saved preference, or a confirmed saved switch to Guidelines only. Do not continue until the user chooses, and do not describe a fallback result as benchmark-backed.
 
-### Guidelines
+### Guidelines only
 
-In Guidelines mode, perform no benchmark lookup and make no benchmark-evidence claim. Look up current first-party guidance for every affected platform and link directly to the principles that constrain hierarchy, navigation, targets, labels, feedback, accessibility, errors, safe areas, and recovery.
+In Guidelines only mode, perform no benchmark lookup and make no benchmark-evidence claim. Look up current first-party guidance for every affected platform and link directly to the principles that constrain hierarchy, navigation, targets, labels, feedback, accessibility, errors, safe areas, and recovery.
 
 Use Apple Human Interface Guidelines as first-party authority for Apple targets. For Android or web targets, current first-party platform rules override conflicting Apple-inspired judgment. Distinguish platform requirements from product-specific judgment.
 
@@ -363,7 +363,7 @@ Apply the least-motion principle: use no more motion than the stated interaction
 
 Use this motion-evidence precedence: existing product motion; native platform behavior and standard components; current first-party platform guidance; inspected relevant shipped-product motion; labeled Design Arc judgment. Prefer established product tokens and standard native components when they satisfy the interaction purpose. If sources conflict, the current target platform's first-party requirements govern that platform.
 
-In Benchmarks mode, authorized shipped-product motion may be inspected as precedent. Static screens or sequences support only start/end state, changing element, journey location, and transition intent; they cannot support exact duration, easing, springs, velocity, interruption, or choreography. Never convert an unobserved benchmark animation into an exact motion claim.
+In Guidelines + Benchmarks mode, authorized shipped-product motion may be inspected as precedent. Static screens or sequences support only start/end state, changing element, journey location, and transition intent; they cannot support exact duration, easing, springs, velocity, interruption, or choreography. Never convert an unobserved benchmark animation into an exact motion claim.
 
 For playable motion evidence, record source; product/journey; frame rate when known; observed duration/path/order; interruption/reversal; measurement method; confidence; and missing states. Frame-derived values are estimates.
 
@@ -371,7 +371,7 @@ Every temporal claim uses exactly one label: `directly observed`, `measured esti
 
 When necessary playable evidence is unavailable, report the limitation and offer an accessible live product, user recording, authorized Page Flows recording, native default, or labeled proposal requiring implementation validation. Never invent it.
 
-In Guidelines mode, perform no benchmark lookup, make no real-product motion claim, and report that no benchmark motion was inspected. Use current first-party guidance, standard native behavior, and labeled judgment without implying shipped-product precedent.
+In Guidelines only mode, perform no benchmark lookup, make no real-product motion claim, and report that no benchmark motion was inspected. Use current first-party guidance, standard native behavior, and labeled judgment without implying shipped-product precedent.
 
 #### Write the material motion contracts
 
@@ -485,15 +485,15 @@ Fully automatic mode never bypasses motion evidence integrity.
 - Inspecting the product or researching before setup and Objective Confirmation.
 - Rewriting a saved preference because of a one-run override.
 - Silently importing or merging legacy preferences.
-- Falling back from Benchmarks without the user's choice.
+- Falling back from Guidelines + Benchmarks without the user's choice.
 - Calling a popular screenshot “best in class” without inspecting its journey.
 - Inferring exact motion timing, easing, springs, or choreography from a screenshot or static screen sequence.
 - Reporting a frame-derived value as exact or omitting the temporal-claim label.
-- Claiming shipped-product motion precedent in Guidelines mode.
+- Claiming shipped-product motion precedent in Guidelines only mode.
 - Treating Motion or Motion+ as Design Arc evidence, authority, dependency, or permission to install; an authorized implementation owner's separate optional dependency choice does not change that boundary.
 - Treating a Stitch prototype as staging or device implementation proof.
 - Inventing custom motion when existing product or standard native behavior already serves the purpose.
-- Looking up benchmarks or implying benchmark support in Guidelines mode.
+- Looking up benchmarks or implying benchmark support in Guidelines only mode.
 - Inventing a missing objective under Fully automatic.
 - Hiding alternatives because Follow recommendation is active.
 - Treating `meets with corrections` as permission to pass Visual Proposal Gate.

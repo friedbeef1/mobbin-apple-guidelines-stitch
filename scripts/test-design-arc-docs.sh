@@ -190,11 +190,11 @@ require_text "$using_design_arc" 'Each round batches every known repairable mism
 require_text "$using_design_arc" 'If the proposal still does not match, Design Arc stops and flags every unresolved mismatch and the attempts already made.'
 require_text "$using_design_arc" '| Approval mode | Objective | Visual Proposal Gate |'
 require_text "$using_design_arc" 'Select evidence mode<br/>Active host; You when a choice is required'
-require_text "$using_design_arc" 'C -- "Guidelines mode" --> C1'
+require_text "$using_design_arc" 'C -- "Guidelines only mode" --> C1'
 require_text "$using_design_arc" 'Official Apple Human Interface Guidelines for Apple,'
 require_text "$using_design_arc" 'Android and Material guidance for Android,'
 require_text "$using_design_arc" 'or W3C guidance for web + active host'
-require_text "$using_design_arc" 'C -- "Benchmarks mode" --> C2'
+require_text "$using_design_arc" 'C -- "Guidelines + Benchmarks mode" --> C2'
 require_text "$using_design_arc" 'Mobbin journey benchmarks + applicable'
 require_text "$using_design_arc" 'Google Stitch + active host'
 require_text "$using_design_arc" 'Generated screens + active host'
@@ -401,7 +401,7 @@ workflow_table = """| Workflow step | Platform or source handling it | Human inv
 | ↓ | | |
 | Audit the current journey | Your website or app + the active host | |
 | ↓ | | |
-| Gather and label evidence | Mobbin + the active host in Benchmarks mode, and official platform guidance + the active host in Guidelines mode | |
+| Gather and label evidence | Mobbin + the active host in Guidelines + Benchmarks mode, and official platform guidance + the active host in Guidelines only mode | |
 | ↓ | | |
 | Recommend a design direction | Codex or Claude Code | |
 | ↓ | | |
@@ -556,7 +556,7 @@ require_text "$behavioral_validation" '## Fresh-task installation and setup evid
 require_text "$behavioral_validation" 'Codex CLI 0.146.1'
 require_text "$behavioral_validation" 'used the restricted built-in plugin-install control and failed'
 require_text "$behavioral_validation" 'executed both terminal commands, verified `design-arc@design-arc-marketplace` as installed and enabled'
-require_text "$behavioral_validation" 'presented Benchmarks/Guidelines and Guided/Follow recommendation/Fully automatic independently'
+require_text "$behavioral_validation" 'presented Guidelines + Benchmarks/Guidelines only and Guided/Follow recommendation/Fully automatic independently'
 require_text "$behavioral_validation" 'Fourteen render-repair mutations prove that the written contract rejects unbounded retries, per-mismatch retrying, user-dependent ordinary corrections, uninspected correction claims, skipped reinspection, unsafe direction changes, runtime-proof retries, premature early stopping, missing exhaustion handling, unexplained `meets direction`, incomplete repair records, and approval-mode bypasses.'
 require_text "$behavioral_validation" '187 deterministic mutation rejections'
 require_text "$behavioral_validation" 'Five activation-integrity mutations separately prove that direct invocation starts immediately, an indirectly selected skill asks first, pre-approval work remains isolated, declining does not let Design Arc claim control of the ordinary request, and an unselected skill cannot be credited with work it did not perform.'
@@ -604,7 +604,7 @@ require_text "$prompts" '$design-arc evidence guidelines'
 require_text "$prompts" '$design-arc mode guided'
 require_text "$prompts" '$design-arc mode follow-recommendation'
 require_text "$prompts" '$design-arc mode fully-automatic'
-require_text "$prompts" 'use Guidelines for this run'
+require_text "$prompts" 'use Guidelines only for this run'
 require_text "$prompts" 'Bypass both gates'
 forbid_text "$prompts" 'stop at the Stitch Gate'
 forbid_text "$prompts" 'continues through Stitch only when the verdict'

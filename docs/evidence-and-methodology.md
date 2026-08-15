@@ -32,14 +32,14 @@ The graph can focus correction planning but never replaces complete render inspe
 
 | Evidence mode | Choose it when | What it means |
 | --- | --- | --- |
-| **Benchmarks** — recommended when relevant access is available | Inspected real-product journeys would add useful precedent to current platform guidance. | Design Arc inspects complete, relevant journeys, explains why each pattern helps the objective, and records limits. A library listing, popularity, metadata, or one screenshot is never proof of best-in-class quality. |
-| **Guidelines** | You want a first-party-guidance-led review without benchmark research or do not have authorized benchmark access. | Design Arc performs no benchmark lookup and makes no benchmark-evidence claim. It uses current first-party guidance for every affected platform. |
+| **Guidelines + Benchmarks** — recommended when relevant access is available | Inspected real-product journeys would add useful precedent to current platform guidance. | Design Arc inspects complete, relevant journeys, explains why each pattern helps the objective, and records limits. A library listing, popularity, metadata, or one screenshot is never proof of best-in-class quality. |
+| **Guidelines only** | You want a first-party-guidance-led review without benchmark research or do not have authorized benchmark access. | Design Arc performs no benchmark lookup and makes no benchmark-evidence claim. It uses current first-party guidance for every affected platform. |
 
 The evidence choice is independent from approval behavior. Design Arc reports the active evidence mode, approval mode, and provenance of each at the start of every run.
 
 Apple Human Interface Guidelines are first-party authority for Apple targets. For Android or web targets, current first-party platform rules override conflicting Apple-inspired judgment. Requirements are kept distinct from product-specific judgment.
 
-Mobbin can be selected as a benchmark provider in Benchmarks mode. It remains an external source requiring separate access and authorization. Its examples are observed precedent, not a bundled integration or a source to copy. If access is unavailable, Design Arc stops and offers either a one-run Guidelines fallback or a confirmed saved switch; it never silently degrades or calls the result benchmark-backed.
+Mobbin can be selected as a benchmark provider in Guidelines + Benchmarks mode. It remains an external source requiring separate access and authorization. Its examples are observed precedent, not a bundled integration or a source to copy. If access is unavailable, Design Arc stops and offers either a one-run Guidelines only fallback or a confirmed saved switch; it never silently degrades or calls the result benchmark-backed.
 
 Google Stitch is an optional external visualization service requiring separate access and payload authorization. The board supports deeper exploration, while the active host must still return a reviewable journey map, key renders, identifiers, and validation verdict in its task or session. Apple, Google, Mobbin, and Stitch access is not bundled or official, and none of those services authorizes product-source changes.
 

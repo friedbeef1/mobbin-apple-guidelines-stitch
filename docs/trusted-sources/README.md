@@ -11,7 +11,7 @@ Grounding makes a recommendation explainable instead of taste-based. Design Arc 
 | Product judgment | The recommendation and trade-offs for the user-confirmed objective where sources do not decide one answer. | Design Arc synthesis, labeled as judgment. | An external fact or provider endorsement. |
 | Visualization and validation | A concrete proposed journey that can be inspected across material states. | Active-host static journey boards by default; optional [Google Stitch](https://stitch.withgoogle.com/) workspace. | Evidence, platform compliance, accessibility, or implementation readiness by itself. |
 
-The affected platform's current first-party rules govern that platform. Benchmark precedent is used only when access is separately authorized and relevant journeys are actually inspected. Guidelines mode performs no benchmark lookup and makes no benchmark-evidence claim.
+The affected platform's current first-party rules govern that platform. Benchmark precedent is used only when access is separately authorized and relevant journeys are actually inspected. Guidelines only mode performs no benchmark lookup and makes no benchmark-evidence claim.
 
 Read the focused guides for the source type and its limits:
 

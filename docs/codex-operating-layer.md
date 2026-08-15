@@ -52,7 +52,7 @@ approval_mode: guided
 
 One-run request overrides take precedence without rewriting saved values. Otherwise Codex uses the saved Design Arc preference, a confirmed legacy import when the new file is absent, or first-use selection for anything still missing. Codex reports the active evidence mode and approval mode and the provenance of each independently.
 
-Legacy imports are proposed, never silent. The former FB UX preference maps to Benchmarks and provider `mobbin`; the former Apple Guidelines + Stitch preference maps to Guidelines. The old approval choice is retained. When both files exist, the user chooses one mapping or starts fresh. Design Arc never silently merges, rewrites, or deletes the old files.
+Legacy imports are proposed, never silent. The former FB UX preference maps to Guidelines + Benchmarks and provider `mobbin`; the former Apple Guidelines + Stitch preference maps to Guidelines only. The old approval choice is retained. When both files exist, the user chooses one mapping or starts fresh. Design Arc never silently merges, rewrites, or deletes the old files.
 
 ## Objective and approval discipline
 
@@ -70,9 +70,9 @@ Approval modes change pauses, not rigor:
 
 ## Evidence discipline
 
-Benchmarks mode requires separately authorized access, complete and relevant inspected journeys, and a stated reason each selected pattern helps the confirmed objective. Library presence, metadata, popularity, or a single screenshot does not prove best-in-class quality. Missing access stops the workflow until the user selects a one-run Guidelines fallback or confirms a saved switch.
+Guidelines + Benchmarks mode requires separately authorized access, complete and relevant inspected journeys, and a stated reason each selected pattern helps the confirmed objective. Library presence, metadata, popularity, or a single screenshot does not prove best-in-class quality. Missing access stops the workflow until the user selects a one-run Guidelines only fallback or confirms a saved switch.
 
-Guidelines mode performs no benchmark lookup and makes no benchmark-evidence claim. Both modes require current first-party guidance for every affected platform and distinguish platform requirements from product judgment.
+Guidelines only mode performs no benchmark lookup and makes no benchmark-evidence claim. Both modes require current first-party guidance for every affected platform and distinguish platform requirements from product judgment.
 
 Codex must not claim a journey was inspected, guidance was current, benchmark evidence supports a decision, a new visual proposal was generated, or a viewport was exact without current-task evidence. Appearance alone does not prove accessibility, safe-area, browser/native, or physical-device behavior.
 

@@ -69,28 +69,28 @@ MUTATIONS = {
         "Report the active modes without their provenance.",
     ),
     "benchmarks guided combination": (
-        "| Benchmarks | Guided | Direction Gate stops; Visual Proposal Gate stops |",
-        "| Benchmarks | Guided | Both gates continue |",
+        "| Guidelines + Benchmarks | Guided | Direction Gate stops; Visual Proposal Gate stops |",
+        "| Guidelines + Benchmarks | Guided | Both gates continue |",
     ),
     "benchmarks follow combination": (
-        "| Benchmarks | Follow recommendation | Direction Gate continues with the marked recommendation; Visual Proposal Gate stops |",
-        "| Benchmarks | Follow recommendation | Both gates continue |",
+        "| Guidelines + Benchmarks | Follow recommendation | Direction Gate continues with the marked recommendation; Visual Proposal Gate stops |",
+        "| Guidelines + Benchmarks | Follow recommendation | Both gates continue |",
     ),
     "benchmarks automatic combination": (
-        "| Benchmarks | Fully automatic | Direction Gate continues; Visual Proposal Gate continues only on `meets direction` |",
-        "| Benchmarks | Fully automatic | Visual Proposal Gate continues on any verdict |",
+        "| Guidelines + Benchmarks | Fully automatic | Direction Gate continues; Visual Proposal Gate continues only on `meets direction` |",
+        "| Guidelines + Benchmarks | Fully automatic | Visual Proposal Gate continues on any verdict |",
     ),
     "guidelines guided combination": (
-        "| Guidelines | Guided | Direction Gate stops; Visual Proposal Gate stops |",
-        "| Guidelines | Guided | Both gates continue |",
+        "| Guidelines only | Guided | Direction Gate stops; Visual Proposal Gate stops |",
+        "| Guidelines only | Guided | Both gates continue |",
     ),
     "guidelines follow combination": (
-        "| Guidelines | Follow recommendation | Direction Gate continues with the marked recommendation; Visual Proposal Gate stops |",
-        "| Guidelines | Follow recommendation | Both gates continue |",
+        "| Guidelines only | Follow recommendation | Direction Gate continues with the marked recommendation; Visual Proposal Gate stops |",
+        "| Guidelines only | Follow recommendation | Both gates continue |",
     ),
     "guidelines automatic combination": (
-        "| Guidelines | Fully automatic | Direction Gate continues; Visual Proposal Gate continues only on `meets direction` |",
-        "| Guidelines | Fully automatic | Visual Proposal Gate continues on any verdict |",
+        "| Guidelines only | Fully automatic | Direction Gate continues; Visual Proposal Gate continues only on `meets direction` |",
+        "| Guidelines only | Fully automatic | Visual Proposal Gate continues on any verdict |",
     ),
     "benchmark journey quality": (
         "Inspect complete, relevant real-product journeys and explain why each selected pattern is useful for the established objective.",
@@ -101,24 +101,24 @@ MUTATIONS = {
         "Popularity or one screenshot proves best-in-class quality.",
     ),
     "guidelines no benchmark lookup": (
-        "In Guidelines mode, perform no benchmark lookup and make no benchmark-evidence claim.",
-        "In Guidelines mode, quietly use benchmark evidence when convenient.",
+        "In Guidelines only mode, perform no benchmark lookup and make no benchmark-evidence claim.",
+        "In Guidelines only mode, quietly use benchmark evidence when convenient.",
     ),
     "missing access stop": (
         "If benchmark access is missing, stop; never degrade silently.",
         "If benchmark access is missing, silently continue with guidelines.",
     ),
     "one-run fallback": (
-        "Offer either a one-run Guidelines fallback that does not rewrite the saved preference, or a confirmed saved switch to Guidelines.",
-        "Switch the saved preference to Guidelines without asking.",
+        "Offer either a one-run Guidelines only fallback that does not rewrite the saved preference, or a confirmed saved switch to Guidelines only.",
+        "Switch the saved preference to Guidelines only without asking.",
     ),
     "fb ux import": (
         "`.codex/fb-ux.yaml` maps to `evidence_mode: benchmarks`, `benchmark_provider: mobbin`, and its preserved approval mode.",
-        "`.codex/fb-ux.yaml` maps to Guidelines and drops its approval mode.",
+        "`.codex/fb-ux.yaml` maps to Guidelines only and drops its approval mode.",
     ),
     "apple skill import": (
         "`.codex/apple-guidelines-stitch.yaml` maps to `evidence_mode: guidelines`, omits `benchmark_provider`, and preserves its approval mode.",
-        "`.codex/apple-guidelines-stitch.yaml` maps to Benchmarks and adds a provider.",
+        "`.codex/apple-guidelines-stitch.yaml` maps to Guidelines + Benchmarks and adds a provider.",
     ),
     "confirm import": (
         "Show the proposed mapping and ask once before importing it.",
@@ -225,8 +225,8 @@ MUTATIONS = {
         "Static screens support exact duration, easing, springs, velocity, interruption, and choreography.",
     ),
     "motion case 02 benchmark authorization": (
-        "In Benchmarks mode, authorized shipped-product motion may be inspected as precedent.",
-        "In Benchmarks mode, inspect shipped-product motion without authorization.",
+        "In Guidelines + Benchmarks mode, authorized shipped-product motion may be inspected as precedent.",
+        "In Guidelines + Benchmarks mode, inspect shipped-product motion without authorization.",
     ),
     "motion case 03 playable evidence record": (
         "For playable motion evidence, record source; product/journey; frame rate when known; observed duration/path/order; interruption/reversal; measurement method; confidence; and missing states. Frame-derived values are estimates.",
@@ -241,8 +241,8 @@ MUTATIONS = {
         "When playable evidence is unavailable, invent a plausible animation from a static screen.",
     ),
     "motion case 06 Guidelines isolation": (
-        "In Guidelines mode, perform no benchmark lookup, make no real-product motion claim, and report that no benchmark motion was inspected.",
-        "In Guidelines mode, imply real-product motion was inspected without a benchmark lookup.",
+        "In Guidelines only mode, perform no benchmark lookup, make no real-product motion claim, and report that no benchmark motion was inspected.",
+        "In Guidelines only mode, imply real-product motion was inspected without a benchmark lookup.",
     ),
     "motion case 07 complete contract fields": (
         "Every material motion contract includes: Motion ID; journey location; purpose; trigger; start/end state; spatial behavior; choreography; timing; easing/spring; interruption; reduced motion; evidence; provenance; implementation target; implementation source; proof status. Unsupported values are `unverified`.",
