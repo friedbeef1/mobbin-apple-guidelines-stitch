@@ -1,0 +1,17 @@
+{
+  "name": "design-arc",
+  "version": "0.4.0",
+  "description": "Outcome-led UI journey design for Claude Code.",
+  "author": {
+    "name": "James Yeang"
+  },
+  "repository": "https://github.com/friedbeef1/mobbin-apple-guidelines-stitch",
+  "license": "MIT",
+  "keywords": [
+    "ux",
+    "journey-design",
+    "outcomes",
+    "evidence"
+  ],
+  "skills": "./skills/"
+}

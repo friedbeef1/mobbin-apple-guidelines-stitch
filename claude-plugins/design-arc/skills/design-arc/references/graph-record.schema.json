@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "design-arc.graph/v1",
+  "title": "Design Arc graph record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "project_id", "review_id", "nodes", "edges"],
+  "properties": {
+    "schema": {
+      "const": "design-arc.graph/v1"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "review_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nodes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "edges": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/edge" }
+    }
+  },
+  "$defs": {
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "label"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "type": {
+          "enum": [
+            "confirmed_objective",
+            "evidence_source",
+            "platform_requirement",
+            "design_decision",
+            "journey",
+            "screen",
+            "state",
+            "transition",
+            "stitch_render",
+            "observed_mismatch",
+            "correction",
+            "approval",
+            "exception"
+          ]
+        },
+        "label": { "type": "string", "minLength": 1 }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "from",
+        "to",
+        "active",
+        "provenance_kind",
+        "source_ref",
+        "observed_at",
+        "support_status"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "type": {
+          "enum": [
+            "supports",
+            "requires",
+            "applies_to",
+            "conflicts_with",
+            "depends_on",
+            "rendered_as",
+            "corrected_by",
+            "supersedes",
+            "approved_by"
+          ]
+        },
+        "from": { "type": "string", "minLength": 1 },
+        "to": { "type": "string", "minLength": 1 },
+        "active": { "type": "boolean" },
+        "provenance_kind": {
+          "enum": [
+            "inspected_evidence",
+            "official_guidance",
+            "user_confirmed_objective",
+            "design_arc_judgment"
+          ]
+        },
+        "source_ref": { "type": "string", "minLength": 1 },
+        "observed_at": { "type": "string", "format": "date-time" },
+        "support_status": { "const": "supported" }
+      }
+    }
+  }
+}

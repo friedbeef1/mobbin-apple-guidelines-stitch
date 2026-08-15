@@ -1,0 +1,19 @@
+{
+  "name": "design-arc-marketplace",
+  "owner": {
+    "name": "James Yeang"
+  },
+  "description": "Design Arc skills for outcome-led UI journey design in Claude Code.",
+  "plugins": [
+    {
+      "name": "design-arc",
+      "source": "./claude-plugins/design-arc",
+      "description": "Outcome-led UI journey design for Claude Code.",
+      "version": "0.4.0",
+      "author": {
+        "name": "James Yeang"
+      },
+      "category": "productivity"
+    }
+  ]
+}
