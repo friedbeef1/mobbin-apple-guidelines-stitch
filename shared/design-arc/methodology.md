@@ -56,6 +56,28 @@ If Codex has selected this skill for a suitable request that did not directly in
 
 A request such as “upgrade Design Arc” activates this same safe upgrade flow without requiring the command.
 
+### Runtime state and adapter isolation
+
+Codex stores preferences at `.codex/design-arc.yaml`, active-review identity at
+`.codex/design-arc-active-review.json`, and review artifacts under
+`.codex/design-arc/reviews/<review_id>/`. Claude Code stores preferences only at `.claude/design-arc.yaml`, active-review identity only at `.claude/design-arc-active-review.json`, and review artifacts only under `.claude/design-arc/reviews/<review_id>/`.
+
+Every new active-review record includes `runtime: codex` or `runtime: claude-code` together with its pinned `workflow_version`.
+An existing active record without runtime provenance remains owned by the
+runtime-specific path where it was created; do not rewrite it merely to add the
+field. Each adapter reads and writes only its own preference, active-review,
+review, and graph paths.
+
+Never import, merge, migrate, resume, or continue an active review across runtimes; preference import is the only allowed cross-runtime copy.
+Cross-runtime preference import copies only explicitly confirmed portable
+preference values into a new destination-runtime file. It never copies a Codex
+home, reminder, active-review record, review artifact, graph, task identity, or
+session context.
+
+An adapter upgrade or downgrade preserves both runtimes' preferences, reminder blocks, review directories, graph files, product files, and active-review records byte-for-byte.
+It never resumes, converts, merges, or rewrites an active session; that session retains its recorded runtime and workflow version, while only a new clean session may load the changed adapter version.
+An older adapter ignores unsupported state while preserving it; it never deletes or reinterprets newer preferences, reminders, reviews, or graphs.
+
 ### Safe plugin upgrade
 
 An upgrade changes the shared Codex plugin installation, not any participating product. Do not treat it as first use, project setup, preference migration, home recovery, or a design run.

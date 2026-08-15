@@ -35,10 +35,82 @@ def relative(path: Path) -> str:
     return path.relative_to(REPO_ROOT).as_posix()
 
 
+def without_section(markdown: str, start: str, end: str) -> str:
+    """Remove one complete heading-delimited section from a packaged adapter."""
+    pattern = re.compile(
+        rf"(?ms)^{re.escape(start)}\n.*?(?=^{re.escape(end)}\n)"
+    )
+    rendered, count = pattern.subn("", markdown, count=1)
+    if count != 1:
+        raise ValueError(f"missing shared methodology section: {start}")
+    return rendered
+
+
+def methodology_for(platform: str) -> str:
+    methodology = METHODOLOGY.read_text(encoding="utf-8").lstrip("\n")
+    if platform == "codex":
+        return methodology
+
+    # Claude reuses the canonical journey methodology, but the Codex-only
+    # upgrade, project-home, and legacy-import sections are not executable in
+    # Claude Code. Claude-specific equivalents live in the Claude overlay.
+    for start, end in (
+        ("### Safe plugin upgrade", "### Project home"),
+        ("### Project home", "### Resolution precedence"),
+        ("### Legacy preference import", "### The six valid combinations"),
+    ):
+        methodology = without_section(methodology, start, end)
+
+    replacements = {
+        "Store project-scoped choices in `.codex/design-arc.yaml`:":
+            "Store project-scoped choices in `.claude/design-arc.yaml`:",
+        "- `$design-arc home` — report, create, recover, or repin this project's Design Arc home under the confirmation and deduplication rules below.\n": "",
+        "- `$design-arc upgrade` — safely upgrade the laptop/profile plugin while preserving every project's preferences, home, files, and active work.":
+            "- `$design-arc upgrade` — safely upgrade the Claude Code plugin while preserving preferences, reminders, reviews, graphs, product files, and active sessions.",
+        "Treat Design Arc as directly invoked when the current request includes `$design-arc`, explicitly asks to use Design Arc by name, or is a journey starter submitted inside a confirmed Design Arc home.":
+            "Treat Design Arc as directly invoked when the current request includes `/design-arc:design-arc` or explicitly asks to use Design Arc by name.",
+        "If Codex has selected this skill for a suitable request that did not directly invoke Design Arc":
+            "If Claude Code has selected this skill for a suitable request that did not directly invoke Design Arc",
+        "create preferences, create a project home, or write review records":
+            "create preferences or write review records",
+        "Saved `.codex/design-arc.yaml` value.":
+            "Saved `.claude/design-arc.yaml` value.",
+        "Confirmed legacy import, only when the new file is absent.":
+            "Confirmed Codex preference import, only when the Claude file is absent.",
+        "confirmed legacy import, or first-use selection":
+            "confirmed Codex preference import, or first-use selection",
+        "in that project's `.codex/design-arc.yaml`; keep laptop-global graph safety state isolated under the active Codex profile":
+            "in that project's `.claude/design-arc.yaml`; keep laptop-global graph safety state isolated under the active Claude Code profile",
+        "shared by this Codex installation":
+            "shared by this Claude Code installation",
+        "$CODEX_HOME/design-arc-global.yaml":
+            "$CLAUDE_CONFIG_DIR/design-arc-global.yaml",
+        "do not rewrite `.codex/design-arc.yaml`, laptop-global safety state, or `design_arc_home` metadata merely because a review resolved them":
+            "do not rewrite `.claude/design-arc.yaml` or laptop-global safety state merely because a review resolved them",
+        "Store each record only at `.codex/design-arc/reviews/<review_id>/graph.json`":
+            "Store each record only at `.claude/design-arc/reviews/<review_id>/graph.json`",
+        "preserves the review ID, workflow version, project preference, home metadata, and product files":
+            "preserves the review ID, workflow version, project preference, and product files",
+        "it never clears preferences, homes, product files, other reviews, or other projects":
+            "it never clears preferences, product files, other reviews, or other projects",
+        "must preserve project preferences, homes, active review identity/version records, graph files, and product files":
+            "must preserve project preferences, reminder blocks, active review identity/version records, graph files, and product files",
+    }
+    for original, replacement in replacements.items():
+        if original not in methodology:
+            raise ValueError(f"missing Claude methodology adaptation source: {original}")
+        methodology = methodology.replace(original, replacement, 1)
+    methodology = methodology.replace(
+        "$CODEX_HOME/design-arc-global.yaml",
+        "$CLAUDE_CONFIG_DIR/design-arc-global.yaml",
+    )
+    return methodology.replace("$design-arc", "/design-arc:design-arc")
+
+
 def composition(platform: str) -> bytes:
     details = PLATFORMS[platform]
     overlay = details["overlay"].read_text(encoding="utf-8").rstrip("\n")
-    methodology = METHODOLOGY.read_text(encoding="utf-8").lstrip("\n")
+    methodology = methodology_for(platform)
     return f"{overlay}\n\n{methodology}".encode("utf-8")
 
 
