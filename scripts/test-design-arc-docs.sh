@@ -33,9 +33,22 @@ forbid_text() {
   fi
 }
 
+copy_fixture() {
+  destination=$1
+  mkdir -p "$destination"
+  (
+    cd "$repo_root"
+    tar --exclude=.git --exclude=.superpowers -cf - .
+  ) | (
+    cd "$destination"
+    tar -xf -
+  )
+}
+
 readme="$repo_root/README.md"
 getting_started="$repo_root/docs/getting-started.md"
 using_design_arc="$repo_root/docs/using-design-arc.md"
+advanced_controls="$repo_root/docs/advanced-controls.md"
 evidence_methodology="$repo_root/docs/evidence-and-methodology.md"
 upgrades_migration="$repo_root/docs/upgrades-and-migration.md"
 trust_sources="$repo_root/docs/trust-limitations-and-sources.md"
@@ -45,9 +58,9 @@ prompts="$repo_root/examples/prompts.md"
 motion_sources="$repo_root/docs/trusted-sources/motion.md"
 trusted_source_library="$repo_root/docs/trusted-sources/README.md"
 visualization_sources="$repo_root/docs/trusted-sources/visualization.md"
-shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)'
+shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)'
 
-for file in "$readme" "$getting_started" "$using_design_arc" "$evidence_methodology" "$upgrades_migration" "$trust_sources" "$operating_layer" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
+for file in "$readme" "$getting_started" "$using_design_arc" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$trust_sources" "$operating_layer" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
 do
   [ -f "$file" ] || fail "missing required documentation: ${file#"$repo_root/"}"
 done
@@ -70,7 +83,7 @@ for forbidden_text in ("```sh", "codex plugin", "skills registry", "Python", "Sa
         raise SystemExit(f"FAIL: README retains forbidden advanced-installation content: {forbidden_text}")
 PY
 
-python3 - "$repo_root" "$readme" "$getting_started" "$using_design_arc" "$evidence_methodology" "$upgrades_migration" "$trust_sources" <<'PY'
+python3 - "$repo_root" "$readme" "$getting_started" "$using_design_arc" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$trust_sources" <<'PY'
 from pathlib import Path
 import re
 import sys
@@ -106,77 +119,52 @@ require_text "$readme" '## The workflow'
 require_text "$readme" '## Documentation'
 require_text "$readme" '[Getting started](docs/getting-started.md)'
 require_text "$readme" '[Using Design Arc](docs/using-design-arc.md)'
+require_text "$readme" '[Advanced controls](docs/advanced-controls.md)'
 require_text "$readme" '[Evidence and methodology](docs/evidence-and-methodology.md)'
 require_text "$readme" '[Upgrades and migration](docs/upgrades-and-migration.md)'
 require_text "$readme" '[Trust and sources](docs/trust-limitations-and-sources.md)'
 require_text "$readme" '## Install'
 require_text "$readme" '**Ask Claude Code:** Add the Design Arc marketplace from'
-require_text "$readme" '/design-arc:design-arc setup'
 require_text "$readme" '## Start a review'
-require_text "$readme" 'Help me make our onboarding less confusing.'
+require_text "$readme" 'Use Design Arc to help me make our onboarding less confusing.'
+require_text "$readme" 'You do not need to remember a command.'
 require_text "$readme" '## Trust'
 require_text "$readme" 'Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.'
 require_text "$readme" '## License'
 require_text "$readme" '[MIT License](LICENSE)'
 
-for file in "$getting_started" "$using_design_arc" "$evidence_methodology" "$upgrades_migration" "$trust_sources"
+for file in "$getting_started" "$using_design_arc" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$trust_sources"
 do
   require_text "$file" "$shared_navigation"
 done
 
 require_text "$getting_started" '# Getting started'
 require_text "$getting_started" 'How do I install Design Arc and begin my first review?'
-require_text "$getting_started" '## Choose your host'
-require_text "$getting_started" '| **Codex** | `$design-arc` | `.codex/design-arc.yaml` | A confirmed pinned project home |'
-require_text "$getting_started" '| **Claude Code** | `/design-arc:design-arc` | `.claude/design-arc.yaml` | A clean project session; optional approved `CLAUDE.md` reminder |'
+require_text "$getting_started" '## Install once'
+require_text "$getting_started" '## Start by describing the problem'
+require_text "$getting_started" 'Use Design Arc to help me improve our onboarding.'
+require_text "$getting_started" 'Design Arc guides setup in plain language the first time a project uses it.'
 require_text "$getting_started" '## Install in Claude Code'
-require_text "$getting_started" 'claude plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch'
-require_text "$getting_started" 'claude plugin install design-arc@design-arc-marketplace'
-require_text "$getting_started" 'Start a new Claude Code session, then run:'
-require_text "$getting_started" '/design-arc:design-arc setup'
-require_text "$getting_started" 'Claude setup offers a one-time import only when `.claude/design-arc.yaml` is absent and `.codex/design-arc.yaml` contains a completely valid portable preference mapping.'
-require_text "$getting_started" 'It shows the proposed values, ignores Codex-only home and review state, and copies only after explicit import approval; the Codex file remains byte-for-byte unchanged.'
-require_text "$getting_started" 'Preference or import approval does not authorize a `CLAUDE.md` edit.'
-require_text "$getting_started" '[Anthropic’s plugin guide](https://code.claude.com/docs/en/discover-plugins)'
 require_text "$getting_started" 'Design Arc is installed once for your Codex profile. Each participating project keeps its own setup and may have one approved, pinned home.'
-require_text "$getting_started" 'Install Design Arc as a Codex plugin, not as a standalone skill.'
-require_text "$getting_started" 'Add https://github.com/friedbeef1/mobbin-apple-guidelines-stitch as a plugin marketplace using ref `main`, then install `design-arc@design-arc-marketplace`.'
-require_text "$getting_started" 'Do not search skills.sh or the standalone skills registry.'
-require_text "$getting_started" 'Use the terminal commands below; do not use the built-in plugin-install control or `request_plugin_install`.'
-require_text "$getting_started" 'Ask me for download permission if required, verify the plugin is enabled, and tell me to start a new task.'
 require_text "$getting_started" 'No Python knowledge is required.'
-require_text "$getting_started" '### If Codex says “no exact package exists in the skills registry”'
-require_text "$getting_started" 'That response means Codex used the wrong installation route.'
-require_text "$getting_started" 'If Codex says the plugin is not in the permitted recommended-plugin list, it used the built-in plugin-install control instead of the terminal commands.'
-require_text "$getting_started" 'codex plugin marketplace add /path/to/mobbin-apple-guidelines-stitch'
+require_text "$getting_started" 'Technical commands and troubleshooting live in [Advanced controls](advanced-controls.md).'
 require_text "$getting_started" 'Next: [Using Design Arc](using-design-arc.md).'
 
 require_text "$using_design_arc" '# Using Design Arc'
-require_text "$using_design_arc" 'In Codex, guaranteed activation starts with `$design-arc`.'
-require_text "$using_design_arc" 'In Claude Code, use `/design-arc:design-arc` for a review and add `setup`, `mode`, or `graph` when you want that focused action.'
+require_text "$using_design_arc" 'Describe the product outcome you want in ordinary language.'
+require_text "$using_design_arc" 'Commands are optional shortcuts, not required knowledge.'
 require_text "$using_design_arc" 'Codex and Claude Code never merge, migrate, resume, or continue an active review across runtimes.'
-require_text "$using_design_arc" 'The optional `CLAUDE.md` reminder is proposed separately during Claude setup and is written only after approval for that exact edit.'
-require_text "$using_design_arc" '<!-- design-arc:reminder:start -->'
-require_text "$using_design_arc" 'When a UI journey request matches Design Arc, suggest `/design-arc:design-arc` and wait for explicit approval unless the user invoked Design Arc directly. Never claim Design Arc ran unless the skill loaded.'
-require_text "$using_design_arc" '<!-- design-arc:reminder:end -->'
+require_text "$using_design_arc" 'The optional project reminder is proposed separately during Claude setup and is written only after approval for that exact edit.'
 require_text "$using_design_arc" 'If the active host selects Design Arc for a suitable request that did not invoke it directly, it asks for permission before beginning.'
 require_text "$using_design_arc" 'Automatic skill selection is not guaranteed'
 require_text "$using_design_arc" 'Design Arc does not run continuously or silently in every task.'
 require_text "$using_design_arc" 'How do I use Design Arc after installation?'
 require_text "$using_design_arc" 'The active host is Codex for the Codex adapter and Claude Code for the Claude adapter.'
-require_text "$using_design_arc" '### Graph commands by host'
-require_text "$using_design_arc" '/design-arc:design-arc graph on'
-require_text "$using_design_arc" '/design-arc:design-arc graph off'
-require_text "$using_design_arc" '/design-arc:design-arc graph explain'
-require_text "$using_design_arc" '/design-arc:design-arc graph rebuild'
-require_text "$using_design_arc" '/design-arc:design-arc graph clear'
-require_text "$using_design_arc" '/design-arc:design-arc graph global off'
-require_text "$using_design_arc" '/design-arc:design-arc graph global on'
 require_text "$using_design_arc" '## Return to a project'
 require_text "$using_design_arc" '| When | Codex | Claude Code |'
-require_text "$using_design_arc" '| First day | Run `$design-arc setup`, confirm preferences, and approve or decline the proposed project home. | Run `/design-arc:design-arc setup`, confirm preferences, and separately approve or decline the optional `CLAUDE.md` reminder. |'
-require_text "$using_design_arc" '| Next day | Open the pinned `Design Arc — <Project Name>` task and describe the journey. | Open the product project in a new clean Claude Code session and invoke `/design-arc:design-arc`. |'
-require_text "$using_design_arc" '| New product | Open the new saved project and run `$design-arc setup`; its optional home remains separate. | Open the new product project and run `/design-arc:design-arc setup`; its Claude preferences remain separate. |'
+require_text "$using_design_arc" '| First day | Ask to use Design Arc, confirm the guided choices, and approve or decline the proposed project home. | Ask to use Design Arc, confirm the guided choices, and separately approve or decline the optional project reminder. |'
+require_text "$using_design_arc" '| Next day | Open the pinned `Design Arc — <Project Name>` task and describe the journey. | Open the product project in a new clean Claude Code session and ask to use Design Arc. |'
+require_text "$using_design_arc" '| New product | Open the new saved project and ask to use Design Arc; its optional home remains separate. | Open the new product project and ask to use Design Arc; its preferences remain separate. |'
 require_text "$using_design_arc" '### Codex project homes'
 require_text "$using_design_arc" 'Each home is a launchpad, not a workspace for the design review.'
 require_text "$using_design_arc" 'Every journey starter opens a clean local task in that same saved project'
@@ -220,20 +208,36 @@ require_text "$using_design_arc" 'Design Arc understands how requirements, evide
 require_text "$using_design_arc" 'Graph assistance is active by default for every new 0.3.0 review in both existing and new projects when no project or host-local safety control turns it off.'
 require_text "$using_design_arc" 'An active review remains exactly as it started; its next clean review gains the 0.3.0 assistance.'
 require_text "$using_design_arc" 'Graph assistance adds no approval gate.'
-require_text "$using_design_arc" '$design-arc graph on'
-require_text "$using_design_arc" '$design-arc graph off'
-require_text "$using_design_arc" '$design-arc graph explain'
-require_text "$using_design_arc" '$design-arc graph rebuild'
-require_text "$using_design_arc" '$design-arc graph clear'
-require_text "$using_design_arc" '$design-arc graph global off'
-require_text "$using_design_arc" '$design-arc graph global on'
-require_text "$using_design_arc" 'Graph status has its own provenance; it is separate from evidence-mode and approval-mode provenance.'
-require_text "$using_design_arc" 'Claude Code resolves its profile root from a non-empty `CLAUDE_CONFIG_DIR`, falling back to `~/.claude`, and never treats an empty value as `/`.'
-require_text "$using_design_arc" 'Its graph `project_id` is an opaque SHA-256 identity derived from the canonical project root; the raw local path is never stored in the graph.'
-require_text "$using_design_arc" 'If the record is missing, invalid, or cannot be trusted, Design Arc reports the reason and continues the unchanged standard workflow without graph assistance.'
-require_text "$using_design_arc" 'Rebuild reconstructs only the current review from current authoritative workflow facts; it does not redo research, change an approved direction, or create requirements.'
-require_text "$using_design_arc" 'Clear is destructive: it requires explicit confirmation for the exact current-review graph path and deletes only that record.'
+require_text "$using_design_arc" 'Graph assistance is optional internal reasoning support.'
+require_text "$using_design_arc" 'People who want to inspect or manage it can use the commands in [Advanced controls](advanced-controls.md).'
 require_text "$using_design_arc" 'Next: [Evidence and methodology](evidence-and-methodology.md).'
+
+require_text "$advanced_controls" '# Advanced controls'
+require_text "$advanced_controls" 'You do not need these commands for normal Design Arc use.'
+for command in \
+  '$design-arc setup' \
+  '$design-arc home' \
+  '$design-arc evidence benchmarks' \
+  '$design-arc evidence guidelines' \
+  '$design-arc mode guided' \
+  '$design-arc mode follow-recommendation' \
+  '$design-arc mode fully-automatic' \
+  '$design-arc graph on' \
+  '$design-arc graph off' \
+  '/design-arc:design-arc graph on' \
+  '/design-arc:design-arc graph off'
+do
+  require_text "$advanced_controls" "$command"
+done
+
+for beginner_page in "$readme" "$getting_started" "$using_design_arc"
+do
+  forbid_text "$beginner_page" '$design-arc setup'
+  forbid_text "$beginner_page" '$design-arc mode'
+  forbid_text "$beginner_page" '$design-arc evidence'
+  forbid_text "$beginner_page" '$design-arc graph'
+  forbid_text "$beginner_page" '/design-arc:design-arc graph'
+done
 
 for forbidden_shared_runtime in \
   'Generate one complete static journey board<br/>Codex by default' \
@@ -338,40 +342,37 @@ do
   done
 done
 
-python3 - "$readme" "$getting_started" "$evidence_methodology" "$upgrades_migration" "$trust_sources" <<'PY'
+python3 - "$readme" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$trust_sources" <<'PY'
 from pathlib import Path
 import re
 import sys
 
 text = Path(sys.argv[1]).read_text(encoding="utf-8")
-install_section = Path(sys.argv[2]).read_text(encoding="utf-8")
+advanced_controls = Path(sys.argv[2]).read_text(encoding="utf-8")
 methodology = Path(sys.argv[3]).read_text(encoding="utf-8")
 migration = Path(sys.argv[4]).read_text(encoding="utf-8")
 trust = Path(sys.argv[5]).read_text(encoding="utf-8")
-prompt_start = install_section.index("Install Design Arc as a Codex plugin, not as a standalone skill.")
 marketplace_command = "codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main"
 plugin_command = "codex plugin add design-arc@design-arc-marketplace"
-if marketplace_command not in install_section:
-    raise SystemExit("FAIL: getting-started must include the exact marketplace command")
-if plugin_command not in install_section:
-    raise SystemExit("FAIL: getting-started must include the exact Design Arc install command")
-marketplace_position = install_section.index(marketplace_command)
-plugin_position = install_section.index(plugin_command)
-if marketplace_position < prompt_start or plugin_position < prompt_start:
-    raise SystemExit("FAIL: explicit plugin commands must appear directly after the copyable Codex instruction")
+if marketplace_command not in advanced_controls:
+    raise SystemExit("FAIL: advanced controls must include the exact marketplace command")
+if plugin_command not in advanced_controls:
+    raise SystemExit("FAIL: advanced controls must include the exact Design Arc install command")
+marketplace_position = advanced_controls.index(marketplace_command)
+plugin_position = advanced_controls.index(plugin_command)
 if marketplace_position > plugin_position:
-    raise SystemExit("FAIL: getting-started must add the marketplace before adding Design Arc")
-if "Codex handles the installation" in install_section:
+    raise SystemExit("FAIL: advanced controls must add the marketplace before adding Design Arc")
+if "Codex handles the installation" in advanced_controls:
     raise SystemExit("FAIL: README must not promise that Codex infers the marketplace route automatically")
-if "skills.sh URL or package name" in install_section:
+if "skills.sh URL or package name" in advanced_controls:
     raise SystemExit("FAIL: troubleshooting must not route Design Arc back to a standalone skills registry")
-if "Visual Gate" in "".join((text, install_section, methodology, migration, trust)):
+if "Visual Gate" in "".join((text, advanced_controls, methodology, migration, trust)):
     raise SystemExit("FAIL: documentation must use the required Visual Proposal Gate name, not Visual Gate")
 
 local_command = "codex plugin marketplace add /path/to/mobbin-apple-guidelines-stitch"
-if local_command not in install_section.splitlines():
-    raise SystemExit("FAIL: getting-started must show the exact local-checkout marketplace command")
-if f"{local_command} --ref main" in install_section:
+if local_command not in advanced_controls.splitlines():
+    raise SystemExit("FAIL: advanced controls must show the exact local-checkout marketplace command")
+if f"{local_command} --ref main" in advanced_controls:
     raise SystemExit("FAIL: documentation local-checkout marketplace command must not use the Git-only --ref option")
 
 headings = re.findall(r"^#{1,2} .+$", text, re.MULTILINE)
@@ -613,7 +614,7 @@ printf '%s\n' 'PASS: Design Arc product documentation'
 if [ "${DESIGN_ARC_DOCS_SKIP_BROKEN_LINK_MUTATION:-}" != '1' ]
 then
   mutation_checkout="$task_temp_dir/broken-link-fixture"
-  cp -R "$repo_root" "$mutation_checkout"
+  copy_fixture "$mutation_checkout"
   mutation_page="$mutation_checkout/README.md"
 
   python3 - "$mutation_page" <<'PY'
@@ -641,7 +642,7 @@ PY
   printf '%s\n' 'PASS: broken-link mutation is rejected'
 
   escape_checkout="$task_temp_dir/escape-link-fixture"
-  cp -R "$repo_root" "$escape_checkout"
+  copy_fixture "$escape_checkout"
   escape_page="$escape_checkout/README.md"
 
   python3 - "$escape_page" <<'PY'
@@ -674,7 +675,7 @@ PY
   printf '%s\n' 'PASS: escape-link mutation is rejected'
 
   license_checkout="$task_temp_dir/license-link-fixture"
-  cp -R "$repo_root" "$license_checkout"
+  copy_fixture "$license_checkout"
   license_page="$license_checkout/README.md"
 
   python3 - "$license_page" <<'PY'
@@ -702,8 +703,8 @@ PY
   printf '%s\n' 'PASS: license-link mutation is rejected'
 
   command_order_checkout="$task_temp_dir/plugin-command-order-fixture"
-  cp -R "$repo_root" "$command_order_checkout"
-  command_order_page="$command_order_checkout/docs/getting-started.md"
+  copy_fixture "$command_order_checkout"
+  command_order_page="$command_order_checkout/docs/advanced-controls.md"
 
   python3 - "$command_order_page" <<'PY'
 from pathlib import Path
@@ -725,7 +726,7 @@ PY
     fail 'plugin-command-order mutation was accepted'
   fi
 
-  printf '%s\n' "$output" | grep -F 'FAIL: getting-started must add the marketplace before adding Design Arc' >/dev/null || {
+  printf '%s\n' "$output" | grep -F 'FAIL: advanced controls must add the marketplace before adding Design Arc' >/dev/null || {
     printf '%s\n' "$output" >&2
     fail 'plugin-command-order mutation failed for the wrong reason'
   }

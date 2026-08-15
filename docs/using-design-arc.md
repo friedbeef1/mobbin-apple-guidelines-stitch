@@ -1,35 +1,22 @@
 # Using Design Arc
 
-[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)
+[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)
 
 How do I use Design Arc after installation?
 
 ## Start a review in ordinary language
 
-In Codex, guaranteed activation starts with `$design-arc`. Explicitly asking Codex to “use Design Arc” also invokes it directly, as does choosing a journey starter inside a confirmed Design Arc project home.
+Describe the product outcome you want in ordinary language. For example: “Use Design Arc to help me make our onboarding less confusing.” Explicitly asking the active host to use Design Arc invokes it directly, as does choosing a journey starter inside a confirmed Codex project home.
 
-In Claude Code, use `/design-arc:design-arc` for a review and add `setup`, `mode`, or `graph` when you want that focused action. Explicitly asking Claude Code to use Design Arc also invokes it directly. The Claude adapter does not create a Codex task or project home.
+Commands are optional shortcuts, not required knowledge. The Claude adapter does not create a Codex task or project home.
 
-If the active host selects Design Arc for a suitable request that did not invoke it directly, it asks for permission before beginning. Until you approve, it does not start setup, inspect your product, gather Design Arc evidence, or create Design Arc project or review records. Automatic skill selection is not guaranteed, so use the matching direct command, ask for Design Arc by name, or use a confirmed Codex project home when you want certainty. Design Arc does not run continuously or silently in every task.
+If the active host selects Design Arc for a suitable request that did not invoke it directly, it asks for permission before beginning. Until you approve, it does not start setup, inspect your product, gather Design Arc evidence, or create Design Arc project or review records. Automatic skill selection is not guaranteed, so ask for Design Arc by name or use a confirmed Codex project home when you want certainty. Design Arc does not run continuously or silently in every task.
 
 Examples of requests for which Codex or Claude Code may offer Design Arc include:
 
 - “Help me make our onboarding less confusing.”
 - “Audit how customers complete checkout and propose a better complete journey.”
 - “Redesign account recovery so people can get back in without weakening security.”
-
-In Codex, use these commands for setup, recovery, or one-run preferences:
-
-```text
-$design-arc setup
-$design-arc home
-$design-arc evidence benchmarks
-$design-arc evidence guidelines
-$design-arc mode
-$design-arc mode guided
-$design-arc mode follow-recommendation
-$design-arc mode fully-automatic
-```
 
 Natural-language requests such as “use Guidelines for this run” or “follow your recommendation this time” are one-run overrides; they do not rewrite the saved project preference.
 
@@ -88,51 +75,15 @@ Claude's decision prompt is: “Claude can prepare a lightweight static journey 
 
 Design Arc bundles no MCP server, so the generic diagram does not invent a connection that is not configured. Mobbin and Google Stitch are external services, not automatically available to the active host. Google now provides an official Stitch MCP server and SDK, but Design Arc uses that route only when it is separately installed, configured, and authorized. When a particular review actually uses an MCP, its run record and evidence labels name the exact configured MCP server or tool; otherwise they name the browser or manual access path used. Design Arc does not imply an official Mobbin MCP integration.
 
-### Graph commands by host
-
-Use the command set for the active adapter. Codex:
-
-```text
-$design-arc graph
-$design-arc graph on
-$design-arc graph off
-$design-arc graph explain
-$design-arc graph rebuild
-$design-arc graph clear
-$design-arc graph global off
-$design-arc graph global on
-```
-
-Claude Code:
-
-```text
-/design-arc:design-arc graph
-/design-arc:design-arc graph on
-/design-arc:design-arc graph off
-/design-arc:design-arc graph explain
-/design-arc:design-arc graph rebuild
-/design-arc:design-arc graph clear
-/design-arc:design-arc graph global off
-/design-arc:design-arc graph global on
-```
-
-`graph` reports the current review without changing anything. `graph on` and `graph off` save a setting for this project only. `graph global off` is a laptop safety ceiling; `graph global on` removes that ceiling but never overrides a project that is off. A one-review request can turn assistance off for that review, but cannot override a project or laptop safety control.
-
-Claude Code resolves its profile root from a non-empty `CLAUDE_CONFIG_DIR`, falling back to `~/.claude`, and never treats an empty value as `/`. Its graph `project_id` is an opaque SHA-256 identity derived from the canonical project root; the raw local path is never stored in the graph.
-
-At the start of a review, Design Arc reports whether assistance is active and why. Graph status has its own provenance; it is separate from evidence-mode and approval-mode provenance. `graph explain` also shows the resolution chain, review identity, workflow version, record location, and the latest validation or fallback result.
-
-If the record is missing, invalid, or cannot be trusted, Design Arc reports the reason and continues the unchanged standard workflow without graph assistance. This is a reduction in assistance, not a blocked review or a reason to bypass the usual evidence and approval controls.
-
-Rebuild reconstructs only the current review from current authoritative workflow facts; it does not redo research, change an approved direction, or create requirements. Clear is destructive: it requires explicit confirmation for the exact current-review graph path and deletes only that record. Clearing leaves project and host-local settings, Codex homes, product files, and other reviews alone.
+Graph assistance is optional internal reasoning support. If it is unavailable or turned off, Design Arc continues the same review without it. It never replaces evidence, platform guidance, approvals, or complete screen inspection. People who want to inspect or manage it can use the commands in [Advanced controls](advanced-controls.md).
 
 ## Return to a project
 
 | When | Codex | Claude Code |
 | --- | --- | --- |
-| First day | Run `$design-arc setup`, confirm preferences, and approve or decline the proposed project home. | Run `/design-arc:design-arc setup`, confirm preferences, and separately approve or decline the optional `CLAUDE.md` reminder. |
-| Next day | Open the pinned `Design Arc — <Project Name>` task and describe the journey. | Open the product project in a new clean Claude Code session and invoke `/design-arc:design-arc`. |
-| New product | Open the new saved project and run `$design-arc setup`; its optional home remains separate. | Open the new product project and run `/design-arc:design-arc setup`; its Claude preferences remain separate. |
+| First day | Ask to use Design Arc, confirm the guided choices, and approve or decline the proposed project home. | Ask to use Design Arc, confirm the guided choices, and separately approve or decline the optional project reminder. |
+| Next day | Open the pinned `Design Arc — <Project Name>` task and describe the journey. | Open the product project in a new clean Claude Code session and ask to use Design Arc. |
+| New product | Open the new saved project and ask to use Design Arc; its optional home remains separate. | Open the new product project and ask to use Design Arc; its preferences remain separate. |
 
 ### Codex project homes
 
@@ -140,21 +91,13 @@ Codex setup can add one approved, pinned home named `Design Arc — <Project Nam
 
 There is no global Design Arc home. A project with no confirmed Codex setup receives no home and no sidebar item. Design Arc reuses an existing home for the same title and project instead of creating a duplicate. If it finds extra same-project homes, it reports them for you to clean up; it never deletes them.
 
-If Codex cannot create or pin the task, Design Arc saves confirmed preferences, says clearly that no home is ready, and gives you the exact title, starter card, and manual create-and-pin steps. Run `$design-arc home` later to report, create, recover, or repin the current project’s home.
+If Codex cannot create or pin the task, Design Arc saves confirmed preferences, says clearly that no home is ready, and gives you the exact title, starter card, and manual create-and-pin steps. You can later ask Design Arc to recover or repin the current project’s home.
 
 ### Claude Code re-entry reminder
 
-Claude Code creates no project home. Reopen the product project in a clean session and invoke `/design-arc:design-arc`; Claude reads only `.claude/design-arc.yaml` and Claude-local review state. A new session does not continue a Codex review, and an already-open session keeps the runtime and workflow version with which it started.
+Claude Code creates no project home. Reopen the product project in a clean session and ask to use Design Arc. A new session does not continue a Codex review, and an already-open session keeps the runtime and workflow version with which it started.
 
-The optional `CLAUDE.md` reminder is proposed separately during Claude setup and is written only after approval for that exact edit. Its complete marked block is:
-
-```markdown
-<!-- design-arc:reminder:start -->
-When a UI journey request matches Design Arc, suggest `/design-arc:design-arc` and wait for explicit approval unless the user invoked Design Arc directly. Never claim Design Arc ran unless the skill loaded.
-<!-- design-arc:reminder:end -->
-```
-
-Setup preserves every byte outside that block, never adds a duplicate, and leaves `CLAUDE.md` unchanged when permission is declined or safe insertion is unavailable. The reminder helps Claude offer the skill; it does not start Design Arc automatically and does not replace the slash command.
+The optional project reminder is proposed separately during Claude setup and is written only after approval for that exact edit. Setup preserves existing project instructions, never adds a duplicate reminder, and changes nothing when permission is declined. The reminder helps Claude offer the skill; it does not start Design Arc automatically.
 
 ## Choosing the active host or Stitch for the screens
 

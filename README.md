@@ -8,8 +8,9 @@ Design Arc audits the real journey, checks decisions against current first-party
 
 | Page | What it covers |
 | --- | --- |
-| [Getting started](docs/getting-started.md) | Installation, first use, and troubleshooting. |
+| [Getting started](docs/getting-started.md) | Simple installation and first use. |
 | [Using Design Arc](docs/using-design-arc.md) | Project homes, approvals, and everyday review work. |
+| [Advanced controls](docs/advanced-controls.md) | Optional commands, graph controls, and technical troubleshooting. |
 | [Evidence and methodology](docs/evidence-and-methodology.md) | Evidence modes, complete states, motion, and validation. |
 | [Upgrades and migration](docs/upgrades-and-migration.md) | Safe upgrades, preservation, and legacy preferences. |
 | [Trust and sources](docs/trust-limitations-and-sources.md) | Boundaries, limitations, and trusted sources. |
@@ -20,8 +21,8 @@ Use the adapter for the host where you want to do the review. Both adapters use 
 
 | Use | Choose it when | Start Design Arc |
 | --- | --- | --- |
-| **Codex** | Your product work already runs in Codex and you want a pinned project home for returning later. | `$design-arc` |
-| **Claude Code** | Your product work runs in Claude Code and you want a namespaced skill plus an optional project reminder. | `/design-arc:design-arc` |
+| **Codex** | Your product work already runs in Codex and you want a pinned project home for returning later. | Ask Codex to use Design Arc. |
+| **Claude Code** | Your product work runs in Claude Code and you want an optional project reminder. | Ask Claude Code to use Design Arc. |
 
 The workflow is shared; installation, invocation, project state, re-entry, and upgrades stay platform-specific.
 
@@ -86,9 +87,9 @@ Follow the exact platform commands in [Getting started](docs/getting-started.md)
 
 ## Start a review
 
-`$design-arc` Help me make our onboarding less confusing.
+> Use Design Arc to help me make our onboarding less confusing.
 
-In Claude Code, start with `/design-arc:design-arc` and run `/design-arc:design-arc setup` once per participating project. In Codex, use `$design-arc`, ask for Design Arc by name, or choose a starter from the project home. Either host may recognize an unprefixed journey request and offer Design Arc, but automatic skill selection is not guaranteed.
+You do not need to remember a command. Ask for Design Arc by name in either host, or choose a starter from an existing Codex project home. Design Arc guides any first-time choices in plain language. Automatic skill selection for an unprefixed request is not guaranteed.
 [Learn how to use Design Arc.](docs/using-design-arc.md)
 
 ## Trust

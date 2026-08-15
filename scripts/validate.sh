@@ -32,6 +32,7 @@ for required_file in \
   .gitignore \
   examples/prompts.md \
   docs/codex-operating-layer.md \
+  docs/advanced-controls.md \
   docs/trusted-sources/README.md \
   docs/trusted-sources/motion.md \
   docs/trusted-sources/platform-guidance.md \
