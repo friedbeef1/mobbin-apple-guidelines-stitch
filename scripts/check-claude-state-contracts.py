@@ -105,6 +105,30 @@ FORBIDDEN_CONTRACTS = {
     "Codex legacy import": (
         "Only consider import when `.codex/design-arc.yaml` is absent.",
     ),
+    "Codex default visualization": (
+        "Generate one complete static journey board in Codex by default",
+    ),
+    "Codex bounded revisions": (
+        "bounded image revisions in Codex",
+    ),
+    "Codex correction round": (
+        "after one Codex correction round",
+    ),
+    "Codex recommendation continuation": (
+        "I can continue in Codex if you prefer.",
+    ),
+    "Codex stay choice": (
+        "continuing in Codex remains available. Treat `stay in Codex`",
+    ),
+    "Codex default route": (
+        "For the default Codex route",
+    ),
+    "Codex evidence return": (
+        "Return decision-ready evidence in Codex",
+    ),
+    "Codex run record": (
+        "Report these fields in the Codex conversation",
+    ),
 }
 
 

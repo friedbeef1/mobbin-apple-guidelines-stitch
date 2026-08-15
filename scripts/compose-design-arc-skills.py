@@ -95,6 +95,22 @@ def methodology_for(platform: str) -> str:
             "it never clears preferences, product files, other reviews, or other projects",
         "must preserve project preferences, homes, active review identity/version records, graph files, and product files":
             "must preserve project preferences, reminder blocks, active review identity/version records, graph files, and product files",
+        "Generate one complete static journey board in Codex by default":
+            "Generate one complete static journey board in Claude Code by default",
+        "bounded image revisions in Codex":
+            "bounded image revisions in Claude Code",
+        "after one Codex correction round":
+            "after one Claude Code correction round",
+        "I can continue in Codex if you prefer.":
+            "I can continue in Claude Code if you prefer.",
+        "continuing in Codex remains available. Treat `stay in Codex`":
+            "continuing in Claude Code remains available. Treat `stay in Claude Code`",
+        "For the default Codex route":
+            "For the default Claude Code route",
+        "Return decision-ready evidence in Codex":
+            "Return decision-ready evidence in Claude Code",
+        "Report these fields in the Codex conversation":
+            "Report these fields in the Claude Code conversation",
     }
     for original, replacement in replacements.items():
         if original not in methodology:

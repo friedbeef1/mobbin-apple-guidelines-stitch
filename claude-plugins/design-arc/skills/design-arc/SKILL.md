@@ -332,17 +332,17 @@ Recheck the complete selected direction against current first-party guidance for
 
 ### Choose and manage the visualization surface
 
-Generate one complete static journey board in Codex by default; do not build application logic, navigation logic, APIs, databases, production components, or throwaway prototype infrastructure merely to visualize the proposal. Include every material entry, transition, loading, empty, error, success, cancellation, and recovery state. Prefer one cohesive board first; generate an individual high-resolution screen only when closer inspection or a focused correction requires it.
+Generate one complete static journey board in Claude Code by default; do not build application logic, navigation logic, APIs, databases, production components, or throwaway prototype infrastructure merely to visualize the proposal. Include every material entry, transition, loading, empty, error, success, cancellation, and recovery state. Prefer one cohesive board first; generate an individual high-resolution screen only when closer inspection or a focused correction requires it.
 
-Google Stitch is an optional renderer and persistent design workspace, not a mandatory workflow stage or evidence authority. Recommend it early when sustained visual editing is becoming easier on a canvas than through bounded image revisions in Codex.
+Google Stitch is an optional renderer and persistent design workspace, not a mandatory workflow stage or evidence authority. Recommend it early when sustained visual editing is becoming easier on a canvas than through bounded image revisions in Claude Code.
 
-Recommend Stitch when any one genuine trigger occurs: a second meaningful visual direction; a change spanning three or more screens; precise layout, spacing, or styling iteration; user-directed canvas editing; likely continuation on another day; a journey becoming difficult to review as one board; noticeable unrelated drift after one Codex correction round; device variants; collaboration; or design export.
+Recommend Stitch when any one genuine trigger occurs: a second meaningful visual direction; a change spanning three or more screens; precise layout, spacing, or styling iteration; user-directed canvas editing; likely continuation on another day; a journey becoming difficult to review as one board; noticeable unrelated drift after one Claude Code correction round; device variants; collaboration; or design export.
 
 Do not recommend Stitch merely because it is available, Mobbin supplied precedent, several material states exist, the first board has minor repairable drift, or one screen needs a bounded label, color, or control correction.
 
-The first recommendation names the specific benefit; a later recommendation is brief and appears only after another genuine trigger or materially larger scope. Use this shape: “This is becoming easier to manage in Stitch because <specific trigger and benefit>. I recommend moving there, but I can continue in Codex if you prefer.”
+The first recommendation names the specific benefit; a later recommendation is brief and appears only after another genuine trigger or materially larger scope. Use this shape: “This is becoming easier to manage in Stitch because <specific trigger and benefit>. I recommend moving there, but I can continue in Claude Code if you prefer.”
 
-A Stitch recommendation is advisory: never transfer automatically, and continuing in Codex remains available. Treat `stay in Codex` as a choice for the current editing phase, not a permanent suppression. If the user says not to recommend Stitch again for this review, suppress every further Stitch recommendation for that review.
+A Stitch recommendation is advisory: never transfer automatically, and continuing in Claude Code remains available. Treat `stay in Claude Code` as a choice for the current editing phase, not a permanent suppression. If the user says not to recommend Stitch again for this review, suppress every further Stitch recommendation for that review.
 
 When Stitch is selected, preserve the approved journey requirements, require separately authorized access, and compare retrieved or supplied changes before treating them as the current proposal. A Stitch share link, exported screens, Figma or HTML/CSS export, or `DESIGN.md` may support the return path. Use an exact configured Stitch MCP server or tool only when it is actually available and separately authorized; never imply that Design Arc bundles one. Retrieval means “inspect and show what changed,” not “silently approve or overwrite the direction.”
 
@@ -400,9 +400,9 @@ Only measured staging or target-device behavior can establish implementation pro
 
 Design Arc may specify and critique motion, but it does not authorize application-code implementation, dependency installation, staging, deployment, or release. Passing the Visual Proposal Gate may route an approved contract to the authorized implementation owner; that owner retains stack, source, staging, and release authority.
 
-For the default Codex route, generate the complete static board directly and avoid disposable application logic. When the user chooses Stitch, treat it as an external visualization service, not a bundled Design Arc integration; obtain whatever separate access and payload authorization the environment requires and use an existing project and design system when supplied. With either renderer, generate every material state required by the selected journey, including entry, transition, loading, empty, error, success, cancellation, and recovery. Record exact requested viewports, safe areas, assets, interaction states, renderer or board identifiers, and new screen identifiers.
+For the default Claude Code route, generate the complete static board directly and avoid disposable application logic. When the user chooses Stitch, treat it as an external visualization service, not a bundled Design Arc integration; obtain whatever separate access and payload authorization the environment requires and use an existing project and design system when supplied. With either renderer, generate every material state required by the selected journey, including entry, transition, loading, empty, error, success, cancellation, and recovery. Record exact requested viewports, safe areas, assets, interaction states, renderer or board identifiers, and new screen identifiers.
 
-Return decision-ready evidence in Codex: an inline journey map, embedded key renders, concise generator recommendations, exact verified render dimensions, identifiers, and evidence provenance. A board offers deeper exploration; it is not a substitute for the evidence in chat.
+Return decision-ready evidence in Claude Code: an inline journey map, embedded key renders, concise generator recommendations, exact verified render dimensions, identifiers, and evidence provenance. A board offers deeper exploration; it is not a substitute for the evidence in chat.
 
 Before assigning a visual verdict, explicitly evaluate motion purpose and least-motion restraint, provenance labels and citations, reduced-motion behavior, alignment with every material motion contract, prototype limitations, and remaining runtime proof.
 
@@ -451,7 +451,7 @@ Passing Visual Proposal Gate authorizes only a coordinated handoff of the valida
 
 ## Required run record
 
-Report these fields in the Codex conversation:
+Report these fields in the Claude Code conversation:
 
 - **Setup:** active evidence mode, active approval mode, provenance of each, saved values, and one-run overrides.
 - **Objective:** confirmed outcome or explicit Fully automatic objective and evaluation criterion.
