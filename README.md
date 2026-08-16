@@ -1,5 +1,7 @@
 # Design Arc
 
+One Design Arc, available for Codex and Claude Code.
+
 Product feedback is often vague, redesign discussions become subjective, and teams approve attractive screens without knowing whether the complete journey works.
 Move from uncertain product feedback to a complete design direction grounded in credible sources.
 Design Arc audits the real journey, checks decisions against current first-party platform guidance and inspected real-product journeys, recommends the strongest path, and designs every important state before implementation begins.
@@ -10,22 +12,24 @@ Design Arc audits the real journey, checks decisions against current first-party
 | --- | --- |
 | [Getting started](docs/getting-started.md) | Simple installation and first use. |
 | [Using Design Arc](docs/using-design-arc.md) | Project homes, approvals, and everyday review work. |
+| [Design Arc for Codex](docs/codex.md) | Codex installation, project homes, visuals, and return path. |
+| [Design Arc for Claude Code](docs/claude-code.md) | Claude installation, project reminders, visuals, and return path. |
 | [FAQ](docs/faq.md) | Plain-language answers about project homes, commands, and returning later. |
 | [Advanced controls](docs/advanced-controls.md) | Optional commands, graph controls, and technical troubleshooting. |
 | [Evidence and methodology](docs/evidence-and-methodology.md) | Evidence modes, complete states, motion, and validation. |
 | [Upgrades and migration](docs/upgrades-and-migration.md) | Safe upgrades, preservation, and legacy preferences. |
 | [Trust and sources](docs/trust-limitations-and-sources.md) | Boundaries, limitations, and trusted sources. |
 
-## Choose Codex or Claude Code
+## One product, two platform editions
 
-Use the adapter for the host where you want to do the review. Both adapters use the same Design Arc methodology and approval gates.
+Choose the edition for the place where you already work. Both editions use the same Design Arc methodology, evidence rules, and approval gates.
 
 | Use | Choose it when | Start Design Arc |
 | --- | --- | --- |
-| **Codex** | Your product work already runs in Codex and you want a pinned project home for returning later. | Ask Codex to use Design Arc. |
-| **Claude Code** | Your product work runs in Claude Code and you want an optional project reminder. | Ask Claude Code to use Design Arc. |
+| [**Codex**](docs/codex.md) | Your product work already runs in Codex and you want a pinned project home for returning later. | Ask Codex to use Design Arc. |
+| [**Claude Code**](docs/claude-code.md) | Your product work runs in Claude Code and you want an optional project reminder. | Ask Claude Code to use Design Arc. |
 
-The workflow is shared; installation, invocation, project state, re-entry, and upgrades stay platform-specific.
+The product and workflow are shared. Only installation, invocation, saved project state, return path, and platform-specific visualization behavior differ.
 
 ## You need Design Arc if…
 

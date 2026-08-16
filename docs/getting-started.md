@@ -1,12 +1,12 @@
 # Getting started
 
-[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [FAQ](faq.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)
+[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)
 
 How do I install Design Arc and begin my first review?
 
 ## Install once
 
-Choose the app where you want to use Design Arc.
+Design Arc is one product available for two platforms. Choose the edition for the place where you already work.
 
 ## Install in Codex
 
@@ -22,7 +22,7 @@ Paste this into Claude Code:
 
 > Add the Design Arc marketplace from https://github.com/friedbeef1/mobbin-apple-guidelines-stitch and install Design Arc.
 
-The Codex and Claude Code adapters are installed independently, but use the same Design Arc methodology.
+The Codex and Claude Code editions are installed independently, but use the same Design Arc methodology. They are not different products.
 
 ## Start by describing the problem
 

@@ -1,6 +1,12 @@
 # Frequently asked questions
 
-[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [FAQ](faq.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)
+[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)
+
+## Are the Codex and Claude Code editions different products?
+
+No. Design Arc is one product with one shared methodology. The Codex and Claude Code editions are thin platform packages that adapt installation, saved project state, returning later, and visualization recommendations to the host where you work.
+
+Improvements to the core workflow are made once and validated for both editions. You install only the edition or editions you want to use.
 
 ## What is a project home?
 

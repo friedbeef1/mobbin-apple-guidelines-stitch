@@ -48,6 +48,8 @@ copy_fixture() {
 readme="$repo_root/README.md"
 getting_started="$repo_root/docs/getting-started.md"
 using_design_arc="$repo_root/docs/using-design-arc.md"
+codex_edition="$repo_root/docs/codex.md"
+claude_edition="$repo_root/docs/claude-code.md"
 advanced_controls="$repo_root/docs/advanced-controls.md"
 evidence_methodology="$repo_root/docs/evidence-and-methodology.md"
 upgrades_migration="$repo_root/docs/upgrades-and-migration.md"
@@ -59,15 +61,23 @@ prompts="$repo_root/examples/prompts.md"
 motion_sources="$repo_root/docs/trusted-sources/motion.md"
 trusted_source_library="$repo_root/docs/trusted-sources/README.md"
 visualization_sources="$repo_root/docs/trusted-sources/visualization.md"
-shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [FAQ](faq.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)'
+shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)'
 
-for file in "$readme" "$getting_started" "$using_design_arc" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$trust_sources" "$operating_layer" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
+for file in "$readme" "$getting_started" "$using_design_arc" "$codex_edition" "$claude_edition" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$trust_sources" "$operating_layer" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
 do
   [ -f "$file" ] || fail "missing required documentation: ${file#"$repo_root/"}"
 done
 
 require_text "$readme" '[FAQ](docs/faq.md)'
+require_text "$readme" 'One Design Arc, available for Codex and Claude Code.'
+require_text "$readme" '[Design Arc for Codex](docs/codex.md)'
+require_text "$readme" '[Design Arc for Claude Code](docs/claude-code.md)'
+require_text "$codex_edition" '## What stays the same'
+require_text "$codex_edition" 'pinned project home'
+require_text "$claude_edition" '## What stays the same'
+require_text "$claude_edition" 'Claude Code does not create a Codex project home.'
 require_text "$faq" '## What is a project home?'
+require_text "$faq" '## Are the Codex and Claude Code editions different products?'
 require_text "$faq" 'A project home is an optional pinned Codex task for one particular product.'
 require_text "$faq" 'It does not contain your application, create another project, or run continuously.'
 require_text "$faq" 'Claude Code does not use project homes.'
@@ -119,9 +129,9 @@ require_text "$readme" 'Move from uncertain product feedback to a complete desig
 require_text "$readme" 'Design Arc audits the real journey, checks decisions against current first-party platform guidance and inspected real-product journeys, recommends the strongest path, and designs every important state before implementation begins.'
 require_text "$readme" '## You need Design Arc if…'
 require_text "$readme" '## What Design Arc produces'
-require_text "$readme" '## Choose Codex or Claude Code'
+require_text "$readme" '## One product, two platform editions'
 require_text "$readme" '| Use | Choose it when | Start Design Arc |'
-require_text "$readme" 'The workflow is shared; installation, invocation, project state, re-entry, and upgrades stay platform-specific.'
+require_text "$readme" 'The product and workflow are shared. Only installation, invocation, saved project state, return path, and platform-specific visualization behavior differ.'
 require_text "$readme" '## The workflow'
 require_text "$readme" '## Documentation'
 require_text "$readme" '[Getting started](docs/getting-started.md)'
@@ -386,7 +396,7 @@ headings = re.findall(r"^#{1,2} .+$", text, re.MULTILINE)
 expected_headings = [
     "# Design Arc",
     "## Documentation",
-    "## Choose Codex or Claude Code",
+    "## One product, two platform editions",
     "## You need Design Arc if…",
     "## What Design Arc produces",
     "## The workflow",
