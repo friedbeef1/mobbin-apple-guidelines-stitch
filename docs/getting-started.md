@@ -14,7 +14,7 @@ Paste this into Codex:
 
 > Install the Design Arc plugin from https://github.com/friedbeef1/design-arc
 
-Design Arc is installed once for your Codex profile. Each participating project keeps its own setup and may have one approved, pinned home. No Python knowledge is required. Codex may ask for download permission.
+No Python knowledge is required. The active host may ask for download permission.
 
 ## Install in Claude Code
 
@@ -22,7 +22,7 @@ Paste this into Claude Code:
 
 > Add the Design Arc marketplace from https://github.com/friedbeef1/design-arc and install Design Arc.
 
-The Codex and Claude Code editions are installed independently, but use the same Design Arc methodology. They are not different products.
+The Codex and Claude Code editions are installed independently, but use the same Design Arc methodology. They are not different products. Choose the runtime page for the active host for installation, saved state, and returning later. Read [Design Arc for Codex](codex.md) or [Design Arc for Claude Code](claude-code.md).
 
 ## Start by describing the problem
 

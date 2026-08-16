@@ -6,9 +6,9 @@ How do I use Design Arc after installation?
 
 ## Start a review in ordinary language
 
-Describe the product outcome you want in ordinary language. For example: “Use Design Arc to help me make our onboarding less confusing.” Explicitly asking the active host to use Design Arc invokes it directly, as does choosing a journey starter inside a confirmed Codex project home.
+Describe the product outcome you want in ordinary language. For example: “Use Design Arc to help me make our onboarding less confusing.” Explicitly asking the active host to use Design Arc invokes it directly.
 
-Commands are optional shortcuts, not required knowledge. The Claude adapter does not create a Codex task or project home.
+Commands are optional shortcuts, not required knowledge.
 
 If the active host selects Design Arc for a suitable request that did not invoke it directly, it asks for permission before beginning. Until you approve, it does not start setup, inspect your product, gather Design Arc evidence, or create Design Arc project or review records. Automatic skill selection is not guaranteed, so ask for Design Arc by name or use a confirmed Codex project home when you want certainty. Design Arc does not run continuously or silently in every task.
 
@@ -20,13 +20,11 @@ Examples of requests for which Codex or Claude Code may offer Design Arc include
 
 Natural-language requests such as “use Guidelines only for this run” or “follow your recommendation this time” are one-run overrides; they do not rewrite the saved project preference.
 
-The workflow, evidence rules, approval modes, renderer choice, and design-only handoff boundary are shared. Invocation, saved preferences, active-review records, return paths, and adapter upgrades are platform-specific. Codex and Claude Code never merge, migrate, resume, or continue an active review across runtimes.
+The workflow, evidence rules, approval modes, renderer choice, and design-only handoff boundary are shared. Invocation, saved preferences, active-review records, return paths, and adapter upgrades are platform-specific. Codex and Claude Code never merge, migrate, resume, or continue an active review across runtimes. Runtime-specific installation, invocation, saved state, returning later, visual capabilities, and upgrades belong to the [Codex runtime](codex.md) and [Claude Code runtime](claude-code.md) pages. [Runtime boundaries](runtime-boundaries.md) explains why these details stay separate.
 
 ## Graph-assisted corrections
 
 Design Arc understands how requirements, evidence and screens affect one another, helping it make more precise corrections without surrendering approval control.
-
-The active host is Codex for the Codex adapter and Claude Code for the Claude adapter.
 
 Graph assistance is active by default for every new 0.3.0 review in both existing and new projects when no project or host-local safety control turns it off. That default does not rewrite project preferences or host-local settings. An active review remains exactly as it started; its next clean review gains the 0.3.0 assistance.
 
@@ -64,14 +62,7 @@ flowchart TD
 
 Official Apple guidance governs Apple platform requirements; the applicable first-party guidance does the same for Android or web. Mobbin supplies product precedent only in Guidelines + Benchmarks mode.
 
-Visualization adapts to the active host:
-
-- **Codex** creates static screen images and complete journey boards directly by default. Stitch remains optional, and is recommended when canvas editing, multiple visual alternatives, or sustained refinement materially helps.
-- **Claude Code** does not claim native image generation. It can prepare HTML/CSS, SVG, specifications, and lightweight static journey boards, and recommends Stitch early for polished mockups, visual exploration, editable layouts, or continued refinement. It does not send users to Codex unless they request a cross-platform handoff.
-
-Before Stitch is used, the active host prepares the complete evidence-grounded journey, requirements, and important-state inventory. Stitch visualizes rather than establishes correctness; Codex or Claude Code validates the returned screens and applies the same proposal-wide correction loop of up to three rounds. Stitch remains optional and separately authorized.
-
-Claude's decision prompt is: “Claude can prepare a lightweight static journey board here. For polished, editable screen mockups, I recommend a Stitch-ready visual proposal. Which would you prefer?”
+Before Stitch is used, the active host prepares the complete evidence-grounded journey, requirements, and important-state inventory. Stitch visualizes rather than establishes correctness; the active host validates the returned screens and applies the same proposal-wide correction loop of up to three rounds. Stitch remains optional and separately authorized. For the active host’s visual capabilities and recommendation details, use the [Codex runtime](codex.md) or [Claude Code runtime](claude-code.md) page.
 
 Design Arc bundles no MCP server, so the generic diagram does not invent a connection that is not configured. Mobbin and Google Stitch are external services, not automatically available to the active host. Google now provides an official Stitch MCP server and SDK, but Design Arc uses that route only when it is separately installed, configured, and authorized. When a particular review actually uses an MCP, its run record and evidence labels name the exact configured MCP server or tool; otherwise they name the browser or manual access path used. Design Arc does not imply an official Mobbin MCP integration.
 
@@ -79,29 +70,11 @@ Graph assistance is optional internal reasoning support. If it is unavailable or
 
 ## Return to a project
 
-| When | Codex | Claude Code |
-| --- | --- | --- |
-| First day | Ask to use Design Arc, confirm the guided choices, and approve or decline the proposed project home. | Ask to use Design Arc, confirm the guided choices, and separately approve or decline the optional project reminder. |
-| Next day | Open the pinned `Design Arc — <Project Name>` task and describe the journey. | Open the product project in a new clean Claude Code session and ask to use Design Arc. |
-| New product | Open the new saved project and ask to use Design Arc; its optional home remains separate. | Open the new product project and ask to use Design Arc; its preferences remain separate. |
-
-### Codex project homes
-
-Codex setup can add one approved, pinned home named `Design Arc — <Project Name>` to each participating project. Each home is a launchpad, not a workspace for the design review. Every journey starter opens a clean local task in that same saved project, while the pinned home stays available for the next request.
-
-There is no global Design Arc home. A project with no confirmed Codex setup receives no home and no sidebar item. Design Arc reuses an existing home for the same title and project instead of creating a duplicate. If it finds extra same-project homes, it reports them for you to clean up; it never deletes them.
-
-If Codex cannot create or pin the task, Design Arc saves confirmed preferences, says clearly that no home is ready, and gives you the exact title, starter card, and manual create-and-pin steps. You can later ask Design Arc to recover or repin the current project’s home.
-
-### Claude Code re-entry reminder
-
-Claude Code creates no project home. Reopen the product project in a clean session and ask to use Design Arc. A new session does not continue a Codex review, and an already-open session keeps the runtime and workflow version with which it started.
-
-The optional project reminder is proposed separately during Claude setup and is written only after approval for that exact edit. Setup preserves existing project instructions, never adds a duplicate reminder, and changes nothing when permission is declined. The reminder helps Claude offer the skill; it does not start Design Arc automatically.
+The return path is a runtime detail. Use [Design Arc for Codex](codex.md) for Codex project homes and [Design Arc for Claude Code](claude-code.md) for Claude Code re-entry and its optional reminder. A runtime-specific return path never merges or continues a review from the other runtime.
 
 ## Choosing the active host or Stitch for the screens
 
-Design Arc generates one complete static journey board in the active host by default: Codex for the Codex adapter and Claude Code for the Claude adapter. It does not build disposable application logic merely to visualize the proposal. The board covers every important state, while separate high-resolution screens are generated only when closer inspection or a focused correction needs them.
+Design Arc generates one complete static journey board in the active host by default. It does not build disposable application logic merely to visualize the proposal. The board covers every important state, while separate high-resolution screens are generated only when closer inspection or a focused correction needs them.
 
 Stitch is optional and Design Arc recommends it when any one genuine canvas trigger occurs. Triggers include a second meaningful visual direction, changes across three or more screens, precise visual iteration, self-editing, another-day continuation, a board becoming difficult to review, unrelated drift after one active-host correction round, device variants, collaboration, or design export.
 

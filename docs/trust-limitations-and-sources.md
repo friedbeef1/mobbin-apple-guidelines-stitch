@@ -42,7 +42,7 @@ Design Arc must not claim current product inspection, first-party guidance, benc
 
 A validated visual journey remains a design proposal. No evidence mode, approval mode, external-service access, provider authorization, Direction decision, or visual verdict authorizes source implementation, staging, deployment, live release, destructive or provider changes, or work outside the authorized integration lane. Those actions require their own scope, owner, authorization, and evidence.
 
-For the complete source library, see [Trusted sources](trusted-sources/README.md). For the technical operating boundary, see [Codex operating layer](codex-operating-layer.md).
+For the complete source library, see [Trusted sources](trusted-sources/README.md). For shared and host-specific limits, see [Runtime boundaries](runtime-boundaries.md).
 
 ## Trademarks
 

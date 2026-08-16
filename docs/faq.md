@@ -8,6 +8,8 @@ No. Design Arc is one product with one shared methodology. The Codex and Claude 
 
 Improvements to the core workflow are made once and validated for both editions. You install only the edition or editions you want to use.
 
+For the division between the shared workflow and host-specific behavior, read [Runtime boundaries](runtime-boundaries.md).
+
 ## What is a project home?
 
 A project home is an optional pinned Codex task for one particular product. It is a visible shortcut in the Codex sidebar, usually named `Design Arc — <Project Name>`.

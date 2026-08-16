@@ -11,10 +11,11 @@ Design Arc audits the real journey, checks decisions against current first-party
 | Page | What it covers |
 | --- | --- |
 | [Getting started](docs/getting-started.md) | Simple installation and first use. |
-| [Using Design Arc](docs/using-design-arc.md) | Project homes, approvals, and everyday review work. |
-| [Design Arc for Codex](docs/codex.md) | Codex installation, project homes, visuals, and return path. |
-| [Design Arc for Claude Code](docs/claude-code.md) | Claude installation, project reminders, visuals, and return path. |
-| [FAQ](docs/faq.md) | Plain-language answers about project homes, commands, and returning later. |
+| [Using Design Arc](docs/using-design-arc.md) | The shared workflow, approvals, and everyday review work. |
+| [Design Arc for Codex](docs/codex.md) | Codex runtime details: installation, project homes, visuals, and return path. |
+| [Design Arc for Claude Code](docs/claude-code.md) | Claude Code runtime details: installation, reminders, visuals, and return path. |
+| [Runtime boundaries](docs/runtime-boundaries.md) | What the shared workflow preserves and where host-specific behavior belongs. |
+| [FAQ](docs/faq.md) | Plain-language answers about commands and returning later. |
 | [Advanced controls](docs/advanced-controls.md) | Optional commands, graph controls, and technical troubleshooting. |
 | [Evidence and methodology](docs/evidence-and-methodology.md) | Evidence modes, complete states, motion, and validation. |
 | [Upgrades and migration](docs/upgrades-and-migration.md) | Safe upgrades, preservation, and legacy preferences. |
@@ -29,7 +30,7 @@ Choose the edition for the place where you already work. Both editions use the s
 | [**Codex**](docs/codex.md) | Your product work already runs in Codex and you want a pinned project home for returning later. | Ask Codex to use Design Arc. |
 | [**Claude Code**](docs/claude-code.md) | Your product work runs in Claude Code and you want an optional project reminder. | Ask Claude Code to use Design Arc. |
 
-The product and workflow are shared. Only installation, invocation, saved project state, return path, and platform-specific visualization behavior differ.
+The product and workflow are shared. Start with Design Arc, then use the runtime page for the active host when installation, saved state, return paths, or visual capabilities differ. See [Codex runtime details](docs/codex.md), [Claude Code runtime details](docs/claude-code.md), and [Runtime boundaries](docs/runtime-boundaries.md) for those boundaries.
 
 ## You need Design Arc if…
 
@@ -46,7 +47,7 @@ The product and workflow are shared. Only installation, invocation, saved projec
 - Evidence appropriate to the product and platform, with current links, limitations, and observed-versus-inferred status.
 - One unmistakably recommended direction plus meaningful alternatives, benefits, risks, and trade-offs.
 - A complete visual proposal covering entry, transition, loading, empty, error, success, cancellation, and recovery states.
-- Decision-ready evidence in the active Codex task or Claude Code session: journey map, key renders, identifiers, validation verdict, gate record, and next authorized owner.
+- Decision-ready evidence in the active host: journey map, key renders, identifiers, validation verdict, gate record, and next authorized owner.
 
 ## The workflow
 
@@ -54,15 +55,15 @@ The product and workflow are shared. Only installation, invocation, saved projec
 
 | Workflow step | Platform or source handling it | Human involvement |
 | --- | --- | --- |
-| Describe the outcome you want | Codex or Claude Code | **👤 You** |
+| Describe the outcome you want | Active host | **👤 You** |
 | ↓ | | |
 | Audit the current journey | Your website or app + the active host | |
 | ↓ | | |
 | Gather and label evidence | Mobbin + the active host in Guidelines + Benchmarks mode, and official platform guidance + the active host in Guidelines only mode | |
 | ↓ | | |
-| Recommend a design direction | Codex or Claude Code | |
+| Recommend a design direction | Active host | |
 | ↓ | | |
-| Approve design direction | Codex or Claude Code | **👤 You** |
+| Approve design direction | Active host | **👤 You** |
 | ↓ | | |
 | Validate against platform guidance | Apple, Android, Material, or W3C guidance + the active host | |
 | ↓ | | |
@@ -72,9 +73,9 @@ The product and workflow are shared. Only installation, invocation, saved projec
 | ↓ | | |
 | Validate every important state | Generated journey screens + the active host | |
 | ↓ | | |
-| Approve the visual proposal | Codex or Claude Code | **👤 You** |
+| Approve the visual proposal | Active host | **👤 You** |
 | ↓ | | |
-| Prepare the design handoff | Codex or Claude Code | |
+| Prepare the design handoff | Active host | |
 
 Setup resolves two independent choices: how evidence is gathered and where Design Arc pauses for approval. Every route establishes the objective before inspection or research, audits the actual product, preserves platform rules, and stops at a design-only handoff boundary.
 
@@ -94,7 +95,7 @@ Follow the exact platform commands in [Getting started](docs/getting-started.md)
 
 > Use Design Arc to help me make our onboarding less confusing.
 
-You do not need to remember a command. Ask for Design Arc by name in either host, or choose a starter from an existing Codex project home. Design Arc guides any first-time choices in plain language. Automatic skill selection for an unprefixed request is not guaranteed.
+You do not need to remember a command. Ask the active host for Design Arc by name. Design Arc guides any first-time choices in plain language. Automatic skill selection for an unprefixed request is not guaranteed. The [runtime pages](docs/runtime-boundaries.md) explain the host-specific ways to return later.
 [Learn how to use Design Arc.](docs/using-design-arc.md)
 
 ## Trust

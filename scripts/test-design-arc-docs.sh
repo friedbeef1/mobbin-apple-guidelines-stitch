@@ -56,6 +56,7 @@ upgrades_migration="$repo_root/docs/upgrades-and-migration.md"
 trust_sources="$repo_root/docs/trust-limitations-and-sources.md"
 faq="$repo_root/docs/faq.md"
 operating_layer="$repo_root/docs/codex-operating-layer.md"
+runtime_boundaries="$repo_root/docs/runtime-boundaries.md"
 behavioral_validation="$repo_root/docs/validation/behavioral-validation.md"
 prompts="$repo_root/examples/prompts.md"
 motion_sources="$repo_root/docs/trusted-sources/motion.md"
@@ -63,7 +64,7 @@ trusted_source_library="$repo_root/docs/trusted-sources/README.md"
 visualization_sources="$repo_root/docs/trusted-sources/visualization.md"
 shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)'
 
-for file in "$readme" "$getting_started" "$using_design_arc" "$codex_edition" "$claude_edition" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$trust_sources" "$operating_layer" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
+for file in "$readme" "$getting_started" "$using_design_arc" "$codex_edition" "$claude_edition" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$trust_sources" "$operating_layer" "$runtime_boundaries" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
 do
   [ -f "$file" ] || fail "missing required documentation: ${file#"$repo_root/"}"
 done
@@ -131,7 +132,10 @@ require_text "$readme" '## You need Design Arc if…'
 require_text "$readme" '## What Design Arc produces'
 require_text "$readme" '## One product, two platform editions'
 require_text "$readme" '| Use | Choose it when | Start Design Arc |'
-require_text "$readme" 'The product and workflow are shared. Only installation, invocation, saved project state, return path, and platform-specific visualization behavior differ.'
+require_text "$readme" 'The product and workflow are shared. Start with Design Arc, then use the runtime page for the active host when installation, saved state, return paths, or visual capabilities differ.'
+require_text "$readme" '[Codex runtime details](docs/codex.md)'
+require_text "$readme" '[Claude Code runtime details](docs/claude-code.md)'
+require_text "$readme" '[Runtime boundaries](docs/runtime-boundaries.md)'
 require_text "$readme" '## The workflow'
 require_text "$readme" '## Documentation'
 require_text "$readme" '[Getting started](docs/getting-started.md)'
@@ -162,7 +166,9 @@ require_text "$getting_started" '## Start by describing the problem'
 require_text "$getting_started" 'Use Design Arc to help me improve our onboarding.'
 require_text "$getting_started" 'Design Arc guides setup in plain language the first time a project uses it.'
 require_text "$getting_started" '## Install in Claude Code'
-require_text "$getting_started" 'Design Arc is installed once for your Codex profile. Each participating project keeps its own setup and may have one approved, pinned home.'
+require_text "$getting_started" 'Choose the runtime page for the active host for installation, saved state, and returning later.'
+require_text "$getting_started" '[Design Arc for Codex](codex.md)'
+require_text "$getting_started" '[Design Arc for Claude Code](claude-code.md)'
 require_text "$getting_started" 'No Python knowledge is required.'
 require_text "$getting_started" 'Technical commands and troubleshooting live in [Advanced controls](advanced-controls.md).'
 require_text "$getting_started" 'Next: [Using Design Arc](using-design-arc.md).'
@@ -171,30 +177,17 @@ require_text "$using_design_arc" '# Using Design Arc'
 require_text "$using_design_arc" 'Describe the product outcome you want in ordinary language.'
 require_text "$using_design_arc" 'Commands are optional shortcuts, not required knowledge.'
 require_text "$using_design_arc" 'Codex and Claude Code never merge, migrate, resume, or continue an active review across runtimes.'
-require_text "$using_design_arc" 'The optional project reminder is proposed separately during Claude setup and is written only after approval for that exact edit.'
 require_text "$using_design_arc" 'If the active host selects Design Arc for a suitable request that did not invoke it directly, it asks for permission before beginning.'
 require_text "$using_design_arc" 'Automatic skill selection is not guaranteed'
 require_text "$using_design_arc" 'Design Arc does not run continuously or silently in every task.'
 require_text "$using_design_arc" 'How do I use Design Arc after installation?'
-require_text "$using_design_arc" 'The active host is Codex for the Codex adapter and Claude Code for the Claude adapter.'
-require_text "$using_design_arc" '## Return to a project'
-require_text "$using_design_arc" '| When | Codex | Claude Code |'
-require_text "$using_design_arc" '| First day | Ask to use Design Arc, confirm the guided choices, and approve or decline the proposed project home. | Ask to use Design Arc, confirm the guided choices, and separately approve or decline the optional project reminder. |'
-require_text "$using_design_arc" '| Next day | Open the pinned `Design Arc — <Project Name>` task and describe the journey. | Open the product project in a new clean Claude Code session and ask to use Design Arc. |'
-require_text "$using_design_arc" '| New product | Open the new saved project and ask to use Design Arc; its optional home remains separate. | Open the new product project and ask to use Design Arc; its preferences remain separate. |'
-require_text "$using_design_arc" '### Codex project homes'
-require_text "$using_design_arc" 'Each home is a launchpad, not a workspace for the design review.'
-require_text "$using_design_arc" 'Every journey starter opens a clean local task in that same saved project'
-require_text "$using_design_arc" 'There is no global Design Arc home.'
-require_text "$using_design_arc" 'A project with no confirmed Codex setup receives no home and no sidebar item.'
-require_text "$using_design_arc" 'Design Arc reuses an existing home for the same title and project instead of creating a duplicate.'
-require_text "$using_design_arc" 'If it finds extra same-project homes, it reports them for you to clean up; it never deletes them.'
-require_text "$using_design_arc" 'If Codex cannot create or pin the task, Design Arc saves confirmed preferences, says clearly that no home is ready, and gives you the exact title, starter card, and manual create-and-pin steps.'
+require_text "$using_design_arc" 'Runtime-specific installation, invocation, saved state, returning later, visual capabilities, and upgrades belong to the [Codex runtime](codex.md) and [Claude Code runtime](claude-code.md) pages.'
+require_text "$using_design_arc" '[Runtime boundaries](runtime-boundaries.md)'
 require_text "$using_design_arc" 'Help me make our onboarding less confusing.'
 require_text "$using_design_arc" 'Audit how customers complete checkout and propose a better complete journey.'
 require_text "$using_design_arc" 'Redesign account recovery so people can get back in without weakening security.'
 require_text "$using_design_arc" '## Choosing the active host or Stitch for the screens'
-require_text "$using_design_arc" 'Design Arc generates one complete static journey board in the active host by default: Codex for the Codex adapter and Claude Code for the Claude adapter.'
+require_text "$using_design_arc" 'Design Arc generates one complete static journey board in the active host by default.'
 require_text "$using_design_arc" 'It does not build disposable application logic merely to visualize the proposal.'
 require_text "$using_design_arc" 'Stitch is optional and Design Arc recommends it when any one genuine canvas trigger occurs.'
 require_text "$using_design_arc" 'A Stitch recommendation is advisory and never transfers the proposal automatically.'
@@ -338,14 +331,34 @@ require_text "$trust_sources" 'Graph assistance is a project-local relationship 
 require_text "$trust_sources" 'It cannot prove a requirement, establish runtime quality, replace current evidence, or authorize a product decision.'
 require_text "$trust_sources" 'A failed graph record reduces assistance rather than blocking the review: Design Arc reports the issue and continues the standard workflow.'
 require_text "$trust_sources" '[Trusted sources](trusted-sources/README.md)'
-require_text "$trust_sources" '[Codex operating layer](codex-operating-layer.md)'
+require_text "$trust_sources" '[Runtime boundaries](runtime-boundaries.md)'
 require_text "$trust_sources" 'Next: [Home](../README.md).'
 
 require_text "$trusted_source_library" '| Visualization and validation | A concrete proposed journey that can be inspected across material states. | Active-host static journey boards by default; optional [Google Stitch](https://stitch.withgoogle.com/) workspace. | Evidence, platform compliance, accessibility, or implementation readiness by itself. |'
 require_text "$trusted_source_library" '[Visualization](visualization.md) — active-host static boards by default and Stitch as an optional persistent editing workspace.'
 require_text "$visualization_sources" 'Design Arc generates a consolidated static journey board in the active host by default: Codex for the Codex adapter and Claude Code for the Claude adapter.'
 require_text "$visualization_sources" 'The active host is the lower-friction route for a bounded proposal and a few corrections.'
-require_text "$operating_layer" 'After a Guided or Follow recommendation visual approval, or a Fully automatic `meets direction` verdict'
+require_text "$runtime_boundaries" '# Runtime boundaries'
+require_text "$runtime_boundaries" 'Design Arc is one shared workflow. The active host owns only the runtime-specific installation, invocation, saved state, return path, visualization capability, and upgrade behavior.'
+require_text "$runtime_boundaries" 'The [Codex runtime](codex.md) and [Claude Code runtime](claude-code.md) pages are the authoritative guides for those host-specific details.'
+require_text "$runtime_boundaries" 'Codex and Claude Code never merge, migrate, resume, or continue an active review across runtimes.'
+require_text "$runtime_boundaries" 'Objective Confirmation, both evidence modes, the Direction Gate, the Visual Proposal Gate, complete-state validation, optional Stitch, and the three-round correction limit are shared workflow contracts.'
+require_text "$runtime_boundaries" 'No runtime detail or approval authorizes source implementation, staging, deployment, or release.'
+require_text "$operating_layer" '# Codex operating layer (compatibility page)'
+require_text "$operating_layer" 'The authoritative shared boundary is [Runtime boundaries](runtime-boundaries.md).'
+require_text "$operating_layer" '[Design Arc for Codex](codex.md)'
+
+for shared_page in "$readme" "$getting_started" "$using_design_arc" "$evidence_methodology" "$trust_sources" "$faq"
+do
+  for forbidden_codex_default in \
+    'Codex generates the static journey board by default.' \
+    'Codex creates static screen images and complete journey boards directly by default.' \
+    'You can stay in Codex.' \
+    'Codex as the Design Arc operating layer'
+  do
+    forbid_text "$shared_page" "$forbidden_codex_default"
+  done
+done
 
 for shared_doc in "$evidence_methodology" "$trusted_source_library" "$visualization_sources"
 do
@@ -414,15 +427,15 @@ workflow = text[workflow_start:workflow_end]
 workflow_instruction = "**Only rows marked 👤 You require your involvement. Design Arc handles every unmarked step.**"
 workflow_table = """| Workflow step | Platform or source handling it | Human involvement |
 | --- | --- | --- |
-| Describe the outcome you want | Codex or Claude Code | **👤 You** |
+| Describe the outcome you want | Active host | **👤 You** |
 | ↓ | | |
 | Audit the current journey | Your website or app + the active host | |
 | ↓ | | |
 | Gather and label evidence | Mobbin + the active host in Guidelines + Benchmarks mode, and official platform guidance + the active host in Guidelines only mode | |
 | ↓ | | |
-| Recommend a design direction | Codex or Claude Code | |
+| Recommend a design direction | Active host | |
 | ↓ | | |
-| Approve design direction | Codex or Claude Code | **👤 You** |
+| Approve design direction | Active host | **👤 You** |
 | ↓ | | |
 | Validate against platform guidance | Apple, Android, Material, or W3C guidance + the active host | |
 | ↓ | | |
@@ -432,9 +445,9 @@ workflow_table = """| Workflow step | Platform or source handling it | Human inv
 | ↓ | | |
 | Validate every important state | Generated journey screens + the active host | |
 | ↓ | | |
-| Approve the visual proposal | Codex or Claude Code | **👤 You** |
+| Approve the visual proposal | Active host | **👤 You** |
 | ↓ | | |
-| Prepare the design handoff | Codex or Claude Code | |"""
+| Prepare the design handoff | Active host | |"""
 
 def validate_workflow(candidate):
     expected_table = f"## The workflow\n\n{workflow_instruction}\n\n{workflow_table}"
@@ -454,13 +467,13 @@ for mutated_workflow in (
     workflow.replace(workflow_instruction, "**Design Arc handles every step.**", 1),
     workflow.replace("| Workflow step | Platform or source handling it | Human involvement |", "| Workflow | Platform | Human |", 1),
     workflow.replace(
-        "| Describe the outcome you want | Codex or Claude Code | **👤 You** |\n| ↓ | | |\n| Audit the current journey | Your website or app + the active host | |",
-        "| Audit the current journey | Your website or app + the active host | |\n| ↓ | | |\n| Describe the outcome you want | Codex or Claude Code | **👤 You** |",
+        "| Describe the outcome you want | Active host | **👤 You** |\n| ↓ | | |\n| Audit the current journey | Your website or app + the active host | |",
+        "| Audit the current journey | Your website or app + the active host | |\n| ↓ | | |\n| Describe the outcome you want | Active host | **👤 You** |",
         1,
     ),
     workflow.replace(
-        "| Prepare the design handoff | Codex or Claude Code | |\n\nSetup resolves",
-        "| Prepare the design handoff | Codex or Claude Code | |\n| Record a follow-up | Codex or Claude Code | |\n\nSetup resolves",
+        "| Prepare the design handoff | Active host | |\n\nSetup resolves",
+        "| Prepare the design handoff | Active host | |\n| Record a follow-up | Active host | |\n\nSetup resolves",
         1,
     ),
 ):
@@ -532,18 +545,6 @@ if actual_external_urls != approved_external_urls:
     )
 PY
 
-require_text "$operating_layer" '# Codex as the Design Arc operating layer'
-require_text "$operating_layer" '## Install once; participate per project'
-require_text "$operating_layer" 'one confirmed home per participating saved project'
-require_text "$operating_layer" 'There is no global Design Arc home.'
-require_text "$operating_layer" 'Each journey starts in a clean local task in the same saved project'
-require_text "$operating_layer" 'A project without confirmed setup gets no home and no sidebar item.'
-require_text "$operating_layer" 'If task tools are unavailable or fail, preference setup may still succeed, but Design Arc must not claim that the home exists.'
-require_text "$operating_layer" '.codex/design-arc.yaml'
-require_text "$operating_layer" 'evidence and approval choices independently'
-require_text "$operating_layer" 'Android or web first-party rules override conflicting Apple-inspired judgment'
-require_text "$operating_layer" 'Codex compares the complete rendered proposal with the approved direction, batches straightforward drift into at most three correction rounds, and reinspects every replacement render before assigning the visual verdict.'
-require_text "$operating_layer" 'No mode or external-service authorization authorizes source implementation, staging, deployment, or release.'
 
 require_text "$repo_root/docs/trusted-sources/platform-guidance.md" '## Motion guidance'
 require_text "$repo_root/docs/trusted-sources/platform-guidance.md" 'Existing product motion and standard native behavior come first.'
