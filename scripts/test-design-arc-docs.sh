@@ -63,7 +63,7 @@ prompts="$repo_root/examples/prompts.md"
 motion_sources="$repo_root/docs/trusted-sources/motion.md"
 trusted_source_library="$repo_root/docs/trusted-sources/README.md"
 visualization_sources="$repo_root/docs/trusted-sources/visualization.md"
-shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)'
+shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)'
 
 for file in "$readme" "$getting_started" "$using_design_arc" "$codex_edition" "$claude_edition" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$migration_history" "$trust_sources" "$operating_layer" "$runtime_boundaries" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
 do
