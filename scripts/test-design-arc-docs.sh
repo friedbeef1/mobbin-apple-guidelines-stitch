@@ -298,8 +298,31 @@ if "Static screen images and complete journey boards directly in Codex by defaul
 if "does not claim native image generation" not in claude:
     raise SystemExit("FAIL: Claude Code runtime page must not claim native image generation")
 
+required_matrix_rows = (
+    "| Start a review | “Use Design Arc to help me improve our onboarding.” | `$design-arc` | `/design-arc:design-arc` |",
+    "| Review setup | “Show this project’s Design Arc choices.” | `$design-arc setup` | `/design-arc:design-arc setup` |",
+    "| Upgrade safely | “Upgrade Design Arc safely.” | `$design-arc upgrade` | `/design-arc:design-arc upgrade` |",
+    "| Use Guidelines + Benchmarks | “Use authorized benchmarks and official guidance.” | `$design-arc evidence benchmarks` | `/design-arc:design-arc evidence benchmarks` |",
+    "| Use Guidelines only | “Use official guidelines only.” | `$design-arc evidence guidelines` | `/design-arc:design-arc evidence guidelines` |",
+    "| Report approval behavior | “What approval mode is active?” | `$design-arc mode` | `/design-arc:design-arc mode` |",
+    "| Save Guided | “Pause for both approvals in this project.” | `$design-arc mode guided` | `/design-arc:design-arc mode guided` |",
+    "| Save Follow recommendation | “Follow the recommendation, then show me the visual proposal.” | `$design-arc mode follow-recommendation` | `/design-arc:design-arc mode follow-recommendation` |",
+    "| Save Fully automatic | “Bypass both gates for this explicit objective.” | `$design-arc mode fully-automatic` | `/design-arc:design-arc mode fully-automatic` |",
+    "| Report graph state | “Is graph assistance active for this review?” | `$design-arc graph` | `/design-arc:design-arc graph` |",
+    "| Save this project on | “Turn graph assistance on for this project.” | `$design-arc graph on` | `/design-arc:design-arc graph on` |",
+    "| Save this project off | “Turn graph assistance off for this project.” | `$design-arc graph off` | `/design-arc:design-arc graph off` |",
+    "| Explain state | “Explain why graph assistance has this state.” | `$design-arc graph explain` | `/design-arc:design-arc graph explain` |",
+    "| Rebuild this review | “Rebuild this review’s graph from the current workflow evidence.” | `$design-arc graph rebuild` | `/design-arc:design-arc graph rebuild` |",
+    "| Clear this review | “Clear this review’s graph; ask me to confirm first.” | `$design-arc graph clear` | `/design-arc:design-arc graph clear` |",
+    "| Set laptop safety off | “Turn graph assistance off on this laptop.” | `$design-arc graph global off` | `/design-arc:design-arc graph global off` |",
+    "| Remove laptop safety ceiling | “Remove the laptop-wide graph safety ceiling.” | `$design-arc graph global on` | `/design-arc:design-arc graph global on` |",
+    "| Return through a project home | `$design-arc home` | Not available; Claude Code does not create a project home. |",
+    "| Add a project reminder | Not available; Codex does not use a `CLAUDE.md` reminder. | Optional approved `CLAUDE.md` reminder; no command. |",
+)
+errors = [f"FAIL: advanced controls is missing exact action-matrix row: {row}" for row in required_matrix_rows if row not in controls]
+
 if "The examples below use the Codex command surface" in prompts:
-    raise SystemExit("FAIL: prompt examples must not be Codex-first")
+    errors.append("FAIL: prompt examples must not be Codex-first")
 plain_section = prompts.split("## Plain-language journey starters", 1)[1].split("## ", 1)[0]
 for starter in (
     "> Help me make our onboarding less confusing.",
@@ -307,9 +330,17 @@ for starter in (
     "> Redesign account recovery so people can get back in without weakening security.",
 ):
     if starter not in plain_section:
-        raise SystemExit("FAIL: prompt examples must put command-free journey starters first")
+        errors.append("FAIL: prompt examples must put command-free journey starters first")
 if "$design-arc" in plain_section or "/design-arc:design-arc" in plain_section:
-    raise SystemExit("FAIL: plain-language journey starters must be command-free")
+    errors.append("FAIL: plain-language journey starters must be command-free")
+if "Stitch gates" in prompts or "Stitch Gate" in prompts:
+    errors.append("FAIL: prompt examples must not present Stitch as a required gate")
+if "past Stitch" in prompts:
+    errors.append("FAIL: prompt examples must not imply that approval continues past Stitch")
+if "Stitch remains optional" not in prompts:
+    errors.append("FAIL: prompt examples must explicitly preserve optional Stitch")
+if errors:
+    raise SystemExit("\n".join(errors))
 PY
 
 for beginner_page in "$readme" "$getting_started" "$using_design_arc"

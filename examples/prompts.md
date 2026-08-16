@@ -44,7 +44,7 @@ Optional shortcut: `$design-arc setup` in Codex or `/design-arc:design-arc setup
 
 ### Save Guidelines + Benchmarks and Guided
 
-> Use our separately authorized Mobbin access with official platform guidance, and save that evidence approach for this project. Pause for both design approvals. For the checkout review, first suggest two or three plausible objectives and let me choose one or enter my own. After I confirm it, inspect the complete current journey, use relevant full-journey benchmarks and current first-party platform guidance, and stop at the Direction and Stitch gates.
+> Use our separately authorized Mobbin access with official platform guidance, and save that evidence approach for this project. Pause for both design approvals. For the checkout review, first suggest two or three plausible objectives and let me choose one or enter my own. After I confirm it, inspect the complete current journey, use relevant full-journey benchmarks and current first-party platform guidance, and stop at the Direction Gate and the Visual Proposal Gate. Stitch remains optional and requires my approval if you recommend it.
 
 Optional shortcuts: `$design-arc evidence benchmarks` and `$design-arc mode guided` in Codex; `/design-arc:design-arc evidence benchmarks` and `/design-arc:design-arc mode guided` in Claude Code.
 
@@ -82,7 +82,7 @@ After the stop, a one-run response can be:
 
 ### Bypass both gates for one explicit objective
 
-> Bypass both gates for this run. My explicit objective is to reduce checkout abandonment caused by unclear delivery choices while preserving accurate delivery promises. Keep the alternatives and automatic selection visible, validate every material state, and continue past Stitch only on `meets direction`. This does not authorize implementation or deployment.
+> Bypass both gates for this run. My explicit objective is to reduce checkout abandonment caused by unclear delivery choices while preserving accurate delivery promises. Keep the alternatives and automatic selection visible, validate every material state, and continue past the Visual Proposal Gate only on `meets direction`. Stitch remains optional and requires my approval if you recommend it. This does not authorize implementation or deployment.
 
 `Bypass both gates` is a one-run Fully automatic alias. Without an explicit current-request objective, Design Arc must stop before inspection or research.
 

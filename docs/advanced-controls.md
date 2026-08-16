@@ -39,9 +39,14 @@ Graph assistance is optional internal reasoning support. It connects evidence, r
 
 ## Runtime-only return paths
 
-These are intentionally not paired commands. `$design-arc home` is Codex-only: it reports, creates, recovers, or repins the optional project home after the required confirmation. Claude Code does not create a project home.
+These are intentionally not paired commands.
 
-Claude Code instead has an optional, separately approved `CLAUDE.md` reminder block. It is not a command, it never creates a Codex home, and it preserves unrelated `CLAUDE.md` content. Read the [Codex](codex.md) and [Claude Code](claude-code.md) pages for the exact return-path boundaries.
+| Action | Codex | Claude Code |
+| --- | --- | --- |
+| Return through a project home | `$design-arc home` | Not available; Claude Code does not create a project home. |
+| Add a project reminder | Not available; Codex does not use a `CLAUDE.md` reminder. | Optional approved `CLAUDE.md` reminder; no command. |
+
+`$design-arc home` reports, creates, recovers, or repins the optional Codex project home after the required confirmation. The optional Claude Code reminder never creates a Codex home and preserves unrelated `CLAUDE.md` content. Read the [Codex](codex.md) and [Claude Code](claude-code.md) pages for the exact return-path boundaries.
 
 ## Installation commands and troubleshooting
 
