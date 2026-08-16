@@ -63,10 +63,4 @@ Version `0.3.1` adds an activation-integrity boundary. Direct use of `$design-ar
 
 The patch does not rewrite project preferences, recreate pinned homes, change product files, alter graph records, or convert active reviews. An active review stays pinned to the workflow version under which it began; start the next review from the same home to load the upgraded plugin in a clean task.
 
-## Historical Claude preference import
-
-Claude Code may propose importing portable values from `.codex/design-arc.yaml` only when `.claude/design-arc.yaml` does not exist. It validates the complete portable mapping, shows the proposed values and ignored Codex-only fields, and waits for explicit import approval. Only evidence mode, a valid benchmark provider, approval mode, and graph assistance can be copied.
-
-The operation creates Claude preferences without changing any Codex bytes. Homes, active reviews, review directories, and graph records never cross runtimes. A decline or malformed value imports nothing and routes to fresh Claude setup instead. Once Claude preferences exist, setup uses them and does not offer the import again.
-
 Next: [Trust and sources](trust-limitations-and-sources.md).

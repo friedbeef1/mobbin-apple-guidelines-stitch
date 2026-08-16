@@ -23,6 +23,10 @@ That ordinary-language request is the recommended start. If you prefer a shortcu
 - Optional Google Stitch escalation when canvas editing, alternatives, collaboration, or sustained visual refinement would materially help.
 - Codex-specific preferences and review records under `.codex/`.
 
+## State
+
+Codex owns `.codex/design-arc.yaml`, its review records, and its graph records. The optional pinned project home remains a Codex-owned return path. This state stays separate from Claude Code state even when both editions are used for the same product.
+
 ## Returning later
 
 With your approval, Codex can create one pinned project home for this saved product. It is a launchpad for plain-language starters: each starter opens a clean local task in the same project. Use `$design-arc home` only when you want to inspect, create, recover, or repin that Codex-only return path.
@@ -32,6 +36,14 @@ Claude Code has no project home. Its separate, optional return aid is an approve
 ## Commands when you want them
 
 Every shared setting has matching Codex and Claude Code syntax in [Advanced controls](advanced-controls.md). For example, use `$design-arc evidence guidelines` in Codex or `/design-arc:design-arc evidence guidelines` in Claude Code. These shortcuts are optional: “Use official guidelines only” means the same thing for the current review.
+
+## Upgrade
+
+Ask Codex to upgrade Design Arc safely through its configured marketplace. Before the change, verify the installed version, requested version, source, and route; afterward, verify the installed result.
+
+The upgrade preserves `.codex/design-arc.yaml`, the optional pinned project home, review records, graph records, product files, and active tasks byte-for-byte. It does not rerun setup, recreate homes, or change an active review. After verifying the installed version and preservation result, start the next review in a clean Codex task.
+
+Codex does not synchronize, merge, import, or mutate Claude Code state.
 
 ## What stays the same
 

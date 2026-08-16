@@ -109,27 +109,53 @@ for forbidden_text in ("```sh", "codex plugin", "skills registry", "Python", "Sa
         raise SystemExit(f"FAIL: README retains forbidden advanced-installation content: {forbidden_text}")
 PY
 
-python3 - "$repo_root" "$readme" "$getting_started" "$using_design_arc" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$migration_history" "$trust_sources" <<'PY'
+python3 - "$repo_root" <<'PY'
 from pathlib import Path
 import re
 import sys
+from urllib.parse import unquote
 
 repository_root = Path(sys.argv[1]).resolve()
-documentation_pages = [Path(path) for path in sys.argv[2:]]
+documentation_pages = sorted(
+    [repository_root / "README.md"]
+    + list((repository_root / "docs").glob("*.md"))
+    + list((repository_root / "docs" / "trusted-sources").glob("*.md"))
+    + [repository_root / "examples" / "prompts.md"]
+)
+
+
+def heading_fragments(page):
+    fragments = set()
+    occurrences = {}
+    for line in page.read_text(encoding="utf-8").splitlines():
+        match = re.match(r"^#{1,6}\s+(.+?)\s*#*\s*$", line)
+        if not match:
+            continue
+        heading = re.sub(r"<[^>]+>", "", match.group(1))
+        heading = re.sub(r"[`*_~]", "", heading).strip().lower()
+        slug = "".join(character for character in heading if character.isalnum() or character in " _-")
+        slug = re.sub(r"\s+", "-", slug)
+        occurrence = occurrences.get(slug, 0)
+        occurrences[slug] = occurrence + 1
+        fragments.add(slug if occurrence == 0 else f"{slug}-{occurrence}")
+    return fragments
 
 for source in documentation_pages:
     for target in re.findall(r"\[[^\]]+\]\(([^)]+)\)", source.read_text(encoding="utf-8")):
-        if target.startswith(("http://", "https://", "mailto:", "#")):
+        if target.startswith(("http://", "https://", "mailto:")):
             continue
-        resolved = (source.parent / target.split("#", 1)[0]).resolve()
+        relative_path, separator, fragment = target.partition("#")
+        resolved = (source.parent / relative_path).resolve() if relative_path else source.resolve()
         try:
             resolved.relative_to(repository_root)
         except ValueError:
             raise SystemExit(f"FAIL: relative link escapes repository in {source}: {target}")
         if not resolved.exists():
             raise SystemExit(f"FAIL: broken relative link in {source}: {target}")
+        if separator and resolved.suffix.lower() == ".md" and unquote(fragment) not in heading_fragments(resolved):
+            raise SystemExit(f"FAIL: broken Markdown fragment in {source}: {target}")
 
-print("PASS: repository-relative Markdown links resolve")
+print(f"PASS: repository-relative Markdown links and fragments resolve across {len(documentation_pages)} public pages")
 PY
 
 require_text "$readme" '# Design Arc'
@@ -162,6 +188,31 @@ require_text "$readme" '## Trust'
 require_text "$readme" 'Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.'
 require_text "$readme" '## License'
 require_text "$readme" '[MIT License](LICENSE)'
+
+require_text "$codex_edition" '## State'
+require_text "$codex_edition" 'Codex owns `.codex/design-arc.yaml`, its review records, and its graph records.'
+require_text "$codex_edition" 'The optional pinned project home remains a Codex-owned return path.'
+require_text "$codex_edition" '## Upgrade'
+require_text "$codex_edition" 'Ask Codex to upgrade Design Arc safely through its configured marketplace.'
+require_text "$codex_edition" 'The upgrade preserves `.codex/design-arc.yaml`, the optional pinned project home, review records, graph records, product files, and active tasks byte-for-byte.'
+require_text "$codex_edition" 'After verifying the installed version and preservation result, start the next review in a clean Codex task.'
+require_text "$codex_edition" 'Codex does not synchronize, merge, import, or mutate Claude Code state.'
+
+require_text "$claude_edition" '## State'
+require_text "$claude_edition" 'Claude Code owns `.claude/design-arc.yaml`, its review records, and its graph records.'
+require_text "$claude_edition" 'The optional approved `CLAUDE.md` reminder remains a Claude Code-owned return path.'
+require_text "$claude_edition" '## Import portable preferences from Codex'
+require_text "$claude_edition" 'Claude Code offers this one-time import only when `.claude/design-arc.yaml` is absent.'
+require_text "$claude_edition" 'After explicit confirmation, only evidence mode, a valid benchmark provider, approval mode, and graph assistance are copied.'
+require_text "$claude_edition" 'Codex bytes, homes, active reviews, review records, and graph records are not merged or changed.'
+require_text "$claude_edition" '## Upgrade'
+require_text "$claude_edition" 'claude plugin update design-arc@design-arc-marketplace'
+require_text "$claude_edition" 'The upgrade preserves `.claude/design-arc.yaml`, the approved `CLAUDE.md` reminder, review records, graph records, product files, and active sessions byte-for-byte.'
+require_text "$claude_edition" 'After verifying the installed version and source, start the next review in a clean Claude Code session.'
+require_text "$claude_edition" 'The upgrade does not import preferences or synchronize, merge, or mutate Codex state.'
+
+forbid_text "$migration_history" '## Historical Claude preference import'
+forbid_text "$migration_history" 'Claude Code may propose importing portable values from `.codex/design-arc.yaml`'
 
 for file in "$getting_started" "$using_design_arc" "$codex_edition" "$claude_edition" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$migration_history" "$trust_sources" "$runtime_boundaries"
 do
@@ -416,7 +467,8 @@ require_text "$upgrades_migration" 'Codex and Claude Code are independently inst
 require_text "$upgrades_migration" 'claude plugin update design-arc@design-arc-marketplace'
 require_text "$upgrades_migration" 'A Claude Code adapter change preserves `.claude/design-arc.yaml`, the approved `CLAUDE.md` reminder block, reviews, graphs, product files, and active sessions byte-for-byte.'
 require_text "$upgrades_migration" 'Start a new clean session in the adapter you changed; an already-open session keeps its pinned runtime and workflow version.'
-require_text "$upgrades_migration" 'For legacy plugin replacement, preference import, and 0.2–0.3 recovery, read [Migration history](migration-history.md).'
+require_text "$upgrades_migration" 'For retired plugin replacement, legacy Codex preference import, and 0.2–0.3 recovery, read [Migration history](migration-history.md).'
+require_text "$upgrades_migration" 'For the current one-time Codex-to-Claude portable preference import, read [Design Arc for Claude Code](claude-code.md#import-portable-preferences-from-codex).'
 forbidden_current_history='codex plugin remove fb-ux@fb-ux-marketplace
 codex plugin remove apple-guidelines-stitch@fb-ux-marketplace
 ### Moving to or from 0.3.0
@@ -561,10 +613,12 @@ if headings != expected_headings:
 workflow_start = text.index("## The workflow")
 workflow_end = text.index("## Install")
 workflow = text[workflow_start:workflow_end]
-workflow_instruction = "**Only rows marked 👤 You require your involvement. Design Arc handles every unmarked step.**"
+workflow_instruction = "**Rows marked 👤 You show where your involvement may be needed. First-use choices, approval pauses, and the optional Stitch choice are conditional.**"
 workflow_table = """| Workflow step | Platform or source handling it | Human involvement |
 | --- | --- | --- |
 | Describe the outcome you want | Active host | **👤 You** |
+| ↓ | | |
+| Choose evidence and approval behavior on first use | Active host | **👤 You — only when no saved preference exists** |
 | ↓ | | |
 | Audit the current journey | Your website or app + the active host | |
 | ↓ | | |
@@ -572,17 +626,19 @@ workflow_table = """| Workflow step | Platform or source handling it | Human inv
 | ↓ | | |
 | Recommend a design direction | Active host | |
 | ↓ | | |
-| Approve design direction | Active host | **👤 You** |
+| Approve design direction | Active host | **👤 You — only when the selected approval mode pauses here** |
 | ↓ | | |
 | Validate against platform guidance | Apple, Android, Material, or W3C guidance + the active host | |
 | ↓ | | |
 | Decide on any design motion | Relevant official guidance + inspected motion evidence + the active host | |
 | ↓ | | |
+| Choose whether to use the optional Stitch workspace | Active host | **👤 You — only if Stitch is recommended** |
+| ↓ | | |
 | Visualize the complete journey | Static journey board in the active host by default; optional Google Stitch workspace | |
 | ↓ | | |
 | Validate every important state | Generated journey screens + the active host | |
 | ↓ | | |
-| Approve the visual proposal | Active host | **👤 You** |
+| Approve the visual proposal | Active host | **👤 You — only when the selected approval mode pauses here** |
 | ↓ | | |
 | Prepare the design handoff | Active host | |"""
 
@@ -593,10 +649,10 @@ def validate_workflow(candidate):
         raise ValueError("workflow must use the exact instruction, table header, separator, and ordered rows")
     if not candidate[len(expected_table):].startswith(f"\n\n{following_prose}"):
         raise ValueError("workflow table must end immediately after the final handoff row")
-    if candidate.count("| ↓ | | |") != 10:
-        raise ValueError("workflow must preserve the 10-row arrow sequence")
-    if candidate.count("**👤 You**") != 3:
-        raise ValueError("workflow must contain exactly three human-involvement markers")
+    if candidate.count("| ↓ | | |") != 12:
+        raise ValueError("workflow must preserve the 12-row arrow sequence")
+    if candidate.count("👤 You") != 6:
+        raise ValueError("workflow must contain one legend reference and five human-involvement rows")
 
 validate_workflow(workflow)
 
@@ -604,8 +660,8 @@ for mutated_workflow in (
     workflow.replace(workflow_instruction, "**Design Arc handles every step.**", 1),
     workflow.replace("| Workflow step | Platform or source handling it | Human involvement |", "| Workflow | Platform | Human |", 1),
     workflow.replace(
-        "| Describe the outcome you want | Active host | **👤 You** |\n| ↓ | | |\n| Audit the current journey | Your website or app + the active host | |",
-        "| Audit the current journey | Your website or app + the active host | |\n| ↓ | | |\n| Describe the outcome you want | Active host | **👤 You** |",
+        "| Describe the outcome you want | Active host | **👤 You** |\n| ↓ | | |\n| Choose evidence and approval behavior on first use | Active host | **👤 You — only when no saved preference exists** |",
+        "| Choose evidence and approval behavior on first use | Active host | **👤 You — only when no saved preference exists** |\n| ↓ | | |\n| Describe the outcome you want | Active host | **👤 You** |",
         1,
     ),
     workflow.replace(
@@ -831,6 +887,34 @@ PY
     fail 'escape-link mutation failed for the wrong reason'
   }
   printf '%s\n' 'PASS: escape-link mutation is rejected'
+
+  fragment_checkout="$task_temp_dir/broken-fragment-fixture"
+  copy_fixture "$fragment_checkout"
+  fragment_page="$fragment_checkout/docs/codex.md"
+
+  python3 - "$fragment_page" <<'PY'
+from pathlib import Path
+import sys
+
+page = Path(sys.argv[1])
+original = page.read_text(encoding="utf-8")
+target = "[FAQ](faq.md#what-is-a-project-home)"
+if target not in original:
+    raise SystemExit("FAIL: broken-fragment fixture requires the exact Codex FAQ link")
+page.write_text(original.replace(target, "[FAQ](faq.md#missing-project-home)", 1), encoding="utf-8")
+PY
+
+  if output=$(DESIGN_ARC_DOCS_SKIP_BROKEN_LINK_MUTATION=1 sh "$fragment_checkout/scripts/test-design-arc-docs.sh" 2>&1)
+  then
+    printf '%s\n' "$output" >&2
+    fail 'broken-fragment mutation was accepted'
+  fi
+
+  printf '%s\n' "$output" | grep -F 'FAIL: broken Markdown fragment in' >/dev/null || {
+    printf '%s\n' "$output" >&2
+    fail 'broken-fragment mutation failed for the wrong reason'
+  }
+  printf '%s\n' 'PASS: broken-fragment mutation is rejected'
 
   license_checkout="$task_temp_dir/license-link-fixture"
   copy_fixture "$license_checkout"

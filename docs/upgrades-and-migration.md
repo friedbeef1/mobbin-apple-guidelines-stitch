@@ -60,6 +60,6 @@ claude plugin update design-arc@design-arc-marketplace
 
 Confirm the installed version and source after it completes, then open a clean Claude Code session. This changes only the Claude Code adapter. It does not alter Codex preferences, homes, reviews, graphs, product files, or active tasks.
 
-For legacy plugin replacement, preference import, and 0.2–0.3 recovery, read [Migration history](migration-history.md).
+For retired plugin replacement, legacy Codex preference import, and 0.2–0.3 recovery, read [Migration history](migration-history.md). For the current one-time Codex-to-Claude portable preference import, read [Design Arc for Claude Code](claude-code.md#import-portable-preferences-from-codex).
 
 Next: [Trust and sources](trust-limitations-and-sources.md).

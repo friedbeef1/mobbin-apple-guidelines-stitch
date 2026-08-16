@@ -52,11 +52,13 @@ The product and workflow are shared. Start with Design Arc, then use the runtime
 
 ## The workflow
 
-**Only rows marked 👤 You require your involvement. Design Arc handles every unmarked step.**
+**Rows marked 👤 You show where your involvement may be needed. First-use choices, approval pauses, and the optional Stitch choice are conditional.**
 
 | Workflow step | Platform or source handling it | Human involvement |
 | --- | --- | --- |
 | Describe the outcome you want | Active host | **👤 You** |
+| ↓ | | |
+| Choose evidence and approval behavior on first use | Active host | **👤 You — only when no saved preference exists** |
 | ↓ | | |
 | Audit the current journey | Your website or app + the active host | |
 | ↓ | | |
@@ -64,17 +66,19 @@ The product and workflow are shared. Start with Design Arc, then use the runtime
 | ↓ | | |
 | Recommend a design direction | Active host | |
 | ↓ | | |
-| Approve design direction | Active host | **👤 You** |
+| Approve design direction | Active host | **👤 You — only when the selected approval mode pauses here** |
 | ↓ | | |
 | Validate against platform guidance | Apple, Android, Material, or W3C guidance + the active host | |
 | ↓ | | |
 | Decide on any design motion | Relevant official guidance + inspected motion evidence + the active host | |
 | ↓ | | |
+| Choose whether to use the optional Stitch workspace | Active host | **👤 You — only if Stitch is recommended** |
+| ↓ | | |
 | Visualize the complete journey | Static journey board in the active host by default; optional Google Stitch workspace | |
 | ↓ | | |
 | Validate every important state | Generated journey screens + the active host | |
 | ↓ | | |
-| Approve the visual proposal | Active host | **👤 You** |
+| Approve the visual proposal | Active host | **👤 You — only when the selected approval mode pauses here** |
 | ↓ | | |
 | Prepare the design handoff | Active host | |
 

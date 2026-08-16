@@ -25,6 +25,16 @@ That ordinary-language request is the recommended start. The reliable command sh
 
 Claude Code does not create a Codex project home. It also does not claim native image generation or send work to Codex unless you explicitly request a cross-platform handoff.
 
+## State
+
+Claude Code owns `.claude/design-arc.yaml`, its review records, and its graph records. The optional approved `CLAUDE.md` reminder remains a Claude Code-owned return path. This state stays separate from Codex state even when both editions are used for the same product.
+
+## Import portable preferences from Codex
+
+Claude Code offers this one-time import only when `.claude/design-arc.yaml` is absent. It validates the complete portable mapping, shows the proposed values and ignored Codex-only fields, and waits for explicit confirmation before writing Claude preferences. After explicit confirmation, only evidence mode, a valid benchmark provider, approval mode, and graph assistance are copied.
+
+Codex bytes, homes, active reviews, review records, and graph records are not merged or changed. This is a one-time copy into Claude-owned preferences, not cross-runtime synchronization. Declining the import or encountering a malformed portable value changes nothing and returns to fresh Claude Code setup.
+
 ## Returning later
 
 With your approval, Claude Code can add one visible `CLAUDE.md` reminder block for this project. It suggests the `/design-arc:design-arc` shortcut in a later clean Claude Code session, without changing your unrelated instructions. This is a Claude Code-only reminder, not a project home.
@@ -34,6 +44,18 @@ Codex project homes remain Codex-only. For that separate return path, see [Desig
 ## Commands when you want them
 
 Every shared setting has matching Claude Code and Codex syntax in [Advanced controls](advanced-controls.md). For example, use `/design-arc:design-arc evidence guidelines` in Claude Code or `$design-arc evidence guidelines` in Codex. These shortcuts are optional: “Use official guidelines only” means the same thing for the current review.
+
+## Upgrade
+
+Run the supported update in the Claude Code environment:
+
+```bash
+claude plugin update design-arc@design-arc-marketplace
+```
+
+The upgrade preserves `.claude/design-arc.yaml`, the approved `CLAUDE.md` reminder, review records, graph records, product files, and active sessions byte-for-byte. It does not rerun setup or change an active review. After verifying the installed version and source, start the next review in a clean Claude Code session.
+
+The upgrade does not import preferences or synchronize, merge, or mutate Codex state.
 
 ## What stays the same
 
