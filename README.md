@@ -18,7 +18,8 @@ Design Arc audits the real journey, checks decisions against current first-party
 | [FAQ](docs/faq.md) | Plain-language answers about commands and returning later. |
 | [Advanced controls](docs/advanced-controls.md) | Optional commands, graph controls, and technical troubleshooting. |
 | [Evidence and methodology](docs/evidence-and-methodology.md) | Evidence modes, complete states, motion, and validation. |
-| [Upgrades and migration](docs/upgrades-and-migration.md) | Safe upgrades, preservation, and legacy preferences. |
+| [Upgrades and migration](docs/upgrades-and-migration.md) | Safe current adapter upgrades and preservation. |
+| [Migration history](docs/migration-history.md) | Legacy plugin replacement and versioned recovery instructions. |
 | [Trust and sources](docs/trust-limitations-and-sources.md) | Boundaries, limitations, and trusted sources. |
 
 ## One product, two platform editions

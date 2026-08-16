@@ -53,6 +53,7 @@ claude_edition="$repo_root/docs/claude-code.md"
 advanced_controls="$repo_root/docs/advanced-controls.md"
 evidence_methodology="$repo_root/docs/evidence-and-methodology.md"
 upgrades_migration="$repo_root/docs/upgrades-and-migration.md"
+migration_history="$repo_root/docs/migration-history.md"
 trust_sources="$repo_root/docs/trust-limitations-and-sources.md"
 faq="$repo_root/docs/faq.md"
 operating_layer="$repo_root/docs/codex-operating-layer.md"
@@ -62,9 +63,9 @@ prompts="$repo_root/examples/prompts.md"
 motion_sources="$repo_root/docs/trusted-sources/motion.md"
 trusted_source_library="$repo_root/docs/trusted-sources/README.md"
 visualization_sources="$repo_root/docs/trusted-sources/visualization.md"
-shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)'
+shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)'
 
-for file in "$readme" "$getting_started" "$using_design_arc" "$codex_edition" "$claude_edition" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$trust_sources" "$operating_layer" "$runtime_boundaries" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
+for file in "$readme" "$getting_started" "$using_design_arc" "$codex_edition" "$claude_edition" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$migration_history" "$trust_sources" "$operating_layer" "$runtime_boundaries" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
 do
   [ -f "$file" ] || fail "missing required documentation: ${file#"$repo_root/"}"
 done
@@ -108,7 +109,7 @@ for forbidden_text in ("```sh", "codex plugin", "skills registry", "Python", "Sa
         raise SystemExit(f"FAIL: README retains forbidden advanced-installation content: {forbidden_text}")
 PY
 
-python3 - "$repo_root" "$readme" "$getting_started" "$using_design_arc" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$trust_sources" <<'PY'
+python3 - "$repo_root" "$readme" "$getting_started" "$using_design_arc" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$migration_history" "$trust_sources" <<'PY'
 from pathlib import Path
 import re
 import sys
@@ -150,6 +151,7 @@ require_text "$readme" '[Using Design Arc](docs/using-design-arc.md)'
 require_text "$readme" '[Advanced controls](docs/advanced-controls.md)'
 require_text "$readme" '[Evidence and methodology](docs/evidence-and-methodology.md)'
 require_text "$readme" '[Upgrades and migration](docs/upgrades-and-migration.md)'
+require_text "$readme" '[Migration history](docs/migration-history.md)'
 require_text "$readme" '[Trust and sources](docs/trust-limitations-and-sources.md)'
 require_text "$readme" '## Install'
 require_text "$readme" '**Ask Claude Code:** Add the Design Arc marketplace from'
@@ -161,7 +163,7 @@ require_text "$readme" 'Design Arc does not silently redesign, implement, or dep
 require_text "$readme" '## License'
 require_text "$readme" '[MIT License](LICENSE)'
 
-for file in "$getting_started" "$using_design_arc" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$trust_sources"
+for file in "$getting_started" "$using_design_arc" "$codex_edition" "$claude_edition" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$migration_history" "$trust_sources" "$runtime_boundaries"
 do
   require_text "$file" "$shared_navigation"
 done
@@ -395,27 +397,44 @@ require_text "$evidence_methodology" '[Trusted sources](trusted-sources/README.m
 require_text "$evidence_methodology" 'Next: [Upgrades and migration](upgrades-and-migration.md).'
 
 require_text "$upgrades_migration" '# Upgrades and migration'
-require_text "$upgrades_migration" 'What happens when Design Arc is upgraded or replaces an older plugin?'
-require_text "$upgrades_migration" '## Upgrade Codex and Claude Code independently'
-require_text "$upgrades_migration" 'Upgrading one adapter never installs, removes, or upgrades the other.'
+require_text "$upgrades_migration" 'How do I safely upgrade the installed Design Arc adapters today?'
+require_text "$upgrades_migration" '## Current adapter upgrades'
+require_text "$upgrades_migration" 'Codex and Claude Code are independently installed adapters. Upgrading one never installs, removes, upgrades, or synchronizes the other.'
 require_text "$upgrades_migration" 'claude plugin update design-arc@design-arc-marketplace'
 require_text "$upgrades_migration" 'A Claude Code adapter change preserves `.claude/design-arc.yaml`, the approved `CLAUDE.md` reminder block, reviews, graphs, product files, and active sessions byte-for-byte.'
 require_text "$upgrades_migration" 'Start a new clean session in the adapter you changed; an already-open session keeps its pinned runtime and workflow version.'
-require_text "$upgrades_migration" 'codex plugin remove fb-ux@fb-ux-marketplace'
-require_text "$upgrades_migration" 'codex plugin remove apple-guidelines-stitch@fb-ux-marketplace'
-require_text "$upgrades_migration" 'codex plugin marketplace remove fb-ux-marketplace'
-require_text "$upgrades_migration" 'codex plugin marketplace add friedbeef1/design-arc --ref main'
-require_text "$upgrades_migration" 'codex plugin add design-arc@design-arc-marketplace'
-require_text "$upgrades_migration" 'Start a new Codex task.'
-require_text "$upgrades_migration" 'Never silently merge, rewrite, or delete either legacy preference file.'
-require_text "$upgrades_migration" 'Upgrading to 0.3.0 preserves project preferences, homes, active-review identity and workflow versions, graph records, and product files.'
-require_text "$upgrades_migration" 'Active reviews are not changed mid-review; a later clean review resolves the 0.3.0 default independently.'
-require_text "$upgrades_migration" 'Downgrading to an older workflow leaves graph records in place but ignores them; it does not delete or reinterpret them.'
-require_text "$upgrades_migration" '### Upgrading from 0.3.0 to 0.3.1'
-require_text "$upgrades_migration" 'Version `0.3.1` adds an activation-integrity boundary.'
-require_text "$upgrades_migration" 'Automatic selection is not guaranteed, so an unprefixed response is never presented as Design Arc work unless the skill actually loaded.'
-require_text "$upgrades_migration" 'The patch does not rewrite project preferences, recreate pinned homes, change product files, alter graph records, or convert active reviews.'
+require_text "$upgrades_migration" 'For legacy plugin replacement, preference import, and 0.2–0.3 recovery, read [Migration history](migration-history.md).'
+forbidden_current_history='codex plugin remove fb-ux@fb-ux-marketplace
+codex plugin remove apple-guidelines-stitch@fb-ux-marketplace
+### Moving to or from 0.3.0
+### Upgrading from 0.3.0 to 0.3.1
+Saved preferences and migration'
+while IFS= read -r historical_text
+do
+  forbid_text "$upgrades_migration" "$historical_text"
+done <<EOF
+$forbidden_current_history
+EOF
 require_text "$upgrades_migration" 'Next: [Trust and sources](trust-limitations-and-sources.md).'
+
+require_text "$migration_history" '# Migration history (legacy compatibility)'
+require_text "$migration_history" 'This page preserves retired replacement and recovery instructions. It is not the current upgrade path.'
+require_text "$migration_history" 'For current adapter upgrades and preservation rules, read [Upgrades and migration](upgrades-and-migration.md).'
+require_text "$migration_history" 'codex plugin remove fb-ux@fb-ux-marketplace'
+require_text "$migration_history" 'codex plugin remove apple-guidelines-stitch@fb-ux-marketplace'
+require_text "$migration_history" 'codex plugin marketplace remove fb-ux-marketplace'
+require_text "$migration_history" 'codex plugin marketplace add friedbeef1/design-arc --ref main'
+require_text "$migration_history" 'codex plugin add design-arc@design-arc-marketplace'
+require_text "$migration_history" 'Start a new Codex task.'
+require_text "$migration_history" 'Never silently merge, rewrite, or delete either legacy preference file.'
+require_text "$migration_history" '### Moving to or from 0.3.0'
+require_text "$migration_history" 'Upgrading to 0.3.0 preserves project preferences, homes, active-review identity and workflow versions, graph records, and product files.'
+require_text "$migration_history" 'Active reviews are not changed mid-review; a later clean review resolves the 0.3.0 default independently.'
+require_text "$migration_history" 'Downgrading to an older workflow leaves graph records in place but ignores them; it does not delete or reinterpret them.'
+require_text "$migration_history" '### Upgrading from 0.3.0 to 0.3.1'
+require_text "$migration_history" 'Version `0.3.1` adds an activation-integrity boundary.'
+require_text "$migration_history" 'Automatic selection is not guaranteed, so an unprefixed response is never presented as Design Arc work unless the skill actually loaded.'
+require_text "$migration_history" 'The patch does not rewrite project preferences, recreate pinned homes, change product files, alter graph records, or convert active reviews.'
 
 require_text "$trust_sources" '# Trust, limitations and sources'
 require_text "$trust_sources" 'What can Design Arc prove, access, implement, or release?'
@@ -476,7 +495,7 @@ do
   done
 done
 
-python3 - "$readme" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$trust_sources" <<'PY'
+python3 - "$readme" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$migration_history" "$trust_sources" <<'PY'
 from pathlib import Path
 import re
 import sys
@@ -485,7 +504,8 @@ text = Path(sys.argv[1]).read_text(encoding="utf-8")
 advanced_controls = Path(sys.argv[2]).read_text(encoding="utf-8")
 methodology = Path(sys.argv[3]).read_text(encoding="utf-8")
 migration = Path(sys.argv[4]).read_text(encoding="utf-8")
-trust = Path(sys.argv[5]).read_text(encoding="utf-8")
+migration_history = Path(sys.argv[5]).read_text(encoding="utf-8")
+trust = Path(sys.argv[6]).read_text(encoding="utf-8")
 marketplace_command = "codex plugin marketplace add friedbeef1/design-arc --ref main"
 plugin_command = "codex plugin add design-arc@design-arc-marketplace"
 if marketplace_command not in advanced_controls:
@@ -612,7 +632,7 @@ migration_commands = [
     "codex plugin add design-arc@design-arc-marketplace",
     "Start a new Codex task.",
 ]
-migration_positions = [migration.index(command) for command in migration_commands]
+migration_positions = [migration_history.index(command) for command in migration_commands]
 if migration_positions != sorted(migration_positions):
     raise SystemExit("FAIL: migration steps are not in the required safe order")
 
