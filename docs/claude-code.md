@@ -14,7 +14,7 @@ Then open the product project and say:
 
 > Use Design Arc to help me improve our onboarding.
 
-The reliable command entry point is `/design-arc:design-arc`, but you do not need it for ordinary use when you ask for Design Arc by name.
+That ordinary-language request is the recommended start. The reliable command shortcut is `/design-arc:design-arc`; the paired Codex form is `$design-arc`. You do not need either command for ordinary use when you ask for Design Arc by name.
 
 ## What Claude Code adds
 
@@ -24,6 +24,16 @@ The reliable command entry point is `/design-arc:design-arc`, but you do not nee
 - Claude-specific preferences and review records under `.claude/`.
 
 Claude Code does not create a Codex project home. It also does not claim native image generation or send work to Codex unless you explicitly request a cross-platform handoff.
+
+## Returning later
+
+With your approval, Claude Code can add one visible `CLAUDE.md` reminder block for this project. It suggests the `/design-arc:design-arc` shortcut in a later clean Claude Code session, without changing your unrelated instructions. This is a Claude Code-only reminder, not a project home.
+
+Codex project homes remain Codex-only. For that separate return path, see [Design Arc for Codex](codex.md).
+
+## Commands when you want them
+
+Every shared setting has matching Claude Code and Codex syntax in [Advanced controls](advanced-controls.md). For example, use `/design-arc:design-arc evidence guidelines` in Claude Code or `$design-arc evidence guidelines` in Codex. These shortcuts are optional: “Use official guidelines only” means the same thing for the current review.
 
 ## What stays the same
 

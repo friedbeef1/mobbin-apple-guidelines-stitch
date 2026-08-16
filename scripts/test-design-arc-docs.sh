@@ -248,6 +248,70 @@ do
   require_text "$advanced_controls" "$command"
 done
 
+python3 - "$codex_edition" "$claude_edition" "$advanced_controls" "$prompts" <<'PY'
+from pathlib import Path
+import sys
+
+codex = Path(sys.argv[1]).read_text(encoding="utf-8")
+claude = Path(sys.argv[2]).read_text(encoding="utf-8")
+controls = Path(sys.argv[3]).read_text(encoding="utf-8")
+prompts = Path(sys.argv[4]).read_text(encoding="utf-8")
+
+plain_starter = "Use Design Arc to help me improve our onboarding."
+for name, text in (("Codex runtime page", codex), ("Claude Code runtime page", claude)):
+    if plain_starter not in text:
+        raise SystemExit(f"FAIL: {name} must lead with a plain-language starter")
+
+command_pairs = (
+    ("$design-arc", "/design-arc:design-arc"),
+    ("$design-arc setup", "/design-arc:design-arc setup"),
+    ("$design-arc upgrade", "/design-arc:design-arc upgrade"),
+    ("$design-arc evidence benchmarks", "/design-arc:design-arc evidence benchmarks"),
+    ("$design-arc evidence guidelines", "/design-arc:design-arc evidence guidelines"),
+    ("$design-arc mode", "/design-arc:design-arc mode"),
+    ("$design-arc mode guided", "/design-arc:design-arc mode guided"),
+    ("$design-arc mode follow-recommendation", "/design-arc:design-arc mode follow-recommendation"),
+    ("$design-arc mode fully-automatic", "/design-arc:design-arc mode fully-automatic"),
+    ("$design-arc graph", "/design-arc:design-arc graph"),
+    ("$design-arc graph on", "/design-arc:design-arc graph on"),
+    ("$design-arc graph off", "/design-arc:design-arc graph off"),
+    ("$design-arc graph explain", "/design-arc:design-arc graph explain"),
+    ("$design-arc graph rebuild", "/design-arc:design-arc graph rebuild"),
+    ("$design-arc graph clear", "/design-arc:design-arc graph clear"),
+    ("$design-arc graph global off", "/design-arc:design-arc graph global off"),
+    ("$design-arc graph global on", "/design-arc:design-arc graph global on"),
+)
+for codex_command, claude_command in command_pairs:
+    if codex_command not in controls or claude_command not in controls:
+        raise SystemExit(f"FAIL: advanced controls must pair {codex_command} with {claude_command}")
+
+if "$design-arc home" not in controls or "/design-arc:design-arc home" in controls:
+    raise SystemExit("FAIL: project-home control must remain an explicit Codex-only exception")
+if "pinned project home" not in codex:
+    raise SystemExit("FAIL: Codex runtime page must preserve the Codex-only project home")
+if "`CLAUDE.md` reminder" not in claude:
+    raise SystemExit("FAIL: Claude Code runtime page must preserve the Claude-only reminder")
+if "Claude Code does not create a Codex project home." not in claude:
+    raise SystemExit("FAIL: Claude Code runtime page must reject Codex project homes")
+if "Static screen images and complete journey boards directly in Codex by default." not in codex:
+    raise SystemExit("FAIL: Codex runtime page must retain its direct visualization capability")
+if "does not claim native image generation" not in claude:
+    raise SystemExit("FAIL: Claude Code runtime page must not claim native image generation")
+
+if "The examples below use the Codex command surface" in prompts:
+    raise SystemExit("FAIL: prompt examples must not be Codex-first")
+plain_section = prompts.split("## Plain-language journey starters", 1)[1].split("## ", 1)[0]
+for starter in (
+    "> Help me make our onboarding less confusing.",
+    "> Audit how customers complete checkout and propose a better complete journey.",
+    "> Redesign account recovery so people can get back in without weakening security.",
+):
+    if starter not in plain_section:
+        raise SystemExit("FAIL: prompt examples must put command-free journey starters first")
+if "$design-arc" in plain_section or "/design-arc:design-arc" in plain_section:
+    raise SystemExit("FAIL: plain-language journey starters must be command-free")
+PY
+
 for beginner_page in "$readme" "$getting_started" "$using_design_arc"
 do
   forbid_text "$beginner_page" '$design-arc setup'
@@ -615,22 +679,25 @@ require_text "$behavioral_validation" '| Next-day return | Open the same product
 require_text "$behavioral_validation" '| Runtime isolation | Keep Claude preferences, active reviews, review artifacts, graphs, and sessions under Claude ownership; never merge or continue a Codex active review. |'
 
 require_text "$prompts" '# Design Arc prompt examples'
-require_text "$prompts" 'The examples below use the Codex command surface unless a Claude Code equivalent is shown.'
-require_text "$prompts" 'In Claude Code, start a review with `/design-arc:design-arc`; use `.claude/design-arc.yaml`, and return in a clean project session rather than through a Codex home.'
-require_text "$prompts" 'Use `$design-arc`, ask for Design Arc by name, or return through the project’s pinned home.'
-require_text "$prompts" 'automatic selection is not guaranteed and an ordinary Codex response is not presented as Design Arc work.'
+require_text "$prompts" 'Start in ordinary language in either runtime.'
+require_text "$prompts" 'automatic skill selection is not guaranteed'
 require_text "$prompts" '## Plain-language journey starters'
-require_text "$prompts" '> `$design-arc` Help me make our onboarding less confusing.'
-require_text "$prompts" 'Help me make our onboarding less confusing.'
-require_text "$prompts" 'Audit how customers complete checkout and propose a better complete journey.'
-require_text "$prompts" 'Redesign account recovery so people can get back in without weakening security.'
-require_text "$prompts" '## Preference and recovery commands'
+require_text "$prompts" '> Help me make our onboarding less confusing.'
+require_text "$prompts" '> Audit how customers complete checkout and propose a better complete journey.'
+require_text "$prompts" '> Redesign account recovery so people can get back in without weakening security.'
+require_text "$prompts" '## Optional command forms'
 require_text "$prompts" '$design-arc setup'
+require_text "$prompts" '/design-arc:design-arc setup'
 require_text "$prompts" '$design-arc evidence benchmarks'
+require_text "$prompts" '/design-arc:design-arc evidence benchmarks'
 require_text "$prompts" '$design-arc evidence guidelines'
+require_text "$prompts" '/design-arc:design-arc evidence guidelines'
 require_text "$prompts" '$design-arc mode guided'
+require_text "$prompts" '/design-arc:design-arc mode guided'
 require_text "$prompts" '$design-arc mode follow-recommendation'
+require_text "$prompts" '/design-arc:design-arc mode follow-recommendation'
 require_text "$prompts" '$design-arc mode fully-automatic'
+require_text "$prompts" '/design-arc:design-arc mode fully-automatic'
 require_text "$prompts" 'use Guidelines only for this run'
 require_text "$prompts" 'Bypass both gates'
 forbid_text "$prompts" 'stop at the Stitch Gate'
