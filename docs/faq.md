@@ -12,22 +12,12 @@ For the division between the shared workflow and host-specific behavior, read [R
 
 ## What is a project home?
 
-A project home is an optional pinned Codex task for one particular product. It is a visible shortcut in the Codex sidebar, usually named `Design Arc — <Project Name>`.
+Project homes are a Codex-only return-path feature. The shared Design Arc workflow neither requires nor creates one.
 
-When you return another day, open that home and choose a starter or describe the journey you want reviewed. Design Arc opens the actual review in a clean task for the same product, while the pinned home remains available for next time.
+For approval, naming, reuse, and returning later, read [Design Arc for Codex](codex.md).
 
-It does not contain your application, create another project, or run continuously. It is simply a reusable launchpad, and Design Arc creates it only with your approval.
-
-The Design Arc plugin is installed once on your laptop; each participating product may have one separate project home. Claude Code does not use project homes. It uses an optional project reminder instead.
+For Claude Code’s distinct return path, read [Design Arc for Claude Code](claude-code.md).
 
 ## Do I need to remember a Design Arc command?
 
-No. In Codex or Claude Code, ask the active host to use Design Arc in ordinary language. Codex users can also return through their pinned project home. Commands are optional advanced controls.
-
-## Will a project home mix different products together?
-
-No. Each home belongs to one saved Codex project. Design Arc reuses the matching home and does not intentionally create a global home or duplicate homes for the same product.
-
-## Is a project home required?
-
-No. You can decline it and continue using Design Arc. The home only makes Design Arc easier to find when you return later.
+No. Ask the active host to use Design Arc in ordinary language. Commands are optional advanced controls. Use the relevant runtime page when you need to return to a product later.

@@ -79,9 +79,16 @@ require_text "$claude_edition" '## What stays the same'
 require_text "$claude_edition" 'Claude Code does not create a Codex project home.'
 require_text "$faq" '## What is a project home?'
 require_text "$faq" '## Are the Codex and Claude Code editions different products?'
-require_text "$faq" 'A project home is an optional pinned Codex task for one particular product.'
-require_text "$faq" 'It does not contain your application, create another project, or run continuously.'
-require_text "$faq" 'Claude Code does not use project homes.'
+require_text "$faq" 'Project homes are a Codex-only return-path feature.'
+require_text "$faq" 'For approval, naming, reuse, and returning later, read [Design Arc for Codex](codex.md).'
+require_text "$faq" 'For Claude Code’s distinct return path, read [Design Arc for Claude Code](claude-code.md).'
+for forbidden_shared_lifecycle in \
+  'A project home is an optional pinned Codex task for one particular product.' \
+  'The Design Arc plugin is installed once on your laptop; each participating product may have one separate project home. Claude Code does not use project homes. It uses an optional project reminder instead.' \
+  'Codex users can also return through their pinned project home.'
+do
+  forbid_text "$faq" "$forbidden_shared_lifecycle"
+done
 
 python3 - "$readme" <<'PY'
 from pathlib import Path
@@ -179,6 +186,7 @@ require_text "$using_design_arc" 'Commands are optional shortcuts, not required 
 require_text "$using_design_arc" 'Codex and Claude Code never merge, migrate, resume, or continue an active review across runtimes.'
 require_text "$using_design_arc" 'If the active host selects Design Arc for a suitable request that did not invoke it directly, it asks for permission before beginning.'
 require_text "$using_design_arc" 'Automatic skill selection is not guaranteed'
+require_text "$using_design_arc" 'ask for Design Arc by name when certainty matters.'
 require_text "$using_design_arc" 'Design Arc does not run continuously or silently in every task.'
 require_text "$using_design_arc" 'How do I use Design Arc after installation?'
 require_text "$using_design_arc" 'Runtime-specific installation, invocation, saved state, returning later, visual capabilities, and upgrades belong to the [Codex runtime](codex.md) and [Claude Code runtime](claude-code.md) pages.'
@@ -354,7 +362,8 @@ do
     'Codex generates the static journey board by default.' \
     'Codex creates static screen images and complete journey boards directly by default.' \
     'You can stay in Codex.' \
-    'Codex as the Design Arc operating layer'
+    'Codex as the Design Arc operating layer' \
+    'ask for Design Arc by name or use a confirmed Codex project home when you want certainty.'
   do
     forbid_text "$shared_page" "$forbidden_codex_default"
   done

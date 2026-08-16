@@ -10,7 +10,7 @@ Describe the product outcome you want in ordinary language. For example: “Use 
 
 Commands are optional shortcuts, not required knowledge.
 
-If the active host selects Design Arc for a suitable request that did not invoke it directly, it asks for permission before beginning. Until you approve, it does not start setup, inspect your product, gather Design Arc evidence, or create Design Arc project or review records. Automatic skill selection is not guaranteed, so ask for Design Arc by name or use a confirmed Codex project home when you want certainty. Design Arc does not run continuously or silently in every task.
+If the active host selects Design Arc for a suitable request that did not invoke it directly, it asks for permission before beginning. Until you approve, it does not start setup, inspect your product, gather Design Arc evidence, or create Design Arc project or review records. Automatic skill selection is not guaranteed, so ask for Design Arc by name when certainty matters. Runtime-specific return paths are described in the [Codex runtime](codex.md) and [Claude Code runtime](claude-code.md) pages. Design Arc does not run continuously or silently in every task.
 
 Examples of requests for which Codex or Claude Code may offer Design Arc include:
 
