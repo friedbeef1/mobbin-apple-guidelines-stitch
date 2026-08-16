@@ -8,7 +8,7 @@ Choose the Claude Code edition when your product work already happens in Claude 
 
 Ask Claude Code:
 
-> Add the Design Arc marketplace from https://github.com/friedbeef1/mobbin-apple-guidelines-stitch and install Design Arc.
+> Add the Design Arc marketplace from https://github.com/friedbeef1/design-arc and install Design Arc.
 
 Then open the product project and say:
 

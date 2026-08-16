@@ -8,7 +8,7 @@ Choose the Codex edition when your product work already happens in Codex.
 
 Ask Codex:
 
-> Install the Design Arc plugin from https://github.com/friedbeef1/mobbin-apple-guidelines-stitch
+> Install the Design Arc plugin from https://github.com/friedbeef1/design-arc
 
 Then open the product project and say:
 

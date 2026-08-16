@@ -130,7 +130,7 @@ Scoring: RED because no terminal marketplace command ran and installation could 
 The revised public prompt explicitly directs Codex to use these terminal commands and not `request_plugin_install`:
 
 ```bash
-codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main
+codex plugin marketplace add friedbeef1/design-arc --ref main
 codex plugin add design-arc@design-arc-marketplace
 ```
 

@@ -83,10 +83,10 @@ The active host produces a consolidated static journey board first, without buil
 ## Install
 
 **Ask Codex:** Install the Design Arc plugin from
-https://github.com/friedbeef1/mobbin-apple-guidelines-stitch
+https://github.com/friedbeef1/design-arc
 
 **Ask Claude Code:** Add the Design Arc marketplace from
-https://github.com/friedbeef1/mobbin-apple-guidelines-stitch and install `design-arc@design-arc-marketplace`.
+https://github.com/friedbeef1/design-arc and install `design-arc@design-arc-marketplace`.
 
 Follow the exact platform commands in [Getting started](docs/getting-started.md). Installation may require download permission.
 

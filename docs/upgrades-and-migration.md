@@ -92,7 +92,7 @@ To replace the former installed plugins, use this safe order:
 3. Add the repository again so Codex reads the renamed marketplace:
 
    ```bash
-   codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main
+   codex plugin marketplace add friedbeef1/design-arc --ref main
    ```
 
 4. Install the canonical plugin:

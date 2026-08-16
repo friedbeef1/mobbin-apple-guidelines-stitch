@@ -12,7 +12,7 @@ Design Arc is one product available for two platforms. Choose the edition for th
 
 Paste this into Codex:
 
-> Install the Design Arc plugin from https://github.com/friedbeef1/mobbin-apple-guidelines-stitch
+> Install the Design Arc plugin from https://github.com/friedbeef1/design-arc
 
 Design Arc is installed once for your Codex profile. Each participating project keeps its own setup and may have one approved, pinned home. No Python knowledge is required. Codex may ask for download permission.
 
@@ -20,7 +20,7 @@ Design Arc is installed once for your Codex profile. Each participating project 
 
 Paste this into Claude Code:
 
-> Add the Design Arc marketplace from https://github.com/friedbeef1/mobbin-apple-guidelines-stitch and install Design Arc.
+> Add the Design Arc marketplace from https://github.com/friedbeef1/design-arc and install Design Arc.
 
 The Codex and Claude Code editions are installed independently, but use the same Design Arc methodology. They are not different products.
 

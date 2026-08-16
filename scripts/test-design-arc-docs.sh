@@ -91,7 +91,7 @@ line_count = len(text.splitlines())
 if not 80 <= line_count <= 130:
     raise SystemExit(f"FAIL: README must contain 80-130 lines; found {line_count}")
 
-ask_codex_instruction = "**Ask Codex:** Install the Design Arc plugin from\nhttps://github.com/friedbeef1/mobbin-apple-guidelines-stitch"
+ask_codex_instruction = "**Ask Codex:** Install the Design Arc plugin from\nhttps://github.com/friedbeef1/design-arc"
 if ask_codex_instruction not in text:
     raise SystemExit("FAIL: README is missing the exact Ask Codex installation instruction")
 
@@ -308,7 +308,7 @@ require_text "$upgrades_migration" 'Start a new clean session in the adapter you
 require_text "$upgrades_migration" 'codex plugin remove fb-ux@fb-ux-marketplace'
 require_text "$upgrades_migration" 'codex plugin remove apple-guidelines-stitch@fb-ux-marketplace'
 require_text "$upgrades_migration" 'codex plugin marketplace remove fb-ux-marketplace'
-require_text "$upgrades_migration" 'codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main'
+require_text "$upgrades_migration" 'codex plugin marketplace add friedbeef1/design-arc --ref main'
 require_text "$upgrades_migration" 'codex plugin add design-arc@design-arc-marketplace'
 require_text "$upgrades_migration" 'Start a new Codex task.'
 require_text "$upgrades_migration" 'Never silently merge, rewrite, or delete either legacy preference file.'
@@ -369,7 +369,7 @@ advanced_controls = Path(sys.argv[2]).read_text(encoding="utf-8")
 methodology = Path(sys.argv[3]).read_text(encoding="utf-8")
 migration = Path(sys.argv[4]).read_text(encoding="utf-8")
 trust = Path(sys.argv[5]).read_text(encoding="utf-8")
-marketplace_command = "codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main"
+marketplace_command = "codex plugin marketplace add friedbeef1/design-arc --ref main"
 plugin_command = "codex plugin add design-arc@design-arc-marketplace"
 if marketplace_command not in advanced_controls:
     raise SystemExit("FAIL: advanced controls must include the exact marketplace command")
@@ -386,7 +386,7 @@ if "skills.sh URL or package name" in advanced_controls:
 if "Visual Gate" in "".join((text, advanced_controls, methodology, migration, trust)):
     raise SystemExit("FAIL: documentation must use the required Visual Proposal Gate name, not Visual Gate")
 
-local_command = "codex plugin marketplace add /path/to/mobbin-apple-guidelines-stitch"
+local_command = "codex plugin marketplace add /path/to/design-arc"
 if local_command not in advanced_controls.splitlines():
     raise SystemExit("FAIL: advanced controls must show the exact local-checkout marketplace command")
 if f"{local_command} --ref main" in advanced_controls:
@@ -491,7 +491,7 @@ migration_commands = [
     "codex plugin remove fb-ux@fb-ux-marketplace",
     "codex plugin remove apple-guidelines-stitch@fb-ux-marketplace",
     "codex plugin marketplace remove fb-ux-marketplace",
-    "codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main",
+    "codex plugin marketplace add friedbeef1/design-arc --ref main",
     "codex plugin add design-arc@design-arc-marketplace",
     "Start a new Codex task.",
 ]
@@ -729,7 +729,7 @@ import sys
 
 page = Path(sys.argv[1])
 original = page.read_text(encoding="utf-8")
-marketplace_command = "codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main"
+marketplace_command = "codex plugin marketplace add friedbeef1/design-arc --ref main"
 plugin_command = "codex plugin add design-arc@design-arc-marketplace"
 ordered_commands = f"{marketplace_command}\n{plugin_command}"
 if ordered_commands not in original:

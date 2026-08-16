@@ -58,21 +58,21 @@ The normal installation path is to ask the active host to install Design Arc fro
 Claude Code:
 
 ```bash
-claude plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch
+claude plugin marketplace add friedbeef1/design-arc
 claude plugin install design-arc@design-arc-marketplace
 ```
 
 Codex:
 
 ```bash
-codex plugin marketplace add friedbeef1/mobbin-apple-guidelines-stitch --ref main
+codex plugin marketplace add friedbeef1/design-arc --ref main
 codex plugin add design-arc@design-arc-marketplace
 ```
 
 For a local checkout, replace the GitHub repository with its local path and omit the Git-only `--ref` option. Design Arc is a plugin, not a standalone skills-registry package. If Codex reports that no exact skills-registry package exists, ask it to use the plugin marketplace route above.
 
 ```bash
-codex plugin marketplace add /path/to/mobbin-apple-guidelines-stitch
+codex plugin marketplace add /path/to/design-arc
 codex plugin add design-arc@design-arc-marketplace
 ```
 

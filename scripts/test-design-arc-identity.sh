@@ -48,7 +48,7 @@ expected_plugin = {
     "description": "Outcome-led UI journey design for Codex.",
     "skills": "./skills/",
     "author": {"name": "James Yeang"},
-    "repository": "https://github.com/friedbeef1/mobbin-apple-guidelines-stitch",
+    "repository": "https://github.com/friedbeef1/design-arc",
     "license": "MIT",
     "keywords": ["ux", "journey-design", "outcomes", "evidence"],
     "interface": {
