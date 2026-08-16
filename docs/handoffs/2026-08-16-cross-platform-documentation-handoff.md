@@ -1,6 +1,6 @@
 # Design Arc cross-platform documentation handoff
 
-Date: 2026-08-16  
+Date: 2026-08-16
 Branch: `feature/design-arc-claude-code-0.4.0`
 
 ## Outcome
