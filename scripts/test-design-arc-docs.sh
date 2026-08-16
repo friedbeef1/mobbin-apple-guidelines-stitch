@@ -232,6 +232,19 @@ require_text "$using_design_arc" 'Graph assistance is optional internal reasonin
 require_text "$using_design_arc" 'People who want to inspect or manage it can use the commands in [Advanced controls](advanced-controls.md).'
 require_text "$using_design_arc" 'Next: [Evidence and methodology](evidence-and-methodology.md).'
 
+python3 - "$using_design_arc" <<'PY'
+from pathlib import Path
+import sys
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+approval_controls = text.find("## Approval and trust controls")
+graph_assistance = text.find("## Graph-assisted corrections")
+if approval_controls == -1 or graph_assistance == -1:
+    raise SystemExit("FAIL: shared usage page is missing required core or graph guidance")
+if graph_assistance < approval_controls:
+    raise SystemExit("FAIL: shared usage page must keep graph assistance after core approval guidance")
+PY
+
 require_text "$advanced_controls" '# Advanced controls'
 require_text "$advanced_controls" 'You do not need these commands for normal Design Arc use.'
 for command in \

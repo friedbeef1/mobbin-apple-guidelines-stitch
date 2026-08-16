@@ -22,6 +22,40 @@ Natural-language requests such as “use Guidelines only for this run” or “f
 
 The workflow, evidence rules, approval modes, renderer choice, and design-only handoff boundary are shared. Invocation, saved preferences, active-review records, return paths, and adapter upgrades are platform-specific. Codex and Claude Code never merge, migrate, resume, or continue an active review across runtimes. Runtime-specific installation, invocation, saved state, returning later, visual capabilities, and upgrades belong to the [Codex runtime](codex.md) and [Claude Code runtime](claude-code.md) pages. [Runtime boundaries](runtime-boundaries.md) explains why these details stay separate.
 
+## Return to a project
+
+The return path is a runtime detail. Use [Design Arc for Codex](codex.md) for Codex project homes and [Design Arc for Claude Code](claude-code.md) for Claude Code re-entry and its optional reminder. A runtime-specific return path never merges or continues a review from the other runtime.
+
+## Choosing the active host or Stitch for the screens
+
+Design Arc generates one complete static journey board in the active host by default. It does not build disposable application logic merely to visualize the proposal. The board covers every important state, while separate high-resolution screens are generated only when closer inspection or a focused correction needs them.
+
+Stitch is optional and Design Arc recommends it when any one genuine canvas trigger occurs. Triggers include a second meaningful visual direction, changes across three or more screens, precise visual iteration, self-editing, another-day continuation, a board becoming difficult to review, unrelated drift after one active-host correction round, device variants, collaboration, or design export.
+
+The first recommendation explains the specific benefit. Design Arc may recommend Stitch again, briefly, only after another genuine trigger or materially larger scope. A Stitch recommendation is advisory and never transfers the proposal automatically. You can stay in the active host. That choice applies to the current editing phase; Design Arc may ask again if the work materially grows. If you say not to recommend Stitch again for this review, Design Arc suppresses every further recommendation for that review.
+
+When you choose Stitch, Design Arc preserves the approved requirements and compares the latest retrieved or supplied Stitch changes before accepting them as the current proposal. Stitch access—including an exact Stitch MCP when actually configured—remains separately authorized. Design Arc itself bundles no MCP.
+
+## What happens after screens render
+
+Design Arc corrects straightforward visual drift before asking you to approve the visual proposal. The initial proposal may be followed by at most three correction rounds for the whole proposal. Each round batches every known repairable mismatch, generates a new proposal, and reinspects the complete result. The same validation and correction rules apply whether the active host or Stitch renders the screens.
+
+If the proposal still does not match, Design Arc stops and flags every unresolved mismatch and the attempts already made. It asks sooner only when the correction would change the approved direction, requires new authorization, or cannot be proven in a prototype.
+
+## Approval and trust controls
+
+> Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.
+
+Objective Confirmation establishes the product outcome before the audit or evidence gathering begins. The Direction Gate confirms the recommended design direction; the Visual Proposal Gate confirms the validated visual proposal. Existing 0.3.x review records may call this the Stitch Gate; it is the same gate, not an additional approval.
+
+| Approval mode | Objective | Visual Proposal Gate |
+| --- | --- | --- |
+| **Guided** — recommended for a new project | Confirm; stop at Direction Gate | Stop for approval |
+| **Follow recommendation** | Confirm; continue at Direction Gate with the visibly marked recommendation | Stop for approval |
+| **Fully automatic** | The current request must state an explicit objective; continue at Direction Gate with the visibly marked recommendation | Continue only after a `meets direction` verdict |
+
+“Follow your recommendation” is a one-run Follow recommendation alias. “Bypass both gates” is a one-run Fully automatic alias, but it never permits Design Arc to invent a missing objective. Automatic modes change decision pauses, not the audit, evidence, complete-state, validation, or ownership requirements.
+
 ## Graph-assisted corrections
 
 Design Arc understands how requirements, evidence and screens affect one another, helping it make more precise corrections without surrendering approval control.
@@ -67,39 +101,5 @@ Before Stitch is used, the active host prepares the complete evidence-grounded j
 Design Arc bundles no MCP server, so the generic diagram does not invent a connection that is not configured. Mobbin and Google Stitch are external services, not automatically available to the active host. Google now provides an official Stitch MCP server and SDK, but Design Arc uses that route only when it is separately installed, configured, and authorized. When a particular review actually uses an MCP, its run record and evidence labels name the exact configured MCP server or tool; otherwise they name the browser or manual access path used. Design Arc does not imply an official Mobbin MCP integration.
 
 Graph assistance is optional internal reasoning support. If it is unavailable or turned off, Design Arc continues the same review without it. It never replaces evidence, platform guidance, approvals, or complete screen inspection. People who want to inspect or manage it can use the commands in [Advanced controls](advanced-controls.md).
-
-## Return to a project
-
-The return path is a runtime detail. Use [Design Arc for Codex](codex.md) for Codex project homes and [Design Arc for Claude Code](claude-code.md) for Claude Code re-entry and its optional reminder. A runtime-specific return path never merges or continues a review from the other runtime.
-
-## Choosing the active host or Stitch for the screens
-
-Design Arc generates one complete static journey board in the active host by default. It does not build disposable application logic merely to visualize the proposal. The board covers every important state, while separate high-resolution screens are generated only when closer inspection or a focused correction needs them.
-
-Stitch is optional and Design Arc recommends it when any one genuine canvas trigger occurs. Triggers include a second meaningful visual direction, changes across three or more screens, precise visual iteration, self-editing, another-day continuation, a board becoming difficult to review, unrelated drift after one active-host correction round, device variants, collaboration, or design export.
-
-The first recommendation explains the specific benefit. Design Arc may recommend Stitch again, briefly, only after another genuine trigger or materially larger scope. A Stitch recommendation is advisory and never transfers the proposal automatically. You can stay in the active host. That choice applies to the current editing phase; Design Arc may ask again if the work materially grows. If you say not to recommend Stitch again for this review, Design Arc suppresses every further recommendation for that review.
-
-When you choose Stitch, Design Arc preserves the approved requirements and compares the latest retrieved or supplied Stitch changes before accepting them as the current proposal. Stitch access—including an exact Stitch MCP when actually configured—remains separately authorized. Design Arc itself bundles no MCP.
-
-## What happens after screens render
-
-Design Arc corrects straightforward visual drift before asking you to approve the visual proposal. The initial proposal may be followed by at most three correction rounds for the whole proposal. Each round batches every known repairable mismatch, generates a new proposal, and reinspects the complete result. The same validation and correction rules apply whether the active host or Stitch renders the screens.
-
-If the proposal still does not match, Design Arc stops and flags every unresolved mismatch and the attempts already made. It asks sooner only when the correction would change the approved direction, requires new authorization, or cannot be proven in a prototype.
-
-## Approval and trust controls
-
-> Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.
-
-Objective Confirmation establishes the product outcome before the audit or evidence gathering begins. The Direction Gate confirms the recommended design direction; the Visual Proposal Gate confirms the validated visual proposal. Existing 0.3.x review records may call this the Stitch Gate; it is the same gate, not an additional approval.
-
-| Approval mode | Objective | Visual Proposal Gate |
-| --- | --- | --- |
-| **Guided** — recommended for a new project | Confirm; stop at Direction Gate | Stop for approval |
-| **Follow recommendation** | Confirm; continue at Direction Gate with the visibly marked recommendation | Stop for approval |
-| **Fully automatic** | The current request must state an explicit objective; continue at Direction Gate with the visibly marked recommendation | Continue only after a `meets direction` verdict |
-
-“Follow your recommendation” is a one-run Follow recommendation alias. “Bypass both gates” is a one-run Fully automatic alias, but it never permits Design Arc to invent a missing objective. Automatic modes change decision pauses, not the audit, evidence, complete-state, validation, or ownership requirements.
 
 Next: [Evidence and methodology](evidence-and-methodology.md).
