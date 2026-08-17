@@ -23,6 +23,8 @@ On new Google Antigravity setup, propose every missing preference and obtain exp
 
 When `.gemini/design-arc.yaml` already exists, treat it as the Antigravity saved preference, do not offer a cross-runtime import, and never overwrite it from `.codex/design-arc.yaml` or `.claude/design-arc.yaml`.
 
+Every Antigravity-created `.gemini/design-arc-active-review.json` and review artifact under `.gemini/design-arc/reviews/<review_id>/` records `runtime: antigravity` together with its pinned `workflow_version`; reject a `.gemini` record labelled `runtime: codex` and do not reinterpret it.
+
 Only when the Antigravity preference is absent, inspect
 `.codex/design-arc.yaml` and `.claude/design-arc.yaml` read-only when they
 exist. For each source independently, the portable fields are `evidence_mode`,
@@ -40,6 +42,11 @@ If the user declines import or declines to choose a source, leave all Codex and 
 If either inspected source file is malformed or any portable value is invalid, import nothing from that source, report the invalid fields without exposing unrelated contents, and offer fresh Antigravity setup or the other separately valid source.
 
 Never tell a Google Antigravity user to pass work to Codex or Claude Code unless the user explicitly requests a cross-platform handoff. A cross-platform handoff is an explicit user choice, not an import side effect: do not transfer, merge, alter, or resume source reviews, tasks, sessions, or runtime state.
+
+Graph assistance never bypasses Objective Confirmation.
+Graph assistance never bypasses Direction Gate.
+Graph assistance never bypasses Visual Proposal Gate.
+Graph assistance never weakens Objective Confirmation, Direction Gate, or Visual Proposal Gate approval-mode behavior.
 
 ### Safe Google Antigravity plugin upgrade
 

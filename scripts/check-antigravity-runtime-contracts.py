@@ -39,7 +39,7 @@ REQUIRED_CONTRACTS = {
         "If either inspected source file is malformed or any portable value is invalid, import nothing from that source, report the invalid fields without exposing unrelated contents, and offer fresh Antigravity setup or the other separately valid source.",
     ),
     "runtime provenance": (
-        "Every new active-review record includes `runtime: codex` or `runtime: antigravity` together with its pinned `workflow_version`.",
+        "Every Antigravity-created `.gemini/design-arc-active-review.json` and review artifact under `.gemini/design-arc/reviews/<review_id>/` records `runtime: antigravity` together with its pinned `workflow_version`; reject a `.gemini` record labelled `runtime: codex` and do not reinterpret it.",
     ),
     "Antigravity review storage": (
         "Google Antigravity stores preferences only at `.gemini/design-arc.yaml`, active-review identity only at `.gemini/design-arc-active-review.json`, and review artifacts only under `.gemini/design-arc/reviews/<review_id>/`.",
@@ -71,8 +71,20 @@ REQUIRED_CONTRACTS = {
     "proposal-wide correction limit": (
         "Use one initial visual proposal followed by at most three batched correction rounds for the entire proposal.",
     ),
-    "workflow-gate preservation": (
-        "Graph assistance never bypasses Objective Confirmation, Direction Gate, Visual Proposal Gate, their approval-mode behavior, or the requirement that Fully automatic continues only on `meets direction`.",
+    "Objective Confirmation preservation": (
+        "Graph assistance never bypasses Objective Confirmation.",
+    ),
+    "Direction Gate preservation": (
+        "Graph assistance never bypasses Direction Gate.",
+    ),
+    "Visual Proposal Gate preservation": (
+        "Graph assistance never bypasses Visual Proposal Gate.",
+    ),
+    "approval-mode behavior preservation": (
+        "Graph assistance never weakens Objective Confirmation, Direction Gate, or Visual Proposal Gate approval-mode behavior.",
+    ),
+    "Fully automatic condition preservation": (
+        "Fully automatic continues only on `meets direction`.",
     ),
 }
 
@@ -93,8 +105,23 @@ FORBIDDEN_CONTRACTS = {
     "mandatory Stitch contradiction": (
         "Google Stitch is mandatory for every Design Arc review.",
     ),
-    "gate bypass contradiction": (
+    "Objective Confirmation bypass contradiction": (
+        "Graph assistance may bypass Objective Confirmation.",
+    ),
+    "Direction Gate bypass contradiction": (
+        "Graph assistance may bypass Direction Gate.",
+    ),
+    "Visual Proposal Gate bypass contradiction": (
         "Graph assistance may bypass the Visual Proposal Gate.",
+    ),
+    "approval-mode weakening contradiction": (
+        "Graph assistance may weaken approval-mode behavior.",
+    ),
+    "Fully automatic condition contradiction": (
+        "Fully automatic may continue without `meets direction`.",
+    ),
+    "wrong Gemini runtime contradiction": (
+        "A `.gemini` record may use `runtime: codex`.",
     ),
 }
 
