@@ -1,21 +1,24 @@
 # Upgrades and migration
 
-[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)
+[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [Google Antigravity](antigravity.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)
 
 How do I safely upgrade the installed Design Arc adapters today?
 
 ## Current adapter upgrades
 
-Codex and Claude Code are independently installed adapters. Upgrading one never installs, removes, upgrades, or synchronizes the other.
+Codex, Claude Code, and Google Antigravity are independently installed adapters. Upgrading one never installs, removes, upgrades, or synchronizes either other adapter.
 
 | Adapter | Supported upgrade request | State that remains owned by it |
 | --- | --- | --- |
 | **Codex** | Ask Codex to upgrade Design Arc safely through its configured marketplace. | `.codex/design-arc.yaml`, homes, reviews, graphs, and product files |
 | **Claude Code** | `claude plugin update design-arc@design-arc-marketplace` | `.claude/design-arc.yaml`, approved reminder block, reviews, graphs, and product files |
+| **Google Antigravity** | Use a supported Google Antigravity extension update route. | `.gemini/design-arc.yaml`, active-review records, review artifacts, graphs, and product files |
 
 Before either change, verify the installed version, requested version, source, and route. Re-read installed state afterward instead of treating command success as proof. Start a new clean session in the adapter you changed; an already-open session keeps its pinned runtime and workflow version.
 
 A Claude Code adapter change preserves `.claude/design-arc.yaml`, the approved `CLAUDE.md` reminder block, reviews, graphs, product files, and active sessions byte-for-byte. It also leaves all Codex state untouched. The same boundary applies in reverse to a Codex upgrade. Neither route runs project setup, imports preferences, merges reviews, or transfers project state during an adapter change.
+
+An Antigravity adapter change preserves `.gemini/design-arc.yaml`, active-review records, review artifacts, graphs, product files, and active sessions byte-for-byte. It leaves Codex and Claude Code state untouched, never runs project setup, imports preferences, merges reviews, or transfers project state during an adapter change.
 
 ## Codex upgrade details
 
@@ -61,5 +64,11 @@ claude plugin update design-arc@design-arc-marketplace
 Confirm the installed version and source after it completes, then open a clean Claude Code session. This changes only the Claude Code adapter. It does not alter Codex preferences, homes, reviews, graphs, product files, or active tasks.
 
 For retired plugin replacement, legacy Codex preference import, and 0.2–0.3 recovery, read [Migration history](migration-history.md). For the current one-time Codex-to-Claude portable preference import, read [Design Arc for Claude Code](claude-code.md#import-portable-preferences-from-codex).
+
+## Google Antigravity upgrade details
+
+Use a supported Google Antigravity extension update route. Before the change, confirm the installed and requested versions, source, and route; afterward, re-read the installed state. Do not turn command success into a claim that standalone, IDE, and CLI were all exercised. Any install-and-load smoke result must name the exact surface that was actually tested.
+
+The extension update does not rerun setup, edit `.gemini/design-arc.yaml`, touch product files, or continue an active review. Begin the next review in a clean Google Antigravity session; an already-open session keeps its pinned runtime and workflow version. For the complete Antigravity state and import boundary, read [Design Arc for Google Antigravity](antigravity.md).
 
 Next: [Trust and sources](trust-limitations-and-sources.md).

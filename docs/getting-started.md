@@ -1,12 +1,12 @@
 # Getting started
 
-[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)
+[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [Google Antigravity](antigravity.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)
 
 How do I install Design Arc and begin my first review?
 
 ## Install once
 
-Design Arc is one product available for two platforms. Choose the edition for the place where you already work.
+Design Arc is one product available for three platforms. Choose the edition for the place where you already work.
 
 ## Install in Codex
 
@@ -22,7 +22,11 @@ Paste this into Claude Code:
 
 > Add the Design Arc marketplace from https://github.com/friedbeef1/design-arc and install Design Arc.
 
-The Codex and Claude Code editions are installed independently, but use the same Design Arc methodology. They are not different products. Choose the runtime page for the active host for installation, saved state, and returning later. Read [Design Arc for Codex](codex.md) or [Design Arc for Claude Code](claude-code.md).
+## Install in Google Antigravity
+
+Use the one-line install and `/design-arc` in [Design Arc for Google Antigravity](antigravity.md).
+
+The Codex, Claude Code, and Google Antigravity editions are installed independently, but use the same Design Arc methodology. They are not different products. Choose the runtime page for the active host for installation, saved state, and returning later. Read [Design Arc for Codex](codex.md), [Design Arc for Claude Code](claude-code.md), or [Design Arc for Google Antigravity](antigravity.md).
 
 ## Start by describing the problem
 

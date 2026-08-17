@@ -1,6 +1,6 @@
 # Using Design Arc
 
-[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)
+[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [Google Antigravity](antigravity.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)
 
 How do I use Design Arc after installation?
 
@@ -10,7 +10,7 @@ Describe the product outcome you want in ordinary language. For example: “Use 
 
 Commands are optional shortcuts, not required knowledge.
 
-If the active host selects Design Arc for a suitable request that did not invoke it directly, it asks for permission before beginning. Until you approve, it does not start setup, inspect your product, gather Design Arc evidence, or create Design Arc project or review records. Automatic skill selection is not guaranteed, so ask for Design Arc by name when certainty matters. Runtime-specific return paths are described in the [Codex runtime](codex.md) and [Claude Code runtime](claude-code.md) pages. Design Arc does not run continuously or silently in every task.
+If the active host selects Design Arc for a suitable request that did not invoke it directly, it asks for permission before beginning. Until you approve, it does not start setup, inspect your product, gather Design Arc evidence, or create Design Arc project or review records. Automatic skill selection is not guaranteed, so ask for Design Arc by name when certainty matters. Runtime-specific return paths are described in the [Codex runtime](codex.md), [Claude Code runtime](claude-code.md), and [Google Antigravity runtime](antigravity.md) pages. Design Arc does not run continuously or silently in every task.
 
 Examples of requests for which Codex or Claude Code may offer Design Arc include:
 
@@ -20,11 +20,11 @@ Examples of requests for which Codex or Claude Code may offer Design Arc include
 
 Natural-language requests such as “use Guidelines only for this run” or “follow your recommendation this time” are one-run overrides; they do not rewrite the saved project preference.
 
-The workflow, evidence rules, approval modes, renderer choice, and design-only handoff boundary are shared. Invocation, saved preferences, active-review records, return paths, and adapter upgrades are platform-specific. Codex and Claude Code never merge, migrate, resume, or continue an active review across runtimes. Runtime-specific installation, invocation, saved state, returning later, visual capabilities, and upgrades belong to the [Codex runtime](codex.md) and [Claude Code runtime](claude-code.md) pages. [Runtime boundaries](runtime-boundaries.md) explains why these details stay separate.
+The workflow, evidence rules, approval modes, renderer choice, and design-only handoff boundary are shared. Invocation, saved preferences, active-review records, return paths, and adapter upgrades are platform-specific. Codex, Claude Code, and Google Antigravity never merge, migrate, resume, or continue an active review across runtimes. Runtime-specific installation, invocation, saved state, returning later, visual capabilities, and upgrades belong to the [Codex runtime](codex.md), [Claude Code runtime](claude-code.md), and [Google Antigravity runtime](antigravity.md) pages. [Runtime boundaries](runtime-boundaries.md) explains why these details stay separate.
 
 ## Return to a project
 
-The return path is a runtime detail. Use [Design Arc for Codex](codex.md) for Codex project homes and [Design Arc for Claude Code](claude-code.md) for Claude Code re-entry and its optional reminder. A runtime-specific return path never merges or continues a review from the other runtime.
+The return path is a runtime detail. Use [Design Arc for Codex](codex.md) for Codex project homes, [Design Arc for Claude Code](claude-code.md) for Claude Code re-entry and its optional reminder, and [Design Arc for Google Antigravity](antigravity.md) for Antigravity re-entry. A runtime-specific return path never merges or continues a review from another runtime.
 
 ## Choosing the active host or Stitch for the screens
 
@@ -96,7 +96,7 @@ flowchart TD
 
 Official Apple guidance governs Apple platform requirements; the applicable first-party guidance does the same for Android or web. Mobbin supplies product precedent only in Guidelines + Benchmarks mode.
 
-Before Stitch is used, the active host prepares the complete evidence-grounded journey, requirements, and important-state inventory. Stitch visualizes rather than establishes correctness; the active host validates the returned screens and applies the same proposal-wide correction loop of up to three rounds. Stitch remains optional and separately authorized. For the active host’s visual capabilities and recommendation details, use the [Codex runtime](codex.md) or [Claude Code runtime](claude-code.md) page.
+Before Stitch is used, the active host prepares the complete evidence-grounded journey, requirements, and important-state inventory. Stitch visualizes rather than establishes correctness; the active host validates the returned screens and applies the same proposal-wide correction loop of up to three rounds. Stitch remains optional and separately authorized. For the active host’s visual capabilities and recommendation details, use the [Codex runtime](codex.md), [Claude Code runtime](claude-code.md), or [Google Antigravity runtime](antigravity.md) page.
 
 Design Arc bundles no MCP server, so the generic diagram does not invent a connection that is not configured. Mobbin and Google Stitch are external services, not automatically available to the active host. Google now provides an official Stitch MCP server and SDK, but Design Arc uses that route only when it is separately installed, configured, and authorized. When a particular review actually uses an MCP, its run record and evidence labels name the exact configured MCP server or tool; otherwise they name the browser or manual access path used. Design Arc does not imply an official Mobbin MCP integration.
 

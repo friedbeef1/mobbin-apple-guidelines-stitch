@@ -1,6 +1,6 @@
 # Advanced controls
 
-[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)
+[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [Google Antigravity](antigravity.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)
 
 You do not need these commands for normal Design Arc use. Start by describing the outcome in ordinary language; Design Arc asks the necessary questions. The command forms below are optional shortcuts for the same shared actions.
 
@@ -37,6 +37,10 @@ Graph assistance is optional internal reasoning support. It connects evidence, r
 
 `graph` reports state. `on` and `off` save the project choice. `global off` is a laptop safety ceiling; `global on` removes that ceiling but never forces a project on. `rebuild` reconstructs only the current review relationship record. `clear` is destructive and requires explicit confirmation for the exact graph record.
 
+## Google Antigravity controls
+
+Google Antigravity guarantees the `/design-arc` entry point; start there, then ask in ordinary language for the shared action you want. The documented adapter contract does not promise separate Antigravity slash subcommands for setup, graph controls, or upgrades. Use [Design Arc for Google Antigravity](antigravity.md) for its state, imports, upgrade boundary, and current surface proof.
+
 ## Runtime-only return paths
 
 These are intentionally not paired commands.
@@ -66,6 +70,12 @@ codex plugin marketplace add friedbeef1/design-arc --ref main
 codex plugin add design-arc@design-arc-marketplace
 ```
 
+Google Antigravity (from the repository root):
+
+```bash
+agy plugin install https://github.com/friedbeef1/design-arc
+```
+
 For a local checkout, replace the GitHub repository with its local path and omit the Git-only `--ref` option. Design Arc is a plugin, not a standalone skills-registry package. If Codex reports that no exact skills-registry package exists, ask it to use the plugin marketplace route above.
 
 ```bash
@@ -75,7 +85,7 @@ codex plugin add design-arc@design-arc-marketplace
 
 ## Saved state and upgrades
 
-Codex preferences live in `.codex/design-arc.yaml`; Claude Code preferences live in `.claude/design-arc.yaml`. The adapters do not silently merge active reviews. Claude may offer a confirmed one-time import of portable Codex preferences when its own preference file is absent.
+Codex preferences live in `.codex/design-arc.yaml`; Claude Code preferences live in `.claude/design-arc.yaml`; Google Antigravity preferences live in `.gemini/design-arc.yaml`. The adapters do not silently merge active reviews. Claude may offer a confirmed one-time import of portable Codex preferences when its own preference file is absent; Antigravity may offer a confirmed one-time import from exactly one validated Codex or Claude source when its own preference file is absent.
 
 Upgrade commands and preservation rules are documented in [Upgrades and migration](upgrades-and-migration.md).
 

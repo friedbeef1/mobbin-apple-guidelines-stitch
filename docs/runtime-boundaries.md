@@ -1,10 +1,10 @@
 # Runtime boundaries
 
-[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)
+[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [Google Antigravity](antigravity.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)
 
 Design Arc is one shared workflow. The active host owns only the runtime-specific installation, invocation, saved state, return path, visualization capability, and upgrade behavior.
 
-The [Codex runtime](codex.md) and [Claude Code runtime](claude-code.md) pages are the authoritative guides for those host-specific details. They describe their own installation and return paths without turning either host into the default for the shared product journey.
+The [Codex runtime](codex.md), [Claude Code runtime](claude-code.md), and [Google Antigravity runtime](antigravity.md) pages are the authoritative guides for those host-specific details. They describe their own installation and return paths without turning any host into the default for the shared product journey.
 
 ## What remains shared
 
@@ -16,9 +16,9 @@ The active host produces a reviewable proposal, and Stitch remains an optional, 
 
 ## What remains separate
 
-Codex and Claude Code never merge, migrate, resume, or continue an active review across runtimes. Each runtime keeps its own saved state, review records, return path, and upgrade lifecycle. A host-specific project home, reminder, command, or visual capability is not a shared Design Arc requirement and does not create cross-runtime synchronization.
+Codex, Claude Code, and Google Antigravity never merge, migrate, resume, or continue an active review across runtimes. Each runtime keeps its own saved state, review records, return path, and upgrade lifecycle. A host-specific project home, reminder, command, or visual capability is not a shared Design Arc requirement and does not create cross-runtime synchronization.
 
-Use the [Codex runtime](codex.md) page for Codex-only details, including project homes. Use the [Claude Code runtime](claude-code.md) page for Claude Code-only details, including its optional project reminder. Use [Upgrades and migration](upgrades-and-migration.md) for the current upgrade path and preservation rules.
+Use the [Codex runtime](codex.md) page for Codex-only details, including project homes. Use the [Claude Code runtime](claude-code.md) page for Claude Code-only details, including its optional project reminder. Use the [Google Antigravity runtime](antigravity.md) page for Antigravity-only installation, `/design-arc`, and `.gemini/` state details. Use [Upgrades and migration](upgrades-and-migration.md) for the current upgrade path and preservation rules.
 
 ## Implementation and release boundary
 

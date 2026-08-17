@@ -50,6 +50,7 @@ getting_started="$repo_root/docs/getting-started.md"
 using_design_arc="$repo_root/docs/using-design-arc.md"
 codex_edition="$repo_root/docs/codex.md"
 claude_edition="$repo_root/docs/claude-code.md"
+antigravity_edition="$repo_root/docs/antigravity.md"
 advanced_controls="$repo_root/docs/advanced-controls.md"
 evidence_methodology="$repo_root/docs/evidence-and-methodology.md"
 upgrades_migration="$repo_root/docs/upgrades-and-migration.md"
@@ -63,23 +64,40 @@ prompts="$repo_root/examples/prompts.md"
 motion_sources="$repo_root/docs/trusted-sources/motion.md"
 trusted_source_library="$repo_root/docs/trusted-sources/README.md"
 visualization_sources="$repo_root/docs/trusted-sources/visualization.md"
-shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)'
+shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [Google Antigravity](antigravity.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)'
+historical_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)'
 
-for file in "$readme" "$getting_started" "$using_design_arc" "$codex_edition" "$claude_edition" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$migration_history" "$trust_sources" "$operating_layer" "$runtime_boundaries" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
+for file in "$readme" "$getting_started" "$using_design_arc" "$codex_edition" "$claude_edition" "$antigravity_edition" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$migration_history" "$trust_sources" "$operating_layer" "$runtime_boundaries" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
 do
   [ -f "$file" ] || fail "missing required documentation: ${file#"$repo_root/"}"
 done
 
 require_text "$readme" '[FAQ](docs/faq.md)'
-require_text "$readme" 'One Design Arc, available for Codex and Claude Code.'
+require_text "$readme" 'One Design Arc, available for Codex, Claude Code, and Google Antigravity.'
 require_text "$readme" '[Design Arc for Codex](docs/codex.md)'
 require_text "$readme" '[Design Arc for Claude Code](docs/claude-code.md)'
+require_text "$readme" '[Design Arc for Google Antigravity](docs/antigravity.md)'
 require_text "$codex_edition" '## What stays the same'
 require_text "$codex_edition" 'pinned project home'
 require_text "$claude_edition" '## What stays the same'
 require_text "$claude_edition" 'Claude Code does not create a Codex project home.'
+require_text "$antigravity_edition" '# Design Arc for Google Antigravity'
+require_text "$antigravity_edition" 'agy plugin install https://github.com/friedbeef1/design-arc'
+require_text "$antigravity_edition" '`/design-arc`'
+require_text "$antigravity_edition" 'standalone, IDE, and CLI surfaces when that surface has loaded this extension'
+require_text "$antigravity_edition" 'The repository test suite validates the packaged Antigravity adapter and its written contracts.'
+require_text "$antigravity_edition" 'It does not by itself prove a plugin install or `/design-arc` load on standalone, IDE, or CLI.'
+require_text "$antigravity_edition" 'Google Antigravity owns `.gemini/design-arc.yaml`, `.gemini/design-arc-active-review.json`, and review artifacts under `.gemini/design-arc/reviews/`.'
+require_text "$antigravity_edition" 'Never import, merge, migrate, resume, or continue an active review across runtimes.'
+require_text "$antigravity_edition" 'Only when `.gemini/design-arc.yaml` is absent can Design Arc offer a one-time, explicitly confirmed preference import from Codex or Claude Code.'
+require_text "$antigravity_edition" 'If both source preferences exist, choose exactly one validated source; Design Arc never merges them.'
+require_text "$antigravity_edition" 'lightweight static journey board with HTML/CSS, SVG, or specifications'
+require_text "$antigravity_edition" 'does not claim native image generation'
+require_text "$antigravity_edition" 'Stitch remains optional and separately authorized.'
+require_text "$antigravity_edition" 'The extension installation does not authorize benchmark, browser, visualization, MCP, provider, or product access.'
+require_text "$antigravity_edition" 'Use a supported Google Antigravity extension update route.'
 require_text "$faq" '## What is a project home?'
-require_text "$faq" '## Are the Codex and Claude Code editions different products?'
+require_text "$faq" '## Are the Codex, Claude Code, and Google Antigravity editions different products?'
 require_text "$faq" 'Project homes are a Codex-only return-path feature.'
 require_text "$faq" 'For approval, naming, reuse, and returning later, read [Design Arc for Codex](codex.md).'
 require_text "$faq" 'For Claude Code’s distinct return path, read [Design Arc for Claude Code](claude-code.md).'
@@ -164,7 +182,7 @@ require_text "$readme" 'Move from uncertain product feedback to a complete desig
 require_text "$readme" 'Design Arc audits the real journey, checks decisions against current first-party platform guidance and inspected real-product journeys, recommends the strongest path, and designs every important state before implementation begins.'
 require_text "$readme" '## You need Design Arc if…'
 require_text "$readme" '## What Design Arc produces'
-require_text "$readme" '## One product, two platform editions'
+require_text "$readme" '## One product, three platform editions'
 require_text "$readme" '| Use | Choose it when | Start Design Arc |'
 require_text "$readme" 'The product and workflow are shared. Start with Design Arc, then use the runtime page for the active host when installation, saved state, return paths, or visual capabilities differ.'
 require_text "$readme" '[Codex runtime details](docs/codex.md)'
@@ -214,10 +232,11 @@ require_text "$claude_edition" 'The upgrade does not import preferences or synch
 forbid_text "$migration_history" '## Historical Claude preference import'
 forbid_text "$migration_history" 'Claude Code may propose importing portable values from `.codex/design-arc.yaml`'
 
-for file in "$getting_started" "$using_design_arc" "$codex_edition" "$claude_edition" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$migration_history" "$trust_sources" "$runtime_boundaries"
+for file in "$getting_started" "$using_design_arc" "$codex_edition" "$claude_edition" "$antigravity_edition" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$trust_sources" "$runtime_boundaries"
 do
   require_text "$file" "$shared_navigation"
 done
+require_text "$migration_history" "$historical_navigation"
 
 require_text "$getting_started" '# Getting started'
 require_text "$getting_started" 'How do I install Design Arc and begin my first review?'
@@ -226,9 +245,11 @@ require_text "$getting_started" '## Start by describing the problem'
 require_text "$getting_started" 'Use Design Arc to help me improve our onboarding.'
 require_text "$getting_started" 'Design Arc guides setup in plain language the first time a project uses it.'
 require_text "$getting_started" '## Install in Claude Code'
+require_text "$getting_started" '## Install in Google Antigravity'
 require_text "$getting_started" 'Choose the runtime page for the active host for installation, saved state, and returning later.'
 require_text "$getting_started" '[Design Arc for Codex](codex.md)'
 require_text "$getting_started" '[Design Arc for Claude Code](claude-code.md)'
+require_text "$getting_started" '[Design Arc for Google Antigravity](antigravity.md)'
 require_text "$getting_started" 'No Python knowledge is required.'
 require_text "$getting_started" 'Technical commands and troubleshooting live in [Advanced controls](advanced-controls.md).'
 require_text "$getting_started" 'Next: [Using Design Arc](using-design-arc.md).'
@@ -236,13 +257,13 @@ require_text "$getting_started" 'Next: [Using Design Arc](using-design-arc.md).'
 require_text "$using_design_arc" '# Using Design Arc'
 require_text "$using_design_arc" 'Describe the product outcome you want in ordinary language.'
 require_text "$using_design_arc" 'Commands are optional shortcuts, not required knowledge.'
-require_text "$using_design_arc" 'Codex and Claude Code never merge, migrate, resume, or continue an active review across runtimes.'
+require_text "$using_design_arc" 'Codex, Claude Code, and Google Antigravity never merge, migrate, resume, or continue an active review across runtimes.'
 require_text "$using_design_arc" 'If the active host selects Design Arc for a suitable request that did not invoke it directly, it asks for permission before beginning.'
 require_text "$using_design_arc" 'Automatic skill selection is not guaranteed'
 require_text "$using_design_arc" 'ask for Design Arc by name when certainty matters.'
 require_text "$using_design_arc" 'Design Arc does not run continuously or silently in every task.'
 require_text "$using_design_arc" 'How do I use Design Arc after installation?'
-require_text "$using_design_arc" 'Runtime-specific installation, invocation, saved state, returning later, visual capabilities, and upgrades belong to the [Codex runtime](codex.md) and [Claude Code runtime](claude-code.md) pages.'
+require_text "$using_design_arc" 'Runtime-specific installation, invocation, saved state, returning later, visual capabilities, and upgrades belong to the [Codex runtime](codex.md), [Claude Code runtime](claude-code.md), and [Google Antigravity runtime](antigravity.md) pages.'
 require_text "$using_design_arc" '[Runtime boundaries](runtime-boundaries.md)'
 require_text "$using_design_arc" 'Help me make our onboarding less confusing.'
 require_text "$using_design_arc" 'Audit how customers complete checkout and propose a better complete journey.'
@@ -298,6 +319,9 @@ PY
 
 require_text "$advanced_controls" '# Advanced controls'
 require_text "$advanced_controls" 'You do not need these commands for normal Design Arc use.'
+require_text "$advanced_controls" '## Google Antigravity controls'
+require_text "$advanced_controls" 'Google Antigravity guarantees the `/design-arc` entry point; start there, then ask in ordinary language for the shared action you want.'
+require_text "$advanced_controls" 'agy plugin install https://github.com/friedbeef1/design-arc'
 for command in \
   '$design-arc setup' \
   '$design-arc home' \
@@ -463,8 +487,10 @@ require_text "$evidence_methodology" 'Next: [Upgrades and migration](upgrades-an
 require_text "$upgrades_migration" '# Upgrades and migration'
 require_text "$upgrades_migration" 'How do I safely upgrade the installed Design Arc adapters today?'
 require_text "$upgrades_migration" '## Current adapter upgrades'
-require_text "$upgrades_migration" 'Codex and Claude Code are independently installed adapters. Upgrading one never installs, removes, upgrades, or synchronizes the other.'
+require_text "$upgrades_migration" 'Codex, Claude Code, and Google Antigravity are independently installed adapters. Upgrading one never installs, removes, upgrades, or synchronizes either other adapter.'
 require_text "$upgrades_migration" 'claude plugin update design-arc@design-arc-marketplace'
+require_text "$upgrades_migration" 'Use a supported Google Antigravity extension update route.'
+require_text "$upgrades_migration" 'An Antigravity adapter change preserves `.gemini/design-arc.yaml`, active-review records, review artifacts, graphs, product files, and active sessions byte-for-byte.'
 require_text "$upgrades_migration" 'A Claude Code adapter change preserves `.claude/design-arc.yaml`, the approved `CLAUDE.md` reminder block, reviews, graphs, product files, and active sessions byte-for-byte.'
 require_text "$upgrades_migration" 'Start a new clean session in the adapter you changed; an already-open session keeps its pinned runtime and workflow version.'
 require_text "$upgrades_migration" 'For retired plugin replacement, legacy Codex preference import, and 0.2–0.3 recovery, read [Migration history](migration-history.md).'
@@ -523,12 +549,12 @@ require_text "$trust_sources" 'Next: [Home](../README.md).'
 
 require_text "$trusted_source_library" '| Visualization and validation | A concrete proposed journey that can be inspected across material states. | Active-host static journey boards by default; optional [Google Stitch](https://stitch.withgoogle.com/) workspace. | Evidence, platform compliance, accessibility, or implementation readiness by itself. |'
 require_text "$trusted_source_library" '[Visualization](visualization.md) — active-host static boards by default and Stitch as an optional persistent editing workspace.'
-require_text "$visualization_sources" 'Design Arc generates a consolidated static journey board in the active host by default: Codex for the Codex adapter and Claude Code for the Claude adapter.'
+require_text "$visualization_sources" 'Design Arc generates a consolidated static journey board in the active host by default: Codex for the Codex adapter, Claude Code for the Claude adapter, and Google Antigravity for the Antigravity adapter.'
 require_text "$visualization_sources" 'The active host is the lower-friction route for a bounded proposal and a few corrections.'
 require_text "$runtime_boundaries" '# Runtime boundaries'
 require_text "$runtime_boundaries" 'Design Arc is one shared workflow. The active host owns only the runtime-specific installation, invocation, saved state, return path, visualization capability, and upgrade behavior.'
-require_text "$runtime_boundaries" 'The [Codex runtime](codex.md) and [Claude Code runtime](claude-code.md) pages are the authoritative guides for those host-specific details.'
-require_text "$runtime_boundaries" 'Codex and Claude Code never merge, migrate, resume, or continue an active review across runtimes.'
+require_text "$runtime_boundaries" 'The [Codex runtime](codex.md), [Claude Code runtime](claude-code.md), and [Google Antigravity runtime](antigravity.md) pages are the authoritative guides for those host-specific details.'
+require_text "$runtime_boundaries" 'Codex, Claude Code, and Google Antigravity never merge, migrate, resume, or continue an active review across runtimes.'
 require_text "$runtime_boundaries" 'Objective Confirmation, both evidence modes, the Direction Gate, the Visual Proposal Gate, complete-state validation, optional Stitch, and the three-round correction limit are shared workflow contracts.'
 require_text "$runtime_boundaries" 'No runtime detail or approval authorizes source implementation, staging, deployment, or release.'
 require_text "$operating_layer" '# Codex operating layer (compatibility page)'
@@ -598,7 +624,7 @@ headings = re.findall(r"^#{1,2} .+$", text, re.MULTILINE)
 expected_headings = [
     "# Design Arc",
     "## Documentation",
-    "## One product, two platform editions",
+    "## One product, three platform editions",
     "## You need Design Arc if…",
     "## What Design Arc produces",
     "## The workflow",
