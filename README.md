@@ -1,6 +1,6 @@
 # Design Arc
 
-One Design Arc, available for Codex and Claude Code.
+One Design Arc, available for Codex, Claude Code, and Google Antigravity.
 
 Product feedback is often vague, redesign discussions become subjective, and teams approve attractive screens without knowing whether the complete journey works.
 Move from uncertain product feedback to a complete design direction grounded in credible sources.
@@ -11,25 +11,29 @@ Design Arc audits the real journey, checks decisions against current first-party
 | Page | What it covers |
 | --- | --- |
 | [Getting started](docs/getting-started.md) | Simple installation and first use. |
-| [Using Design Arc](docs/using-design-arc.md) | Project homes, approvals, and everyday review work. |
-| [Design Arc for Codex](docs/codex.md) | Codex installation, project homes, visuals, and return path. |
-| [Design Arc for Claude Code](docs/claude-code.md) | Claude installation, project reminders, visuals, and return path. |
-| [FAQ](docs/faq.md) | Plain-language answers about project homes, commands, and returning later. |
+| [Using Design Arc](docs/using-design-arc.md) | The shared workflow, approvals, and everyday review work. |
+| [Design Arc for Codex](docs/codex.md) | Codex runtime details: installation, project homes, visuals, and return path. |
+| [Design Arc for Claude Code](docs/claude-code.md) | Claude Code runtime details: installation, reminders, visuals, and return path. |
+| [Design Arc for Google Antigravity](docs/antigravity.md) | Google Antigravity runtime details: installation, `/design-arc`, local boards, and return path. |
+| [Runtime boundaries](docs/runtime-boundaries.md) | What the shared workflow preserves and where host-specific behavior belongs. |
+| [FAQ](docs/faq.md) | Plain-language answers about commands and returning later. |
 | [Advanced controls](docs/advanced-controls.md) | Optional commands, graph controls, and technical troubleshooting. |
 | [Evidence and methodology](docs/evidence-and-methodology.md) | Evidence modes, complete states, motion, and validation. |
-| [Upgrades and migration](docs/upgrades-and-migration.md) | Safe upgrades, preservation, and legacy preferences. |
+| [Upgrades and migration](docs/upgrades-and-migration.md) | Safe current adapter upgrades and preservation. |
+| [Migration history](docs/migration-history.md) | Legacy plugin replacement and versioned recovery instructions. |
 | [Trust and sources](docs/trust-limitations-and-sources.md) | Boundaries, limitations, and trusted sources. |
 
-## One product, two platform editions
+## One product, three platform editions
 
-Choose the edition for the place where you already work. Both editions use the same Design Arc methodology, evidence rules, and approval gates.
+Choose the edition for the place where you already work. All three editions use the same Design Arc methodology, evidence rules, and approval gates.
 
 | Use | Choose it when | Start Design Arc |
 | --- | --- | --- |
 | [**Codex**](docs/codex.md) | Your product work already runs in Codex and you want a pinned project home for returning later. | Ask Codex to use Design Arc. |
 | [**Claude Code**](docs/claude-code.md) | Your product work runs in Claude Code and you want an optional project reminder. | Ask Claude Code to use Design Arc. |
+| [**Google Antigravity**](docs/antigravity.md) | Your product work runs in Google Antigravity. | Install it, then use `/design-arc`. |
 
-The product and workflow are shared. Only installation, invocation, saved project state, return path, and platform-specific visualization behavior differ.
+The product and workflow are shared. Start with Design Arc, then use the runtime page for the active host when installation, saved state, return paths, or visual capabilities differ. See [Codex runtime details](docs/codex.md), [Claude Code runtime details](docs/claude-code.md), [Google Antigravity runtime details](docs/antigravity.md), and [Runtime boundaries](docs/runtime-boundaries.md) for those boundaries.
 
 ## You need Design Arc if…
 
@@ -46,35 +50,39 @@ The product and workflow are shared. Only installation, invocation, saved projec
 - Evidence appropriate to the product and platform, with current links, limitations, and observed-versus-inferred status.
 - One unmistakably recommended direction plus meaningful alternatives, benefits, risks, and trade-offs.
 - A complete visual proposal covering entry, transition, loading, empty, error, success, cancellation, and recovery states.
-- Decision-ready evidence in the active Codex task or Claude Code session: journey map, key renders, identifiers, validation verdict, gate record, and next authorized owner.
+- Decision-ready evidence in the active host: journey map, key renders, identifiers, validation verdict, gate record, and next authorized owner.
 
 ## The workflow
 
-**Only rows marked 👤 You require your involvement. Design Arc handles every unmarked step.**
+**Rows marked 👤 You show where your involvement may be needed. First-use choices, approval pauses, and the optional Stitch choice are conditional.**
 
 | Workflow step | Platform or source handling it | Human involvement |
 | --- | --- | --- |
-| Describe the outcome you want | Codex or Claude Code | **👤 You** |
+| Describe the outcome you want | Active host | **👤 You** |
+| ↓ | | |
+| Choose evidence and approval behavior on first use | Active host | **👤 You — only when no saved preference exists** |
 | ↓ | | |
 | Audit the current journey | Your website or app + the active host | |
 | ↓ | | |
 | Gather and label evidence | Mobbin + the active host in Guidelines + Benchmarks mode, and official platform guidance + the active host in Guidelines only mode | |
 | ↓ | | |
-| Recommend a design direction | Codex or Claude Code | |
+| Recommend a design direction | Active host | |
 | ↓ | | |
-| Approve design direction | Codex or Claude Code | **👤 You** |
+| Approve design direction | Active host | **👤 You — only when the selected approval mode pauses here** |
 | ↓ | | |
 | Validate against platform guidance | Apple, Android, Material, or W3C guidance + the active host | |
 | ↓ | | |
 | Decide on any design motion | Relevant official guidance + inspected motion evidence + the active host | |
 | ↓ | | |
+| Choose whether to use the optional Stitch workspace | Active host | **👤 You — only if Stitch is recommended** |
+| ↓ | | |
 | Visualize the complete journey | Static journey board in the active host by default; optional Google Stitch workspace | |
 | ↓ | | |
 | Validate every important state | Generated journey screens + the active host | |
 | ↓ | | |
-| Approve the visual proposal | Codex or Claude Code | **👤 You** |
+| Approve the visual proposal | Active host | **👤 You — only when the selected approval mode pauses here** |
 | ↓ | | |
-| Prepare the design handoff | Codex or Claude Code | |
+| Prepare the design handoff | Active host | |
 
 Setup resolves two independent choices: how evidence is gathered and where Design Arc pauses for approval. Every route establishes the objective before inspection or research, audits the actual product, preserves platform rules, and stops at a design-only handoff boundary.
 
@@ -88,13 +96,15 @@ https://github.com/friedbeef1/design-arc
 **Ask Claude Code:** Add the Design Arc marketplace from
 https://github.com/friedbeef1/design-arc and install `design-arc@design-arc-marketplace`.
 
+**Google Antigravity:** Follow the one-line install in [its runtime guide](docs/antigravity.md).
+
 Follow the exact platform commands in [Getting started](docs/getting-started.md). Installation may require download permission.
 
 ## Start a review
 
 > Use Design Arc to help me make our onboarding less confusing.
 
-You do not need to remember a command. Ask for Design Arc by name in either host, or choose a starter from an existing Codex project home. Design Arc guides any first-time choices in plain language. Automatic skill selection for an unprefixed request is not guaranteed.
+You do not need to remember a command. Ask the active host for Design Arc by name. Design Arc guides any first-time choices in plain language. Automatic skill selection for an unprefixed request is not guaranteed. The [runtime pages](docs/runtime-boundaries.md) explain the host-specific ways to return later.
 [Learn how to use Design Arc.](docs/using-design-arc.md)
 
 ## Trust

@@ -41,6 +41,10 @@ for required_file in \
   docs/validation/behavioral-validation.md \
   .claude-plugin/marketplace.json \
   .agents/plugins/marketplace.json \
+  gemini-extension.json \
+  skills/design-arc/SKILL.md \
+  skills/design-arc/references/graph-record.schema.json \
+  skills/design-arc/scripts/validate-graph-record.py \
   claude-plugins/design-arc/.claude-plugin/plugin.json \
   claude-plugins/design-arc/skills/design-arc/SKILL.md \
   claude-plugins/design-arc/skills/design-arc/references/graph-record.schema.json \
@@ -52,6 +56,7 @@ for required_file in \
   plugins/design-arc/skills/design-arc/scripts/validate-graph-record.py \
   scripts/check-workflow-contracts.py \
   scripts/check-claude-state-contracts.py \
+  scripts/check-antigravity-runtime-contracts.py \
   scripts/compose-design-arc-skills.py \
   scripts/test-design-arc-docs.sh \
   scripts/test-design-arc-identity.sh \
@@ -64,8 +69,10 @@ for required_file in \
   scripts/test-validate.sh \
   scripts/test-graph-records.py \
   scripts/test-claude-state-contracts.py \
+  scripts/test-antigravity-runtime-contracts.py \
   scripts/test-claude-plugin-install.sh \
   scripts/test-claude-package.py \
+  scripts/test-antigravity-package.py \
   scripts/test-skill-composition.py \
   scripts/validate-graph-record.py \
   scripts/test-workflow-contracts.py \
@@ -101,13 +108,17 @@ sh "$repo_root/scripts/test-design-arc-identity.sh"
 sh "$repo_root/scripts/test-design-arc-docs.sh"
 python3 "$repo_root/scripts/check-workflow-contracts.py"
 python3 "$repo_root/scripts/check-claude-state-contracts.py"
+python3 "$repo_root/scripts/check-antigravity-runtime-contracts.py"
 python3 "$repo_root/scripts/test-workflow-contracts.py"
 python3 "$repo_root/scripts/test-runtime-visualization-contracts.py"
 python3 "$repo_root/scripts/test-claude-state-contracts.py"
+python3 "$repo_root/scripts/test-antigravity-runtime-contracts.py"
 python3 "$repo_root/scripts/compose-design-arc-skills.py" --platform codex --check
 python3 "$repo_root/scripts/compose-design-arc-skills.py" --platform claude --check
+python3 "$repo_root/scripts/compose-design-arc-skills.py" --platform antigravity --check
 python3 "$repo_root/scripts/test-skill-composition.py"
 python3 "$repo_root/scripts/test-claude-package.py"
+python3 "$repo_root/scripts/test-antigravity-package.py"
 if python3 "$repo_root/scripts/test-graph-records.py"
 then
   :
@@ -185,15 +196,18 @@ sh -n \
 python3 - \
   "$repo_root/scripts/check-workflow-contracts.py" \
   "$repo_root/scripts/check-claude-state-contracts.py" \
+  "$repo_root/scripts/check-antigravity-runtime-contracts.py" \
   "$repo_root/scripts/compose-design-arc-skills.py" \
   "$repo_root/scripts/test-graph-records.py" \
   "$repo_root/scripts/test-claude-package.py" \
+  "$repo_root/scripts/test-antigravity-package.py" \
   "$repo_root/scripts/test-plugin-upgrade-state.py" \
   "$repo_root/claude-plugins/design-arc/skills/design-arc/scripts/validate-graph-record.py" \
   "$repo_root/plugins/design-arc/skills/design-arc/scripts/validate-graph-record.py" \
   "$repo_root/scripts/validate-graph-record.py" \
   "$repo_root/scripts/test-workflow-contracts.py" \
   "$repo_root/scripts/test-claude-state-contracts.py" \
+  "$repo_root/scripts/test-antigravity-runtime-contracts.py" \
   "$repo_root/scripts/test-runtime-visualization-contracts.py" \
   "$repo_root/scripts/test-skill-composition.py" <<'PY'
 from pathlib import Path
@@ -256,7 +270,7 @@ if DESIGN_ARC_UPGRADE_BASELINE_SHA=55b03baf4a8dc0b52f0702f1236a865ac2c797b6 \
 then
   :
 else
-  fail 'isolated public 0.3.0 to 0.4.0 upgrade smoke failed'
+  fail 'isolated public 0.3.0 to 0.5.0 upgrade smoke failed'
 fi
 
 if DESIGN_ARC_UPGRADE_BASELINE_SHA=bd5443df13bab19ba066be8014ff2e1ae87cc9f6 \
@@ -265,7 +279,7 @@ if DESIGN_ARC_UPGRADE_BASELINE_SHA=bd5443df13bab19ba066be8014ff2e1ae87cc9f6 \
 then
   :
 else
-  fail 'isolated public 0.3.1 to 0.4.0 upgrade smoke failed'
+  fail 'isolated public 0.3.1 to 0.5.0 upgrade smoke failed'
 fi
 
 if git -C "$repo_root" rev-parse --is-inside-work-tree >/dev/null 2>&1

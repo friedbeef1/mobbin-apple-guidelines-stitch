@@ -1,31 +1,25 @@
 # Frequently asked questions
 
-[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)
+[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [Google Antigravity](antigravity.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)
 
-## Are the Codex and Claude Code editions different products?
+## Are the Codex, Claude Code, and Google Antigravity editions different products?
 
-No. Design Arc is one product with one shared methodology. The Codex and Claude Code editions are thin platform packages that adapt installation, saved project state, returning later, and visualization recommendations to the host where you work.
+No. Design Arc is one product with one shared methodology. The Codex, Claude Code, and Google Antigravity editions are thin platform packages that adapt installation, saved project state, returning later, and visualization recommendations to the host where you work.
 
-Improvements to the core workflow are made once and validated for both editions. You install only the edition or editions you want to use.
+Improvements to the core workflow are made once and validated for each packaged edition. You install only the edition or editions you want to use.
+
+For the division between the shared workflow and host-specific behavior, read [Runtime boundaries](runtime-boundaries.md).
 
 ## What is a project home?
 
-A project home is an optional pinned Codex task for one particular product. It is a visible shortcut in the Codex sidebar, usually named `Design Arc — <Project Name>`.
+Project homes are a Codex-only return-path feature. The shared Design Arc workflow neither requires nor creates one.
 
-When you return another day, open that home and choose a starter or describe the journey you want reviewed. Design Arc opens the actual review in a clean task for the same product, while the pinned home remains available for next time.
+For approval, naming, reuse, and returning later, read [Design Arc for Codex](codex.md).
 
-It does not contain your application, create another project, or run continuously. It is simply a reusable launchpad, and Design Arc creates it only with your approval.
+For Claude Code’s distinct return path, read [Design Arc for Claude Code](claude-code.md).
 
-The Design Arc plugin is installed once on your laptop; each participating product may have one separate project home. Claude Code does not use project homes. It uses an optional project reminder instead.
+For Google Antigravity’s distinct return path, read [Design Arc for Google Antigravity](antigravity.md).
 
 ## Do I need to remember a Design Arc command?
 
-No. In Codex or Claude Code, ask the active host to use Design Arc in ordinary language. Codex users can also return through their pinned project home. Commands are optional advanced controls.
-
-## Will a project home mix different products together?
-
-No. Each home belongs to one saved Codex project. Design Arc reuses the matching home and does not intentionally create a global home or duplicate homes for the same product.
-
-## Is a project home required?
-
-No. You can decline it and continue using Design Arc. The home only makes Design Arc easier to find when you return later.
+No. Ask the active host to use Design Arc in ordinary language. Commands are optional advanced controls. Use the relevant runtime page when you need to return to a product later.

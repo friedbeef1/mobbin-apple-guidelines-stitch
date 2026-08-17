@@ -45,7 +45,7 @@ if len(installed) != 1:
 plugin = installed[0]
 expected = {
     "id": "design-arc@design-arc-marketplace",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "scope": "user",
     "enabled": True,
 }
@@ -68,7 +68,7 @@ if installed_skill.read_bytes() != source_skill.read_bytes():
 PY
 
 for expected_detail in \
-  'design-arc 0.4.0' \
+  'design-arc 0.5.0' \
   'Skills (1)  design-arc' \
   'Agents (0)' \
   'Hooks (0)' \

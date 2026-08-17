@@ -28,6 +28,12 @@ PLATFORMS = {
         "package_root": REPO_ROOT / "claude-plugins/design-arc",
         "manifest": REPO_ROOT / "claude-plugins/design-arc/.claude-plugin/plugin.json",
     },
+    "antigravity": {
+        "overlay": SHARED_ROOT / "overlays/antigravity.md",
+        "output": REPO_ROOT / "skills/design-arc/SKILL.md",
+        "package_root": REPO_ROOT,
+        "manifest": REPO_ROOT / "gemini-extension.json",
+    },
 }
 
 
@@ -50,6 +56,83 @@ def methodology_for(platform: str) -> str:
     methodology = METHODOLOGY.read_text(encoding="utf-8").lstrip("\n")
     if platform == "codex":
         return methodology
+
+    if platform == "antigravity":
+        # Keep Antigravity's exclusions and substitutions explicit here. It
+        # composes from the canonical source, never through the Claude adapter.
+        for start, end in (
+            ("### Safe plugin upgrade", "### Project home"),
+            ("### Project home", "### Resolution precedence"),
+            ("### Legacy preference import", "### The six valid combinations"),
+        ):
+            methodology = without_section(methodology, start, end)
+
+        replacements = {
+            "Store project-scoped choices in `.codex/design-arc.yaml`:":
+                "Store project-scoped choices in `.gemini/design-arc.yaml`:",
+            "- `$design-arc home` — report, create, recover, or repin this project's Design Arc home under the confirmation and deduplication rules below.\n": "",
+            "- `$design-arc upgrade` — safely upgrade the laptop/profile plugin while preserving every project's preferences, home, files, and active work.":
+                "- `$design-arc upgrade` — safely upgrade the Google Antigravity plugin while preserving preferences, reminders, reviews, graphs, product files, and active sessions.",
+            "Treat Design Arc as directly invoked when the current request includes `$design-arc`, explicitly asks to use Design Arc by name, or is a journey starter submitted inside a confirmed Design Arc home.":
+                "Treat Design Arc as directly invoked when the current request includes `/design-arc` or explicitly asks to use Design Arc by name.",
+            "If Codex has selected this skill for a suitable request that did not directly invoke Design Arc":
+                "If Google Antigravity has selected this skill for a suitable request that did not directly invoke Design Arc",
+            "create preferences, create a project home, or write review records":
+                "create preferences or write review records",
+            "Saved `.codex/design-arc.yaml` value.":
+                "Saved `.gemini/design-arc.yaml` value.",
+            "Codex stores preferences at `.codex/design-arc.yaml`, active-review identity at\n`.codex/design-arc-active-review.json`, and review artifacts under\n`.codex/design-arc/reviews/<review_id>/`. Claude Code stores preferences only at `.claude/design-arc.yaml`, active-review identity only at `.claude/design-arc-active-review.json`, and review artifacts only under `.claude/design-arc/reviews/<review_id>/`.":
+                "Codex stores preferences at `.codex/design-arc.yaml`, active-review identity at\n`.codex/design-arc-active-review.json`, and review artifacts under\n`.codex/design-arc/reviews/<review_id>/`. Google Antigravity stores preferences only at `.gemini/design-arc.yaml`, active-review identity only at `.gemini/design-arc-active-review.json`, and review artifacts only under `.gemini/design-arc/reviews/<review_id>/`.",
+            "Every new active-review record includes `runtime: codex` or `runtime: claude-code` together with its pinned `workflow_version`.":
+                "Every new active-review record includes `runtime: codex` or `runtime: antigravity` together with its pinned `workflow_version`.",
+            "Confirmed legacy import, only when the new file is absent.":
+                "Confirmed Codex preference import, only when the Antigravity file is absent.",
+            "confirmed legacy import, or first-use selection":
+                "confirmed Codex preference import, or first-use selection",
+            "in that project's `.codex/design-arc.yaml`; keep laptop-global graph safety state isolated under the active Codex profile":
+                "in that project's `.gemini/design-arc.yaml`; keep laptop-global graph safety state isolated under the active Google Antigravity profile",
+            "shared by this Codex installation":
+                "shared by this Google Antigravity installation",
+            "$CODEX_HOME/design-arc-global.yaml":
+                "<resolved Google Antigravity profile root>/design-arc-global.yaml",
+            "do not rewrite `.codex/design-arc.yaml`, laptop-global safety state, or `design_arc_home` metadata merely because a review resolved them":
+                "do not rewrite `.gemini/design-arc.yaml` or laptop-global safety state merely because a review resolved them",
+            "Store each record only at `.codex/design-arc/reviews/<review_id>/graph.json`":
+                "Store each record only at `.gemini/design-arc/reviews/<review_id>/graph.json`",
+            "preserves the review ID, workflow version, project preference, home metadata, and product files":
+                "preserves the review ID, workflow version, project preference, and product files",
+            "it never clears preferences, homes, product files, other reviews, or other projects":
+                "it never clears preferences, product files, other reviews, or other projects",
+            "must preserve project preferences, homes, active review identity/version records, graph files, and product files":
+                "must preserve project preferences, reminder blocks, active review identity/version records, graph files, and product files",
+            "Confirm that the active host is Codex before recommending a visualization path. Create static screen images and complete journey boards directly in Codex by default.":
+                "Confirm that the active host is Google Antigravity before recommending a visualization path. Never claim native image-generation capability in Google Antigravity. Google Antigravity may create HTML/CSS, SVG, specifications, and lightweight static journey boards.",
+            "Google Stitch is valuable for canvas-based editing, multiple visual alternatives, and sustained visual refinement. Recommend Stitch when those benefits materially help the review, while keeping direct Codex generation as the default. Stitch remains optional and separately authorized.":
+                "Recommend Google Stitch early whenever the user wants polished screen mockups, visual exploration, editable layouts, or continued visual refinement. Stitch remains optional and separately authorized.",
+            "Recommend Stitch when any one genuine trigger occurs: a second meaningful visual direction; a change spanning three or more screens; precise layout, spacing, or styling iteration; user-directed canvas editing; likely continuation on another day; a journey becoming difficult to review as one board; noticeable unrelated drift after one Codex correction round; device variants; collaboration; or design export.":
+                "Recommend Stitch when any one genuine trigger occurs: polished screen mockups; visual exploration; editable layouts; continued visual refinement; a second meaningful visual direction; a change spanning three or more screens; precise layout, spacing, or styling iteration; user-directed canvas editing; likely continuation on another day; device variants; collaboration; or design export.",
+            "Do not recommend Stitch merely because it is available, Mobbin supplied precedent, several material states exist, the first board has minor repairable drift, or one screen needs a bounded label, color, or control correction.":
+                "Do not withhold the Stitch recommendation when polished or editable mockups are requested. Otherwise, do not recommend Stitch merely because it is available, Mobbin supplied precedent, or one screen needs a bounded correction.",
+            "The first recommendation names the specific benefit; a later recommendation is brief and appears only after another genuine trigger or materially larger scope. Use this shape: “This is becoming easier to manage in Stitch because <specific trigger and benefit>. I recommend moving there, but I can continue in Codex if you prefer.”":
+                "For the first relevant choice, use this exact prompt: “Antigravity can prepare a lightweight static journey board here. For polished, editable screen mockups, I recommend a Stitch-ready visual proposal. Which would you prefer?” A later recommendation is brief and appears only after another genuine trigger or materially larger scope.",
+            "A Stitch recommendation is advisory: never transfer automatically, and continuing in Codex remains available. Treat `stay in Codex` as a choice for the current editing phase, not a permanent suppression.":
+                "A Stitch recommendation is advisory: never transfer automatically, and continuing in Google Antigravity remains available. Treat `stay in Google Antigravity` as a choice for the current editing phase, not a permanent suppression. Never tell a Google Antigravity user to pass work to Codex unless the user explicitly requests a cross-platform handoff.",
+            "For the default Codex route, generate the complete static board directly and avoid disposable application logic.":
+                "For the default Google Antigravity route, prepare a lightweight static journey board with HTML/CSS, SVG, or specifications and avoid disposable application logic.",
+            "Return decision-ready evidence in Codex":
+                "Return decision-ready evidence in Google Antigravity",
+            "Report these fields in the Codex conversation":
+                "Report these fields in the Google Antigravity conversation",
+        }
+        for original, replacement in replacements.items():
+            if original not in methodology:
+                raise ValueError(f"missing Antigravity methodology adaptation source: {original}")
+            methodology = methodology.replace(original, replacement, 1)
+        methodology = methodology.replace(
+            "$CODEX_HOME/design-arc-global.yaml",
+            "<resolved Google Antigravity profile root>/design-arc-global.yaml",
+        )
+        return methodology.replace("$design-arc", "/design-arc")
 
     # Claude reuses the canonical journey methodology, but the Codex-only
     # upgrade, project-home, and legacy-import sections are not executable in

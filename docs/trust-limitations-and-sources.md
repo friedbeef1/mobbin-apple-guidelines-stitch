@@ -1,6 +1,6 @@
 # Trust, limitations and sources
 
-[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)
+[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [Google Antigravity](antigravity.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)
 
 What can Design Arc prove, access, implement, or release?
 
@@ -10,9 +10,9 @@ Apple Human Interface Guidelines are first-party authority for Apple targets. Fo
 
 Mobbin can be selected as a benchmark provider in Guidelines + Benchmarks mode. It remains an external source requiring separate access and authorization. Its examples are observed precedent, not a bundled integration or a source to copy. If access is unavailable, Design Arc stops and offers either a one-run Guidelines only fallback or a confirmed saved switch; it never silently degrades or calls the result benchmark-backed.
 
-Codex or Claude Code generates static journey boards in the active host by default. Google Stitch is an optional external visualization workspace requiring separate access and payload authorization. Either route must still return a reviewable journey map, key renders, identifiers, and validation verdict in the active task or session. Apple, Google, Mobbin, and Stitch access is not bundled by Design Arc, and none of those services authorizes product-source changes.
+The active host—Codex, Claude Code, or Google Antigravity—generates static journey boards by default. Google Stitch is an optional external visualization workspace requiring separate access and payload authorization. Either route must still return a reviewable journey map, key renders, identifiers, and validation verdict in the active task or session. Apple, Google, Mobbin, and Stitch access is not bundled by Design Arc, and none of those services authorizes product-source changes.
 
-Installing either adapter authorizes only that local plugin installation. Benchmark, browser, visualization, MCP, provider, and product access each require their own authorization, including approval for the data sent. Installing Design Arc never supplies credentials, accepts provider terms, enables a connector, or authorizes product-source changes.
+Installing any one of the three adapters authorizes only that local adapter installation. Benchmark, browser, visualization, MCP, provider, and product access each require their own authorization, including approval for the data sent. Installing Design Arc never supplies credentials, accepts provider terms, enables a connector, or authorizes product-source changes.
 
 Stitch prototypes are design evidence, not staging or device implementation proof. A prototype can communicate an intended interaction, but it cannot prove runtime quality.
 
@@ -30,7 +30,7 @@ Design Arc is not listed in Codex’s built-in recommended-plugin directory. Cod
 
 ## Claude Code, Claude Desktop, and MCP
 
-Design Arc 0.4.0 is packaged and verified for Claude Code. Its Claude package contains one skill and no agents, hooks, MCP servers, or LSP servers. The namespaced slash command and `.claude` project state belong to Claude Code.
+Design Arc 0.5.0 is packaged and verified for Claude Code. Its Claude package contains one skill and no agents, hooks, MCP servers, or LSP servers. The namespaced slash command and `.claude` project state belong to Claude Code.
 
 It is not a Claude Desktop chat extension and does not install or configure a Desktop MCP server. Claude Desktop’s Code surface may share Claude Code plugin settings, but this release does not claim Desktop visual or interaction QA. Claude Desktop chat MCP configuration is separate from Claude Code configuration. An MCP that happens to be configured in either product is still external to Design Arc and requires its own access, authentication, tool-use, and payload authorization.
 
@@ -42,7 +42,7 @@ Design Arc must not claim current product inspection, first-party guidance, benc
 
 A validated visual journey remains a design proposal. No evidence mode, approval mode, external-service access, provider authorization, Direction decision, or visual verdict authorizes source implementation, staging, deployment, live release, destructive or provider changes, or work outside the authorized integration lane. Those actions require their own scope, owner, authorization, and evidence.
 
-For the complete source library, see [Trusted sources](trusted-sources/README.md). For the technical operating boundary, see [Codex operating layer](codex-operating-layer.md).
+For the complete source library, see [Trusted sources](trusted-sources/README.md). For shared and host-specific limits, see [Runtime boundaries](runtime-boundaries.md).
 
 ## Trademarks
 

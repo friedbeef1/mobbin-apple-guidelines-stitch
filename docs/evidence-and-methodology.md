@@ -1,6 +1,6 @@
 # Evidence and methodology
 
-[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Trust and sources](trust-limitations-and-sources.md)
+[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [Google Antigravity](antigravity.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)
 
 How are Design Arc recommendations grounded and validated?
 
@@ -14,7 +14,7 @@ How are Design Arc recommendations grounded and validated?
 | Visualization and validation | Polished screens can conceal missing transitions, errors, and recovery states. | Visualize the complete journey and inspect every important state before approving it for frontend implementation. | Active-host static journey boards by default; optional Google Stitch workspace—not an evidence authority. |
 | Relationship context | A correction can miss dependent states when requirements, evidence, and screens are considered separately. | Keep validated relationships visible to plan the smallest compatible correction batch and the regression checks that follow. | The current Design Arc workflow record; the relationship record adds context only. |
 
-First-party guidance remains authoritative for its platform, authorized benchmark evidence remains precedent, the active host or Stitch provides visualization, and the graph remains relationship context only. The active host is Codex for the Codex adapter and Claude Code for the Claude adapter. A graph relationship is not evidence, proof, approval, a source of requirements, or authority. It is a checked record of relationships already supported by the current workflow, used to see which states may need a compatible repair or regression check.
+First-party guidance remains authoritative for its platform, authorized benchmark evidence remains precedent, the active host or Stitch provides visualization, and the graph remains relationship context only. A graph relationship is not evidence, proof, approval, a source of requirements, or authority. It is a checked record of relationships already supported by the current workflow, used to see which states may need a compatible repair or regression check. For host-specific capabilities, use the [runtime boundaries](runtime-boundaries.md) and the relevant runtime page.
 
 ### Render conformance and repair
 
