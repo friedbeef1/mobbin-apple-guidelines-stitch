@@ -56,6 +56,7 @@ for required_file in \
   plugins/design-arc/skills/design-arc/scripts/validate-graph-record.py \
   scripts/check-workflow-contracts.py \
   scripts/check-claude-state-contracts.py \
+  scripts/check-antigravity-runtime-contracts.py \
   scripts/compose-design-arc-skills.py \
   scripts/test-design-arc-docs.sh \
   scripts/test-design-arc-identity.sh \
@@ -68,6 +69,7 @@ for required_file in \
   scripts/test-validate.sh \
   scripts/test-graph-records.py \
   scripts/test-claude-state-contracts.py \
+  scripts/test-antigravity-runtime-contracts.py \
   scripts/test-claude-plugin-install.sh \
   scripts/test-claude-package.py \
   scripts/test-antigravity-package.py \
@@ -106,9 +108,11 @@ sh "$repo_root/scripts/test-design-arc-identity.sh"
 sh "$repo_root/scripts/test-design-arc-docs.sh"
 python3 "$repo_root/scripts/check-workflow-contracts.py"
 python3 "$repo_root/scripts/check-claude-state-contracts.py"
+python3 "$repo_root/scripts/check-antigravity-runtime-contracts.py"
 python3 "$repo_root/scripts/test-workflow-contracts.py"
 python3 "$repo_root/scripts/test-runtime-visualization-contracts.py"
 python3 "$repo_root/scripts/test-claude-state-contracts.py"
+python3 "$repo_root/scripts/test-antigravity-runtime-contracts.py"
 python3 "$repo_root/scripts/compose-design-arc-skills.py" --platform codex --check
 python3 "$repo_root/scripts/compose-design-arc-skills.py" --platform claude --check
 python3 "$repo_root/scripts/compose-design-arc-skills.py" --platform antigravity --check
@@ -192,6 +196,7 @@ sh -n \
 python3 - \
   "$repo_root/scripts/check-workflow-contracts.py" \
   "$repo_root/scripts/check-claude-state-contracts.py" \
+  "$repo_root/scripts/check-antigravity-runtime-contracts.py" \
   "$repo_root/scripts/compose-design-arc-skills.py" \
   "$repo_root/scripts/test-graph-records.py" \
   "$repo_root/scripts/test-claude-package.py" \
@@ -202,6 +207,7 @@ python3 - \
   "$repo_root/scripts/validate-graph-record.py" \
   "$repo_root/scripts/test-workflow-contracts.py" \
   "$repo_root/scripts/test-claude-state-contracts.py" \
+  "$repo_root/scripts/test-antigravity-runtime-contracts.py" \
   "$repo_root/scripts/test-runtime-visualization-contracts.py" \
   "$repo_root/scripts/test-skill-composition.py" <<'PY'
 from pathlib import Path
