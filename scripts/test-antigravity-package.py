@@ -69,6 +69,8 @@ def test_antigravity_skill_is_generated_and_self_contained() -> None:
         "user-invocable: true",
         "Google Antigravity entry point",
         "`/design-arc`",
+        "`.gemini/design-arc/reviews/<review_id>/`",
+        "`runtime: antigravity`",
         "separately authorized",
     ):
         require(expected in skill, f"Antigravity skill is missing required guidance: {expected}")

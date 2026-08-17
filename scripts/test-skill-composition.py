@@ -56,14 +56,15 @@ def test_shared_source_composes_each_approved_skill() -> None:
 
 def test_composition_is_deterministic_and_targets_each_adapter_path() -> None:
     """A platform must always resolve to its one declared package destination."""
-    with tempfile.TemporaryDirectory(prefix="design-arc-composition-") as temporary:
-        first = Path(temporary) / "first.md"
-        second = Path(temporary) / "second.md"
-        for output in (first, second):
-            result = run_composer("--platform", "codex", "--output", str(output))
-            require(result, "Codex composition failed")
-        if first.read_bytes() != second.read_bytes():
-            raise AssertionError("Codex composition was not deterministic")
+    for platform in ("codex", "claude", "antigravity"):
+        with tempfile.TemporaryDirectory(prefix="design-arc-composition-") as temporary:
+            first = Path(temporary) / "first.md"
+            second = Path(temporary) / "second.md"
+            for output in (first, second):
+                result = run_composer("--platform", platform, "--output", str(output))
+                require(result, f"{platform} composition failed")
+            if first.read_bytes() != second.read_bytes():
+                raise AssertionError(f"{platform} composition was not deterministic")
 
     for platform, expected in {
         "codex": "plugins/design-arc/skills/design-arc/SKILL.md",
@@ -77,6 +78,27 @@ def test_composition_is_deterministic_and_targets_each_adapter_path() -> None:
             raise AssertionError(f"{platform} output path drifted from {expected}")
         if description["methodology"] != "shared/design-arc/methodology.md":
             raise AssertionError("platform composition bypassed the canonical methodology")
+
+
+def test_antigravity_composes_directly_from_the_canonical_methodology() -> None:
+    """Antigravity must not inherit Claude-specific composition behavior."""
+    original_methodology_for = composer_module.methodology_for
+
+    def reject_claude_dependency(platform: str) -> str:
+        if platform == "claude":
+            raise AssertionError("Antigravity composition delegated to the Claude adapter")
+        return original_methodology_for(platform)
+
+    composer_module.methodology_for = reject_claude_dependency
+    try:
+        antigravity_methodology = composer_module.methodology_for("antigravity")
+    finally:
+        composer_module.methodology_for = original_methodology_for
+
+    if not antigravity_methodology.startswith("# Design Arc\n"):
+        raise AssertionError("Antigravity did not compose from the canonical methodology")
+    if ".gemini/design-arc.yaml" not in antigravity_methodology:
+        raise AssertionError("Antigravity direct composition omitted its project state path")
 
 
 def test_check_enforces_version_parity_and_package_containment() -> None:
@@ -109,6 +131,8 @@ def main() -> int:
     print("PASS: shared methodology composes every approved adapter skill")
     test_composition_is_deterministic_and_targets_each_adapter_path()
     print("PASS: composition is deterministic with stable adapter paths")
+    test_antigravity_composes_directly_from_the_canonical_methodology()
+    print("PASS: Antigravity composes directly from the canonical methodology")
     test_check_enforces_version_parity_and_package_containment()
     print("PASS: composition check enforces version parity and package containment")
     test_package_check_rejects_markdown_links_that_escape_the_skill_root()
