@@ -24,7 +24,11 @@ Paste this into Claude Code:
 
 ## Install in Google Antigravity
 
-Use the one-line install and `/design-arc` in [Design Arc for Google Antigravity](antigravity.md).
+Paste this into Google Antigravity Desktop:
+
+> Install Design Arc globally from https://github.com/friedbeef1/design-arc
+
+You do not need Antigravity CLI for Desktop use. Antigravity may ask permission to download the repository and place its `skills/design-arc` package in the global skills directory. The [Google Antigravity guide](antigravity.md) gives the exact destination and the optional CLI route.
 
 The Codex, Claude Code, and Google Antigravity editions are installed independently, but use the same Design Arc methodology. They are not different products. Choose the runtime page for the active host for installation, saved state, and returning later. Read [Design Arc for Codex](codex.md), [Design Arc for Claude Code](claude-code.md), or [Design Arc for Google Antigravity](antigravity.md).
 

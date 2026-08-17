@@ -96,7 +96,10 @@ https://github.com/friedbeef1/design-arc
 **Ask Claude Code:** Add the Design Arc marketplace from
 https://github.com/friedbeef1/design-arc and install `design-arc@design-arc-marketplace`.
 
-**Google Antigravity:** Follow the one-line install in [its runtime guide](docs/antigravity.md).
+**Ask Google Antigravity Desktop:** Install Design Arc globally from
+https://github.com/friedbeef1/design-arc
+
+Antigravity CLI is optional. The [Google Antigravity guide](docs/antigravity.md) explains the Desktop-first route and the separate CLI plugin command.
 
 Follow the exact platform commands in [Getting started](docs/getting-started.md). Installation may require download permission.
 

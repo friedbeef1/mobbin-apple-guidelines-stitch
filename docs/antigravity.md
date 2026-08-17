@@ -4,21 +4,41 @@
 
 Choose the Google Antigravity edition when your product work already happens in Google Antigravity.
 
-## Install
+## Install in Antigravity Desktop
 
-From the repository root, run:
+Google Antigravity Desktop does not require Antigravity CLI to use Design Arc. Paste this into Antigravity Desktop:
+
+> Install Design Arc globally from https://github.com/friedbeef1/design-arc. Copy the repository's complete `skills/design-arc` folder to `~/.gemini/config/skills/design-arc/`, including its `SKILL.md`, `scripts/`, and `references/`. Do not install the Codex or Claude Code adapters. When finished, confirm the global skill is present.
+
+The global destination is:
+
+```text
+~/.gemini/config/skills/design-arc/
+```
+
+Because the Antigravity package is skills-only, this installs the complete Design Arc workflow used by Desktop. It does not omit an MCP server, hook, agent, or background service because Design Arc does not bundle any of those components.
+
+Start a new Antigravity conversation, open your product project, and say:
+
+> Use Design Arc to help me improve our onboarding.
+
+Asking for Design Arc by name is the dependable Desktop entry point. The host loads the skill when the request matches; you do not need to remember a command.
+
+## Optional CLI installation
+
+If you also use Antigravity CLI, its plugin installer provides a managed repository-install route:
 
 ```bash
 agy plugin install https://github.com/friedbeef1/design-arc
 ```
 
-Then open your product project and use `/design-arc` to begin. You can also ask Google Antigravity to use Design Arc in ordinary language; `/design-arc` is the reliable shortcut when you want certainty.
+Then open your product project and use `/design-arc` to begin. This command verifies the CLI plugin route; it is not a prerequisite for Desktop.
 
 ## Where it works
 
-The same workflow is supported in Google Antigravity standalone, IDE, and CLI surfaces when that surface has loaded this extension. Use the edition where you are already working; Design Arc does not send work to Codex or Claude Code unless you explicitly request a cross-platform handoff.
+The same workflow is supported in Google Antigravity Desktop, IDE, and CLI surfaces when that surface has loaded the Design Arc skill. Use the edition where you are already working; Design Arc does not send work to Codex or Claude Code unless you explicitly request a cross-platform handoff.
 
-The repository test suite validates the packaged Antigravity adapter and its written contracts. It does not by itself prove a plugin install or `/design-arc` load on standalone, IDE, or CLI. Any install-and-load smoke result names the exact surface that was actually exercised.
+The repository test suite validates the packaged Antigravity adapter and its written contracts. A global-skills installation verifies Desktop's supported skill location; it does not prove the optional `agy plugin install` route or `/design-arc` loading in CLI. Any install-and-load result names the exact surface that was actually exercised.
 
 ## What Google Antigravity adds
 
@@ -42,7 +62,11 @@ If both source preferences exist, choose exactly one validated source; Design Ar
 
 ## Upgrade
 
-Use a supported Google Antigravity extension update route. Confirm the installed and requested versions, source, and route before changing the extension, then re-read the installed state afterward. The upgrade preserves `.gemini/design-arc.yaml`, active-review records, review artifacts, graphs, product files, and active sessions byte-for-byte; it does not rerun setup, import preferences, or continue an active review.
+For Desktop, replace the global `design-arc` skill folder with the complete package from the newly confirmed repository version.
+
+Use a supported Google Antigravity extension update route.
+
+That route applies to CLI-managed installations. Confirm the installed and requested versions, source, and route before changing either installation, then re-read the installed state afterward. The upgrade preserves `.gemini/design-arc.yaml`, active-review records, review artifacts, graphs, product files, and active sessions byte-for-byte; it does not rerun setup, import preferences, or continue an active review.
 
 Start the next review in a clean Google Antigravity session. A running session stays pinned to its existing runtime and workflow version.
 

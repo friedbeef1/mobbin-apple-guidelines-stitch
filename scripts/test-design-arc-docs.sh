@@ -82,11 +82,16 @@ require_text "$codex_edition" 'pinned project home'
 require_text "$claude_edition" '## What stays the same'
 require_text "$claude_edition" 'Claude Code does not create a Codex project home.'
 require_text "$antigravity_edition" '# Design Arc for Google Antigravity'
+require_text "$antigravity_edition" 'Google Antigravity Desktop does not require Antigravity CLI to use Design Arc.'
+require_text "$antigravity_edition" 'Install Design Arc globally from https://github.com/friedbeef1/design-arc'
+require_text "$antigravity_edition" '`~/.gemini/config/skills/design-arc/`'
+require_text "$antigravity_edition" 'Because the Antigravity package is skills-only'
+require_text "$antigravity_edition" '## Optional CLI installation'
 require_text "$antigravity_edition" 'agy plugin install https://github.com/friedbeef1/design-arc'
 require_text "$antigravity_edition" '`/design-arc`'
-require_text "$antigravity_edition" 'standalone, IDE, and CLI surfaces when that surface has loaded this extension'
+require_text "$antigravity_edition" 'Desktop, IDE, and CLI surfaces when that surface has loaded the Design Arc skill'
 require_text "$antigravity_edition" 'The repository test suite validates the packaged Antigravity adapter and its written contracts.'
-require_text "$antigravity_edition" 'It does not by itself prove a plugin install or `/design-arc` load on standalone, IDE, or CLI.'
+require_text "$antigravity_edition" 'it does not prove the optional `agy plugin install` route or `/design-arc` loading in CLI.'
 require_text "$antigravity_edition" 'Google Antigravity owns `.gemini/design-arc.yaml`, `.gemini/design-arc-active-review.json`, and review artifacts under `.gemini/design-arc/reviews/`.'
 require_text "$antigravity_edition" 'Never import, merge, migrate, resume, or continue an active review across runtimes.'
 require_text "$antigravity_edition" 'Only when `.gemini/design-arc.yaml` is absent can Design Arc offer a one-time, explicitly confirmed preference import from Codex or Claude Code.'
@@ -96,6 +101,16 @@ require_text "$antigravity_edition" 'does not claim native image generation'
 require_text "$antigravity_edition" 'Stitch remains optional and separately authorized.'
 require_text "$antigravity_edition" 'The extension installation does not authorize benchmark, browser, visualization, MCP, provider, or product access.'
 require_text "$antigravity_edition" 'Use a supported Google Antigravity extension update route.'
+python3 - "$antigravity_edition" <<'PY'
+from pathlib import Path
+import sys
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+desktop = text.find("## Install in Antigravity Desktop")
+cli = text.find("## Optional CLI installation")
+if desktop == -1 or cli == -1 or desktop > cli:
+    raise SystemExit("FAIL: Antigravity Desktop installation must appear before optional CLI installation")
+PY
 require_text "$faq" '## What is a project home?'
 require_text "$faq" '## Are the Codex, Claude Code, and Google Antigravity editions different products?'
 require_text "$faq" 'Project homes are a Codex-only return-path feature.'
@@ -246,6 +261,8 @@ require_text "$getting_started" 'Use Design Arc to help me improve our onboardin
 require_text "$getting_started" 'Design Arc guides setup in plain language the first time a project uses it.'
 require_text "$getting_started" '## Install in Claude Code'
 require_text "$getting_started" '## Install in Google Antigravity'
+require_text "$getting_started" 'Install Design Arc globally from https://github.com/friedbeef1/design-arc'
+require_text "$getting_started" 'You do not need Antigravity CLI for Desktop use.'
 require_text "$getting_started" 'Choose the runtime page for the active host for installation, saved state, and returning later.'
 require_text "$getting_started" '[Design Arc for Codex](codex.md)'
 require_text "$getting_started" '[Design Arc for Claude Code](claude-code.md)'
