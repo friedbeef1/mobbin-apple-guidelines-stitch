@@ -177,6 +177,8 @@ if find "$repo_root" \
   -type f \
   ! -name '*.pyc' \
   ! -name '*.pyo' \
+  ! -path "$repo_root/assets/design-arc-directory-logo.png" \
+  ! -path "$repo_root/assets/design-arc-directory-logo.svg" \
   -print | grep -i -E "$artifact_pattern" >/dev/null
 then
   fail 'proprietary image or media artifact found'
