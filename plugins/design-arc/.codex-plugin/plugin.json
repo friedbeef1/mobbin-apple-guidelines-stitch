@@ -24,6 +24,8 @@
       "Outcome-led journey design",
       "Evidence-grounded validation"
     ],
+    "composerIcon": "./assets/design-arc-directory-logo.png",
+    "logo": "./assets/design-arc-directory-logo.png",
     "defaultPrompt": [
       "$design-arc Help me make our onboarding less confusing.",
       "$design-arc Audit how customers complete checkout and propose a better complete journey.",

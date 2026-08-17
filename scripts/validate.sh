@@ -50,6 +50,7 @@ for required_file in \
   claude-plugins/design-arc/skills/design-arc/references/graph-record.schema.json \
   claude-plugins/design-arc/skills/design-arc/scripts/validate-graph-record.py \
   plugins/design-arc/.codex-plugin/plugin.json \
+  plugins/design-arc/assets/design-arc-directory-logo.png \
   plugins/design-arc/skills/design-arc/SKILL.md \
   plugins/design-arc/skills/design-arc/agents/openai.yaml \
   plugins/design-arc/skills/design-arc/references/graph-record.schema.json \
@@ -179,6 +180,7 @@ if find "$repo_root" \
   ! -name '*.pyo' \
   ! -path "$repo_root/assets/design-arc-directory-logo.png" \
   ! -path "$repo_root/assets/design-arc-directory-logo.svg" \
+  ! -path "$repo_root/plugins/design-arc/assets/design-arc-directory-logo.png" \
   -print | grep -i -E "$artifact_pattern" >/dev/null
 then
   fail 'proprietary image or media artifact found'

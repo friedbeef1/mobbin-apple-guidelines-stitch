@@ -11,6 +11,7 @@ skill_path="$plugin_path/skills/design-arc/SKILL.md"
 metadata_path="$plugin_path/skills/design-arc/agents/openai.yaml"
 marketplace_manifest="$repo_root/.agents/plugins/marketplace.json"
 directory_logo="$repo_root/assets/design-arc-directory-logo.png"
+plugin_logo="$plugin_path/assets/design-arc-directory-logo.png"
 codex_skills_dir=${CODEX_SKILLS_DIR:-"$HOME/.codex/skills"}
 plugin_validator="$codex_skills_dir/.system/plugin-creator/scripts/validate_plugin.py"
 skill_validator="$codex_skills_dir/.system/skill-creator/scripts/quick_validate.py"
@@ -20,12 +21,27 @@ fail() {
   exit 1
 }
 
-for required_file in "$plugin_manifest" "$skill_path" "$metadata_path" "$marketplace_manifest" "$directory_logo"
+for required_file in "$plugin_manifest" "$skill_path" "$metadata_path" "$marketplace_manifest" "$directory_logo" "$plugin_logo"
 do
   [ -f "$required_file" ] || fail "missing Design Arc identity file: ${required_file#"$repo_root/"}"
 done
 
 [ -s "$directory_logo" ] || fail 'Plugin Directory logo must not be empty'
+[ -s "$plugin_logo" ] || fail 'packaged plugin logo must not be empty'
+
+python3 - "$plugin_logo" <<'PY'
+import struct
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+data = path.read_bytes()
+if data[:8] != b"\x89PNG\r\n\x1a\n" or data[12:16] != b"IHDR":
+    raise SystemExit("packaged plugin logo must be a PNG image")
+width, height = struct.unpack(">II", data[16:24])
+if width != height:
+    raise SystemExit(f"packaged plugin logo must be square, got {width}x{height}")
+PY
 
 [ ! -e "$repo_root/plugins/fb-ux" ] || fail 'legacy fb-ux package remains active in the repository tree'
 [ ! -e "$repo_root/plugins/apple-guidelines-stitch" ] || fail 'legacy apple-guidelines-stitch package remains active in the repository tree'
@@ -61,6 +77,8 @@ expected_plugin = {
         "developerName": "James Yeang",
         "category": "Productivity",
         "capabilities": ["Outcome-led journey design", "Evidence-grounded validation"],
+        "composerIcon": "./assets/design-arc-directory-logo.png",
+        "logo": "./assets/design-arc-directory-logo.png",
         "defaultPrompt": [
             "$design-arc Help me make our onboarding less confusing.",
             "$design-arc Audit how customers complete checkout and propose a better complete journey.",
