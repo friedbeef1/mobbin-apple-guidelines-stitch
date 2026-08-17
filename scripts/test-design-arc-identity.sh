@@ -63,7 +63,7 @@ metadata = metadata_path.read_text(encoding="utf-8")
 
 expected_plugin = {
     "name": "design-arc",
-    "version": "0.5.0",
+    "version": "1.5.0",
     "description": "Live: outcome-led UI journey design for Codex.",
     "skills": "./skills/",
     "author": {"name": "James Yeang"},

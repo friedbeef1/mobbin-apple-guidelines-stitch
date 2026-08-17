@@ -576,7 +576,7 @@ require_text "$trust_sources" 'The active host—Codex, Claude Code, or Google A
 require_text "$trust_sources" 'Installing any one of the three adapters authorizes only that local adapter installation.'
 require_text "$trust_sources" 'Benchmark, browser, visualization, MCP, provider, and product access each require their own authorization, including approval for the data sent.'
 require_text "$trust_sources" '## Claude Code, Claude Desktop, and MCP'
-require_text "$trust_sources" 'Design Arc 0.5.0 is packaged and verified for Claude Code.'
+require_text "$trust_sources" 'Design Arc 1.5.0 is packaged and verified for Claude Code.'
 forbid_text "$trust_sources" 'Codex or Claude Code generates static journey boards in the active host by default.'
 forbid_text "$trust_sources" 'Installing either adapter authorizes only that local plugin installation.'
 forbid_text "$trust_sources" 'Design Arc 0.4.0 is packaged and verified for Claude Code.'

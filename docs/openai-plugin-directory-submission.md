@@ -5,7 +5,7 @@ This document records the exact candidate materials for the Design Arc **Codex â
 ## Public listing copy
 
 - **Plugin name:** Design Arc
-- **Version:** 0.5.0
+- **Version:** 1.5.0
 - **Category:** Productivity
 - **Short description:** Turn ambiguous UI feedback into complete, evidence-grounded journeys.
 - **Long description:** Design Arc helps product teams turn vague feedback and subjective redesign debate into a complete design direction. It confirms the intended outcome, audits the real journey, grounds recommendations in current platform guidance and optionally inspected product benchmarks, visualizes every important state, and preserves explicit approval control before implementation begins.
@@ -53,7 +53,7 @@ This document records the exact candidate materials for the Design Arc **Codex â
 
 ## Initial release notes
 
-Initial official-directory submission of the Design Arc Codex Live adapter. The plugin is skills-only and bundles no MCP server, agent, hook, app, credentials, analytics, or background service. Version 0.5.0 preserves objective confirmation, evidence provenance, platform-guidance precedence, direction and visual-proposal gates, complete-state validation, optional Stitch visualization with a three-round correction limit, graph-assisted reasoning, and implementation and release boundaries.
+Initial official-directory submission of the Design Arc Codex Live adapter. The plugin is skills-only and bundles no MCP server, agent, hook, app, credentials, analytics, or background service. Version 1.5.0 preserves objective confirmation, evidence provenance, platform-guidance precedence, direction and visual-proposal gates, complete-state validation, optional Stitch visualization with a three-round correction limit, graph-assisted reasoning, and implementation and release boundaries.
 
 ## Submission boundary
 

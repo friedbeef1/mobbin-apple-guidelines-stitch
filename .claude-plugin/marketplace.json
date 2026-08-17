@@ -9,7 +9,7 @@
       "name": "design-arc",
       "source": "./claude-plugins/design-arc",
       "description": "Alpha: outcome-led UI journey design for Claude Code.",
-      "version": "0.5.0",
+      "version": "1.5.0",
       "author": {
         "name": "James Yeang"
       },
