@@ -46,7 +46,7 @@ def test_antigravity_manifest_is_a_root_skills_only_extension() -> None:
     require(manifest.get("name") == "design-arc", "Antigravity extension name must be design-arc")
     require(manifest.get("version") == "0.5.0", "Antigravity extension must ship 0.5.0")
     require(
-        manifest.get("description") == "Outcome-led UI journey design for Google Antigravity.",
+        manifest.get("description") == "Alpha: outcome-led UI journey design for Google Antigravity.",
         "Antigravity extension description drifted",
     )
     require(

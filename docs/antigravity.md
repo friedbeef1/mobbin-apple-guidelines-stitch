@@ -1,8 +1,10 @@
-# Design Arc for Google Antigravity
+# Design Arc for Google Antigravity — Alpha
 
 [Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [Google Antigravity](antigravity.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)
 
 Choose the Google Antigravity edition when your product work already happens in Google Antigravity.
+
+**Release status: Alpha.** The shared Design Arc methodology is established, while this newer Google Antigravity adapter is still maturing.
 
 ## Install in Antigravity Desktop
 

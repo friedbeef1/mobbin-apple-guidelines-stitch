@@ -53,6 +53,10 @@ def test_claude_manifest_is_strictly_valid_and_skill_only() -> None:
     manifest = json.loads(PLUGIN_MANIFEST.read_text(encoding="utf-8"))
     require(manifest.get("name") == "design-arc", "Claude plugin name must be design-arc")
     require(manifest.get("version") == "0.5.0", "Claude plugin must ship 0.5.0")
+    require(
+        manifest.get("description") == "Alpha: outcome-led UI journey design for Claude Code.",
+        "Claude plugin must identify itself as Alpha",
+    )
     require(manifest.get("skills") == "./skills/", "Claude plugin must expose its skills directory")
     require(
         not ({"mcpServers", "agents", "hooks"} & set(manifest)),
@@ -74,7 +78,7 @@ def test_claude_marketplace_is_strictly_valid_and_routes_to_the_package() -> Non
             {
                 "name": "design-arc",
                 "source": "./claude-plugins/design-arc",
-                "description": "Outcome-led UI journey design for Claude Code.",
+                "description": "Alpha: outcome-led UI journey design for Claude Code.",
                 "version": "0.5.0",
                 "author": {"name": "James Yeang"},
                 "category": "productivity",

@@ -25,13 +25,13 @@ Design Arc audits the real journey, checks decisions against current first-party
 
 ## One product, three platform editions
 
-Choose the edition for the place where you already work. All three editions use the same Design Arc methodology, evidence rules, and approval gates.
+Choose the edition for the place where you already work. All three editions use the same Design Arc methodology, evidence rules, and approval gates. Codex is the **Live** edition; Claude Code and Google Antigravity are **Alpha** while their newer adapters mature.
 
-| Use | Choose it when | Start Design Arc |
-| --- | --- | --- |
-| [**Codex**](docs/codex.md) | Your product work already runs in Codex and you want a pinned project home for returning later. | Ask Codex to use Design Arc. |
-| [**Claude Code**](docs/claude-code.md) | Your product work runs in Claude Code and you want an optional project reminder. | Ask Claude Code to use Design Arc. |
-| [**Google Antigravity**](docs/antigravity.md) | Your product work runs in Google Antigravity. | Install it, then use `/design-arc`. |
+| Use | Release status | Choose it when | Start Design Arc |
+| --- | --- | --- | --- |
+| [**Codex**](docs/codex.md) | **Live** | Your product work already runs in Codex and you want a pinned project home for returning later. | Ask Codex to use Design Arc. |
+| [**Claude Code**](docs/claude-code.md) | **Alpha** | Your product work runs in Claude Code and you want an optional project reminder. | Ask Claude Code to use Design Arc. |
+| [**Google Antigravity**](docs/antigravity.md) | **Alpha** | Your product work runs in Google Antigravity. | Install it, then use `/design-arc`. |
 
 The product and workflow are shared. Start with Design Arc, then use the runtime page for the active host when installation, saved state, return paths, or visual capabilities differ. See [Codex runtime details](docs/codex.md), [Claude Code runtime details](docs/claude-code.md), [Google Antigravity runtime details](docs/antigravity.md), and [Runtime boundaries](docs/runtime-boundaries.md) for those boundaries.
 

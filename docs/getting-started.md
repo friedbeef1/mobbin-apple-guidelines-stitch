@@ -8,6 +8,8 @@ How do I install Design Arc and begin my first review?
 
 Design Arc is one product available for three platforms. Choose the edition for the place where you already work.
 
+Codex is the **Live** edition. Claude Code and Google Antigravity are **Alpha** editions. They use the same methodology, but their newer platform adapters are still maturing.
+
 ## Install in Codex
 
 Paste this into Codex:
