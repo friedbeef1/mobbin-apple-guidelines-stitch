@@ -14,7 +14,7 @@ Codex, Claude Code, and Google Antigravity are independently installed adapters.
 | **Claude Code** | `claude plugin update design-arc@design-arc-marketplace` | `.claude/design-arc.yaml`, approved reminder block, reviews, graphs, and product files |
 | **Google Antigravity** | Use a supported Google Antigravity extension update route. | `.gemini/design-arc.yaml`, active-review records, review artifacts, graphs, and product files |
 
-Before either change, verify the installed version, requested version, source, and route. Re-read installed state afterward instead of treating command success as proof. Start a new clean session in the adapter you changed; an already-open session keeps its pinned runtime and workflow version.
+Before any adapter change, verify the installed version, requested version, source, and route. Re-read installed state afterward instead of treating command success as proof. Start a new clean session in the adapter you changed; an already-open session keeps its pinned runtime and workflow version.
 
 A Claude Code adapter change preserves `.claude/design-arc.yaml`, the approved `CLAUDE.md` reminder block, reviews, graphs, product files, and active sessions byte-for-byte. It also leaves all Codex state untouched. The same boundary applies in reverse to a Codex upgrade. Neither route runs project setup, imports preferences, merges reviews, or transfers project state during an adapter change.
 

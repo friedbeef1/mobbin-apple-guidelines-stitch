@@ -12,7 +12,7 @@ Commands are optional shortcuts, not required knowledge.
 
 If the active host selects Design Arc for a suitable request that did not invoke it directly, it asks for permission before beginning. Until you approve, it does not start setup, inspect your product, gather Design Arc evidence, or create Design Arc project or review records. Automatic skill selection is not guaranteed, so ask for Design Arc by name when certainty matters. Runtime-specific return paths are described in the [Codex runtime](codex.md), [Claude Code runtime](claude-code.md), and [Google Antigravity runtime](antigravity.md) pages. Design Arc does not run continuously or silently in every task.
 
-Examples of requests for which Codex or Claude Code may offer Design Arc include:
+Examples of requests for which the active host—Codex, Claude Code, or Google Antigravity—may offer Design Arc include:
 
 - “Help me make our onboarding less confusing.”
 - “Audit how customers complete checkout and propose a better complete journey.”
