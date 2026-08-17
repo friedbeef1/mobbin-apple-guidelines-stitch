@@ -28,6 +28,12 @@ PLATFORMS = {
         "package_root": REPO_ROOT / "claude-plugins/design-arc",
         "manifest": REPO_ROOT / "claude-plugins/design-arc/.claude-plugin/plugin.json",
     },
+    "antigravity": {
+        "overlay": SHARED_ROOT / "overlays/antigravity.md",
+        "output": REPO_ROOT / "skills/design-arc/SKILL.md",
+        "package_root": REPO_ROOT,
+        "manifest": REPO_ROOT / "gemini-extension.json",
+    },
 }
 
 
@@ -49,6 +55,21 @@ def without_section(markdown: str, start: str, end: str) -> str:
 def methodology_for(platform: str) -> str:
     methodology = METHODOLOGY.read_text(encoding="utf-8").lstrip("\n")
     if platform == "codex":
+        return methodology
+
+    if platform == "antigravity":
+        # Antigravity shares the Claude adapter's exclusions for the Codex-only
+        # home, upgrade, and legacy-import sections, then maps the remaining
+        # canonical workflow to its own invocation and project-state surface.
+        methodology = methodology_for("claude")
+        for original, replacement in (
+            ("Claude Code", "Google Antigravity"),
+            ("claude-code", "antigravity"),
+            (".claude", ".gemini"),
+            ("Claude", "Antigravity"),
+            ("/design-arc:design-arc", "/design-arc"),
+        ):
+            methodology = methodology.replace(original, replacement)
         return methodology
 
     # Claude reuses the canonical journey methodology, but the Codex-only
