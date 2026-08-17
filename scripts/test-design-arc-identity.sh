@@ -10,6 +10,7 @@ plugin_manifest="$plugin_path/.codex-plugin/plugin.json"
 skill_path="$plugin_path/skills/design-arc/SKILL.md"
 metadata_path="$plugin_path/skills/design-arc/agents/openai.yaml"
 marketplace_manifest="$repo_root/.agents/plugins/marketplace.json"
+directory_logo="$repo_root/assets/design-arc-directory-logo.png"
 codex_skills_dir=${CODEX_SKILLS_DIR:-"$HOME/.codex/skills"}
 plugin_validator="$codex_skills_dir/.system/plugin-creator/scripts/validate_plugin.py"
 skill_validator="$codex_skills_dir/.system/skill-creator/scripts/quick_validate.py"
@@ -19,10 +20,12 @@ fail() {
   exit 1
 }
 
-for required_file in "$plugin_manifest" "$skill_path" "$metadata_path" "$marketplace_manifest"
+for required_file in "$plugin_manifest" "$skill_path" "$metadata_path" "$marketplace_manifest" "$directory_logo"
 do
   [ -f "$required_file" ] || fail "missing Design Arc identity file: ${required_file#"$repo_root/"}"
 done
+
+[ -s "$directory_logo" ] || fail 'Plugin Directory logo must not be empty'
 
 [ ! -e "$repo_root/plugins/fb-ux" ] || fail 'legacy fb-ux package remains active in the repository tree'
 [ ! -e "$repo_root/plugins/apple-guidelines-stitch" ] || fail 'legacy apple-guidelines-stitch package remains active in the repository tree'

@@ -26,7 +26,7 @@ A failed graph record reduces assistance rather than blocking the review: Design
 
 ## Plugin discovery boundary
 
-Design Arc is not listed in Codex’s built-in recommended-plugin directory. Codex CLI 0.146 introduced workspace plugin publishing, but this account exposes no `codex plugin publish` command and current official documentation provides no documented public third-party directory submission route. The GitHub marketplace commands in [Getting started](getting-started.md) are therefore the canonical public installation path. Do not claim that bare-name discovery, skills.sh, or an official marketplace listing is available. See the [official Codex 0.146 update](https://learn.chatgpt.com/docs/whats-new#organize-sessions-and-extend-codex-cli-01460).
+Design Arc remains installable from its public GitHub marketplace. An official Plugin Directory submission is a separate OpenAI review and publication route; preparing or submitting a candidate does not mean OpenAI has approved or listed it. Until an approved listing is actually published, the GitHub instructions in [Getting started](getting-started.md) remain the dependable public installation path. See OpenAI’s [plugin submission documentation](https://developers.openai.com/plugins/deploy/submission).
 
 ## Claude Code, Claude Desktop, and MCP
 

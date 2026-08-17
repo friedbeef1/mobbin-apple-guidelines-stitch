@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Design Arc</title>
+  <desc id="desc">An ivory design journey arcs toward a vermilion decision point on charcoal.</desc>
+  <rect width="1024" height="1024" rx="184" fill="#11130f"/>
+  <path d="M178 756C286 604 384 494 510 430C634 368 750 328 846 246" fill="none" stroke="#f3ead8" stroke-width="92" stroke-linecap="round"/>
+  <path d="M178 756C286 604 384 494 510 430C634 368 750 328 846 246" fill="none" stroke="#11130f" stroke-width="22" stroke-linecap="round" stroke-dasharray="4 68" opacity=".34"/>
+  <circle cx="178" cy="756" r="34" fill="#f3ead8"/>
+  <circle cx="846" cy="246" r="92" fill="#e64a2e"/>
+  <circle cx="846" cy="246" r="24" fill="#f3ead8"/>
+</svg>

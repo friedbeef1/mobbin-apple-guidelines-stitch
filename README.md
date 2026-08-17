@@ -118,4 +118,4 @@ Design Arc does not silently redesign, implement, or deploy your product. You ch
 
 ## License
 
-[MIT License](LICENSE)
+[MIT License](LICENSE) · [Privacy](docs/privacy.md) · [Terms](docs/terms.md) · [Support](docs/support.md)

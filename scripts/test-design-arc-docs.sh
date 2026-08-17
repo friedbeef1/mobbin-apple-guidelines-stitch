@@ -56,6 +56,10 @@ evidence_methodology="$repo_root/docs/evidence-and-methodology.md"
 upgrades_migration="$repo_root/docs/upgrades-and-migration.md"
 migration_history="$repo_root/docs/migration-history.md"
 trust_sources="$repo_root/docs/trust-limitations-and-sources.md"
+privacy_policy="$repo_root/docs/privacy.md"
+terms="$repo_root/docs/terms.md"
+support="$repo_root/docs/support.md"
+submission="$repo_root/docs/openai-plugin-directory-submission.md"
 faq="$repo_root/docs/faq.md"
 operating_layer="$repo_root/docs/codex-operating-layer.md"
 runtime_boundaries="$repo_root/docs/runtime-boundaries.md"
@@ -67,7 +71,7 @@ visualization_sources="$repo_root/docs/trusted-sources/visualization.md"
 shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [Google Antigravity](antigravity.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)'
 historical_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)'
 
-for file in "$readme" "$getting_started" "$using_design_arc" "$codex_edition" "$claude_edition" "$antigravity_edition" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$migration_history" "$trust_sources" "$operating_layer" "$runtime_boundaries" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
+for file in "$readme" "$getting_started" "$using_design_arc" "$codex_edition" "$claude_edition" "$antigravity_edition" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$migration_history" "$trust_sources" "$privacy_policy" "$terms" "$support" "$submission" "$operating_layer" "$runtime_boundaries" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
 do
   [ -f "$file" ] || fail "missing required documentation: ${file#"$repo_root/"}"
 done
@@ -77,6 +81,17 @@ require_text "$readme" 'One Design Arc, available for Codex, Claude Code, and Go
 require_text "$readme" '[Design Arc for Codex](docs/codex.md)'
 require_text "$readme" '[Design Arc for Claude Code](docs/claude-code.md)'
 require_text "$readme" '[Design Arc for Google Antigravity](docs/antigravity.md)'
+require_text "$readme" '[Privacy](docs/privacy.md)'
+require_text "$readme" '[Terms](docs/terms.md)'
+require_text "$readme" '[Support](docs/support.md)'
+require_text "$privacy_policy" 'Design Arc does not operate a developer-controlled backend'
+require_text "$privacy_policy" 'External services remain separately authorized'
+require_text "$terms" 'Design Arc is a design-review aid, not proof of legal, accessibility, security, implementation, or release compliance.'
+require_text "$support" 'https://github.com/friedbeef1/design-arc/issues'
+require_text "$submission" '## Five positive review cases'
+require_text "$submission" '## Three negative review cases'
+require_text "$submission" '## Public listing copy'
+require_text "$submission" 'Codex — Live'
 require_text "$readme" '| [**Codex**](docs/codex.md) | **Live** |'
 require_text "$readme" '| [**Claude Code**](docs/claude-code.md) | **Alpha** |'
 require_text "$readme" '| [**Google Antigravity**](docs/antigravity.md) | **Alpha** |'
@@ -570,8 +585,8 @@ require_text "$trust_sources" 'Claude Desktop chat MCP configuration is separate
 require_text "$trust_sources" '[Anthropic’s Claude Code Desktop guide](https://code.claude.com/docs/en/desktop)'
 require_text "$trust_sources" '[Anthropic’s MCP guide](https://code.claude.com/docs/en/mcp)'
 require_text "$trust_sources" 'access is not bundled by Design Arc'
-require_text "$trust_sources" 'Design Arc is not listed in Codex’s built-in recommended-plugin directory.'
-require_text "$trust_sources" 'no documented public third-party directory submission route'
+require_text "$trust_sources" 'An official Plugin Directory submission is a separate OpenAI review and publication route'
+require_text "$trust_sources" 'preparing or submitting a candidate does not mean OpenAI has approved or listed it'
 require_text "$trust_sources" 'Graph assistance is a project-local relationship record for correction planning, not a new source of truth.'
 require_text "$trust_sources" 'It cannot prove a requirement, establish runtime quality, replace current evidence, or authorize a product decision.'
 require_text "$trust_sources" 'A failed graph record reduces assistance rather than blocking the review: Design Arc reports the issue and continues the standard workflow.'
