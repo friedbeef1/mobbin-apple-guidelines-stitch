@@ -90,8 +90,9 @@ The active host produces a consolidated static journey board first, without buil
 
 ## Install
 
-**Ask Codex:** Install the Design Arc plugin from
-https://github.com/friedbeef1/design-arc
+**Codex — Live:** [Install the Live Codex edition from the OpenAI Plugin Directory](https://chatgpt.com/plugins/plugins_6a82ffefdc88819191f5eaab4eaf116b).
+
+GitHub remains the public source and fallback Codex marketplace. If you need that route, ask Codex to install the Design Arc plugin from https://github.com/friedbeef1/design-arc.
 
 **Ask Claude Code:** Add the Design Arc marketplace from
 https://github.com/friedbeef1/design-arc and install `design-arc@design-arc-marketplace`.

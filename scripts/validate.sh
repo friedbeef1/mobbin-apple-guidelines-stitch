@@ -38,7 +38,6 @@ for required_file in \
   docs/trusted-sources/platform-guidance.md \
   docs/trusted-sources/product-benchmarks.md \
   docs/trusted-sources/visualization.md \
-  docs/validation/behavioral-validation.md \
   .claude-plugin/marketplace.json \
   .agents/plugins/marketplace.json \
   gemini-extension.json \
@@ -58,6 +57,7 @@ for required_file in \
   scripts/check-workflow-contracts.py \
   scripts/check-claude-state-contracts.py \
   scripts/check-antigravity-runtime-contracts.py \
+  scripts/check_repository_hygiene.py \
   scripts/compose-design-arc-skills.py \
   scripts/test-design-arc-docs.sh \
   scripts/test-design-arc-identity.sh \
@@ -74,6 +74,7 @@ for required_file in \
   scripts/test-claude-plugin-install.sh \
   scripts/test-claude-package.py \
   scripts/test-antigravity-package.py \
+  scripts/test_repository_hygiene.py \
   scripts/test-skill-composition.py \
   scripts/validate-graph-record.py \
   scripts/test-workflow-contracts.py \
@@ -107,6 +108,8 @@ printf '%s\n' 'PASS: plugin and embedded skill validation for Design Arc'
 
 sh "$repo_root/scripts/test-design-arc-identity.sh"
 sh "$repo_root/scripts/test-design-arc-docs.sh"
+python3 "$repo_root/scripts/check_repository_hygiene.py"
+python3 "$repo_root/scripts/test_repository_hygiene.py"
 python3 "$repo_root/scripts/check-workflow-contracts.py"
 python3 "$repo_root/scripts/check-claude-state-contracts.py"
 python3 "$repo_root/scripts/check-antigravity-runtime-contracts.py"
@@ -201,10 +204,12 @@ python3 - \
   "$repo_root/scripts/check-workflow-contracts.py" \
   "$repo_root/scripts/check-claude-state-contracts.py" \
   "$repo_root/scripts/check-antigravity-runtime-contracts.py" \
+  "$repo_root/scripts/check_repository_hygiene.py" \
   "$repo_root/scripts/compose-design-arc-skills.py" \
   "$repo_root/scripts/test-graph-records.py" \
   "$repo_root/scripts/test-claude-package.py" \
   "$repo_root/scripts/test-antigravity-package.py" \
+  "$repo_root/scripts/test_repository_hygiene.py" \
   "$repo_root/scripts/test-plugin-upgrade-state.py" \
   "$repo_root/claude-plugins/design-arc/skills/design-arc/scripts/validate-graph-record.py" \
   "$repo_root/plugins/design-arc/skills/design-arc/scripts/validate-graph-record.py" \

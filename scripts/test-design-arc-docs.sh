@@ -59,11 +59,9 @@ trust_sources="$repo_root/docs/trust-limitations-and-sources.md"
 privacy_policy="$repo_root/docs/privacy.md"
 terms="$repo_root/docs/terms.md"
 support="$repo_root/docs/support.md"
-submission="$repo_root/docs/openai-plugin-directory-submission.md"
 faq="$repo_root/docs/faq.md"
 operating_layer="$repo_root/docs/codex-operating-layer.md"
 runtime_boundaries="$repo_root/docs/runtime-boundaries.md"
-behavioral_validation="$repo_root/docs/validation/behavioral-validation.md"
 prompts="$repo_root/examples/prompts.md"
 motion_sources="$repo_root/docs/trusted-sources/motion.md"
 trusted_source_library="$repo_root/docs/trusted-sources/README.md"
@@ -71,7 +69,7 @@ visualization_sources="$repo_root/docs/trusted-sources/visualization.md"
 shared_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [Google Antigravity](antigravity.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)'
 historical_navigation='[Home](../README.md) · [Getting started](getting-started.md) · [Using Design Arc](using-design-arc.md) · [Codex](codex.md) · [Claude Code](claude-code.md) · [FAQ](faq.md) · [Runtime boundaries](runtime-boundaries.md) · [Advanced controls](advanced-controls.md) · [Evidence and methodology](evidence-and-methodology.md) · [Upgrades and migration](upgrades-and-migration.md) · [Migration history](migration-history.md) · [Trust and sources](trust-limitations-and-sources.md)'
 
-for file in "$readme" "$getting_started" "$using_design_arc" "$codex_edition" "$claude_edition" "$antigravity_edition" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$migration_history" "$trust_sources" "$privacy_policy" "$terms" "$support" "$submission" "$operating_layer" "$runtime_boundaries" "$behavioral_validation" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
+for file in "$readme" "$getting_started" "$using_design_arc" "$codex_edition" "$claude_edition" "$antigravity_edition" "$faq" "$advanced_controls" "$evidence_methodology" "$upgrades_migration" "$migration_history" "$trust_sources" "$privacy_policy" "$terms" "$support" "$operating_layer" "$runtime_boundaries" "$prompts" "$motion_sources" "$trusted_source_library" "$visualization_sources"
 do
   [ -f "$file" ] || fail "missing required documentation: ${file#"$repo_root/"}"
 done
@@ -88,19 +86,16 @@ require_text "$privacy_policy" 'Design Arc does not operate a developer-controll
 require_text "$privacy_policy" 'External services remain separately authorized'
 require_text "$terms" 'Design Arc is a design-review aid, not proof of legal, accessibility, security, implementation, or release compliance.'
 require_text "$support" 'https://github.com/friedbeef1/design-arc/issues'
-require_text "$submission" '## Five positive review cases'
-require_text "$submission" '## Three negative review cases'
-require_text "$submission" '## Public listing copy'
-require_text "$submission" 'Codex — Live'
-require_text "$submission" '**Version:** 1.5.2'
-require_text "$submission" '**Category:** Productivity'
-require_text "$submission" '**Subtitle:** Evidence-backed UI journeys'
-require_text "$submission" '**Description:** Turn vague product feedback into a complete, evidence-backed design direction.'
-require_text "$submission" 'https://github.com/friedbeef1/design-arc/blob/main/docs/support.md'
-require_text "$submission" 'https://github.com/friedbeef1/design-arc/blob/main/docs/privacy.md'
-require_text "$submission" 'https://github.com/friedbeef1/design-arc/blob/main/docs/terms.md'
-require_text "$submission" '## 1.5.2 release notes'
-require_text "$submission" 'It makes no workflow or capability change.'
+directory_listing='https://chatgpt.com/plugins/plugins_6a82ffefdc88819191f5eaab4eaf116b'
+require_text "$readme" "$directory_listing"
+require_text "$getting_started" "$directory_listing"
+require_text "$codex_edition" "$directory_listing"
+require_text "$trust_sources" "$directory_listing"
+require_text "$readme" 'Install the Live Codex edition from the OpenAI Plugin Directory'
+require_text "$getting_started" 'Install the Live Codex edition from the OpenAI Plugin Directory'
+require_text "$codex_edition" 'Install the Live Codex edition from the OpenAI Plugin Directory'
+forbid_text "$trust_sources" 'Until an approved listing is actually published'
+forbid_text "$trust_sources" 'preparing or submitting a candidate does not mean OpenAI has approved or listed it'
 require_text "$readme" '| [**Codex**](docs/codex.md) | **Live** |'
 require_text "$readme" '| [**Claude Code**](docs/claude-code.md) | **Alpha** |'
 require_text "$readme" '| [**Google Antigravity**](docs/antigravity.md) | **Alpha** |'
@@ -164,9 +159,14 @@ line_count = len(text.splitlines())
 if not 80 <= line_count <= 130:
     raise SystemExit(f"FAIL: README must contain 80-130 lines; found {line_count}")
 
-ask_codex_instruction = "**Ask Codex:** Install the Design Arc plugin from\nhttps://github.com/friedbeef1/design-arc"
-if ask_codex_instruction not in text:
-    raise SystemExit("FAIL: README is missing the exact Ask Codex installation instruction")
+directory_instruction = "[Install the Live Codex edition from the OpenAI Plugin Directory](https://chatgpt.com/plugins/plugins_6a82ffefdc88819191f5eaab4eaf116b)"
+fallback_instruction = "ask Codex to install the Design Arc plugin from https://github.com/friedbeef1/design-arc"
+if directory_instruction not in text:
+    raise SystemExit("FAIL: README is missing the primary OpenAI Plugin Directory instruction")
+if fallback_instruction not in text:
+    raise SystemExit("FAIL: README is missing the GitHub fallback installation instruction")
+if text.find(directory_instruction) > text.find(fallback_instruction):
+    raise SystemExit("FAIL: README must present the OpenAI Plugin Directory before the GitHub fallback")
 
 for forbidden_text in ("```sh", "codex plugin", "skills registry", "Python", "Saved preferences and migration", "If Codex says"):
     if forbidden_text in text:
@@ -530,7 +530,6 @@ require_text "$evidence_methodology" 'Stitch prototypes are design evidence, not
 require_text "$evidence_methodology" 'Each direction explains motion purpose and restraint, relevant precedent and platform guidance, provenance labels, reduced-motion implications, motion-specific risks, implementation complexity, and remaining proof.'
 require_text "$evidence_methodology" 'A visual verdict evaluates the same motion requirements and contract alignment, and `meets direction` records prototype limitations and remaining runtime proof before Fully automatic may continue.'
 require_text "$evidence_methodology" '[Motion grounding](trusted-sources/motion.md)'
-require_text "$evidence_methodology" '[Behavioral validation](validation/behavioral-validation.md)'
 require_text "$evidence_methodology" '[Trusted sources](trusted-sources/README.md)'
 require_text "$evidence_methodology" 'Next: [Upgrades and migration](upgrades-and-migration.md).'
 
@@ -594,8 +593,8 @@ require_text "$trust_sources" 'Claude Desktop chat MCP configuration is separate
 require_text "$trust_sources" '[Anthropic’s Claude Code Desktop guide](https://code.claude.com/docs/en/desktop)'
 require_text "$trust_sources" '[Anthropic’s MCP guide](https://code.claude.com/docs/en/mcp)'
 require_text "$trust_sources" 'access is not bundled by Design Arc'
-require_text "$trust_sources" 'An official Plugin Directory submission is a separate OpenAI review and publication route'
-require_text "$trust_sources" 'preparing or submitting a candidate does not mean OpenAI has approved or listed it'
+require_text "$trust_sources" 'The Live Codex edition is published in the OpenAI Plugin Directory.'
+require_text "$trust_sources" 'Deterministic tests protect the written workflow contract, but they do not prove every future runtime response.'
 require_text "$trust_sources" 'Graph assistance is a project-local relationship record for correction planning, not a new source of truth.'
 require_text "$trust_sources" 'It cannot prove a requirement, establish runtime quality, replace current evidence, or authorize a product decision.'
 require_text "$trust_sources" 'A failed graph record reduces assistance rather than blocking the review: Design Arc reports the issue and continues the standard workflow.'
@@ -838,47 +837,6 @@ require_text "$motion_sources" 'Interruption covers reversal, cancellation, and 
 require_text "$motion_sources" 'For Android and web targets, their current first-party guidance takes precedence over conflicting Apple-inspired judgment.'
 require_text "$motion_sources" 'Every material motion contract must name a reduced-motion alternative; no animation is the fallback only when it still preserves the needed information and control.'
 require_text "$motion_sources" 'A prototype can communicate an intended interaction, but it cannot prove runtime quality.'
-
-require_text "$behavioral_validation" '# Design Arc instruction-contract validation'
-require_text "$behavioral_validation" 'plugins/design-arc/skills/design-arc/SKILL.md'
-require_text "$behavioral_validation" 'claude-plugins/design-arc/skills/design-arc/SKILL.md'
-require_text "$behavioral_validation" '`scripts/check-claude-state-contracts.py` protects Claude setup, import, reminder, profile-root, project-identity, runtime-isolation, and upgrade boundaries.'
-require_text "$behavioral_validation" 'executable static instruction-contract guards; they do not execute an agent or prove runtime agent behavior.'
-require_text "$behavioral_validation" 'Fresh-context scenario evidence is qualitative unless the prompt, environment, output, and scoring are stored reproducibly.'
-require_text "$behavioral_validation" '## Fresh-task installation and setup evidence — 2026-08-07'
-require_text "$behavioral_validation" 'Codex CLI 0.146.1'
-require_text "$behavioral_validation" 'used the restricted built-in plugin-install control and failed'
-require_text "$behavioral_validation" 'executed both terminal commands, verified `design-arc@design-arc-marketplace` as installed and enabled'
-require_text "$behavioral_validation" 'presented Guidelines + Benchmarks/Guidelines only and Guided/Follow recommendation/Fully automatic independently'
-require_text "$behavioral_validation" 'Fourteen render-repair mutations prove that the written contract rejects unbounded retries, per-mismatch retrying, user-dependent ordinary corrections, uninspected correction claims, skipped reinspection, unsafe direction changes, runtime-proof retries, premature early stopping, missing exhaustion handling, unexplained `meets direction`, incomplete repair records, and approval-mode bypasses.'
-require_text "$behavioral_validation" '187 deterministic mutation rejections'
-require_text "$behavioral_validation" 'Five activation-integrity mutations separately prove that direct invocation starts immediately, an indirectly selected skill asks first, pre-approval work remains isolated, declining does not let Design Arc claim control of the ordinary request, and an unselected skill cannot be credited with work it did not perform.'
-require_text "$behavioral_validation" 'the direct `$design-arc` prompt loaded the candidate and proceeded without a redundant activation question, while the same unprefixed prompt received an ordinary Codex answer because the skill was not selected.'
-require_text "$behavioral_validation" 'These are static instruction-contract mutations; they do not execute Stitch or prove that every future agent will follow the contract.'
-require_text "$behavioral_validation" '## Isolated 0.2.2 to 0.2.3 upgrade evidence — 2026-08-08'
-require_text "$behavioral_validation" '`scripts/test-plugin-upgrade.sh` checks out immutable public 0.2.2 commit `1c9b3796e6f5f0648bae5984f1b8e3013eeac56f`, uses a temporary `CODEX_HOME`, and creates only a temporary two-project fixture.'
-require_text "$behavioral_validation" 'The RED identity, fresh-install, migration, and upgrade expectations required 0.2.3 while the unchanged canonical manifest still reported 0.2.2; each failed at the intended manifest-version boundary.'
-require_text "$behavioral_validation" 'Changing only `plugins/design-arc/.codex-plugin/plugin.json` to 0.2.3 made the same four focused release checks GREEN.'
-require_text "$behavioral_validation" 'The normal `codex plugin marketplace upgrade design-arc-marketplace` attempt did not produce the 0.2.3 installed state from the local immutable source, so the observed route was `remove-add-fallback`.'
-require_text "$behavioral_validation" 'Before any removal, the immutable restoration preflight required exactly one enabled canonical 0.2.2 installation, zero other available plugins, the exact parsed baseline marketplace and plugin source, one complete byte-identical 0.2.2 cache, and unchanged two-project bytes.'
-require_text "$behavioral_validation" 'Five injected preflight cases—missing, disabled, duplicate, unexpected-source, and cache-mismatch—must stop before either removal command.'
-require_text "$behavioral_validation" 'Injected failures preserve rollback coverage for plugin removal, marketplace removal, target marketplace add, target availability read and validation, plugin install, final state reads, prompt loading, and preservation validation; every restoration requires the immutable 0.2.2 package and unchanged project bytes.'
-require_text "$behavioral_validation" 'The passing comparison preserved exactly two preferences, two ready homes, two product sentinels, and two active reviews byte-for-byte, created zero homes, and continued zero reviews.'
-require_text "$behavioral_validation" 'This is local deterministic evidence only; it is not publication, a real-profile upgrade, real Stitch execution, or product-runtime proof.'
-require_text "$behavioral_validation" '## Design Arc 0.3.1 activation and upgrade evidence — 2026-08-10'
-require_text "$behavioral_validation" '[0.3.1 readiness audit](0.3.1-readiness-audit.md)'
-require_text "$behavioral_validation" 'The isolated upgrade proof checks out public `0.3.0` commit `55b03baf4a8dc0b52f0702f1236a865ac2c797b6`, uses a temporary `CODEX_HOME`, and creates two temporary projects.'
-require_text "$behavioral_validation" 'It installed exactly one enabled `0.3.1` plugin and preserved two preferences, two ready homes, two product sentinels, two graph records, and two version-pinned active reviews byte-for-byte.'
-require_text "$behavioral_validation" '| First use | Install once, then confirm this project’s preferences and separately approve or decline one pinned home. |'
-require_text "$behavioral_validation" '| Next-day return | Open the project’s pinned home and use an ordinary-language starter; the home launches a clean local task in the same project. |'
-require_text "$behavioral_validation" '| New product | Reuse the installed plugin, run setup in the new saved project, and keep its optional home and preferences separate. |'
-require_text "$behavioral_validation" '| Multiple products | Keep at most one approved home per participating project and never create a global home. |'
-require_text "$behavioral_validation" '| Duplicate discovery | Reuse the matching same-project home, report extras for user cleanup, and create no known duplicate. |'
-require_text "$behavioral_validation" '| Task tools unavailable | Save only confirmed preferences, report that no home is ready, and provide the exact title, card, and manual create-and-pin steps. |'
-require_text "$behavioral_validation" '## Claude Code setup and return contract'
-require_text "$behavioral_validation" '| First use | Confirm `.claude/design-arc.yaml` independently and separately approve or decline the exact `CLAUDE.md` reminder block. |'
-require_text "$behavioral_validation" '| Next-day return | Open the same product project in a clean Claude Code session and invoke `/design-arc:design-arc`; do not create or reuse a Codex home. |'
-require_text "$behavioral_validation" '| Runtime isolation | Keep Claude preferences, active reviews, review artifacts, graphs, and sessions under Claude ownership; never merge or continue a Codex active review. |'
 
 require_text "$prompts" '# Design Arc prompt examples'
 require_text "$prompts" 'Start in ordinary language in either runtime.'

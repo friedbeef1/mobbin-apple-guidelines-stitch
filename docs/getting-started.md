@@ -12,7 +12,9 @@ Codex is the **Live** edition. Claude Code and Google Antigravity are **Alpha** 
 
 ## Install in Codex
 
-Paste this into Codex:
+[Install the Live Codex edition from the OpenAI Plugin Directory](https://chatgpt.com/plugins/plugins_6a82ffefdc88819191f5eaab4eaf116b).
+
+GitHub remains the public source and fallback Codex marketplace. If you need that route, paste this into Codex:
 
 > Install the Design Arc plugin from https://github.com/friedbeef1/design-arc
 

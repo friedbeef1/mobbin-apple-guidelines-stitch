@@ -24,9 +24,11 @@ It cannot prove a requirement, establish runtime quality, replace current eviden
 
 A failed graph record reduces assistance rather than blocking the review: Design Arc reports the issue and continues the standard workflow. Rebuild uses current authoritative workflow facts for the current review only. Clear requires explicit confirmation for that review's exact record and never removes project preferences, homes, product files, or another review's record.
 
-## Plugin discovery boundary
+## Plugin discovery and validation boundary
 
-Design Arc remains installable from its public GitHub marketplace. An official Plugin Directory submission is a separate OpenAI review and publication route; preparing or submitting a candidate does not mean OpenAI has approved or listed it. Until an approved listing is actually published, the GitHub instructions in [Getting started](getting-started.md) remain the dependable public installation path. See OpenAI’s [plugin submission documentation](https://developers.openai.com/plugins/deploy/submission).
+The Live Codex edition is published in the OpenAI Plugin Directory. [Open the Design Arc listing](https://chatgpt.com/plugins/plugins_6a82ffefdc88819191f5eaab4eaf116b). GitHub remains the public source, the fallback Codex marketplace, and the installation source for the Claude Code and Google Antigravity Alpha editions.
+
+Deterministic tests protect the written workflow contract, but they do not prove every future runtime response. They verify package structure and reject known contract violations; current-task inspection and evidence are still required before any design, implementation, staging, or release claim.
 
 ## Claude Code, Claude Desktop, and MCP
 

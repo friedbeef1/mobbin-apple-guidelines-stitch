@@ -1,5 +1,14 @@
 .worktrees/
 .superpowers/
+/docs/superpowers/
+/docs/handoffs/
+/docs/retrospectives/
+/docs/validation/
+/docs/release-drafts/
+/docs/openai-plugin-directory-submission.md
+/.codex/design-arc*
+/.claude/design-arc*
+/.gemini/design-arc*
 .DS_Store
 .idea/
 .vscode/

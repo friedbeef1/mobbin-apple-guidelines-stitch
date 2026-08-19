@@ -74,6 +74,6 @@ Stitch prototypes are design evidence, not staging or device implementation proo
 
 Each direction explains motion purpose and restraint, relevant precedent and platform guidance, provenance labels, reduced-motion implications, motion-specific risks, implementation complexity, and remaining proof. A visual verdict evaluates the same motion requirements and contract alignment, and `meets direction` records prototype limitations and remaining runtime proof before Fully automatic may continue.
 
-For the nontechnical explanation of what motion evidence can establish, when a recording is needed, and why a prototype is not runtime proof, read [Trusted sources](trusted-sources/README.md), the [Motion grounding](trusted-sources/motion.md) guide, and [Behavioral validation](validation/behavioral-validation.md).
+For the nontechnical explanation of what motion evidence can establish, when a recording is needed, and why a prototype is not runtime proof, read [Trusted sources](trusted-sources/README.md) and the [Motion grounding](trusted-sources/motion.md) guide.
 
 Next: [Upgrades and migration](upgrades-and-migration.md).
