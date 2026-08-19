@@ -53,6 +53,6 @@ Codex does not synchronize, merge, import, or mutate Claude Code state.
 
 The objective confirmation, credible-source grounding, evidence modes, approval gates, complete-state validation, graph-assisted reasoning, optional Stitch workflow, three-round correction loop, and implementation boundaries are the same Design Arc methodology used by the Claude Code edition.
 
-The pinned project home is a return shortcut, not a second product or a separate copy of your application. See the [FAQ](faq.md#what-is-a-project-home) for the plain-language explanation.
+The pinned project home is a return shortcut, not a second product or a separate copy of your application. See [Projects and AI coding platforms](faq.md#projects-and-ai-coding-platforms) in the FAQ for the plain-language explanation.
 
 Commands are optional and live in [Advanced controls](advanced-controls.md).

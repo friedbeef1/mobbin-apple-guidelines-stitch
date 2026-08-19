@@ -150,11 +150,11 @@ cli = text.find("## Optional CLI installation")
 if desktop == -1 or cli == -1 or desktop > cli:
     raise SystemExit("FAIL: Antigravity Desktop installation must appear before optional CLI installation")
 PY
-require_text "$faq" '## What is a project home?'
-require_text "$faq" '## Are the Codex, Claude Code, and Google Antigravity editions different products?'
-require_text "$faq" 'Project homes are a Codex-only return-path feature.'
-require_text "$faq" 'For approval, naming, reuse, and returning later, read [Design Arc for Codex](codex.md).'
-require_text "$faq" 'For Claude Code’s distinct return path, read [Design Arc for Claude Code](claude-code.md).'
+require_text "$faq" '**What is a Codex project home?**'
+require_text "$faq" '**Are the Codex, Claude Code, and Google Antigravity editions different products?**'
+require_text "$faq" 'An optional pinned Codex task that gives one product a visible place to return to Design Arc later.'
+require_text "$faq" '[Returning later in Codex](codex.md#returning-later)'
+require_text "$faq" '[Returning later in Claude Code](claude-code.md#returning-later)'
 for forbidden_shared_lifecycle in \
   'A project home is an optional pinned Codex task for one particular product.' \
   'The Design Arc plugin is installed once on your laptop; each participating product may have one separate project home. Claude Code does not use project homes. It uses an optional project reminder instead.' \
@@ -314,6 +314,37 @@ require_text "$getting_started" '[Design Arc for Google Antigravity](antigravity
 require_text "$getting_started" 'No Python knowledge is required.'
 require_text "$getting_started" 'Technical commands and troubleshooting live in [Advanced controls](advanced-controls.md).'
 require_text "$getting_started" 'Next: [Using Design Arc](using-design-arc.md).'
+
+require_text "$faq" '# Frequently asked questions'
+require_text "$faq" 'Use the short answers below, then follow the relevant guide when you want the full explanation.'
+require_text "$faq" '## Getting started'
+require_text "$faq" '## Evidence and recommendations'
+require_text "$faq" '## Approvals and automation'
+require_text "$faq" '## Screens, visual proposals, and Stitch'
+require_text "$faq" '## Projects and AI coding platforms'
+require_text "$faq" '## Installation, upgrades, privacy, and support'
+require_text "$faq" '| Question | Short answer | Full explanation |'
+require_text "$faq" '**Do I need to remember a Design Arc command?**'
+require_text "$faq" '**What is a Codex project home?**'
+require_text "$faq" '**Is Mobbin required?**'
+require_text "$faq" '**Is Google Stitch required?**'
+require_text "$faq" '**What happens after three unsuccessful correction rounds?**'
+require_text "$faq" '**Do Codex, Claude Code, and Google Antigravity share project state?**'
+require_text "$faq" '**Will an upgrade disturb existing projects?**'
+
+python3 - "$faq" <<'PY'
+from pathlib import Path
+import sys
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+question_rows = [line for line in text.splitlines() if line.startswith("| **")]
+if len(question_rows) < 24:
+    raise SystemExit(f"FAIL: FAQ has only {len(question_rows)} question rows; expected at least 24")
+for row in question_rows:
+    if "](" not in row:
+        raise SystemExit(f"FAIL: FAQ question lacks a detailed-page link: {row}")
+print(f"PASS: FAQ routes {len(question_rows)} practical questions to detailed pages")
+PY
 
 require_text "$using_design_arc" '# Using Design Arc'
 require_text "$using_design_arc" 'Describe the product outcome you want in ordinary language.'
@@ -951,10 +982,10 @@ import sys
 
 page = Path(sys.argv[1])
 original = page.read_text(encoding="utf-8")
-target = "[FAQ](faq.md#what-is-a-project-home)"
+target = "[Projects and AI coding platforms](faq.md#projects-and-ai-coding-platforms)"
 if target not in original:
     raise SystemExit("FAIL: broken-fragment fixture requires the exact Codex FAQ link")
-page.write_text(original.replace(target, "[FAQ](faq.md#missing-project-home)", 1), encoding="utf-8")
+page.write_text(original.replace(target, "[Projects and AI coding platforms](faq.md#missing-project-home)", 1), encoding="utf-8")
 PY
 
   if output=$(DESIGN_ARC_DOCS_SKIP_BROKEN_LINK_MUTATION=1 sh "$fragment_checkout/scripts/test-design-arc-docs.sh" 2>&1)
