@@ -6,7 +6,7 @@ For installation problems, unexpected workflow behavior, documentation errors, o
 
 > https://github.com/friedbeef1/design-arc/issues
 
-Include the active host, Design Arc version, expected result, actual result, and a minimal reproduction. Remove credentials, personal information, confidential product data, private screenshots, and proprietary review evidence before posting.
+Include your AI coding platform, Design Arc version, expected result, actual result, and a minimal reproduction. Remove credentials, personal information, confidential product data, private screenshots, and proprietary review evidence before posting.
 
 Security-sensitive reports should not be posted publicly. Use the private vulnerability-reporting option in the repository’s **Security** tab when available.
 

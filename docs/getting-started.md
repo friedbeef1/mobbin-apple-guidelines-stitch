@@ -18,7 +18,7 @@ GitHub remains the public source and fallback Codex marketplace. If you need tha
 
 > Install the Design Arc plugin from https://github.com/friedbeef1/design-arc
 
-No Python knowledge is required. The active host may ask for download permission.
+No Python knowledge is required. The AI coding platform may ask for download permission.
 
 ## Install in Claude Code
 
@@ -34,7 +34,7 @@ Paste this into Google Antigravity Desktop:
 
 You do not need Antigravity CLI for Desktop use. Antigravity may ask permission to download the repository and place its `skills/design-arc` package in the global skills directory. The [Google Antigravity guide](antigravity.md) gives the exact destination and the optional CLI route.
 
-The Codex, Claude Code, and Google Antigravity editions are installed independently, but use the same Design Arc methodology. They are not different products. Choose the runtime page for the active host for installation, saved state, and returning later. Read [Design Arc for Codex](codex.md), [Design Arc for Claude Code](claude-code.md), or [Design Arc for Google Antigravity](antigravity.md).
+The Codex, Claude Code, and Google Antigravity editions are installed independently, but use the same Design Arc methodology. They are not different products. Choose the runtime page for the AI coding platform for installation, saved state, and returning later. Read [Design Arc for Codex](codex.md), [Design Arc for Claude Code](claude-code.md), or [Design Arc for Google Antigravity](antigravity.md).
 
 ## Start by describing the problem
 

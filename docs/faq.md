@@ -4,11 +4,11 @@
 
 ## Are the Codex, Claude Code, and Google Antigravity editions different products?
 
-No. Design Arc is one product with one shared methodology. The Codex, Claude Code, and Google Antigravity editions are thin platform packages that adapt installation, saved project state, returning later, and visualization recommendations to the host where you work.
+No. Design Arc is one product with one shared methodology. The Codex, Claude Code, and Google Antigravity editions are thin platform packages that adapt installation, saved project state, returning later, and visualization recommendations to the AI coding platform where you work.
 
 Improvements to the core workflow are made once and validated for each packaged edition. You install only the edition or editions you want to use.
 
-For the division between the shared workflow and host-specific behavior, read [Runtime boundaries](runtime-boundaries.md).
+For the division between the shared workflow and platform-specific behavior, read [Runtime boundaries](runtime-boundaries.md).
 
 ## What is a project home?
 
@@ -22,4 +22,4 @@ For Google Antigravity’s distinct return path, read [Design Arc for Google Ant
 
 ## Do I need to remember a Design Arc command?
 
-No. Ask the active host to use Design Arc in ordinary language. Commands are optional advanced controls. Use the relevant runtime page when you need to return to a product later.
+No. Ask the AI coding platform to use Design Arc in ordinary language. Commands are optional advanced controls. Use the relevant runtime page when you need to return to a product later.

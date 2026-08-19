@@ -10,7 +10,7 @@ Apple Human Interface Guidelines are first-party authority for Apple targets. Fo
 
 Mobbin can be selected as a benchmark provider in Guidelines + Benchmarks mode. It remains an external source requiring separate access and authorization. Its examples are observed precedent, not a bundled integration or a source to copy. If access is unavailable, Design Arc stops and offers either a one-run Guidelines only fallback or a confirmed saved switch; it never silently degrades or calls the result benchmark-backed.
 
-The active host—Codex, Claude Code, or Google Antigravity—generates static journey boards by default. Google Stitch is an optional external visualization workspace requiring separate access and payload authorization. Either route must still return a reviewable journey map, key renders, identifiers, and validation verdict in the active task or session. Apple, Google, Mobbin, and Stitch access is not bundled by Design Arc, and none of those services authorizes product-source changes.
+The AI coding platform—Codex, Claude Code, or Google Antigravity—generates static journey boards by default. Google Stitch is an optional external visualization workspace requiring separate access and payload authorization. Either route must still return a reviewable journey map, key renders, identifiers, and validation verdict in the active task or session. Apple, Google, Mobbin, and Stitch access is not bundled by Design Arc, and none of those services authorizes product-source changes.
 
 Installing any one of the three adapters authorizes only that local adapter installation. Benchmark, browser, visualization, MCP, provider, and product access each require their own authorization, including approval for the data sent. Installing Design Arc never supplies credentials, accepts provider terms, enables a connector, or authorizes product-source changes.
 
@@ -44,7 +44,7 @@ Design Arc must not claim current product inspection, first-party guidance, benc
 
 A validated visual journey remains a design proposal. No evidence mode, approval mode, external-service access, provider authorization, Direction decision, or visual verdict authorizes source implementation, staging, deployment, live release, destructive or provider changes, or work outside the authorized integration lane. Those actions require their own scope, owner, authorization, and evidence.
 
-For the complete source library, see [Trusted sources](trusted-sources/README.md). For shared and host-specific limits, see [Runtime boundaries](runtime-boundaries.md).
+For the complete source library, see [Trusted sources](trusted-sources/README.md). For shared and platform-specific limits, see [Runtime boundaries](runtime-boundaries.md).
 
 ## Trademarks
 

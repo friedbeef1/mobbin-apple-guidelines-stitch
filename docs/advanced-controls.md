@@ -54,7 +54,7 @@ These are intentionally not paired commands.
 
 ## Installation commands and troubleshooting
 
-The normal installation path is to ask the active host to install Design Arc from the repository. These commands are fallbacks.
+The normal installation path is to ask the AI coding platform to install Design Arc from the repository. These commands are fallbacks.
 
 Claude Code:
 

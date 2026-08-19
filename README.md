@@ -2,6 +2,8 @@
 
 One Design Arc, available for Codex, Claude Code, and Google Antigravity.
 
+Design Arc works in three AI coding platforms: Codex, Claude Code, and Google Antigravity. In this documentation, **your AI coding platform** means whichever of those three you are currently using.
+
 Product feedback is often vague, redesign discussions become subjective, and teams approve attractive screens without knowing whether the complete journey works.
 Move from uncertain product feedback to a complete design direction grounded in credible sources.
 Design Arc audits the real journey, checks decisions against current first-party platform guidance and inspected real-product journeys, recommends the strongest path, and designs every important state before implementation begins.
@@ -15,7 +17,7 @@ Design Arc audits the real journey, checks decisions against current first-party
 | [Design Arc for Codex](docs/codex.md) | Codex runtime details: installation, project homes, visuals, and return path. |
 | [Design Arc for Claude Code](docs/claude-code.md) | Claude Code runtime details: installation, reminders, visuals, and return path. |
 | [Design Arc for Google Antigravity](docs/antigravity.md) | Google Antigravity runtime details: installation, `/design-arc`, local boards, and return path. |
-| [Runtime boundaries](docs/runtime-boundaries.md) | What the shared workflow preserves and where host-specific behavior belongs. |
+| [Runtime boundaries](docs/runtime-boundaries.md) | What the shared workflow preserves and where platform-specific behavior belongs. |
 | [FAQ](docs/faq.md) | Plain-language answers about commands and returning later. |
 | [Advanced controls](docs/advanced-controls.md) | Optional commands, graph controls, and technical troubleshooting. |
 | [Evidence and methodology](docs/evidence-and-methodology.md) | Evidence modes, complete states, motion, and validation. |
@@ -33,7 +35,7 @@ Choose the edition for the place where you already work. All three editions use 
 | [**Claude Code**](docs/claude-code.md) | **Alpha** | Your product work runs in Claude Code and you want an optional project reminder. | Ask Claude Code to use Design Arc. |
 | [**Google Antigravity**](docs/antigravity.md) | **Alpha** | Your product work runs in Google Antigravity. | Install it, then use `/design-arc`. |
 
-The product and workflow are shared. Start with Design Arc, then use the runtime page for the active host when installation, saved state, return paths, or visual capabilities differ. See [Codex runtime details](docs/codex.md), [Claude Code runtime details](docs/claude-code.md), [Google Antigravity runtime details](docs/antigravity.md), and [Runtime boundaries](docs/runtime-boundaries.md) for those boundaries.
+The product and workflow are shared. Start with Design Arc, then use the runtime page for Codex, Claude Code, or Google Antigravity when installation, saved state, return paths, or visual capabilities differ. See [Codex runtime details](docs/codex.md), [Claude Code runtime details](docs/claude-code.md), [Google Antigravity runtime details](docs/antigravity.md), and [Runtime boundaries](docs/runtime-boundaries.md) for those boundaries.
 
 ## You need Design Arc if…
 
@@ -50,7 +52,7 @@ The product and workflow are shared. Start with Design Arc, then use the runtime
 - Evidence appropriate to the product and platform, with current links, limitations, and observed-versus-inferred status.
 - One unmistakably recommended direction plus meaningful alternatives, benefits, risks, and trade-offs.
 - A complete visual proposal covering entry, transition, loading, empty, error, success, cancellation, and recovery states.
-- Decision-ready evidence in the active host: journey map, key renders, identifiers, validation verdict, gate record, and next authorized owner.
+- Decision-ready evidence in your AI coding platform: journey map, key renders, identifiers, validation verdict, gate record, and next authorized owner.
 
 ## The workflow
 
@@ -58,35 +60,35 @@ The product and workflow are shared. Start with Design Arc, then use the runtime
 
 | Workflow step | Platform or source handling it | Human involvement |
 | --- | --- | --- |
-| Describe the outcome you want | Active host | **👤 You** |
+| Describe the outcome you want | AI coding platform | **👤 You** |
 | ↓ | | |
-| Choose evidence and approval behavior on first use | Active host | **👤 You — only when no saved preference exists** |
+| Choose evidence and approval behavior on first use | AI coding platform | **👤 You — only when no saved preference exists** |
 | ↓ | | |
-| Audit the current journey | Your website or app + the active host | |
+| Audit the current journey | Your website or app + the AI coding platform | |
 | ↓ | | |
-| Gather and label evidence | Mobbin + the active host in Guidelines + Benchmarks mode, and official platform guidance + the active host in Guidelines only mode | |
+| Gather and label evidence | Mobbin + the AI coding platform in Guidelines + Benchmarks mode, and official platform guidance + the AI coding platform in Guidelines only mode | |
 | ↓ | | |
-| Recommend a design direction | Active host | |
+| Recommend a design direction | AI coding platform | |
 | ↓ | | |
-| Approve design direction | Active host | **👤 You — only when the selected approval mode pauses here** |
+| Approve design direction | AI coding platform | **👤 You — only when the selected approval mode pauses here** |
 | ↓ | | |
-| Validate against platform guidance | Apple, Android, Material, or W3C guidance + the active host | |
+| Validate against platform guidance | Apple, Android, Material, or W3C guidance + the AI coding platform | |
 | ↓ | | |
-| Decide on any design motion | Relevant official guidance + inspected motion evidence + the active host | |
+| Decide on any design motion | Relevant official guidance + inspected motion evidence + the AI coding platform | |
 | ↓ | | |
-| Choose whether to use the optional Stitch workspace | Active host | **👤 You — only if Stitch is recommended** |
+| Choose whether to use the optional Stitch workspace | AI coding platform | **👤 You — only if Stitch is recommended** |
 | ↓ | | |
-| Visualize the complete journey | Static journey board in the active host by default; optional Google Stitch workspace | |
+| Visualize the complete journey | Static journey board in the AI coding platform by default; optional Google Stitch workspace | |
 | ↓ | | |
-| Validate every important state | Generated journey screens + the active host | |
+| Validate every important state | Generated journey screens + the AI coding platform | |
 | ↓ | | |
-| Approve the visual proposal | Active host | **👤 You — only when the selected approval mode pauses here** |
+| Approve the visual proposal | AI coding platform | **👤 You — only when the selected approval mode pauses here** |
 | ↓ | | |
-| Prepare the design handoff | Active host | |
+| Prepare the design handoff | AI coding platform | |
 
 Setup resolves two independent choices: how evidence is gathered and where Design Arc pauses for approval. Every route establishes the objective before inspection or research, audits the actual product, preserves platform rules, and stops at a design-only handoff boundary.
 
-The active host produces a consolidated static journey board first, without building disposable app logic. Design Arc recommends the optional Stitch workspace early when one genuine canvas need appears—such as multi-screen editing, visual variants, another-day continuation, collaboration, or export—but you always choose whether to move.
+Your AI coding platform produces a consolidated static journey board first, without building disposable app logic. Design Arc recommends the optional Stitch workspace early when one genuine canvas need appears—such as multi-screen editing, visual variants, another-day continuation, collaboration, or export—but you always choose whether to move.
 
 ## Install
 
@@ -108,7 +110,7 @@ Follow the exact platform commands in [Getting started](docs/getting-started.md)
 
 > Use Design Arc to help me make our onboarding less confusing.
 
-You do not need to remember a command. Ask the active host for Design Arc by name. Design Arc guides any first-time choices in plain language. Automatic skill selection for an unprefixed request is not guaranteed. The [runtime pages](docs/runtime-boundaries.md) explain the host-specific ways to return later.
+You do not need to remember a command. Ask your AI coding platform for Design Arc by name. Design Arc guides any first-time choices in plain language. Automatic skill selection for an unprefixed request is not guaranteed. The [runtime pages](docs/runtime-boundaries.md) explain the platform-specific ways to return later.
 [Learn how to use Design Arc.](docs/using-design-arc.md)
 
 ## Trust

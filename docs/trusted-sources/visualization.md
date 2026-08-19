@@ -2,11 +2,11 @@
 
 Last checked: 2026-08-07
 
-Visualization turns a recommended journey into a concrete proposal that can be inspected across its material entry, transition, loading, empty, error, success, cancellation, and recovery states. Design Arc generates a consolidated static journey board in the active host by default: Codex for the Codex adapter, Claude Code for the Claude adapter, and Google Antigravity for the Antigravity adapter. It can use [Google Stitch](https://stitch.withgoogle.com/) as an optional external editing workspace after the direction is established.
+Visualization turns a recommended journey into a concrete proposal that can be inspected across its material entry, transition, loading, empty, error, success, cancellation, and recovery states. Design Arc generates a consolidated static journey board in the AI coding platform by default: Codex for the Codex adapter, Claude Code for the Claude adapter, and Google Antigravity for the Antigravity adapter. It can use [Google Stitch](https://stitch.withgoogle.com/) as an optional external editing workspace after the direction is established.
 
 ## Why there are two routes
 
-The active host is the lower-friction route for a bounded proposal and a few corrections. It generates screens rather than disposable application logic. Stitch becomes useful when sustained visual iteration, multi-screen changes, self-editing, collaboration, future-session continuity, device variants, or design export makes a persistent canvas easier to manage. Design Arc may recommend that move early, but the user always chooses it.
+The AI coding platform is the lower-friction route for a bounded proposal and a few corrections. It generates screens rather than disposable application logic. Stitch becomes useful when sustained visual iteration, multi-screen changes, self-editing, collaboration, future-session continuity, device variants, or design export makes a persistent canvas easier to manage. Design Arc may recommend that move early, but the user always chooses it.
 
 ## What Stitch supports
 

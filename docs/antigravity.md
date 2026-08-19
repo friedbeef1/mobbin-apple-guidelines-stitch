@@ -24,7 +24,7 @@ Start a new Antigravity conversation, open your product project, and say:
 
 > Use Design Arc to help me improve our onboarding.
 
-Asking for Design Arc by name is the dependable Desktop entry point. The host loads the skill when the request matches; you do not need to remember a command.
+Asking for Design Arc by name is the dependable Desktop entry point. Google Antigravity loads the skill when the request matches; you do not need to remember a command.
 
 ## Optional CLI installation
 
@@ -48,7 +48,7 @@ The repository test suite validates the packaged Antigravity adapter and its wri
 - An early Stitch recommendation when polished mockups, editable layouts, visual alternatives, or continued refinement would help.
 - Google Antigravity-specific preferences, reviews, and graphs under `.gemini/`.
 
-Google Antigravity does not claim native image generation or build disposable application logic merely to visualize the proposal. Stitch remains optional and separately authorized. Before it is used, Design Arc prepares the complete evidence-grounded journey, requirements, and important-state inventory; the active host validates returned screens and uses the shared proposal-wide correction limit of at most three rounds.
+Google Antigravity does not claim native image generation or build disposable application logic merely to visualize the proposal. Stitch remains optional and separately authorized. Before it is used, Design Arc prepares the complete evidence-grounded journey, requirements, and important-state inventory; the AI coding platform validates returned screens and uses the shared proposal-wide correction limit of at most three rounds.
 
 ## State and returning later
 

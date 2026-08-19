@@ -76,6 +76,7 @@ done
 
 require_text "$readme" '[FAQ](docs/faq.md)'
 require_text "$readme" 'One Design Arc, available for Codex, Claude Code, and Google Antigravity.'
+require_text "$readme" 'Design Arc works in three AI coding platforms: Codex, Claude Code, and Google Antigravity.'
 require_text "$readme" '[Design Arc for Codex](docs/codex.md)'
 require_text "$readme" '[Design Arc for Claude Code](docs/claude-code.md)'
 require_text "$readme" '[Design Arc for Google Antigravity](docs/antigravity.md)'
@@ -86,6 +87,18 @@ require_text "$privacy_policy" 'Design Arc does not operate a developer-controll
 require_text "$privacy_policy" 'External services remain separately authorized'
 require_text "$terms" 'Design Arc is a design-review aid, not proof of legal, accessibility, security, implementation, or release compliance.'
 require_text "$support" 'https://github.com/friedbeef1/design-arc/issues'
+
+for file in "$readme" "$repo_root"/docs/*.md "$repo_root"/docs/trusted-sources/*.md
+do
+  if grep -Ei 'active[ -]host' "$file" >/dev/null
+  then
+    fail "deprecated public term remains in ${file#"$repo_root/"}: active host"
+  fi
+  if grep -i 'host-specific' "$file" >/dev/null
+  then
+    fail "deprecated public term remains in ${file#"$repo_root/"}: host-specific"
+  fi
+done
 directory_listing='https://chatgpt.com/plugins/plugins_6a82ffefdc88819191f5eaab4eaf116b'
 require_text "$readme" "$directory_listing"
 require_text "$getting_started" "$directory_listing"
@@ -230,7 +243,7 @@ require_text "$readme" '## You need Design Arc if…'
 require_text "$readme" '## What Design Arc produces'
 require_text "$readme" '## One product, three platform editions'
 require_text "$readme" '| Use | Release status | Choose it when | Start Design Arc |'
-require_text "$readme" 'The product and workflow are shared. Start with Design Arc, then use the runtime page for the active host when installation, saved state, return paths, or visual capabilities differ.'
+require_text "$readme" 'The product and workflow are shared. Start with Design Arc, then use the runtime page for Codex, Claude Code, or Google Antigravity when installation, saved state, return paths, or visual capabilities differ.'
 require_text "$readme" '[Codex runtime details](docs/codex.md)'
 require_text "$readme" '[Claude Code runtime details](docs/claude-code.md)'
 require_text "$readme" '[Runtime boundaries](docs/runtime-boundaries.md)'
@@ -294,7 +307,7 @@ require_text "$getting_started" '## Install in Claude Code'
 require_text "$getting_started" '## Install in Google Antigravity'
 require_text "$getting_started" 'Install Design Arc globally from https://github.com/friedbeef1/design-arc'
 require_text "$getting_started" 'You do not need Antigravity CLI for Desktop use.'
-require_text "$getting_started" 'Choose the runtime page for the active host for installation, saved state, and returning later.'
+require_text "$getting_started" 'Choose the runtime page for the AI coding platform for installation, saved state, and returning later.'
 require_text "$getting_started" '[Design Arc for Codex](codex.md)'
 require_text "$getting_started" '[Design Arc for Claude Code](claude-code.md)'
 require_text "$getting_started" '[Design Arc for Google Antigravity](antigravity.md)'
@@ -306,40 +319,40 @@ require_text "$using_design_arc" '# Using Design Arc'
 require_text "$using_design_arc" 'Describe the product outcome you want in ordinary language.'
 require_text "$using_design_arc" 'Commands are optional shortcuts, not required knowledge.'
 require_text "$using_design_arc" 'Codex, Claude Code, and Google Antigravity never merge, migrate, resume, or continue an active review across runtimes.'
-require_text "$using_design_arc" 'If the active host selects Design Arc for a suitable request that did not invoke it directly, it asks for permission before beginning.'
+require_text "$using_design_arc" 'If your AI coding platform selects Design Arc for a suitable request that did not invoke it directly, it asks for permission before beginning.'
 require_text "$using_design_arc" 'Automatic skill selection is not guaranteed'
 require_text "$using_design_arc" 'ask for Design Arc by name when certainty matters.'
 require_text "$using_design_arc" 'Design Arc does not run continuously or silently in every task.'
 require_text "$using_design_arc" 'How do I use Design Arc after installation?'
-require_text "$using_design_arc" 'Examples of requests for which the active host—Codex, Claude Code, or Google Antigravity—may offer Design Arc include:'
+require_text "$using_design_arc" 'Codex, Claude Code, or Google Antigravity may offer Design Arc for requests such as:'
 forbid_text "$using_design_arc" 'Examples of requests for which Codex or Claude Code may offer Design Arc include:'
 require_text "$using_design_arc" 'Runtime-specific installation, invocation, saved state, returning later, visual capabilities, and upgrades belong to the [Codex runtime](codex.md), [Claude Code runtime](claude-code.md), and [Google Antigravity runtime](antigravity.md) pages.'
 require_text "$using_design_arc" '[Runtime boundaries](runtime-boundaries.md)'
 require_text "$using_design_arc" 'Help me make our onboarding less confusing.'
 require_text "$using_design_arc" 'Audit how customers complete checkout and propose a better complete journey.'
 require_text "$using_design_arc" 'Redesign account recovery so people can get back in without weakening security.'
-require_text "$using_design_arc" '## Choosing the active host or Stitch for the screens'
-require_text "$using_design_arc" 'Design Arc generates one complete static journey board in the active host by default.'
+require_text "$using_design_arc" '## Choosing your AI coding platform or Stitch for the screens'
+require_text "$using_design_arc" 'Design Arc generates one complete static journey board in your AI coding platform by default.'
 require_text "$using_design_arc" 'It does not build disposable application logic merely to visualize the proposal.'
 require_text "$using_design_arc" 'Stitch is optional and Design Arc recommends it when any one genuine canvas trigger occurs.'
 require_text "$using_design_arc" 'A Stitch recommendation is advisory and never transfers the proposal automatically.'
-require_text "$using_design_arc" 'You can stay in the active host.'
+require_text "$using_design_arc" 'You can stay in your AI coding platform.'
 require_text "$using_design_arc" 'If you say not to recommend Stitch again for this review, Design Arc suppresses every further recommendation for that review.'
-require_text "$using_design_arc" 'The same validation and correction rules apply whether the active host or Stitch renders the screens.'
+require_text "$using_design_arc" 'The same validation and correction rules apply whether your AI coding platform or Stitch renders the screens.'
 require_text "$using_design_arc" 'Design Arc corrects straightforward visual drift before asking you to approve the visual proposal.'
 require_text "$using_design_arc" 'The initial proposal may be followed by at most three correction rounds for the whole proposal.'
 require_text "$using_design_arc" 'Each round batches every known repairable mismatch, generates a new proposal, and reinspects the complete result.'
 require_text "$using_design_arc" 'If the proposal still does not match, Design Arc stops and flags every unresolved mismatch and the attempts already made.'
 require_text "$using_design_arc" '| Approval mode | Objective | Visual Proposal Gate |'
-require_text "$using_design_arc" 'Select evidence mode<br/>Active host; You when a choice is required'
+require_text "$using_design_arc" 'Select evidence mode<br/>AI coding platform; You when a choice is required'
 require_text "$using_design_arc" 'C -- "Guidelines only mode" --> C1'
 require_text "$using_design_arc" 'Official Apple Human Interface Guidelines for Apple,'
 require_text "$using_design_arc" 'Android and Material guidance for Android,'
-require_text "$using_design_arc" 'or W3C guidance for web + active host'
+require_text "$using_design_arc" 'or W3C guidance for web + AI coding platform'
 require_text "$using_design_arc" 'C -- "Guidelines + Benchmarks mode" --> C2'
 require_text "$using_design_arc" 'Mobbin journey benchmarks + applicable'
-require_text "$using_design_arc" 'Google Stitch + active host'
-require_text "$using_design_arc" 'Generated screens + active host'
+require_text "$using_design_arc" 'Google Stitch + AI coding platform'
+require_text "$using_design_arc" 'Generated screens + AI coding platform'
 require_text "$using_design_arc" 'Design Arc bundles no MCP server'
 require_text "$using_design_arc" 'Google now provides an official Stitch MCP server and SDK'
 require_text "$using_design_arc" 'only when it is separately installed, configured, and authorized'
@@ -347,7 +360,7 @@ require_text "$using_design_arc" 'name the exact configured MCP server or tool'
 require_text "$using_design_arc" 'does not imply an official Mobbin MCP integration'
 require_text "$using_design_arc" 'Design Arc does not silently redesign, implement, or deploy your product. You choose the objective, evidence approach, and approval behavior.'
 require_text "$using_design_arc" 'Design Arc understands how requirements, evidence and screens affect one another, helping it make more precise corrections without surrendering approval control.'
-require_text "$using_design_arc" 'Graph assistance is active by default for every new 0.3.0 review in both existing and new projects when no project or host-local safety control turns it off.'
+require_text "$using_design_arc" 'Graph assistance is active by default for every new 0.3.0 review in both existing and new projects when no project or platform-local safety control turns it off.'
 require_text "$using_design_arc" 'An active review remains exactly as it started; its next clean review gains the 0.3.0 assistance.'
 require_text "$using_design_arc" 'Graph assistance adds no approval gate.'
 require_text "$using_design_arc" 'Graph assistance is optional internal reasoning support.'
@@ -509,14 +522,14 @@ require_text "$evidence_methodology" '| Grounding layer | Pain point | How Desig
 require_text "$evidence_methodology" '| Platform requirements | Designs can feel unfamiliar, exclude users, or conflict with platform conventions. | Validate the journey against current guidance for its actual platform. | Apple HIG; Android and Material guidance; W3C web accessibility standards. |'
 require_text "$evidence_methodology" '| Product precedent | Teams copy attractive screenshots without understanding the complete journey or failure states. | Inspect relevant end-to-end product journeys and explain why a pattern fits the objective. | Authorized benchmark research through a provider such as Mobbin. |'
 require_text "$evidence_methodology" '| Product judgment | Opinions and trade-offs can be presented as if a source proved them. | Tie recommendations to the confirmed objective and label judgment separately from observed evidence. | User-confirmed objective and documented Design Arc synthesis—not an external authority. |'
-require_text "$evidence_methodology" '| Visualization and validation | Polished screens can conceal missing transitions, errors, and recovery states. | Visualize the complete journey and inspect every important state before approving it for frontend implementation. | Active-host static journey boards by default; optional Google Stitch workspace—not an evidence authority. |'
+require_text "$evidence_methodology" '| Visualization and validation | Polished screens can conceal missing transitions, errors, and recovery states. | Visualize the complete journey and inspect every important state before approving it for frontend implementation. | AI coding platform static journey boards by default; optional Google Stitch workspace—not an evidence authority. |'
 require_text "$evidence_methodology" 'A single genuine trigger is enough for Design Arc to recommend Stitch'
-require_text "$evidence_methodology" 'Staying in the active host remains available, and the user always approves any transfer.'
+require_text "$evidence_methodology" 'Staying in the AI coding platform remains available, and the user always approves any transfer.'
 require_text "$evidence_methodology" '| Relationship context | A correction can miss dependent states when requirements, evidence, and screens are considered separately. | Keep validated relationships visible to plan the smallest compatible correction batch and the regression checks that follow. | The current Design Arc workflow record; the relationship record adds context only. |'
-require_text "$evidence_methodology" 'First-party guidance remains authoritative for its platform, authorized benchmark evidence remains precedent, the active host or Stitch provides visualization, and the graph remains relationship context only.'
+require_text "$evidence_methodology" 'First-party guidance remains authoritative for its platform, authorized benchmark evidence remains precedent, the AI coding platform or Stitch provides visualization, and the graph remains relationship context only.'
 require_text "$evidence_methodology" 'A graph relationship is not evidence, proof, approval, a source of requirements, or authority.'
 require_text "$evidence_methodology" 'The graph can focus correction planning but never replaces complete render inspection or the proposal-wide correction limit.'
-require_text "$evidence_methodology" '| Motion specification | Active host + affected-platform guidance + inspected motion evidence | Defines what moves, why, how it behaves, its reduced-motion alternative, and what still requires implementation proof. |'
+require_text "$evidence_methodology" '| Motion specification | AI coding platform + affected-platform guidance + inspected motion evidence | Defines what moves, why, how it behaves, its reduced-motion alternative, and what still requires implementation proof. |'
 require_text "$evidence_methodology" 'The initial proposal may be followed by at most three correction rounds for the whole proposal.'
 require_text "$evidence_methodology" 'Each round batches every known repairable mismatch, generates a new proposal, and reinspects the complete result.'
 require_text "$evidence_methodology" 'A written correction is not a corrected proposal; only the inspected replacement render proves the change.'
@@ -580,12 +593,12 @@ require_text "$migration_history" 'The patch does not rewrite project preference
 
 require_text "$trust_sources" '# Trust, limitations and sources'
 require_text "$trust_sources" 'What can Design Arc prove, access, implement, or release?'
-require_text "$trust_sources" 'The active host—Codex, Claude Code, or Google Antigravity—generates static journey boards by default.'
+require_text "$trust_sources" 'The AI coding platform—Codex, Claude Code, or Google Antigravity—generates static journey boards by default.'
 require_text "$trust_sources" 'Installing any one of the three adapters authorizes only that local adapter installation.'
 require_text "$trust_sources" 'Benchmark, browser, visualization, MCP, provider, and product access each require their own authorization, including approval for the data sent.'
 require_text "$trust_sources" '## Claude Code, Claude Desktop, and MCP'
 require_text "$trust_sources" 'Design Arc 1.5.2 is packaged and verified for Claude Code.'
-forbid_text "$trust_sources" 'Codex or Claude Code generates static journey boards in the active host by default.'
+forbid_text "$trust_sources" 'Codex or Claude Code generates static journey boards in the AI coding platform by default.'
 forbid_text "$trust_sources" 'Installing either adapter authorizes only that local plugin installation.'
 forbid_text "$trust_sources" 'Design Arc 0.4.0 is packaged and verified for Claude Code.'
 require_text "$trust_sources" 'It is not a Claude Desktop chat extension and does not install or configure a Desktop MCP server.'
@@ -602,13 +615,13 @@ require_text "$trust_sources" '[Trusted sources](trusted-sources/README.md)'
 require_text "$trust_sources" '[Runtime boundaries](runtime-boundaries.md)'
 require_text "$trust_sources" 'Next: [Home](../README.md).'
 
-require_text "$trusted_source_library" '| Visualization and validation | A concrete proposed journey that can be inspected across material states. | Active-host static journey boards by default; optional [Google Stitch](https://stitch.withgoogle.com/) workspace. | Evidence, platform compliance, accessibility, or implementation readiness by itself. |'
-require_text "$trusted_source_library" '[Visualization](visualization.md) — active-host static boards by default and Stitch as an optional persistent editing workspace.'
-require_text "$visualization_sources" 'Design Arc generates a consolidated static journey board in the active host by default: Codex for the Codex adapter, Claude Code for the Claude adapter, and Google Antigravity for the Antigravity adapter.'
-require_text "$visualization_sources" 'The active host is the lower-friction route for a bounded proposal and a few corrections.'
+require_text "$trusted_source_library" '| Visualization and validation | A concrete proposed journey that can be inspected across material states. | AI coding platform static journey boards by default; optional [Google Stitch](https://stitch.withgoogle.com/) workspace. | Evidence, platform compliance, accessibility, or implementation readiness by itself. |'
+require_text "$trusted_source_library" '[Visualization](visualization.md) — platform static boards by default and Stitch as an optional persistent editing workspace.'
+require_text "$visualization_sources" 'Design Arc generates a consolidated static journey board in the AI coding platform by default: Codex for the Codex adapter, Claude Code for the Claude adapter, and Google Antigravity for the Antigravity adapter.'
+require_text "$visualization_sources" 'The AI coding platform is the lower-friction route for a bounded proposal and a few corrections.'
 require_text "$runtime_boundaries" '# Runtime boundaries'
-require_text "$runtime_boundaries" 'Design Arc is one shared workflow. The active host owns only the runtime-specific installation, invocation, saved state, return path, visualization capability, and upgrade behavior.'
-require_text "$runtime_boundaries" 'The [Codex runtime](codex.md), [Claude Code runtime](claude-code.md), and [Google Antigravity runtime](antigravity.md) pages are the authoritative guides for those host-specific details.'
+require_text "$runtime_boundaries" 'Design Arc is one shared workflow. The AI coding platform owns only the runtime-specific installation, invocation, saved state, return path, visualization capability, and upgrade behavior.'
+require_text "$runtime_boundaries" 'The [Codex runtime](codex.md), [Claude Code runtime](claude-code.md), and [Google Antigravity runtime](antigravity.md) pages are the authoritative guides for those platform-specific details.'
 require_text "$runtime_boundaries" 'Codex, Claude Code, and Google Antigravity never merge, migrate, resume, or continue an active review across runtimes.'
 require_text "$runtime_boundaries" 'Objective Confirmation, both evidence modes, the Direction Gate, the Visual Proposal Gate, complete-state validation, optional Stitch, and the three-round correction limit are shared workflow contracts.'
 require_text "$runtime_boundaries" 'No runtime detail or approval authorizes source implementation, staging, deployment, or release.'
@@ -697,31 +710,31 @@ workflow = text[workflow_start:workflow_end]
 workflow_instruction = "**Rows marked 👤 You show where your involvement may be needed. First-use choices, approval pauses, and the optional Stitch choice are conditional.**"
 workflow_table = """| Workflow step | Platform or source handling it | Human involvement |
 | --- | --- | --- |
-| Describe the outcome you want | Active host | **👤 You** |
+| Describe the outcome you want | AI coding platform | **👤 You** |
 | ↓ | | |
-| Choose evidence and approval behavior on first use | Active host | **👤 You — only when no saved preference exists** |
+| Choose evidence and approval behavior on first use | AI coding platform | **👤 You — only when no saved preference exists** |
 | ↓ | | |
-| Audit the current journey | Your website or app + the active host | |
+| Audit the current journey | Your website or app + the AI coding platform | |
 | ↓ | | |
-| Gather and label evidence | Mobbin + the active host in Guidelines + Benchmarks mode, and official platform guidance + the active host in Guidelines only mode | |
+| Gather and label evidence | Mobbin + the AI coding platform in Guidelines + Benchmarks mode, and official platform guidance + the AI coding platform in Guidelines only mode | |
 | ↓ | | |
-| Recommend a design direction | Active host | |
+| Recommend a design direction | AI coding platform | |
 | ↓ | | |
-| Approve design direction | Active host | **👤 You — only when the selected approval mode pauses here** |
+| Approve design direction | AI coding platform | **👤 You — only when the selected approval mode pauses here** |
 | ↓ | | |
-| Validate against platform guidance | Apple, Android, Material, or W3C guidance + the active host | |
+| Validate against platform guidance | Apple, Android, Material, or W3C guidance + the AI coding platform | |
 | ↓ | | |
-| Decide on any design motion | Relevant official guidance + inspected motion evidence + the active host | |
+| Decide on any design motion | Relevant official guidance + inspected motion evidence + the AI coding platform | |
 | ↓ | | |
-| Choose whether to use the optional Stitch workspace | Active host | **👤 You — only if Stitch is recommended** |
+| Choose whether to use the optional Stitch workspace | AI coding platform | **👤 You — only if Stitch is recommended** |
 | ↓ | | |
-| Visualize the complete journey | Static journey board in the active host by default; optional Google Stitch workspace | |
+| Visualize the complete journey | Static journey board in the AI coding platform by default; optional Google Stitch workspace | |
 | ↓ | | |
-| Validate every important state | Generated journey screens + the active host | |
+| Validate every important state | Generated journey screens + the AI coding platform | |
 | ↓ | | |
-| Approve the visual proposal | Active host | **👤 You — only when the selected approval mode pauses here** |
+| Approve the visual proposal | AI coding platform | **👤 You — only when the selected approval mode pauses here** |
 | ↓ | | |
-| Prepare the design handoff | Active host | |"""
+| Prepare the design handoff | AI coding platform | |"""
 
 def validate_workflow(candidate):
     expected_table = f"## The workflow\n\n{workflow_instruction}\n\n{workflow_table}"
@@ -741,13 +754,13 @@ for mutated_workflow in (
     workflow.replace(workflow_instruction, "**Design Arc handles every step.**", 1),
     workflow.replace("| Workflow step | Platform or source handling it | Human involvement |", "| Workflow | Platform | Human |", 1),
     workflow.replace(
-        "| Describe the outcome you want | Active host | **👤 You** |\n| ↓ | | |\n| Choose evidence and approval behavior on first use | Active host | **👤 You — only when no saved preference exists** |",
-        "| Choose evidence and approval behavior on first use | Active host | **👤 You — only when no saved preference exists** |\n| ↓ | | |\n| Describe the outcome you want | Active host | **👤 You** |",
+        "| Describe the outcome you want | AI coding platform | **👤 You** |\n| ↓ | | |\n| Choose evidence and approval behavior on first use | AI coding platform | **👤 You — only when no saved preference exists** |",
+        "| Choose evidence and approval behavior on first use | AI coding platform | **👤 You — only when no saved preference exists** |\n| ↓ | | |\n| Describe the outcome you want | AI coding platform | **👤 You** |",
         1,
     ),
     workflow.replace(
-        "| Prepare the design handoff | Active host | |\n\nSetup resolves",
-        "| Prepare the design handoff | Active host | |\n| Record a follow-up | Active host | |\n\nSetup resolves",
+        "| Prepare the design handoff | AI coding platform | |\n\nSetup resolves",
+        "| Prepare the design handoff | AI coding platform | |\n| Record a follow-up | AI coding platform | |\n\nSetup resolves",
         1,
     ),
 ):
