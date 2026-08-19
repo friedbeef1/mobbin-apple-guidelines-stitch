@@ -1,10 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
   <title id="title">Design Arc</title>
-  <desc id="desc">An ivory design journey arcs toward a vermilion decision point on charcoal.</desc>
-  <rect width="1024" height="1024" rx="184" fill="#11130f"/>
-  <path d="M178 756C286 604 384 494 510 430C634 368 750 328 846 246" fill="none" stroke="#f3ead8" stroke-width="92" stroke-linecap="round"/>
-  <path d="M178 756C286 604 384 494 510 430C634 368 750 328 846 246" fill="none" stroke="#11130f" stroke-width="22" stroke-linecap="round" stroke-dasharray="4 68" opacity=".34"/>
-  <circle cx="178" cy="756" r="34" fill="#f3ead8"/>
-  <circle cx="846" cy="246" r="92" fill="#e64a2e"/>
-  <circle cx="846" cy="246" r="24" fill="#f3ead8"/>
+  <desc id="desc">Three ivory stages rise toward a small coral endpoint on charcoal.</desc>
+  <rect data-part="background" x="0" y="0" width="1024" height="1024" fill="#11130f"/>
+  <path data-part="stage-1" fill="#f3ead8" d="M128 720L500 660L584 696L518 740L160 840L96 786Z"/>
+  <path data-part="stage-2" fill="#f3ead8" d="M324 446L624 390L700 426L640 462L352 550L294 510Z"/>
+  <path data-part="stage-3" fill="#f3ead8" d="M524 226L752 184L824 210L776 244L548 312L490 280Z"/>
+  <circle data-part="endpoint" cx="884" cy="114" r="50" fill="#ff5a3c"/>
 </svg>

@@ -1,6 +1,6 @@
 {
   "name": "design-arc",
-  "version": "1.5.0",
+  "version": "1.5.2",
   "description": "Live: outcome-led UI journey design for Codex.",
   "author": {
     "name": "James Yeang"
@@ -16,8 +16,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Design Arc",
-    "shortDescription": "Turn ambiguous UI feedback into complete, evidence-grounded journeys.",
-    "longDescription": "Turn a confirmed product outcome into a complete UI journey with evidence, clear trade-offs, and explicit approval gates.",
+    "shortDescription": "Evidence-backed UI journeys",
+    "longDescription": "Turn vague product feedback into a complete, evidence-backed design direction. Design Arc confirms the outcome, audits the real journey, grounds recommendations in current platform guidance and optional product benchmarks, and checks every important state before frontend implementation.",
     "developerName": "James Yeang",
     "category": "Productivity",
     "capabilities": [
