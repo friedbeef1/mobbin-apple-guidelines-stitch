@@ -169,8 +169,27 @@ import sys
 
 text = Path(sys.argv[1]).read_text(encoding="utf-8")
 line_count = len(text.splitlines())
-if not 80 <= line_count <= 130:
-    raise SystemExit(f"FAIL: README must contain 80-130 lines; found {line_count}")
+if not 80 <= line_count <= 140:
+    raise SystemExit(f"FAIL: README must contain 80-140 lines; found {line_count}")
+
+opening_description = "Design Arc audits the real journey, checks decisions against current first-party platform guidance and inspected real-product journeys, recommends the strongest path, and designs every important state before implementation begins."
+action_section = """### See Design Arc in action
+See how Design Arc turns vague feedback into an evidence-backed direction—watch the demo or browse the introduction deck.
+
+| Product demo | Introduction deck |
+| --- | --- |
+| [![Design Arc product demo thumbnail — opens YouTube](https://img.youtube.com/vi/Zt7ba_lngxk/maxresdefault.jpg)](https://youtu.be/Zt7ba_lngxk) | [![Design Arc introduction deck cover — opens presentation](https://docs.google.com/presentation/d/1EG5vrPC5UqAkNAr9jce0lvZz1Jq5oI4AqAbPVivG2sU/export/png?id=1EG5vrPC5UqAkNAr9jce0lvZz1Jq5oI4AqAbPVivG2sU&pageid=g3fab99837d7_0_185)](https://docs.google.com/presentation/d/1EG5vrPC5UqAkNAr9jce0lvZz1Jq5oI4AqAbPVivG2sU/preview) |
+| [Watch on YouTube](https://youtu.be/Zt7ba_lngxk) | [Open presentation](https://docs.google.com/presentation/d/1EG5vrPC5UqAkNAr9jce0lvZz1Jq5oI4AqAbPVivG2sU/preview) |"""
+if action_section not in text:
+    raise SystemExit("FAIL: README action section must retain the ordered two-card demo and introduction-deck resources")
+
+action_position = text.index(action_section)
+description_end = text.index(opening_description) + len(opening_description)
+documentation_position = text.index("## Documentation")
+if action_position != description_end + 1:
+    raise SystemExit("FAIL: README action section must immediately follow the opening product description")
+if action_position > documentation_position:
+    raise SystemExit("FAIL: README action section must appear before Documentation")
 
 directory_instruction = "[Install the Live Codex edition from the OpenAI Plugin Directory](https://chatgpt.com/plugins/plugins_6a82ffefdc88819191f5eaab4eaf116b)"
 fallback_instruction = "ask Codex to install the Design Arc plugin from https://github.com/friedbeef1/design-arc"
@@ -1027,6 +1046,62 @@ PY
     fail 'license-link mutation failed for the wrong reason'
   }
   printf '%s\n' 'PASS: license-link mutation is rejected'
+
+  missing_action_resource_checkout="$task_temp_dir/missing-action-resource-fixture"
+  copy_fixture "$missing_action_resource_checkout"
+  missing_action_resource_page="$missing_action_resource_checkout/README.md"
+
+  python3 - "$missing_action_resource_page" <<'PY'
+from pathlib import Path
+import sys
+
+page = Path(sys.argv[1])
+original = page.read_text(encoding="utf-8")
+target = "[Open presentation](https://docs.google.com/presentation/d/1EG5vrPC5UqAkNAr9jce0lvZz1Jq5oI4AqAbPVivG2sU/preview)"
+if target not in original:
+    raise SystemExit("FAIL: missing-action-resource fixture requires the introduction-deck fallback")
+page.write_text(original.replace(target, "Open presentation", 1), encoding="utf-8")
+PY
+
+  if output=$(DESIGN_ARC_DOCS_SKIP_BROKEN_LINK_MUTATION=1 sh "$missing_action_resource_checkout/scripts/test-design-arc-docs.sh" 2>&1)
+  then
+    printf '%s\n' "$output" >&2
+    fail 'missing action resource mutation was accepted'
+  fi
+
+  printf '%s\n' "$output" | grep -F 'FAIL: README action section must retain the ordered two-card demo and introduction-deck resources' >/dev/null || {
+    printf '%s\n' "$output" >&2
+    fail 'missing action resource mutation failed for the wrong reason'
+  }
+  printf '%s\n' 'PASS: missing action resource mutation is rejected'
+
+  reordered_action_resource_checkout="$task_temp_dir/reordered-action-resource-fixture"
+  copy_fixture "$reordered_action_resource_checkout"
+  reordered_action_resource_page="$reordered_action_resource_checkout/README.md"
+
+  python3 - "$reordered_action_resource_page" <<'PY'
+from pathlib import Path
+import sys
+
+page = Path(sys.argv[1])
+original = page.read_text(encoding="utf-8")
+target = "| Product demo | Introduction deck |"
+if target not in original:
+    raise SystemExit("FAIL: reordered-action-resource fixture requires the action-card headers")
+page.write_text(original.replace(target, "| Introduction deck | Product demo |", 1), encoding="utf-8")
+PY
+
+  if output=$(DESIGN_ARC_DOCS_SKIP_BROKEN_LINK_MUTATION=1 sh "$reordered_action_resource_checkout/scripts/test-design-arc-docs.sh" 2>&1)
+  then
+    printf '%s\n' "$output" >&2
+    fail 'reordered action resource mutation was accepted'
+  fi
+
+  printf '%s\n' "$output" | grep -F 'FAIL: README action section must retain the ordered two-card demo and introduction-deck resources' >/dev/null || {
+    printf '%s\n' "$output" >&2
+    fail 'reordered action resource mutation failed for the wrong reason'
+  }
+  printf '%s\n' 'PASS: reordered action resource mutation is rejected'
 
   command_order_checkout="$task_temp_dir/plugin-command-order-fixture"
   copy_fixture "$command_order_checkout"

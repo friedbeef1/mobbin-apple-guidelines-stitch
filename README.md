@@ -8,11 +8,12 @@ Product feedback is often vague, redesign discussions become subjective, and tea
 Move from uncertain product feedback to a complete design direction grounded in credible sources.
 Design Arc audits the real journey, checks decisions against current first-party platform guidance and inspected real-product journeys, recommends the strongest path, and designs every important state before implementation begins.
 ### See Design Arc in action
-See how Design Arc turns vague feedback into an evidence-backed direction and a complete journey ready for design handoff.
+See how Design Arc turns vague feedback into an evidence-backed direction—watch the demo or browse the introduction deck.
 
-[![Design Arc demo video — opens the video](https://img.youtube.com/vi/Zt7ba_lngxk/maxresdefault.jpg)](https://youtu.be/Zt7ba_lngxk)
-
-[Watch the Design Arc demo video on YouTube.](https://youtu.be/Zt7ba_lngxk)
+| Product demo | Introduction deck |
+| --- | --- |
+| [![Design Arc product demo thumbnail — opens YouTube](https://img.youtube.com/vi/Zt7ba_lngxk/maxresdefault.jpg)](https://youtu.be/Zt7ba_lngxk) | [![Design Arc introduction deck cover — opens presentation](https://docs.google.com/presentation/d/1EG5vrPC5UqAkNAr9jce0lvZz1Jq5oI4AqAbPVivG2sU/export/png?id=1EG5vrPC5UqAkNAr9jce0lvZz1Jq5oI4AqAbPVivG2sU&pageid=g3fab99837d7_0_185)](https://docs.google.com/presentation/d/1EG5vrPC5UqAkNAr9jce0lvZz1Jq5oI4AqAbPVivG2sU/preview) |
+| [Watch on YouTube](https://youtu.be/Zt7ba_lngxk) | [Open presentation](https://docs.google.com/presentation/d/1EG5vrPC5UqAkNAr9jce0lvZz1Jq5oI4AqAbPVivG2sU/preview) |
 
 ## Documentation
 
