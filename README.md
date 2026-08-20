@@ -7,13 +7,13 @@ Design Arc works in three AI coding platforms: Codex, Claude Code, and Google An
 Product feedback is often vague, redesign discussions become subjective, and teams approve attractive screens without knowing whether the complete journey works.
 Move from uncertain product feedback to a complete design direction grounded in credible sources.
 Design Arc audits the real journey, checks decisions against current first-party platform guidance and inspected real-product journeys, recommends the strongest path, and designs every important state before implementation begins.
-
-## See Design Arc in action
+### See Design Arc in action
 See how Design Arc turns vague feedback into an evidence-backed direction and a complete journey ready for design handoff.
 
 [![Design Arc demo video — opens the video](https://img.youtube.com/vi/Zt7ba_lngxk/maxresdefault.jpg)](https://youtu.be/Zt7ba_lngxk)
 
 [Watch the Design Arc demo video on YouTube.](https://youtu.be/Zt7ba_lngxk)
+
 ## Documentation
 
 | Page | What it covers |
