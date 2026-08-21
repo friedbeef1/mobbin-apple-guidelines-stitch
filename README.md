@@ -1,6 +1,6 @@
 # Design Arc
 
-One Design Arc, available for Codex, Claude Code, and Google Antigravity.
+One Design Arc, available for Codex (live), Claude Code (alpha), and Google Antigravity (alpha).
 
 Design Arc works in three AI coding platforms: Codex, Claude Code, and Google Antigravity. In this documentation, **your AI coding platform** means whichever of those three you are currently using.
 
