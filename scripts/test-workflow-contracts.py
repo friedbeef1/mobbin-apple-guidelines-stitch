@@ -68,6 +68,26 @@ MUTATIONS = {
         "Always report the active evidence mode and approval mode, and the provenance of each independently.",
         "Report the active modes without their provenance.",
     ),
+    "separate first-use turns": (
+        "Collect first-use evidence and approval choices in two separate user turns. Never present both choice lists in the same message.",
+        "Present evidence and approval choices together in one message.",
+    ),
+    "Mobbin recommendation": (
+        "**Guidelines + Mobbin benchmarks — recommended.**",
+        "**Guidelines only — recommended here.**",
+    ),
+    "Mobbin Pro prerequisite": (
+        "Ensure you have an active Mobbin Pro account before choosing this option",
+        "Mobbin access is assumed and needs no account.",
+    ),
+    "numeric evidence reply": (
+        "Ask the user to reply with `1` or `2`.",
+        "Ask the user to type the complete evidence-mode name.",
+    ),
+    "numeric approval reply": (
+        "Ask the user to reply with `1`, `2`, or `3`.",
+        "Ask the user to provide both setup choices together.",
+    ),
     "benchmarks guided combination": (
         "| Guidelines + Benchmarks | Guided | Direction Gate stops; Visual Proposal Gate stops |",
         "| Guidelines + Benchmarks | Guided | Both gates continue |",
@@ -752,7 +772,7 @@ GRAPH_MUTATIONS = {
 
 
 EXPECTED_GRAPH_MUTATION_COUNT = 24
-EXPECTED_TOTAL_MUTATION_COUNT = 187
+EXPECTED_TOTAL_MUTATION_COUNT = 192
 
 
 ORDERED_MUTATION_MARKERS = (
