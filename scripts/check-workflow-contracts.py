@@ -40,6 +40,15 @@ REQUIRED_CONTRACTS = {
     "independent provenance": (
         "Always report the active evidence mode and approval mode, and the provenance of each independently.",
     ),
+    "two-step first-use setup": (
+        "Collect first-use evidence and approval choices in two separate user turns. Never present both choice lists in the same message.",
+        "**Step 1 — evidence.** Present exactly this numbered choice first:",
+        "**Guidelines + Mobbin benchmarks — recommended.**",
+        "Ensure you have an active Mobbin Pro account before choosing this option",
+        "Ask the user to reply with `1` or `2`.",
+        "**Step 2 — approval.** Only after evidence is resolved, present this separate numbered choice:",
+        "Ask the user to reply with `1`, `2`, or `3`.",
+    ),
     "six mode combinations": (
         "| Guidelines + Benchmarks | Guided | Direction Gate stops; Visual Proposal Gate stops |",
         "| Guidelines + Benchmarks | Follow recommendation | Direction Gate continues with the marked recommendation; Visual Proposal Gate stops |",
@@ -98,6 +107,12 @@ REQUIRED_CONTRACTS = {
         "The first recommendation names the specific benefit; a later recommendation is brief and appears only after another genuine trigger or materially larger scope.",
     ),
     "Stitch recommendation control": (
+        "When Stitch is recommended, present this numbered choice:",
+        "1. **Stitch** (recommended)",
+        "2. **Stay in Codex**",
+        "3. **Both**",
+        "Reply with `1`, `2`, or `3`.",
+        "Both means create the Codex board and the Stitch visual workspace from the same approved journey.",
         "A Stitch recommendation is advisory: never transfer automatically, and continuing in Codex remains available.",
         "Treat `stay in Codex` as a choice for the current editing phase, not a permanent suppression.",
         "If the user says not to recommend Stitch again for this review, suppress every further Stitch recommendation for that review.",

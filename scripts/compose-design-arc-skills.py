@@ -115,6 +115,10 @@ def methodology_for(platform: str) -> str:
                 "Do not withhold the Stitch recommendation when polished or editable mockups are requested. Otherwise, do not recommend Stitch merely because it is available, Mobbin supplied precedent, or one screen needs a bounded correction.",
             "The first recommendation names the specific benefit; a later recommendation is brief and appears only after another genuine trigger or materially larger scope. Use this shape: “This is becoming easier to manage in Stitch because <specific trigger and benefit>. I recommend moving there, but I can continue in Codex if you prefer.”":
                 "For the first relevant choice, use this exact prompt: “Antigravity can prepare a lightweight static journey board here. For polished, editable screen mockups, I recommend a Stitch-ready visual proposal. Which would you prefer?” A later recommendation is brief and appears only after another genuine trigger or materially larger scope.",
+            "2. **Stay in Codex**":
+                "2. **Stay in Google Antigravity**",
+            "Both means create the Codex board and the Stitch visual workspace from the same approved journey.":
+                "Both means create the Google Antigravity board and the Stitch visual workspace from the same approved journey.",
             "A Stitch recommendation is advisory: never transfer automatically, and continuing in Codex remains available. Treat `stay in Codex` as a choice for the current editing phase, not a permanent suppression.":
                 "A Stitch recommendation is advisory: never transfer automatically, and continuing in Google Antigravity remains available. Treat `stay in Google Antigravity` as a choice for the current editing phase, not a permanent suppression. Never tell a Google Antigravity user to pass work to Codex unless the user explicitly requests a cross-platform handoff.",
             "For the default Codex route, generate the complete static board directly and avoid disposable application logic.":
@@ -188,6 +192,10 @@ def methodology_for(platform: str) -> str:
             "Do not withhold the Stitch recommendation when polished or editable mockups are requested. Otherwise, do not recommend Stitch merely because it is available, Mobbin supplied precedent, or one screen needs a bounded correction.",
         "The first recommendation names the specific benefit; a later recommendation is brief and appears only after another genuine trigger or materially larger scope. Use this shape: “This is becoming easier to manage in Stitch because <specific trigger and benefit>. I recommend moving there, but I can continue in Codex if you prefer.”":
             "For the first relevant choice, use this exact prompt: “Claude can prepare a lightweight static journey board here. For polished, editable screen mockups, I recommend a Stitch-ready visual proposal. Which would you prefer?” A later recommendation is brief and appears only after another genuine trigger or materially larger scope.",
+        "2. **Stay in Codex**":
+            "2. **Stay in Claude Code**",
+        "Both means create the Codex board and the Stitch visual workspace from the same approved journey.":
+            "Both means create the Claude Code board and the Stitch visual workspace from the same approved journey.",
         "A Stitch recommendation is advisory: never transfer automatically, and continuing in Codex remains available. Treat `stay in Codex` as a choice for the current editing phase, not a permanent suppression.":
             "A Stitch recommendation is advisory: never transfer automatically, and continuing in Claude Code remains available. Treat `stay in Claude Code` as a choice for the current editing phase, not a permanent suppression. Never tell a Claude Code user to pass work to Codex unless the user explicitly requests a cross-platform handoff.",
         "For the default Codex route, generate the complete static board directly and avoid disposable application logic.":

@@ -196,15 +196,22 @@ Resolve evidence and approval independently, in this order:
 
 Always report the active evidence mode and approval mode, and the provenance of each independently. Use one of: current-request one-run override, saved Design Arc preference, confirmed legacy import, or first-use selection. Never attribute an overridden value to the saved file.
 
-For first use, ask the user to choose independently:
+Collect first-use evidence and approval choices in two separate user turns. Never present both choice lists in the same message.
 
-- **Guidelines + Benchmarks — recommended when relevant access is available.** Use inspected real-product journeys plus current first-party guidance.
-- **Guidelines only.** Use current first-party platform guidance without benchmark research.
-- **Guided — recommended for a new project.** Stop at Objective Confirmation, Direction Gate, and Visual Proposal Gate.
-- **Follow recommendation.** Stop at Objective Confirmation, automatically select the marked direction, and stop at Visual Proposal Gate.
-- **Fully automatic.** Continue only from an explicit current-request objective, select the marked direction, and pass Visual Proposal Gate only on `meets direction`.
+**Step 1 — evidence.** Present exactly this numbered choice first:
 
-Allow free-form input. Before saving first-use choices, state the proposed file values and obtain confirmation.
+1. **Guidelines + Mobbin benchmarks — recommended.** Use inspected real-product journeys plus current first-party guidance. Ensure you have an active Mobbin Pro account before choosing this option; Design Arc does not include or provision the account.
+2. **Guidelines only.** Use current first-party platform guidance without benchmark research.
+
+Ask the user to reply with `1` or `2`. Accept an unambiguous free-form selection, but make the numeric reply the default. Resolve and record the evidence choice before continuing.
+
+**Step 2 — approval.** Only after evidence is resolved, present this separate numbered choice:
+
+1. **Guided — recommended for a new project.** Stop at Objective Confirmation, Direction Gate, and Visual Proposal Gate.
+2. **Follow recommendation.** Stop at Objective Confirmation, automatically select the marked direction, and stop at Visual Proposal Gate.
+3. **Fully automatic.** Continue only from an explicit current-request objective, select the marked direction, and pass Visual Proposal Gate only on `meets direction`.
+
+Ask the user to reply with `1`, `2`, or `3`. Accept an unambiguous free-form selection, but make the numeric reply the default. Before saving first-use choices, state the proposed file values and obtain confirmation.
 
 ### Graph assistance for 0.3.0 reviews
 
@@ -383,6 +390,14 @@ Recommend Stitch when any one genuine trigger occurs: a second meaningful visual
 Do not recommend Stitch merely because it is available, Mobbin supplied precedent, several material states exist, the first board has minor repairable drift, or one screen needs a bounded label, color, or control correction.
 
 The first recommendation names the specific benefit; a later recommendation is brief and appears only after another genuine trigger or materially larger scope. Use this shape: “This is becoming easier to manage in Stitch because <specific trigger and benefit>. I recommend moving there, but I can continue in Codex if you prefer.”
+
+When Stitch is recommended, present this numbered choice:
+
+1. **Stitch** (recommended)
+2. **Stay in Codex**
+3. **Both**
+
+Reply with `1`, `2`, or `3`. Both means create the Codex board and the Stitch visual workspace from the same approved journey. The active host remains the evidence, validation, and approval surface; inspect both outputs and reconcile material drift before assigning the visual verdict.
 
 A Stitch recommendation is advisory: never transfer automatically, and continuing in Codex remains available. Treat `stay in Codex` as a choice for the current editing phase, not a permanent suppression. If the user says not to recommend Stitch again for this review, suppress every further Stitch recommendation for that review.
 

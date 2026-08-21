@@ -25,6 +25,15 @@ def test_codex_visualization_contract() -> None:
     require(source, "canvas-based editing, multiple visual alternatives, and sustained visual refinement", "Stitch benefits")
     require(source, "Recommend Stitch when those benefits materially help the review", "optional recommendation")
     require(source, "Stitch remains optional and separately authorized.", "optional authorization")
+    require(source, "1. **Stitch** (recommended)", "recommended Stitch choice")
+    require(source, "2. **Stay in Codex**", "Codex-only choice")
+    require(source, "3. **Both**", "combined visualization choice")
+    require(source, "Reply with `1`, `2`, or `3`.", "numeric visualization reply")
+    require(
+        source,
+        "Both means create the Codex board and the Stitch visual workspace from the same approved journey.",
+        "combined visualization behavior",
+    )
     reject(source, "Stitch is mandatory", "mandatory Stitch")
 
 
@@ -35,10 +44,14 @@ def test_claude_visualization_contract() -> None:
     require(source, "prepare a lightweight static journey board with HTML/CSS, SVG, or specifications", "Claude default route")
     require(source, "polished screen mockups, visual exploration, editable layouts, or continued visual refinement", "early Stitch triggers")
     require(source, "Do not withhold the Stitch recommendation when polished or editable mockups are requested.", "no withheld Stitch recommendation")
+    require(source, "1. **Stitch** (recommended)", "recommended Stitch choice")
+    require(source, "2. **Stay in Claude Code**", "Claude-only choice")
+    require(source, "3. **Both**", "combined visualization choice")
+    require(source, "Reply with `1`, `2`, or `3`.", "numeric visualization reply")
     require(
         source,
-        "Claude can prepare a lightweight static journey board here. For polished, editable screen mockups, I recommend a Stitch-ready visual proposal. Which would you prefer?",
-        "required Claude decision prompt",
+        "Both means create the Claude Code board and the Stitch visual workspace from the same approved journey.",
+        "combined visualization behavior",
     )
     require(source, "Never tell a Claude Code user to pass work to Codex unless the user explicitly requests a cross-platform handoff.", "no default Codex handoff")
     reject(source, "Generate one complete static journey board in Claude Code by default", "false native default")

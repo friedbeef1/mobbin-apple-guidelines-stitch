@@ -75,7 +75,7 @@ do
 done
 
 require_text "$readme" '[FAQ](docs/faq.md)'
-require_text "$readme" 'One Design Arc, available for Codex, Claude Code, and Google Antigravity.'
+require_text "$readme" 'One Design Arc, available for Codex (live), Claude Code (alpha), and Google Antigravity (alpha).'
 require_text "$readme" 'Design Arc works in three AI coding platforms: Codex, Claude Code, and Google Antigravity.'
 require_text "$readme" '[Design Arc for Codex](docs/codex.md)'
 require_text "$readme" '[Design Arc for Claude Code](docs/claude-code.md)'
@@ -176,7 +176,7 @@ opening_description = "Design Arc audits the real journey, checks decisions agai
 action_section = """### See Design Arc in action
 See how Design Arc turns vague feedback into an evidence-backed direction—watch the demo or browse the introduction deck.
 
-| Product demo | Introduction deck |
+| Product walkthrough | Introduction deck |
 | --- | --- |
 | [![Design Arc product demo thumbnail — opens YouTube](https://img.youtube.com/vi/Zt7ba_lngxk/maxresdefault.jpg)](https://youtu.be/Zt7ba_lngxk) | [![Design Arc introduction deck cover — opens presentation](https://docs.google.com/presentation/d/1EG5vrPC5UqAkNAr9jce0lvZz1Jq5oI4AqAbPVivG2sU/export/png?id=1EG5vrPC5UqAkNAr9jce0lvZz1Jq5oI4AqAbPVivG2sU&pageid=g3fab99837d7_0_185)](https://docs.google.com/presentation/d/1EG5vrPC5UqAkNAr9jce0lvZz1Jq5oI4AqAbPVivG2sU/preview) |
 | [Watch on YouTube](https://youtu.be/Zt7ba_lngxk) | [Open presentation](https://docs.google.com/presentation/d/1EG5vrPC5UqAkNAr9jce0lvZz1Jq5oI4AqAbPVivG2sU/preview) |"""
@@ -1085,10 +1085,10 @@ import sys
 
 page = Path(sys.argv[1])
 original = page.read_text(encoding="utf-8")
-target = "| Product demo | Introduction deck |"
+target = "| Product walkthrough | Introduction deck |"
 if target not in original:
     raise SystemExit("FAIL: reordered-action-resource fixture requires the action-card headers")
-page.write_text(original.replace(target, "| Introduction deck | Product demo |", 1), encoding="utf-8")
+page.write_text(original.replace(target, "| Introduction deck | Product walkthrough |", 1), encoding="utf-8")
 PY
 
   if output=$(DESIGN_ARC_DOCS_SKIP_BROKEN_LINK_MUTATION=1 sh "$reordered_action_resource_checkout/scripts/test-design-arc-docs.sh" 2>&1)
