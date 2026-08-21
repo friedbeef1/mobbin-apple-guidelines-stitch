@@ -72,8 +72,8 @@ MUTATIONS = {
         "Recommend Stitch only after several triggers occur together.",
     ),
     "required Stitch choice": (
-        "Antigravity can prepare a lightweight static journey board here. For polished, editable screen mockups, I recommend a Stitch-ready visual proposal. Which would you prefer?",
-        "Continue without recommending Stitch for polished mockups.",
+        "Both means create the Google Antigravity board and the Stitch visual workspace from the same approved journey.",
+        "Offer only Stitch or Google Antigravity; do not offer both.",
     ),
     "no default cross-platform handoff": (
         "Never tell a Google Antigravity user to pass work to Codex or Claude Code unless the user explicitly requests a cross-platform handoff.",

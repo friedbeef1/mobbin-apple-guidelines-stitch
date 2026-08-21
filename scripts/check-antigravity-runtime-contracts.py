@@ -58,6 +58,11 @@ REQUIRED_CONTRACTS = {
     ),
     "required Stitch choice": (
         "Antigravity can prepare a lightweight static journey board here. For polished, editable screen mockups, I recommend a Stitch-ready visual proposal. Which would you prefer?",
+        "1. **Stitch** (recommended)",
+        "2. **Stay in Google Antigravity**",
+        "3. **Both**",
+        "Reply with `1`, `2`, or `3`.",
+        "Both means create the Google Antigravity board and the Stitch visual workspace from the same approved journey.",
     ),
     "no default cross-platform handoff": (
         "Never tell a Google Antigravity user to pass work to Codex or Claude Code unless the user explicitly requests a cross-platform handoff.",

@@ -107,6 +107,12 @@ REQUIRED_CONTRACTS = {
         "The first recommendation names the specific benefit; a later recommendation is brief and appears only after another genuine trigger or materially larger scope.",
     ),
     "Stitch recommendation control": (
+        "When Stitch is recommended, present this numbered choice:",
+        "1. **Stitch** (recommended)",
+        "2. **Stay in Codex**",
+        "3. **Both**",
+        "Reply with `1`, `2`, or `3`.",
+        "Both means create the Codex board and the Stitch visual workspace from the same approved journey.",
         "A Stitch recommendation is advisory: never transfer automatically, and continuing in Codex remains available.",
         "Treat `stay in Codex` as a choice for the current editing phase, not a permanent suppression.",
         "If the user says not to recommend Stitch again for this review, suppress every further Stitch recommendation for that review.",

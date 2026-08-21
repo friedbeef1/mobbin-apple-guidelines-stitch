@@ -392,6 +392,10 @@ MUTATIONS = {
         "The first recommendation names the specific benefit; a later recommendation is brief and appears only after another genuine trigger or materially larger scope.",
         "Repeat the recommendation after every small edit.",
     ),
+    "three-way visualization choice": (
+        "Both means create the Codex board and the Stitch visual workspace from the same approved journey.",
+        "Offer only Stitch or Codex; do not offer both.",
+    ),
     "advisory transfer": (
         "A Stitch recommendation is advisory: never transfer automatically, and continuing in Codex remains available.",
         "Automatically transfer the proposal to Stitch after a trigger.",
@@ -772,7 +776,7 @@ GRAPH_MUTATIONS = {
 
 
 EXPECTED_GRAPH_MUTATION_COUNT = 24
-EXPECTED_TOTAL_MUTATION_COUNT = 192
+EXPECTED_TOTAL_MUTATION_COUNT = 193
 
 
 ORDERED_MUTATION_MARKERS = (

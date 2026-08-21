@@ -386,6 +386,14 @@ Do not recommend Stitch merely because it is available, Mobbin supplied preceden
 
 The first recommendation names the specific benefit; a later recommendation is brief and appears only after another genuine trigger or materially larger scope. Use this shape: “This is becoming easier to manage in Stitch because <specific trigger and benefit>. I recommend moving there, but I can continue in Codex if you prefer.”
 
+When Stitch is recommended, present this numbered choice:
+
+1. **Stitch** (recommended)
+2. **Stay in Codex**
+3. **Both**
+
+Reply with `1`, `2`, or `3`. Both means create the Codex board and the Stitch visual workspace from the same approved journey. The active host remains the evidence, validation, and approval surface; inspect both outputs and reconcile material drift before assigning the visual verdict.
+
 A Stitch recommendation is advisory: never transfer automatically, and continuing in Codex remains available. Treat `stay in Codex` as a choice for the current editing phase, not a permanent suppression. If the user says not to recommend Stitch again for this review, suppress every further Stitch recommendation for that review.
 
 Before using Stitch, prepare the complete evidence-grounded journey, requirements, and important-state inventory. When Stitch is selected, preserve the approved journey requirements, require separately authorized access, and compare retrieved or supplied changes before treating them as the current proposal. A Stitch share link, exported screens, Figma or HTML/CSS export, or `DESIGN.md` may support the return path. Use an exact configured Stitch MCP server or tool only when it is actually available and separately authorized; never imply that Design Arc bundles one. Retrieval means “inspect and show what changed,” not “silently approve or overwrite the direction.”

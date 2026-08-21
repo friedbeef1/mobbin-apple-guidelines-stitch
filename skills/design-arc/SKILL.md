@@ -339,6 +339,14 @@ Do not withhold the Stitch recommendation when polished or editable mockups are 
 
 For the first relevant choice, use this exact prompt: “Antigravity can prepare a lightweight static journey board here. For polished, editable screen mockups, I recommend a Stitch-ready visual proposal. Which would you prefer?” A later recommendation is brief and appears only after another genuine trigger or materially larger scope.
 
+When Stitch is recommended, present this numbered choice:
+
+1. **Stitch** (recommended)
+2. **Stay in Google Antigravity**
+3. **Both**
+
+Reply with `1`, `2`, or `3`. Both means create the Google Antigravity board and the Stitch visual workspace from the same approved journey. The active host remains the evidence, validation, and approval surface; inspect both outputs and reconcile material drift before assigning the visual verdict.
+
 A Stitch recommendation is advisory: never transfer automatically, and continuing in Google Antigravity remains available. Treat `stay in Google Antigravity` as a choice for the current editing phase, not a permanent suppression. Never tell a Google Antigravity user to pass work to Codex unless the user explicitly requests a cross-platform handoff. If the user says not to recommend Stitch again for this review, suppress every further Stitch recommendation for that review.
 
 Before using Stitch, prepare the complete evidence-grounded journey, requirements, and important-state inventory. When Stitch is selected, preserve the approved journey requirements, require separately authorized access, and compare retrieved or supplied changes before treating them as the current proposal. A Stitch share link, exported screens, Figma or HTML/CSS export, or `DESIGN.md` may support the return path. Use an exact configured Stitch MCP server or tool only when it is actually available and separately authorized; never imply that Design Arc bundles one. Retrieval means “inspect and show what changed,” not “silently approve or overwrite the direction.”
